@@ -1,7 +1,468 @@
-﻿  c_MainMenu.cpp
-  Generating code
-  0 of 566 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Release\OpenGL.exe
+﻿  Application.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  d:\users\539\desktop\sp2\sp\glfw\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(71): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(71): error C2365: 'glClearColor': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(844): note: see declaration of 'glClearColor'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(73): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(73): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(75): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(77): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(77): error C2365: 'glPolygonMode': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(1032): note: see declaration of 'glPolygonMode'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(79): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(79): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(80): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(80): error C2365: 'glBlendFunc': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(839): note: see declaration of 'glBlendFunc'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C2373: '__glewGenVertexArrays': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(15107): note: see declaration of '__glewGenVertexArrays'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C2440: 'initializing': cannot convert from 'initializer list' to 'int'
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): note: The initializer contains too many elements
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(84): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(84): error C2373: '__glewBindVertexArray': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(15105): note: see declaration of '__glewBindVertexArray'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C2371: 'm_programID': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(61): note: see declaration of 'm_programID'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C3861: 'LoadShaders': identifier not found
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(90): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(90): error C2373: '__glewUseProgram': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(14443): note: see declaration of '__glewUseProgram'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C2466: cannot allocate an array of constant size 0
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C2371: 'm_parameters': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(94): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(94): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(95): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(95): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(97): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(97): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(99): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(99): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(101): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(101): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(103): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(103): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(108): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(108): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(110): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(110): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C2371: 'camera': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(63): note: see declaration of 'camera'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C2146: syntax error: missing ';' before identifier 'Init'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: 'for'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2143: syntax error: missing ')' before ';'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2143: syntax error: missing ';' before '<'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: '++'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: ')'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(117): error C2143: syntax error: missing ';' before '{'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(117): error C2447: '{': missing function header (old-style formal list?)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C2371: 'projection': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(122): note: see declaration of 'projection'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C2146: syntax error: missing ';' before identifier 'SetToPerspective'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C2371: 'projectionStack': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(65): note: see declaration of 'projectionStack'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C2146: syntax error: missing ';' before identifier 'LoadMatrix'
+  Game.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(71): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(71): error C2365: 'glClearColor': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(844): note: see declaration of 'glClearColor'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(73): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(73): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(75): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(77): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(77): error C2365: 'glPolygonMode': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(1032): note: see declaration of 'glPolygonMode'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(79): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(79): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(80): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(80): error C2365: 'glBlendFunc': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(839): note: see declaration of 'glBlendFunc'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C2373: '__glewGenVertexArrays': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(15107): note: see declaration of '__glewGenVertexArrays'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C2440: 'initializing': cannot convert from 'initializer list' to 'int'
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): note: The initializer contains too many elements
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(84): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(84): error C2373: '__glewBindVertexArray': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(15105): note: see declaration of '__glewBindVertexArray'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C2371: 'm_programID': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(61): note: see declaration of 'm_programID'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C3861: 'LoadShaders': identifier not found
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(90): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(90): error C2373: '__glewUseProgram': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(14443): note: see declaration of '__glewUseProgram'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C2466: cannot allocate an array of constant size 0
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C2371: 'm_parameters': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(94): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(94): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(95): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(95): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(97): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(97): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(99): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(99): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(101): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(101): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(103): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(103): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(108): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(108): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(110): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(110): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C2371: 'camera': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(63): note: see declaration of 'camera'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C2146: syntax error: missing ';' before identifier 'Init'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: 'for'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2143: syntax error: missing ')' before ';'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2143: syntax error: missing ';' before '<'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: '++'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: ')'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(117): error C2143: syntax error: missing ';' before '{'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(117): error C2447: '{': missing function header (old-style formal list?)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C2371: 'projection': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(122): note: see declaration of 'projection'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C2146: syntax error: missing ';' before identifier 'SetToPerspective'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C2371: 'projectionStack': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(65): note: see declaration of 'projectionStack'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C2146: syntax error: missing ';' before identifier 'LoadMatrix'
+  MeshBuilder.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(322): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(673): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1001): warning C4101: 'x1': unreferenced local variable
+d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1001): warning C4101: 'z1': unreferenced local variable
+d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1095): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1102): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1103): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1105): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1148): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1150): warning C4018: '>': signed/unsigned mismatch
+  c_Collision.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(71): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(71): error C2365: 'glClearColor': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(844): note: see declaration of 'glClearColor'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(73): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(73): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(75): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(77): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(77): error C2365: 'glPolygonMode': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(1032): note: see declaration of 'glPolygonMode'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(79): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(79): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(80): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(80): error C2365: 'glBlendFunc': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(839): note: see declaration of 'glBlendFunc'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C2373: '__glewGenVertexArrays': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(15107): note: see declaration of '__glewGenVertexArrays'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C2440: 'initializing': cannot convert from 'initializer list' to 'int'
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): note: The initializer contains too many elements
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(84): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(84): error C2373: '__glewBindVertexArray': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(15105): note: see declaration of '__glewBindVertexArray'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C2371: 'm_programID': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(61): note: see declaration of 'm_programID'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C3861: 'LoadShaders': identifier not found
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(90): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(90): error C2373: '__glewUseProgram': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(14443): note: see declaration of '__glewUseProgram'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C2466: cannot allocate an array of constant size 0
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C2371: 'm_parameters': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(94): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(94): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(95): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(95): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(97): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(97): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(99): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(99): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(101): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(101): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(103): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(103): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(108): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(108): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(110): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(110): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C2371: 'camera': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(63): note: see declaration of 'camera'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C2146: syntax error: missing ';' before identifier 'Init'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: 'for'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2143: syntax error: missing ')' before ';'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2143: syntax error: missing ';' before '<'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: '++'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: ')'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(117): error C2143: syntax error: missing ';' before '{'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(117): error C2447: '{': missing function header (old-style formal list?)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C2371: 'projection': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(122): note: see declaration of 'projection'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C2146: syntax error: missing ';' before identifier 'SetToPerspective'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C2371: 'projectionStack': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(65): note: see declaration of 'projectionStack'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C2146: syntax error: missing ';' before identifier 'LoadMatrix'
+  c_MainMenu.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(71): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(71): error C2365: 'glClearColor': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(844): note: see declaration of 'glClearColor'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(73): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(73): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(75): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(77): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(77): error C2365: 'glPolygonMode': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(1032): note: see declaration of 'glPolygonMode'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(79): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(79): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(80): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(80): error C2365: 'glBlendFunc': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(839): note: see declaration of 'glBlendFunc'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C2373: '__glewGenVertexArrays': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(15107): note: see declaration of '__glewGenVertexArrays'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C2440: 'initializing': cannot convert from 'initializer list' to 'int'
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): note: The initializer contains too many elements
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(84): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(84): error C2373: '__glewBindVertexArray': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(15105): note: see declaration of '__glewBindVertexArray'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C2371: 'm_programID': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(61): note: see declaration of 'm_programID'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C3861: 'LoadShaders': identifier not found
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(90): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(90): error C2373: '__glewUseProgram': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(14443): note: see declaration of '__glewUseProgram'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C2466: cannot allocate an array of constant size 0
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C2371: 'm_parameters': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(94): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(94): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(95): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(95): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(97): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(97): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(99): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(99): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(101): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(101): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(103): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(103): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(108): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(108): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(110): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(110): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C2371: 'camera': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(63): note: see declaration of 'camera'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C2146: syntax error: missing ';' before identifier 'Init'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: 'for'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2143: syntax error: missing ')' before ';'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2143: syntax error: missing ';' before '<'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: '++'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: ')'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(117): error C2143: syntax error: missing ';' before '{'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(117): error C2447: '{': missing function header (old-style formal list?)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C2371: 'projection': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(122): note: see declaration of 'projection'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C2146: syntax error: missing ';' before identifier 'SetToPerspective'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C2371: 'projectionStack': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(65): note: see declaration of 'projectionStack'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C2146: syntax error: missing ';' before identifier 'LoadMatrix'
+  c_Render.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(71): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(71): error C2365: 'glClearColor': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(844): note: see declaration of 'glClearColor'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(73): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(73): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(75): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(77): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(77): error C2365: 'glPolygonMode': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(1032): note: see declaration of 'glPolygonMode'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(79): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(79): error C2365: 'glEnable': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(904): note: see declaration of 'glEnable'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(80): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(80): error C2365: 'glBlendFunc': redefinition; previous definition was 'function'
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(839): note: see declaration of 'glBlendFunc'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C2373: '__glewGenVertexArrays': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(15107): note: see declaration of '__glewGenVertexArrays'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): error C2440: 'initializing': cannot convert from 'initializer list' to 'int'
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(83): note: The initializer contains too many elements
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(84): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(84): error C2373: '__glewBindVertexArray': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(15105): note: see declaration of '__glewBindVertexArray'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C2371: 'm_programID': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(61): note: see declaration of 'm_programID'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(87): error C3861: 'LoadShaders': identifier not found
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(90): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(90): error C2373: '__glewUseProgram': redefinition; different type modifiers
+  d:\users\539\desktop\sp2\sp\glew\include\gl\glew.h(14443): note: see declaration of '__glewUseProgram'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C2466: cannot allocate an array of constant size 0
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(93): error C2371: 'm_parameters': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(94): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(94): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(95): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(95): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(97): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(97): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(99): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(99): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(101): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(101): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(103): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(103): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(108): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(108): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(110): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(110): error C2369: 'm_parameters': redefinition; different subscripts
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(62): note: see declaration of 'm_parameters'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C2371: 'camera': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(63): note: see declaration of 'camera'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(113): error C2146: syntax error: missing ';' before identifier 'Init'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: 'for'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2143: syntax error: missing ')' before ';'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2143: syntax error: missing ';' before '<'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: '++'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(116): error C2059: syntax error: ')'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(117): error C2143: syntax error: missing ';' before '{'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(117): error C2447: '{': missing function header (old-style formal list?)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C2371: 'projection': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(122): note: see declaration of 'projection'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(123): error C2146: syntax error: missing ';' before identifier 'SetToPerspective'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3484: syntax error: expected '->' before the return type
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C3613: missing return type after '->' ('int' assumed)
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C2371: 'projectionStack': redefinition; different basic types
+  d:\users\539\desktop\sp2\sp\opengl\source\variables.h(65): note: see declaration of 'projectionStack'
+d:\users\539\desktop\sp2\sp\opengl\source\variables.h(124): error C2146: syntax error: missing ';' before identifier 'LoadMatrix'
