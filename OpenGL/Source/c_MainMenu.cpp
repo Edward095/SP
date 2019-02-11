@@ -36,5 +36,4 @@ void c_MainMenu::Render()
 	modelStack.PushMatrix();
 	render.RenderMesh(meshList[NEWGAME], false);
 	modelStack.PopMatrix();
-
 }
