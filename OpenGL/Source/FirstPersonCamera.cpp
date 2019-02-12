@@ -71,10 +71,7 @@ void FirstPersonCamera::Update(double dt)
 {
 	elapsedTime += dt;
 	
-	if (position.z > 5 && position.z < 9)//Shooting Range
-		WBmove(dt, 3, 9, 5);
-	else
-		WBmove(dt, 3, 18, 12);//gun Room
+	WOBmove(dt);
 	position.y = -1;
 
 	UpdateMouse();

@@ -1,7 +1,5 @@
-﻿  c_MainMenu.cpp
-  Generating code
-  0 of 566 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Release\OpenGL.exe
+﻿Game.obj : error LNK2001: unresolved external symbol "class MS viewStack" (?viewStack@@3VMS@@A)
+Game.obj : error LNK2001: unresolved external symbol "unsigned int * m_parameters" (?m_parameters@@3PAIA)
+Game.obj : error LNK2001: unresolved external symbol "class MS modelStack" (?modelStack@@3VMS@@A)
+Game.obj : error LNK2001: unresolved external symbol "class MS projectionStack" (?projectionStack@@3VMS@@A)
+C:\Users\irfan\Desktop\Sp2(Github)\SP\Release\OpenGL.exe : fatal error LNK1120: 4 unresolved externals
