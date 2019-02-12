@@ -5,7 +5,7 @@
 
 #include "LoadTGA.h"
 
-unsigned int LoadTGA(const char *file_path)				// load TGA file to memory
+GLuint LoadTGA(const char *file_path)				// load TGA file to memory
 {
 	std::ifstream fileStream(file_path, std::ios::binary);
 	if(!fileStream.is_open()) {
