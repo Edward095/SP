@@ -14,7 +14,7 @@ public:
 	enum GEOMETRY_TYPE
 	{
 		TEXT,
-
+		ARROW,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -49,8 +49,11 @@ public:
 	};
 	enum GAME_STATE
 	{
-		MENU,
-		GAME,
+		MENU = 0,
+		NEWGAME,
+		CONTINUE,
+		OPTIONS,
+		EXIT,
 	};
 	c_MainMenu();
 	~c_MainMenu();
@@ -60,25 +63,29 @@ public:
 	void Exit();
 
 private:
-	GAME_STATE e_GameState;
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];
-
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
-
-
-	//Week 4
 	FirstPersonCamera camera;
-
-	//Week 5
 	MS modelStack, viewStack, projectionStack;
 
-	Light light[3];
+	Light light[1];
+	GAME_STATE e_GameState;
+	float ArrowX, ArrowY;
+	double elapsedTime;
+	double bounceTime;
 
 	void RenderMesh(Mesh *mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
+
+	void initLights();
+	void renderLights();
+	void updateLights(int num);
+
+	void renderSelection();
+	void renderOptions();
 };
 
 #endif C_MAINMENU_H
