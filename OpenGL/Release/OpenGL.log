@@ -1,50 +1,12 @@
-﻿  c_MainMenu.cpp
-  FirstPersonCamera.cpp
-d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(72): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(118): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(121): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(126): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(129): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(134): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(137): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(142): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(145): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(157): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(161): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(165): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(169): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  LoadOBJ.cpp
-d:\users\539\desktop\sp2\sp\opengl\source\loadobj.cpp(119): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\loadobj.cpp(120): warning C4018: '<': signed/unsigned mismatch
-d:\users\539\desktop\sp2\sp\opengl\source\loadobj.cpp(122): warning C4018: '<': signed/unsigned mismatch
-d:\users\539\desktop\sp2\sp\opengl\source\loadobj.cpp(124): warning C4018: '>': signed/unsigned mismatch
-  Camera.cpp
-d:\users\539\desktop\sp2\sp\opengl\source\camera.cpp(62): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\camera.cpp(64): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\camera.cpp(70): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\camera.cpp(72): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  LoadTGA.cpp
-  Mesh.cpp
-  MeshBuilder.cpp
-d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(322): warning C4018: '<': signed/unsigned mismatch
-d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(673): warning C4018: '<': signed/unsigned mismatch
-d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1001): warning C4101: 'x1': unreferenced local variable
-d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1001): warning C4101: 'z1': unreferenced local variable
-d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1095): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1102): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1103): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1105): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1148): warning C4018: '<': signed/unsigned mismatch
-d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1150): warning C4018: '>': signed/unsigned mismatch
-  Application.cpp
+﻿  Application.cpp
 c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
   d:\users\539\desktop\sp2\sp\glfw\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
-  main.cpp
-  shader.cpp
-  Utility.cpp
+  c_Collision.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_collision.cpp(105): warning C4018: '<': signed/unsigned mismatch
+  c_MainMenu.cpp
   Generating code
-  566 of 569 functions (99.5%) were compiled, the rest were copied from previous compilation.
-    3 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  4 of 929 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    10 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Release\OpenGL.exe
