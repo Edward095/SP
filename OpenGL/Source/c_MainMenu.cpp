@@ -123,7 +123,7 @@ void c_MainMenu::Update(double dt)
 		else
 			e_GameState = EXIT;
 	}
-	//camera.Update(dt);
+	camera.Update(dt);
 }
 void c_MainMenu::Render()
 {
