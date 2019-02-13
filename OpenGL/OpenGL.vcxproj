@@ -119,14 +119,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)glew\include;$(solutionDir)common\source;$(solutionDir)glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>#(solutionDir)Dependecies\Irrklang\include;$(solutionDir)glew\include;$(solutionDir)common\source;$(solutionDir)glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(solutionDir)glew\lib;$(solutionDir)$(Configuration);$(solutionDir)glfw\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(solutionDir)Dependecies\Irrklang;$(solutionDir)glew\lib;$(solutionDir)$(Configuration);$(solutionDir)glfw\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;winmm.lib;Common.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -148,6 +148,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\c_Garage.cpp" />
+    <ClCompile Include="Source\c_Sound.cpp" />
+    <ClCompile Include="Source\c_Collision.cpp" />
     <ClCompile Include="Source\c_MainMenu.cpp" />
     <ClCompile Include="Source\FirstPersonCamera.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
@@ -162,6 +164,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\c_Garage.h" />
+    <ClInclude Include="Source\c_Sound.h" />
+    <ClInclude Include="Source\c_Collision.h" />
     <ClInclude Include="Source\c_MainMenu.h" />
     <ClInclude Include="Source\FirstPersonCamera.h" />
     <ClInclude Include="Source\LoadOBJ.h" />

@@ -3,16 +3,20 @@
 
 #include "Scene.h"
 #include "Mesh.h"
-#include "Camera.h"
 #include "FirstPersonCamera.h"
 #include "MatrixStack.h"
 #include "Light.h"
+#include "c_Collision.h"
 
 class c_MainMenu : public Scene
 {
 public:
 	enum GEOMETRY_TYPE
 	{
+		box1,
+		box2,
+
+
 		TEXT,
 		ARROW,
 		NUM_GEOMETRY,
@@ -77,15 +81,19 @@ private:
 	double bounceTime;
 
 	void RenderMesh(Mesh *mesh, bool enableLight);
-	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
-	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
 	void initLights();
 	void renderLights();
 	void updateLights(int num);
 
 	void renderSelection();
+	void renderNewGame();
+	void renderContinue();
 	void renderOptions();
+
+
+	c_Collision cube1, cube2;
+	float x, z, y;
 };
 
 #endif C_MAINMENU_H

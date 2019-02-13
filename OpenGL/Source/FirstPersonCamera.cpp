@@ -76,7 +76,6 @@ void FirstPersonCamera::Update(double dt)
 	//else
 	//	WBmove(dt, 3, 18, 12);//gun Room
 	WOBmove(dt);
-	position.y = -1;
 
 	UpdateMouse();
 
@@ -168,12 +167,12 @@ void FirstPersonCamera::WOBmove(double dt)
 	{
 		position -= front * FirstPersonCamera_SPEED * dt;
 	}
-	/*if (Application::IsKeyPressed('Q'))
+	if (Application::IsKeyPressed('Q'))
 	{
 		position += Vector3(0, 1, 0) * 0.75f;
 	}
 	if (Application::IsKeyPressed('E'))
 	{
 		position += Vector3(0, -1, 0) * 0.75f;
-	}*/
+	}
 }

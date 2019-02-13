@@ -1,8 +1,1 @@
-﻿  c_Garage.cpp
-c:\users\marc-\documents\github\sp\opengl\source\c_garage.cpp(252): warning C4305: 'argument': truncation from 'double' to 'float'
-  Generating code
-  0 of 922 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  OpenGL.vcxproj -> C:\Users\marc-\Documents\GitHub\SP\Release\OpenGL.exe
+﻿
