@@ -1,5 +1,1 @@
-﻿Game.obj : error LNK2001: unresolved external symbol "class MS viewStack" (?viewStack@@3VMS@@A)
-Game.obj : error LNK2001: unresolved external symbol "unsigned int * m_parameters" (?m_parameters@@3PAIA)
-Game.obj : error LNK2001: unresolved external symbol "class MS modelStack" (?modelStack@@3VMS@@A)
-Game.obj : error LNK2001: unresolved external symbol "class MS projectionStack" (?projectionStack@@3VMS@@A)
-C:\Users\irfan\Desktop\Sp2(Github)\SP\Release\OpenGL.exe : fatal error LNK1120: 4 unresolved externals
+﻿

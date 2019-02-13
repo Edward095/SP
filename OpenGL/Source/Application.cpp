@@ -9,8 +9,7 @@
 #include <stdlib.h>
 
 #include "Application.h"
-
-#include "Game.h"
+#include "c_MainMenu.h"
 
 
 GLFWwindow* m_window;
@@ -111,7 +110,7 @@ void Application::Run()
 {
 	//Main Loop
 	//Scene *scene = new Assignment02();
-	Scene *scene = new Game();
+	Scene *scene = new c_MainMenu();
 	scene->Init();
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
