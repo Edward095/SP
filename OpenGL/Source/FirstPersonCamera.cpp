@@ -108,7 +108,7 @@ bool FirstPersonCamera::checkCollisions(float x, float zUpper, float zLower)
 
 void FirstPersonCamera::WBmove(double dt, float x, float zUpper, float zLower)
 {
-	static const float FirstPersonCamera_SPEED = 6.f;
+	static const float FirstPersonCamera_SPEED = 50.f;
 
 	Vector3 right = front.Cross(up).Normalize();
 

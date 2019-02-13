@@ -8,15 +8,22 @@ public:
 	c_CarBaseClass();
 	~c_CarBaseClass();
 	virtual void Movement(double dt) = 0;
-	virtual float GetVelocityZ() = 0;
-
+	virtual float GetPosX() = 0;
+	virtual float GetPosY() = 0;
+	virtual float GetPosZ() = 0;
 
 protected:
-	float VelocityX;
 	float VelocityZ;
-	bool driving;
-	bool backwards;
-	float acceleration;
+	float NewPosX;
+	float NewPosY;
+	float NewPosZ;
+	float SteeringAngle;
+	float Acceleration;
+
+	bool Driving;
+	bool Backwards;
+
+	
 };
 
 

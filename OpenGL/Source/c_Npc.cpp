@@ -223,14 +223,14 @@ void c_Npc::Render()
 	RenderTextOnScreen(meshList[TEXT], std::to_string(cameraY), Color(0, 0, 1), 3, 1, 18);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(cameraZ), Color(0, 0, 1), 3, 1, 17);
 
-	if (camera.position.z < 60 && camera.position.z > -20 && talk == false)
+	if (camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40 && talk == false)
 	{
 		modelStack.PushMatrix();
 		RenderTextOnScreen(meshList[TEXT], "Press 'F' to talk to NPC", Color(1, 0, 0), 3, 6, 10);
 		modelStack.PopMatrix();
 	}
 
-	if (camera.position.z < 60 && camera.position.z > -20 && talk == true && elapsedTime < TimePassed)
+	if (camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40 && talk == true && elapsedTime < TimePassed)
 	{
 		modelStack.PushMatrix();
 		RenderTextOnScreen(meshList[TEXT], "Hello!", Color(1, 0, 0), 3, 11, 10);
@@ -239,10 +239,10 @@ void c_Npc::Render()
 		AbletoPress = false;
 		
 	}
-	if (camera.position.z < 60 && camera.position.z > -20 && talk == true && elapsedTime > TimePassed && elapsedTime < TimePassed + 3)
+	if (camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40 && talk == true && elapsedTime > TimePassed && elapsedTime < TimePassed + 3)
 	{
 		modelStack.PushMatrix();
-		RenderTextOnScreen(meshList[TEXT], "Test", Color(1, 0, 0), 3, 11, 9);
+		RenderTextOnScreen(meshList[TEXT], "Select a Level to play ", Color(1, 0, 0), 3, 7, 9);
 		modelStack.PopMatrix();
 		AbletoPress = false;
 	}
