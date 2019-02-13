@@ -30,3 +30,5 @@
 *.log
 *.tlog
 *.pdb
+*.log
+OpenGL/Release/OpenGL.log
