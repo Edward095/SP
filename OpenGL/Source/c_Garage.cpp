@@ -180,7 +180,35 @@ c_Garage::~c_Garage()
 
 void c_Garage::Init()
 {
-	v_TGAName = "Image//testColourBlue.tga";
+	v_Car1Blue = LoadTGA("Image//Car1Blue.tga");
+	v_Car1Red = LoadTGA("Image//Car1Red.tga");
+	v_Car1Purple = LoadTGA("Image//Car1Purple.tga");
+	v_Car1Green = LoadTGA("Image//Car1Green.tga");
+	v_Car1Pink = LoadTGA("Image//Car1Pink.tga");
+	v_Car1Yellow = LoadTGA("Image//Car1Yellow.tga");
+	v_Car1White = LoadTGA("Image//Car1White.tga");
+	v_Car1Grey = LoadTGA("Image//Car1Grey.tga");
+	v_Car1Black = LoadTGA("Image//Car1Black.tga");
+
+	v_Car2Blue = LoadTGA("Image//Car2Blue.tga");
+	v_Car2Red = LoadTGA("Image//Car2Red.tga");
+	v_Car2Purple = LoadTGA("Image//Car2Purple.tga");
+	v_Car2Green = LoadTGA("Image//Car2Green.tga");
+	v_Car2Pink = LoadTGA("Image//Car2Pink.tga");
+	v_Car2Yellow = LoadTGA("Image//Car2Yellow.tga");
+	v_Car2White = LoadTGA("Image//Car2White.tga");
+	v_Car2Grey = LoadTGA("Image//Car2Grey.tga");
+	v_Car2Black = LoadTGA("Image//Car2Black.tga");
+
+	v_Car3Blue = LoadTGA("Image//Car3Blue.tga");
+	v_Car3Red = LoadTGA("Image//Car3Red.tga");
+	v_Car3Purple = LoadTGA("Image//Car3Purple.tga");
+	v_Car3Green = LoadTGA("Image//Car3Green.tga");
+	v_Car3Pink = LoadTGA("Image//Car3Pink.tga");
+	v_Car3Yellow = LoadTGA("Image//Car3Yellow.tga");
+	v_Car3White = LoadTGA("Image//Car3White.tga");
+	v_Car3Grey = LoadTGA("Image//Car3Grey.tga");
+	v_Car3Black = LoadTGA("Image//Car3Black.tga");
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
@@ -262,16 +290,16 @@ void c_Garage::Init()
 	meshList[CAR3PREVIEW] = MeshBuilder::GenerateQuad("Preview3", Color(1, 1, 1), 2);
 	meshList[CAR3PREVIEW]->textureID = LoadTGA("Image//Car3Preview.tga");
 
-	meshList[car1] = MeshBuilder::GenerateOBJ("car1", "OBJ//testCar1.obj");
-	meshList[car1]->textureID = LoadTGA(v_TGAName);
+	meshList[car1] = MeshBuilder::GenerateOBJ("car1", "OBJ//Car1.obj");
+	meshList[car1]->textureID = v_Car1Blue;
 
-	meshList[car2] = MeshBuilder::GenerateOBJ("car1", "OBJ//testCar2.obj");
-	meshList[car2]->textureID = LoadTGA(v_TGAName);
+	meshList[car2] = MeshBuilder::GenerateOBJ("car2", "OBJ//Car2.obj");
+	meshList[car2]->textureID = v_Car2Blue;
 
-	meshList[car3] = MeshBuilder::GenerateOBJ("car1", "OBJ//testCar3.obj");
-	meshList[car3]->textureID = LoadTGA(v_TGAName);
+	meshList[car3] = MeshBuilder::GenerateOBJ("car3", "OBJ//Car3.obj");
+	meshList[car3]->textureID = v_Car3Blue;
 
-	meshList[GARAGEBG] = MeshBuilder::GenerateQuad("background", Color(0, 0, 0), 17);
+	meshList[GARAGEBG] = MeshBuilder::GenerateQuad("background", Color(0, 0, 0), 21);
 	meshList[GARAGEBG]->textureID = LoadTGA("Image//GarageBG.tga");
 
 	v_RotateCar = 0;
@@ -285,12 +313,12 @@ void c_Garage::Init()
 void c_Garage::Update(double dt)
 {
 	v_ElapsedTime += dt;
-	if (Application::IsKeyPressed(VK_DOWN) && v_BounceTime < v_ElapsedTime)
+	if (Application::IsKeyPressed(VK_UP) && v_BounceTime < v_ElapsedTime)
 	{
 		v_CarList.f_ChangeCurrentCar('O');
 		v_BounceTime = v_ElapsedTime + 0.250;
 	}
-	if (Application::IsKeyPressed(VK_UP) && v_BounceTime < v_ElapsedTime)
+	if (Application::IsKeyPressed(VK_DOWN) && v_BounceTime < v_ElapsedTime)
 	{
 		v_CarList.f_ChangeCurrentCar('P');
 		v_BounceTime = v_ElapsedTime + 0.250;
@@ -447,7 +475,7 @@ void c_Garage::Render()
 	renderLights();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(0.5f, 0, -5);
+	modelStack.Translate(0.5f, 0, -10);
 	modelStack.Scale(1.26f, 1, 1);
 	RenderMesh(meshList[GARAGEBG], false);
 	modelStack.PopMatrix();
@@ -488,7 +516,7 @@ void c_Garage::initLights()
 	m_parameters[U_COLOR_TEXTURE] = glGetUniformLocation(m_programID, "colorTexture");
 
 	light[0].type = Light::LIGHT_POINT;
-	light[0].position.Set(-5, 5, 5);
+	light[0].position.Set(-5, 5, 0);
 	light[0].color.Set(1, 1, 1);
 	light[0].power = 2.5f;
 	light[0].kC = 1.f;
@@ -558,55 +586,55 @@ void c_Garage::updateLights(int num)
 void c_Garage::f_RenderPallet()
 {
 	modelStack.PushMatrix();
-	modelStack.Translate(-4, -4, v_MoveBlue);
+	modelStack.Translate(-4, -4.5f, v_MoveBlue);
 	modelStack.Scale(v_ScaleBlue, v_ScaleBlue, v_ScaleBlue);
 	RenderMesh(meshList[COLOUR_BLUE], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(-3, -4, v_MoveRed);
+	modelStack.Translate(-3, -4.5f, v_MoveRed);
 	modelStack.Scale(v_ScaleRed, v_ScaleRed, v_ScaleRed);
 	RenderMesh(meshList[COLOUR_RED], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(-2, -4, v_MovePurple);
+	modelStack.Translate(-2, -4.5f, v_MovePurple);
 	modelStack.Scale(v_ScalePurple, v_ScalePurple, v_ScalePurple);
 	RenderMesh(meshList[COLOUR_PURPLE], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(-1, -4, v_MoveGreen);
+	modelStack.Translate(-1, -4.5f, v_MoveGreen);
 	modelStack.Scale(v_ScaleGreen, v_ScaleGreen, v_ScaleGreen);
 	RenderMesh(meshList[COLOUR_GREEN], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(0, -4, v_MovePink);
+	modelStack.Translate(0, -4.5f, v_MovePink);
 	modelStack.Scale(v_ScalePink, v_ScalePink, v_ScalePink);
 	RenderMesh(meshList[COLOUR_PINK], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(1, -4, v_MoveYellow);
+	modelStack.Translate(1, -4.5f, v_MoveYellow);
 	modelStack.Scale(v_ScaleYellow, v_ScaleYellow, v_ScaleYellow);
 	RenderMesh(meshList[COLOUR_YELLOW], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(2, -4, v_MoveWhite);
+	modelStack.Translate(2, -4.5f, v_MoveWhite);
 	modelStack.Scale(v_ScaleWhite, v_ScaleWhite, v_ScaleWhite);
 	RenderMesh(meshList[COLOUR_WHITE], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(3, -4, v_MoveGrey);
+	modelStack.Translate(3, -4.5f, v_MoveGrey);
 	modelStack.Scale(v_ScaleGrey, v_ScaleGrey, v_ScaleGrey);
 	RenderMesh(meshList[COLOUR_GREY], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(4, -4, v_MoveBlack);
+	modelStack.Translate(4, -4.5f, v_MoveBlack);
 	modelStack.Scale(v_ScaleBlack, v_ScaleBlack, v_ScaleBlack);
 	RenderMesh(meshList[COLOUR_BLACK], false);
 	modelStack.PopMatrix();
@@ -824,23 +852,22 @@ void c_Garage::f_UpdateCurColour()
 	}
 }
 
-
 void c_Garage::f_RenderPreviews()
 {
 	modelStack.PushMatrix();
-	modelStack.Translate(-3, 4, 0);
+	modelStack.Translate(-5.5f, 4, 0);
 	modelStack.Scale(v_ScalePreview1, v_ScalePreview1, v_ScalePreview1);
 	RenderMesh(meshList[CAR1PREVIEW], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 4, 0);
+	modelStack.Translate(-5.5f, 1, 0);
 	modelStack.Scale(v_ScalePreview2, v_ScalePreview2, v_ScalePreview2);
 	RenderMesh(meshList[CAR2PREVIEW], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(3, 4, 0);
+	modelStack.Translate(-5.5f, -2, 0);
 	modelStack.Scale(v_ScalePreview3, v_ScalePreview3, v_ScalePreview3);
 	RenderMesh(meshList[CAR3PREVIEW], false);
 	modelStack.PopMatrix();
@@ -871,7 +898,7 @@ void c_Garage::f_UpdateCurCar()
 void c_Garage::f_RenderFinal()
 {
 	modelStack.PushMatrix();
-	modelStack.Rotate(45, 1, 0, 0);
+	modelStack.Translate(0, -2.5f, -5);
 	modelStack.Rotate(v_RotateCar, 0, 1, 0);
 	switch (v_CarList.f_GetCurCar()->f_GetCarNum())
 	{
@@ -879,48 +906,39 @@ void c_Garage::f_RenderFinal()
 		switch (v_ColourList.f_GetCurColour()->f_GetColourNum())
 		{
 		case 0:
-			v_TGAName = "Image//testColourBlue.tga";
-			meshList[car1]->textureID = LoadTGA(v_TGAName);
+			meshList[car1]->textureID = v_Car1Blue;
 			RenderMesh(meshList[car1], true);
 			break;
 		case 1:
-			v_TGAName = "Image//testColourRed.tga";
-			meshList[car1]->textureID = LoadTGA(v_TGAName);
+			meshList[car1]->textureID = v_Car1Red;
 			RenderMesh(meshList[car1], true);
 			break;
 		case 2:
-			v_TGAName = "Image//testColourPurple.tga";
-			meshList[car1]->textureID = LoadTGA(v_TGAName);
+			meshList[car1]->textureID = v_Car1Purple;
 			RenderMesh(meshList[car1], true);
 			break;
 		case 3:
-			v_TGAName = "Image//testColourGreen.tga";
-			meshList[car1]->textureID = LoadTGA(v_TGAName);
+			meshList[car1]->textureID = v_Car1Green;
 			RenderMesh(meshList[car1], true);
 			break;
 		case 4:
-			v_TGAName = "Image//testColourPink.tga";
-			meshList[car1]->textureID = LoadTGA(v_TGAName);
+			meshList[car1]->textureID = v_Car1Pink;
 			RenderMesh(meshList[car1], true);
 			break;
 		case 5:
-			v_TGAName = "Image//testColourYellow.tga";
-			meshList[car1]->textureID = LoadTGA(v_TGAName);
+			meshList[car1]->textureID = v_Car1Yellow;
 			RenderMesh(meshList[car1], true);
 			break;
 		case 6:
-			v_TGAName = "Image//testColourWhite.tga";
-			meshList[car1]->textureID = LoadTGA(v_TGAName);
+			meshList[car1]->textureID = v_Car1White;
 			RenderMesh(meshList[car1], true);
 			break;
 		case 7:
-			v_TGAName = "Image//testColourGrey.tga";
-			meshList[car1]->textureID = LoadTGA(v_TGAName);
+			meshList[car1]->textureID = v_Car1Grey;
 			RenderMesh(meshList[car1], true);
 			break;
 		case 8:
-			v_TGAName = "Image//testColourBlack.tga";
-			meshList[car1]->textureID = LoadTGA(v_TGAName);
+			meshList[car1]->textureID = v_Car1Black;
 			RenderMesh(meshList[car1], true);
 			break;
 		default:
@@ -932,48 +950,39 @@ void c_Garage::f_RenderFinal()
 		switch (v_ColourList.f_GetCurColour()->f_GetColourNum())
 		{
 		case 0:
-			v_TGAName = "Image//testColourWhite.tga";
-			meshList[car2]->textureID = LoadTGA(v_TGAName);
+			meshList[car2]->textureID = v_Car2Blue;
 			RenderMesh(meshList[car2], true);
 			break;
 		case 1:
-			v_TGAName = "Image//testColourRed.tga";
-			meshList[car2]->textureID = LoadTGA(v_TGAName);
+			meshList[car2]->textureID = v_Car2Red;
 			RenderMesh(meshList[car2], true);
 			break;
 		case 2:
-			v_TGAName = "Image//testColourPurple.tga";
-			meshList[car2]->textureID = LoadTGA(v_TGAName);
+			meshList[car2]->textureID = v_Car2Purple;
 			RenderMesh(meshList[car2], true);
 			break;
 		case 3:
-			v_TGAName = "Image//testColourGreen.tga";
-			meshList[car2]->textureID = LoadTGA(v_TGAName);
+			meshList[car2]->textureID = v_Car2Green;
 			RenderMesh(meshList[car2], true);
 			break;
 		case 4:
-			v_TGAName = "Image//testColourPink.tga";
-			meshList[car2]->textureID = LoadTGA(v_TGAName);
+			meshList[car2]->textureID = v_Car2Pink;
 			RenderMesh(meshList[car2], true);
 			break;
 		case 5:
-			v_TGAName = "Image//testColourYellow.tga";
-			meshList[car2]->textureID = LoadTGA(v_TGAName);
+			meshList[car2]->textureID = v_Car2Yellow;
 			RenderMesh(meshList[car2], true);
 			break;
 		case 6:
-			v_TGAName = "Image//testColourWhite.tga";
-			meshList[car2]->textureID = LoadTGA(v_TGAName);
+			meshList[car2]->textureID = v_Car2White;
 			RenderMesh(meshList[car2], true);
 			break;
 		case 7:
-			v_TGAName = "Image//testColourGrey.tga";
-			meshList[car2]->textureID = LoadTGA(v_TGAName);
+			meshList[car2]->textureID = v_Car2Grey;
 			RenderMesh(meshList[car2], true);
 			break;
 		case 8:
-			v_TGAName = "Image//testColourBlack.tga";
-			meshList[car2]->textureID = LoadTGA(v_TGAName);
+			meshList[car2]->textureID = v_Car2Black;
 			RenderMesh(meshList[car2], true);
 			break;
 		default:
@@ -985,48 +994,39 @@ void c_Garage::f_RenderFinal()
 		switch (v_ColourList.f_GetCurColour()->f_GetColourNum())
 		{
 		case 0:
-			v_TGAName = "Image//testColourBlue.tga";
-			meshList[car3]->textureID = LoadTGA(v_TGAName);
+			meshList[car3]->textureID = v_Car3Blue;
 			RenderMesh(meshList[car3], true);
 			break;
 		case 1:
-			v_TGAName = "Image//testColourRed.tga";
-			meshList[car3]->textureID = LoadTGA(v_TGAName);
+			meshList[car3]->textureID = v_Car3Red;
 			RenderMesh(meshList[car3], true);
 			break;
 		case 2:
-			v_TGAName = "Image//testColourPurple.tga";
-			meshList[car3]->textureID = LoadTGA(v_TGAName);
+			meshList[car3]->textureID = v_Car3Purple;
 			RenderMesh(meshList[car3], true);
 			break;
 		case 3:
-			v_TGAName = "Image//testColourGreen.tga";
-			meshList[car3]->textureID = LoadTGA(v_TGAName);
+			meshList[car3]->textureID = v_Car3Green;
 			RenderMesh(meshList[car3], true);
 			break;
 		case 4:
-			v_TGAName = "Image//testColourPink.tga";
-			meshList[car3]->textureID = LoadTGA(v_TGAName);
+			meshList[car3]->textureID = v_Car3Pink;
 			RenderMesh(meshList[car3], true);
 			break;
 		case 5:
-			v_TGAName = "Image//testColourYellow.tga";
-			meshList[car3]->textureID = LoadTGA(v_TGAName);
+			meshList[car3]->textureID = v_Car3Yellow;
 			RenderMesh(meshList[car3], true);
 			break;
 		case 6:
-			v_TGAName = "Image//testColourWhite.tga";
-			meshList[car3]->textureID = LoadTGA(v_TGAName);
+			meshList[car3]->textureID = v_Car3White;
 			RenderMesh(meshList[car3], true);
 			break;
 		case 7:
-			v_TGAName = "Image//testColourGrey.tga";
-			meshList[car3]->textureID = LoadTGA(v_TGAName);
+			meshList[car3]->textureID = v_Car3Grey;
 			RenderMesh(meshList[car3], true);
 			break;
 		case 8:
-			v_TGAName = "Image//testColourBlack.tga";
-			meshList[car3]->textureID = LoadTGA(v_TGAName);
+			meshList[car3]->textureID = v_Car3Black;
 			RenderMesh(meshList[car3], true);
 			break;
 		default:
