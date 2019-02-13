@@ -1,5 +1,6 @@
 ﻿  c_Garage.cpp
 c:\users\marc-\documents\github\sp\opengl\source\c_garage.cpp(252): warning C4305: 'argument': truncation from 'double' to 'float'
+  c_Sound.cpp
   c_Collision.cpp
   c_MainMenu.cpp
   FirstPersonCamera.cpp
