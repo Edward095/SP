@@ -54,6 +54,15 @@
     <ClCompile Include="Source\c_Sound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\c_Npc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\c_FirstCar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\c_CarBaseClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -95,13 +104,19 @@
     <ClInclude Include="Source\LoadTGA.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\c_MainMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\c_Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\c_Sound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\c_Npc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\c_FirstCar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\c_CarBaseClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

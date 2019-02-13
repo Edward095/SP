@@ -1,3 +1,4 @@
+﻿
 ﻿  c_Garage.cpp
 c:\users\marc-\documents\github\sp\opengl\source\c_garage.cpp(252): warning C4305: 'argument': truncation from 'double' to 'float'
   c_Sound.cpp
@@ -52,3 +53,11 @@ c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(1
     112 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   OpenGL.vcxproj -> C:\Users\marc-\Documents\GitHub\SP\Release\OpenGL.exe
+﻿  c_Npc.cpp
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_npc.cpp(123): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  Generating code
+  1 of 897 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  OpenGL.vcxproj -> C:\Users\irfan\Desktop\Sp2(Github)\SP\Release\OpenGL.exe

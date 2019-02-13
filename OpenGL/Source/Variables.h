@@ -28,6 +28,8 @@ enum GEOMETRY_TYPE
 	TESTCOLOR1,
 
 
+	//Text
+	TEXT,
 	NUM_GEOMETRY,
 };
 enum UNIFORM_TYPE

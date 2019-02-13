@@ -12,7 +12,7 @@
 #include "LoadTGA.h"
 
 //Include your Files here
-
+#include "c_Npc.h"
 
 
 c_MainMenu::c_MainMenu()
@@ -108,6 +108,8 @@ void c_MainMenu::Init()
 	cube1.setHighLow("OBJ//Cube.obj");
 	cube2.pos.Set(3, 0, 0);
 	cube2.setHighLow("OBJ//Cube.obj");
+	//NPC init
+	Npc.Init();
 	/***************************************************************************/
 }
 void c_MainMenu::Update(double dt)
@@ -174,6 +176,9 @@ void c_MainMenu::Update(double dt)
 
 	if(cube1.AABB(cube2))
 		std::cout << "Collided" << std::endl;
+
+	//NPC UPDATE
+	Npc.Update(dt);
 }
 void c_MainMenu::Render()
 {
@@ -197,7 +202,8 @@ void c_MainMenu::Render()
 	else if (e_GameState == NEWGAME)
 		renderNewGame();
 	else if (e_GameState == OPTIONS)
-		renderOptions();
+		//renderOptions();
+	      Npc.Render();
 	else
 	{
 
