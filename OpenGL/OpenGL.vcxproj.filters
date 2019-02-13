@@ -66,7 +66,7 @@
     <ClCompile Include="Source\c_Garage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="c_Entity.cpp">
+    <ClCompile Include="Source\c_Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,7 +128,7 @@
     <ClInclude Include="Source\c_Garage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_Entity.h">
+    <ClInclude Include="Source\c_Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
