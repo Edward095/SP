@@ -71,11 +71,11 @@ void FirstPersonCamera::Update(double dt)
 {
 	elapsedTime += dt;
 	
-	if (position.z > 5 && position.z < 9)//Shooting Range
-		WBmove(dt, 3, 9, 5);
-	else
-		WBmove(dt, 3, 18, 12);//gun Room
-	position.y = -1;
+	//if (position.z > 5 && position.z < 9)//Shooting Range
+	//	WBmove(dt, 3, 9, 5);
+	//else
+	//	WBmove(dt, 3, 18, 12);//gun Room
+	WOBmove(dt);
 
 	UpdateMouse();
 
@@ -167,12 +167,12 @@ void FirstPersonCamera::WOBmove(double dt)
 	{
 		position -= front * FirstPersonCamera_SPEED * dt;
 	}
-	/*if (Application::IsKeyPressed('Q'))
+	if (Application::IsKeyPressed('Q'))
 	{
 		position += Vector3(0, 1, 0) * 0.75f;
 	}
 	if (Application::IsKeyPressed('E'))
 	{
 		position += Vector3(0, -1, 0) * 0.75f;
-	}*/
+	}
 }

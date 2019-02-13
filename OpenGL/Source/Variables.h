@@ -6,7 +6,6 @@
 #include "Mesh.h"
 #include "Camera.h"
 #include "FirstPersonCamera.h"
-#include "MatrixStack.h"
 #include "Light.h"
 
 #define RED Color(1,0,0)
@@ -21,6 +20,8 @@ enum GEOMETRY_TYPE
 	CONTINUE,
 	OPTIONS,
 	EXIT,
+	//Text
+	TEXT,
 	NUM_GEOMETRY,
 };
 enum UNIFORM_TYPE

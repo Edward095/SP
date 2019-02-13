@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "Variables.h"
 #include "c_MainMenu.h"
+#include "c_Npc.h"
 
 class Game : public Scene
 {
@@ -27,5 +28,6 @@ private:
 	 Light light[3];
 	 c_Render render;
 	 c_MainMenu MMScene;
+	 c_Npc Npc;
 };
 #endif
