@@ -2,8 +2,8 @@
 #define C_COLLISION_H
 
 #include <Vector3.h>
-#include "Utility.h"
 #include <vector>
+#include "Utility.h"
 
 class c_Collision
 {

@@ -1,2 +1,4 @@
 ﻿  c_MainMenu.cpp
-  OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\OpenGL.exe
+c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_mainmenu.cpp(15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_mainmenu.cpp(16): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  OpenGL.vcxproj -> C:\Users\incre\OneDrive\Desktop\Edward\SP\Debug\OpenGL.exe

@@ -1,17 +1,17 @@
 #ifndef C_CARBASECLASS_H
 #define C_CARBASECLASS_H
 
+#include "c_Entity.h"
+#include "c_ObjectManager.h"
 
-#include "c_Collision.h"
-#include  "Vector3.h"
-
-class c_CarBaseClass
+class c_CarBaseClass : public c_Entity
 {
 public:
 	c_CarBaseClass();
+	c_CarBaseClass(const char* fileName,Position pos);
 	~c_CarBaseClass();
+	bool gotCollide();
 	virtual void Movement(double dt) = 0;
-	virtual Position GetPos();
 protected:
 	float VelocityZ;
 	float SteeringAngle;
@@ -19,9 +19,7 @@ protected:
 
 	bool Driving;
 	bool Backwards;
-
-	c_Collision collision;
-	Position pos;
+	c_ObjectManager* objectManager;
 	
 };
 

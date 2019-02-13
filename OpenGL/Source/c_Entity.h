@@ -8,15 +8,18 @@ class c_Entity
 {
 public:
 	c_Entity();
-	c_Entity(const char* meshPath);
+	c_Entity(const char* meshPath,Position pos);
 	~c_Entity();
 
 	Mesh* getMesh();
+	Position getPos();
+	c_Collision getOBB();
 
 protected:
+	const char* meshPath;
 	Mesh* mesh;
-	std::string meshPath;
 	c_Collision OBB;
+	Position pos;
 };
 
 #endif

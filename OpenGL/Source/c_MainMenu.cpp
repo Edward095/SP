@@ -11,8 +11,10 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 
-//Include your Files here
-#include "c_Npc.h"
+
+c_FirstCar car1("OBJ//Car1.obj", (0, 0, 0));
+c_FirstCar car2("OBJ//Car2.obj", (3, 0, 0));
+
 
 
 c_MainMenu::c_MainMenu()
@@ -98,6 +100,7 @@ void c_MainMenu::Init()
 	//NPC init
 	Npc.Init();
 
+	
 	/***************************************************************************/
 }
 void c_MainMenu::Update(double dt)
@@ -348,7 +351,15 @@ void c_MainMenu::updateSelection(double dt)
 }
 void c_MainMenu::renderNewGame()
 {
-	Npc.Render();
+	//Npc.Render();
+	modelStack.PushMatrix();
+	RenderMesh(car1.getMesh(), true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(3, 0, 0);
+	RenderMesh(car2.getMesh(), true);
+	modelStack.PopMatrix();
 }
 void c_MainMenu::updateNewGame(double dt)
 {

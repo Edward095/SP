@@ -8,16 +8,13 @@
 #include "Light.h"
 
 #include "c_Npc.h"
+#include "c_FirstCar.h"
 
 class c_MainMenu : public Scene
 {
 public:
 	enum GEOMETRY_TYPE
 	{
-		box1,
-		box2,
-
-
 		TEXT,
 		ARROW,
 		NUM_GEOMETRY,
