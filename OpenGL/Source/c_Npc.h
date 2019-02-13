@@ -2,27 +2,91 @@
 #define C_NPC_H
 
 #include "Scene.h"
-#include "Variables.h"
-#include "c_Render.h"
+#include "Scene.h"
+#include "Mesh.h"
+#include "FirstPersonCamera.h"
+#include "MatrixStack.h"
+#include "Light.h"
 
-class c_Npc 
+class c_Npc :
+	public Scene
 {
 public:
+	enum GEOMETRY_TYPE
+	{
+		TEXT,
+		FRONT,
+		TOP,
+		BACK,
+		LEFT,
+		RIGHT,
+		BOTTOM,
+		NPC,
+		NUM_GEOMETRY,
+	};
+	enum UNIFORM_TYPE
+	{
+		U_MVP = 0,
+		U_MODELVIEW,
+		U_MODELVIEW_INVERSE_TRANSPOSE,
+		U_MATERIAL_AMBIENT,
+		U_MATERIAL_DIFFUSE,
+		U_MATERIAL_SPECULAR,
+		U_MATERIAL_SHININESS,
+		//Light1
+		U_LIGHT0_POSITION,
+		U_LIGHT0_COLOR,
+		U_LIGHT0_POWER,
+		U_LIGHT0_KC,
+		U_LIGHT0_KL,
+		U_LIGHT0_KQ,
+		U_LIGHT0_TYPE,
+		U_LIGHT0_SPOTDIRECTION,
+		U_LIGHT0_COSCUTOFF,
+		U_LIGHT0_COSINNER,
+		U_LIGHT0_EXPONENT,
+		//***********************
+		U_LIGHTENABLED,
+		U_COLOR_TEXTURE_ENABLED,
+		U_COLOR_TEXTURE,
+		U_NUMLIGHTS,
+		U_TEXT_ENABLED,
+		U_TEXT_COLOR,
+		U_TOTAL,
+	};
+
 	c_Npc();
 	~c_Npc();
 	void Init();
 	void Update(double dt);
 	void Render();
+	void Exit();
 
 private:
-	Mesh * meshList[NUM_GEOMETRY];
+	unsigned m_vertexArrayID;
+	Mesh* meshList[NUM_GEOMETRY];
+	unsigned m_programID;
+	unsigned m_parameters[U_TOTAL];
+	FirstPersonCamera camera;
 	MS modelStack, viewStack, projectionStack;
 
+	Light light[1];
 	
-	c_Render render;
+	void initLights();
+	void renderLights();
+	void updateLights(int num);
+
+	void RenderMesh(Mesh *mesh, bool enableLight);
+	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
+	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
+
+
+	//Variables
+
+	bool talk;
+	float elapsedTime;
+	float TimePassed;
+	bool AbletoPress;
 };
 
-
-
 #endif
-
