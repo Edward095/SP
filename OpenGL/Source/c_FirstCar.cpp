@@ -22,9 +22,9 @@ void c_FirstCar::Movement(double dt)
 			Acceleration += 0.1;
 			//steeringAngle = 0;
 			VelocityZ += Acceleration * dt;
-			NewPosX += (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
-			NewPosY = NewPosY;
-			NewPosZ += (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+			pos.x += (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+			pos.y = pos.y;
+			pos.z += (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			Driving = true;
 			Backwards = false;
 
@@ -47,9 +47,9 @@ void c_FirstCar::Movement(double dt)
 		{
 			Acceleration -= 0.1;
 			VelocityZ += Acceleration * dt;
-			NewPosX += (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
-			NewPosY = NewPosY;
-			NewPosZ += (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+			pos.x += (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+			pos.y = pos.y;
+			pos.z += (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			if (Acceleration < 0)
 			{
 				Acceleration = 0;
@@ -98,9 +98,9 @@ void c_FirstCar::Movement(double dt)
 	{
 		Acceleration -= 0.1;
 		VelocityZ += Acceleration * dt;
-		NewPosX += (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
-		NewPosY = NewPosY;
-		NewPosZ += (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+		pos.x += (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+		pos.y = pos.y;
+		pos.z += (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		Backwards = true;
 		Driving = false;
 
@@ -121,9 +121,9 @@ void c_FirstCar::Movement(double dt)
 		{
 			Acceleration += 0.1;
 			VelocityZ += Acceleration * dt;
-			NewPosX += (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
-			NewPosY = NewPosY;
-			NewPosZ += (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+			pos.x += (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+			pos.y = pos.y;
+			pos.z += (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 
 			if (Acceleration > 0)
 			{
@@ -137,21 +137,6 @@ void c_FirstCar::Movement(double dt)
 		}
 	}
 
-}
-
-float c_FirstCar::GetPosX()
-{
-	return NewPosX;
-}
-
-float c_FirstCar::GetPosY()
-{
-	return NewPosY;
-}
-
-float c_FirstCar::GetPosZ()
-{
-	return NewPosZ;
 }
 
 

@@ -148,8 +148,8 @@ void c_MainMenu::Render()
 	else if (e_GameState == NEWGAME)
 		renderNewGame();
 	else if (e_GameState == OPTIONS)
-		//renderOptions();
-	      Npc.Render();
+		renderOptions();
+	      
 	else
 	{
 
@@ -348,7 +348,7 @@ void c_MainMenu::updateSelection(double dt)
 }
 void c_MainMenu::renderNewGame()
 {
-	
+	Npc.Render();
 }
 void c_MainMenu::updateNewGame(double dt)
 {
