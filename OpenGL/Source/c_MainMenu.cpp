@@ -94,86 +94,34 @@ void c_MainMenu::Init()
 	meshList[TEXT]->textureID = LoadTGA("Image//Menu.tga");
 	meshList[ARROW] = MeshBuilder::GenerateQuad("Arrow", Color(1, 0, 0), 0.7f);
 	meshList[ARROW]->textureID = LoadTGA("Image//Arrow.tga");
-
-
-	//COLLISION TEST
-
-	x = z = y = 0;
-
-
-	meshList[box1] = MeshBuilder::GenerateOBJ("CUBE1", "OBJ//Cube.obj");
-	meshList[box2] = MeshBuilder::GenerateOBJ("CUBE2", "OBJ//Cube.obj");
-
-	cube1.pos.Set(0, 0, 0);
-	cube1.setHighLow("OBJ//Cube.obj");
-	cube2.pos.Set(3, 0, 0);
-	cube2.setHighLow("OBJ//Cube.obj");
 	/***************************************************************************/
 }
 void c_MainMenu::Update(double dt)
 {		
 	elapsedTime += dt;
 
-	if (Application::IsKeyPressed(VK_UP) && bounceTime < elapsedTime)
+	switch (e_GameState)
 	{
-		if (ArrowY < 3.f)
-		{
-			ArrowY += 2.1f;
-			bounceTime = elapsedTime + 0.125;
-		}
-			
+	case c_MainMenu::MENU:
+		updateSelection(dt);
+		break;
+	case c_MainMenu::NEWGAME:
+		updateNewGame(dt);
+		break;
+	case c_MainMenu::CONTINUE:
+		updateContinue(dt);
+		break;
+	case c_MainMenu::OPTIONS:
+		updateOption(dt);
+		break;
+	case c_MainMenu::EXIT:
+		break;
+	default:
+		break;
 	}
-	if (Application::IsKeyPressed(VK_DOWN) && bounceTime < elapsedTime)
-	{
-		if (ArrowY > -2.8f)
-		{
-			ArrowY -= 2.1f;
-			bounceTime = elapsedTime + 0.125;
-		}
-	}
-	if (Application::IsKeyPressed(VK_SPACE))
-	{
-		if (ArrowY == 3.25f)
-			e_GameState = NEWGAME;
-		else if (ArrowY == 1.15f)
-			e_GameState = CONTINUE;
-		else if (ArrowY = -0.95f)
-			e_GameState = OPTIONS;
-		else
-			e_GameState = EXIT;
-	}
-	if (Application::IsKeyPressed(VK_RIGHT) && bounceTime < elapsedTime)
-	{
-		x += 0.25f;
-		cube1.pos.Set(x, y, z);
-		cube1.updateHighLow();
-		bounceTime = elapsedTime + 0.125;
-	}
-	if (Application::IsKeyPressed(VK_LEFT) && bounceTime < elapsedTime)
-	{
-		x -= 0.25f;
-		cube1.pos.Set(x, y, z);
-		cube1.updateHighLow();
-		bounceTime = elapsedTime + 0.125;
-	}
-	if (Application::IsKeyPressed(VK_UP) && bounceTime < elapsedTime)
-	{
-		z -= 0.25f;
-		cube1.pos.Set(x, y, z);
-		cube1.updateHighLow();
-		bounceTime = elapsedTime + 0.125;
-	}
-	if (Application::IsKeyPressed(VK_DOWN) && bounceTime < elapsedTime)
-	{	
-		z += 0.25f;
-		cube1.pos.Set(x, y, z);
-		cube1.updateHighLow();
-		bounceTime = elapsedTime + 0.125;
-	}
+	
 	camera.Update(dt);
 
-	if(cube1.AABB(cube2))
-		std::cout << "Collided" << std::endl;
 }
 void c_MainMenu::Render()
 {
@@ -363,24 +311,58 @@ void c_MainMenu::renderSelection()
 	RenderMesh(meshList[ARROW], false);
 	modelStack.PopMatrix();
 }
+void c_MainMenu::updateSelection(double dt)
+{
+	if (Application::IsKeyPressed(VK_UP) && bounceTime < elapsedTime)
+	{
+		if (ArrowY < 3.f)
+		{
+			ArrowY += 2.1f;
+			bounceTime = elapsedTime + 0.125;
+		}
+
+	}
+	if (Application::IsKeyPressed(VK_DOWN) && bounceTime < elapsedTime)
+	{
+		if (ArrowY > -2.8f)
+		{
+			ArrowY -= 2.1f;
+			bounceTime = elapsedTime + 0.125;
+		}
+	}
+	if (Application::IsKeyPressed(VK_SPACE))
+	{
+		if (ArrowY == 3.25f)
+			e_GameState = NEWGAME;
+		else if (ArrowY == 1.15f)
+			e_GameState = CONTINUE;
+		else if (ArrowY = -0.95f)
+			e_GameState = OPTIONS;
+		else
+			e_GameState = EXIT;
+	}
+}
 void c_MainMenu::renderNewGame()
 {
-	modelStack.PushMatrix();
-	modelStack.Translate(x, y, z);
-	RenderMesh(meshList[box1], false);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(3, 0, 0);
-	modelStack.Rotate(45, 0, 1, 0);
-	RenderMesh(meshList[box2], false);
-	modelStack.PopMatrix();
+	
+}
+void c_MainMenu::updateNewGame(double dt)
+{
+	
 }
 void c_MainMenu::renderContinue()
 {
 
 }
+void c_MainMenu::updateContinue(double dt)
+{
+
+}
 void c_MainMenu::renderOptions()
+{
+
+}
+void c_MainMenu::updateOption(double dt)
 {
 
 }
