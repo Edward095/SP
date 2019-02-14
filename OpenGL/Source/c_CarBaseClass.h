@@ -12,6 +12,7 @@ public:
 	~c_CarBaseClass();
 	virtual void Movement(double dt) = 0;
 	virtual Position GetPos();
+	virtual float GetSteeringAngle();
 protected:
 	float VelocityZ;
 	float SteeringAngle;

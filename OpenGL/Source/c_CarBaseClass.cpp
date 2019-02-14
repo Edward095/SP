@@ -14,3 +14,8 @@ Position c_CarBaseClass::GetPos()
 {
 	return pos;
 }
+
+float c_CarBaseClass::GetSteeringAngle()
+{
+	return SteeringAngle;
+}

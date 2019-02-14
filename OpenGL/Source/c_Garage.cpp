@@ -515,10 +515,10 @@ void c_Garage::initLights()
 		"colorTextureEnabled");
 	m_parameters[U_COLOR_TEXTURE] = glGetUniformLocation(m_programID, "colorTexture");
 
-	light[0].type = Light::LIGHT_POINT;
-	light[0].position.Set(-5, 5, 0);
+	light[0].type = Light::LIGHT_SPOT;
+	light[0].position.Set(-5, 7, 0);
 	light[0].color.Set(1, 1, 1);
-	light[0].power = 2.5f;
+	light[0].power = 1.f;
 	light[0].kC = 1.f;
 	light[0].kL = 0.01f;
 	light[0].kQ = 0.001f;
