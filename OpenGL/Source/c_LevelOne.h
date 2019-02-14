@@ -89,6 +89,12 @@ private:
 	float elapsedTime;
 	float TimePassed;
 	bool AbletoPress;
+	float CamPosX;
+	float CamPosY;
+	float CamPosZ;
+	float CamTargetX;
+	float CamTargetY;
+	float CamTargetZ;
 };
 
 #endif
