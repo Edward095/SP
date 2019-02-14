@@ -95,7 +95,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(solutionDir)Dependecies\Irrklang;$(solutionDir)glew\lib;$(solutionDir)$(Configuration);$(solutionDir)glfw\lib-vc2015</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(solutionDir)Dependecies\Irrklang\lib\Win32;$(solutionDir)glew\lib;$(solutionDir)$(Configuration);$(solutionDir)glfw\lib-vc2015</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;winmm.lib;Common.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -126,7 +126,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(solutionDir)Dependecies\Irrklang;$(solutionDir)glew\lib;$(solutionDir)$(Configuration);$(solutionDir)glfw\lib-vc2015</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(solutionDir)Dependecies\Irrklang\lib\Win32;$(solutionDir)glew\lib;$(solutionDir)$(Configuration);$(solutionDir)glfw\lib-vc2015</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;winmm.lib;Common.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
