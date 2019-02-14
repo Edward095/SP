@@ -8,9 +8,9 @@ class c_CarBaseClass : public c_Entity
 {
 public:
 	c_CarBaseClass();
-	c_CarBaseClass(const char* fileName, Vector3 pos);
 	~c_CarBaseClass();
 	bool gotCollide();
+	void updateAppearance(const char* meshPath, const char* TGApath);
 	virtual void Movement(double dt) = 0;
 	virtual float GetSteeringAngle();
 

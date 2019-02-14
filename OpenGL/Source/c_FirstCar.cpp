@@ -8,12 +8,6 @@ c_FirstCar::c_FirstCar()
 	VelocityZ = 0;
 	Acceleration = 0;
 }
-c_FirstCar::c_FirstCar(const char* fileName, Vector3 pos) : c_CarBaseClass(fileName,pos)
-{
-	Driving = false;
-	VelocityZ = 0;
-	Acceleration = 0;
-}
 c_FirstCar::~c_FirstCar()
 {
 

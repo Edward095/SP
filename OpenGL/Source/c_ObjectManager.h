@@ -10,6 +10,7 @@ public:
 	void addOBJ(c_Entity* OBJ);
 	static c_ObjectManager* getInstance();
 	std::vector <c_Entity*> getObjects();
+	void delInstance();
 private: 
 	c_ObjectManager();
 	std::vector <c_Entity*> objects;
