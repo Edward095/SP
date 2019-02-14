@@ -32,6 +32,8 @@ void c_MainMenu::Init()
 	bounceTime = 0;
 	elapsedTime = 0;
 	e_GameState = MENU;
+	//NPC init
+	Npc.Init();
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -96,10 +98,6 @@ void c_MainMenu::Init()
 	meshList[ARROW] = MeshBuilder::GenerateQuad("Arrow", Color(1, 0, 0), 0.7f);
 	meshList[ARROW]->textureID = LoadTGA("Image//Arrow.tga");
 
-	//NPC init
-	Npc.Init();
-	
-	/***************************************************************************/
 }
 void c_MainMenu::Update(double dt)
 {		
@@ -112,6 +110,7 @@ void c_MainMenu::Update(double dt)
 		break;
 	case c_MainMenu::NEWGAME:
 		updateNewGame(dt);
+		
 		break;
 	case c_MainMenu::CONTINUE:
 		updateContinue(dt);
@@ -126,6 +125,7 @@ void c_MainMenu::Update(double dt)
 	}
 	
 	camera.Update(dt);
+	
 }
 void c_MainMenu::Render()
 {
@@ -241,7 +241,7 @@ void c_MainMenu::initLights()
 	light[0].type = Light::LIGHT_POINT;
 	light[0].position.Set(0, -0.5f, 0);
 	light[0].color.Set(1, 1, 1);
-	light[0].power = 100.f;
+	light[0].power = 1.f;
 	light[0].kC = 1.f;
 	light[0].kL = 0.01f;
 	light[0].kQ = 0.001f;
@@ -335,7 +335,7 @@ void c_MainMenu::updateSelection(double dt)
 			bounceTime = elapsedTime + 0.125;
 		}
 	}
-	if (Application::IsKeyPressed(VK_SPACE))
+	if (Application::IsKeyPressed(VK_SPACE) && bounceTime < elapsedTime)
 	{
 		if (ArrowY == 3.25f)
 			e_GameState = NEWGAME;
@@ -345,6 +345,8 @@ void c_MainMenu::updateSelection(double dt)
 			e_GameState = OPTIONS;
 		else
 			e_GameState = EXIT;
+
+		bounceTime = elapsedTime + 0.125;
 	}
 }
 void c_MainMenu::renderNewGame()
@@ -353,7 +355,7 @@ void c_MainMenu::renderNewGame()
 }
 void c_MainMenu::updateNewGame(double dt)
 {
-
+	Npc.Update(dt);
 }
 void c_MainMenu::renderContinue()
 {

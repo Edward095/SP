@@ -32,3 +32,5 @@
 *.pdb
 *.log
 OpenGL/Release/OpenGL.log
+*.db-wal
+*.db-shm

@@ -7,6 +7,7 @@
 #include "FirstPersonCamera.h"
 #include "MatrixStack.h"
 #include "Light.h"
+#include "c_Garage.h"
 
 class c_Npc :
 	public Scene
@@ -55,23 +56,41 @@ public:
 		U_TOTAL,
 	};
 
+	enum GAME_STATE_NPC
+	{
+		_NPC,
+		GARAGE,
+
+	};
+
 	c_Npc();
 	~c_Npc();
 	void Init();
 	void Update(double dt);
 	void Render();
 	void Exit();
+	void UpdateNpc(double dt);
+	void RenderNpc();
 
 private:
+
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 	FirstPersonCamera camera;
 	MS modelStack, viewStack, projectionStack;
+	//Gamestate
+	GAME_STATE_NPC e_GameState_NPC;
 
+	//Light
 	Light light[1];
 	
+	//Class
+	c_Garage Garage;
+
+
+	//Function
 	void initLights();
 	void renderLights();
 	void updateLights(int num);
@@ -83,10 +102,15 @@ private:
 
 	//Variables
 
-	bool talk;
-	float elapsedTime;
-	float TimePassed;
-	bool AbletoPress;
+	
+	double ElapsedTime;
+	double TimePassed;
+	float ArrowY;
+	double BounceTime;
+
+	bool AbleToPress;
+	bool Talk;
+	bool LevelSelection;
 };
 
 #endif

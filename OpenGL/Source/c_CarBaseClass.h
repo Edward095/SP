@@ -12,6 +12,7 @@ public:
 	~c_CarBaseClass();
 	bool gotCollide();
 	virtual void Movement(double dt) = 0;
+	virtual float GetSteeringAngle();
 protected:
 	float VelocityZ;
 	float SteeringAngle;

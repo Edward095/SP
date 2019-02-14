@@ -25,3 +25,8 @@ bool c_CarBaseClass::gotCollide()
 	}
 	return false;
 }
+
+float c_CarBaseClass::GetSteeringAngle()
+{
+	return SteeringAngle;
+}

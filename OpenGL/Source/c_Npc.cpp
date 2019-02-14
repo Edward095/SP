@@ -13,6 +13,8 @@
 
 
 
+
+
 c_Npc::c_Npc()
 {
 }
@@ -24,7 +26,8 @@ c_Npc::~c_Npc()
 
 void c_Npc::Init()
 {
-
+	Garage.Init();
+	e_GameState_NPC = _NPC;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -112,29 +115,35 @@ void c_Npc::Init()
 
 
 
+
+
 	//Initialization of Variables
-	talk = false;
-	elapsedTime = 0;
+	ElapsedTime = 0;
 	TimePassed = 0;
-	AbletoPress = true;
+	ArrowY = 7;
+	BounceTime = 0;
+	
+	//booleans
+	AbleToPress = false;
+	Talk = false;
+	LevelSelection = false;
+
+
 }
 void c_Npc::Update(double dt)
 {
-	elapsedTime += dt;
+	ElapsedTime += dt;
 	camera.Update(dt);
-  
-	if (AbletoPress == true)
+
+	switch (e_GameState_NPC)
 	{
-		if (Application::IsKeyPressed('F'))
-		{
-			talk = true;
-			TimePassed = elapsedTime + 3;
-		}
-	}
-	if (elapsedTime > TimePassed)
-	{
-		//AbletoPress = false;
-		//talk = false;
+	case _NPC:
+		UpdateNpc(dt);
+		break;
+
+	case GARAGE:
+		Garage.Update(dt);
+		break;
 	}
 }
 
@@ -156,6 +165,66 @@ void c_Npc::Render()
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
+	
+	if (e_GameState_NPC == _NPC)
+	{
+		RenderNpc();
+	}
+	else if (e_GameState_NPC == GARAGE)
+	{
+		Garage.Render();
+	}
+
+
+	
+
+
+}
+
+void c_Npc::UpdateNpc(double dt)
+{
+	if (Application::IsKeyPressed('F') && camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40)
+	{
+		Talk = true;
+		TimePassed = ElapsedTime + 3;
+	}
+	
+	
+	if (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40)
+	{
+		ArrowY--;
+		if (ArrowY < 6)
+		{
+			ArrowY = 7;
+		}
+		BounceTime = ElapsedTime + 0.125;
+	}
+	if (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40)
+	{
+		ArrowY++;
+		if (ArrowY > 7)
+		{
+			ArrowY = 6;
+		}
+		BounceTime = ElapsedTime + 0.125;
+	}
+	if (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40 && AbleToPress == true)
+	{
+		BounceTime = ElapsedTime + 0.125;
+		if (ArrowY == 7)
+		{
+			e_GameState_NPC = GARAGE;
+			//Garage.Update(dt);
+		}
+		else if (ArrowY == 6)
+		{
+			LevelSelection = true;
+		}
+	}
+}
+
+void c_Npc::RenderNpc()
+{
 	//Human OBJ
 	modelStack.PushMatrix();
 	modelStack.Translate(0, -50, -80);
@@ -223,36 +292,63 @@ void c_Npc::Render()
 	RenderTextOnScreen(meshList[TEXT], std::to_string(cameraY), Color(0, 0, 1), 3, 1, 18);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(cameraZ), Color(0, 0, 1), 3, 1, 17);
 
-	if (camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40 && talk == false)
+	if (camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40 && Talk == false)
 	{
 		modelStack.PushMatrix();
 		RenderTextOnScreen(meshList[TEXT], "Press 'F' to talk to NPC", Color(1, 0, 0), 3, 6, 10);
 		modelStack.PopMatrix();
 	}
 
-	if (camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40 && talk == true && elapsedTime < TimePassed)
+	if (camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40 && Talk == true && ElapsedTime < TimePassed)
 	{
 		modelStack.PushMatrix();
 		RenderTextOnScreen(meshList[TEXT], "Hello!", Color(1, 0, 0), 3, 11, 10);
 		RenderTextOnScreen(meshList[TEXT], "Welcome to our Racing Game!", Color(1, 0, 0), 3, 5, 9);
 		modelStack.PopMatrix();
-		AbletoPress = false;
 		
+
 	}
-	if (camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40 && talk == true && elapsedTime > TimePassed && elapsedTime < TimePassed + 3)
+	if (camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40 && Talk == true && ElapsedTime > TimePassed && LevelSelection == false)
 	{
 		modelStack.PushMatrix();
-		RenderTextOnScreen(meshList[TEXT], "Select a Level to play ", Color(1, 0, 0), 3, 7, 9);
+		RenderTextOnScreen(meshList[TEXT], "Customize Car?", Color(1, 0, 0), 3, 9, 13);
 		modelStack.PopMatrix();
-		AbletoPress = false;
+		AbleToPress = true;
+		
 	}
 
+	if (camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40 && Talk == true && ElapsedTime > TimePassed)
+	{
+		modelStack.PushMatrix();
+		//modelStack.Translate(0, ArrowY, 0);
+		RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowY);
+		modelStack.PopMatrix();
+		AbleToPress = true;
+		
+	}
+	if (camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40 && Talk == true && ElapsedTime > TimePassed && LevelSelection == false)
+	{
+		modelStack.PushMatrix();
+		RenderTextOnScreen(meshList[TEXT], "Yes", Color(1, 0, 0), 5, 7, 7);
+		modelStack.PopMatrix();
+		AbleToPress = true;
+	}
+	if (camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40 && Talk == true && ElapsedTime > TimePassed && LevelSelection == false)
+	{
+		modelStack.PushMatrix();
+		RenderTextOnScreen(meshList[TEXT], "No", Color(1, 0, 0), 5, 7, 6);
+		modelStack.PopMatrix();
+		AbleToPress = true;
+		
+	}
 
-
-
-
-
-
+	if (camera.position.z < 60 && camera.position.z > -20 && camera.position.y > -20 && camera.position.y < 60 && camera.position.x > -40 && camera.position.x < 40 && Talk == true && ElapsedTime > TimePassed && LevelSelection == true)
+	{
+		modelStack.PushMatrix();
+		RenderTextOnScreen(meshList[TEXT], "No", Color(1, 0, 0), 5, 7, 6);
+		modelStack.PopMatrix();
+		AbleToPress = true;
+	}
 }
 void c_Npc::Exit()
 {
