@@ -1,6 +1,6 @@
 #include "c_ObjectManager.h"
 
-
+c_ObjectManager* c_ObjectManager::instance = 0;
 
 c_ObjectManager::c_ObjectManager()
 {
@@ -17,9 +17,9 @@ void c_ObjectManager::addOBJ(c_Entity* OBJ)
 }
 c_ObjectManager* c_ObjectManager::getInstance()
 {
-	if (instance == nullptr)
+	if (!instance)
 	{
-		instance = this;
+		instance = new c_ObjectManager();
 		return instance;
 	}
 	else

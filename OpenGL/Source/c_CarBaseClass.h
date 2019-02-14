@@ -8,7 +8,7 @@ class c_CarBaseClass : public c_Entity
 {
 public:
 	c_CarBaseClass();
-	c_CarBaseClass(const char* fileName,Position pos);
+	c_CarBaseClass(const char* fileName, Vector3 pos);
 	~c_CarBaseClass();
 	bool gotCollide();
 	virtual void Movement(double dt) = 0;
@@ -19,7 +19,7 @@ protected:
 
 	bool Driving;
 	bool Backwards;
-	c_ObjectManager* objectManager;
+	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
 	
 };
 

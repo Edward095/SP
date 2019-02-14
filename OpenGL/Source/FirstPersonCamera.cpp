@@ -151,19 +151,19 @@ void FirstPersonCamera::WOBmove(double dt)
 
 	Vector3 right = front.Cross(up).Normalize();
 
-	if (Application::IsKeyPressed('D'))
+	if (Application::IsKeyPressed(VK_RIGHT))
 	{
 		position += right * FirstPersonCamera_SPEED * dt;
 	}
-	if (Application::IsKeyPressed('W'))
+	if (Application::IsKeyPressed(VK_UP))
 	{
 		position += front * FirstPersonCamera_SPEED * dt;
 	}
-	if (Application::IsKeyPressed('A'))
+	if (Application::IsKeyPressed(VK_LEFT))
 	{
 		position -= right * FirstPersonCamera_SPEED * dt;
 	}
-	if (Application::IsKeyPressed('S'))
+	if (Application::IsKeyPressed(VK_DOWN))
 	{
 		position -= front * FirstPersonCamera_SPEED * dt;
 	}

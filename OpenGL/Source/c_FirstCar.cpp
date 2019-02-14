@@ -8,7 +8,7 @@ c_FirstCar::c_FirstCar()
 	VelocityZ = 0;
 	Acceleration = 0;
 }
-c_FirstCar::c_FirstCar(const char* fileName, Position pos) : c_CarBaseClass(fileName,pos)
+c_FirstCar::c_FirstCar(const char* fileName, Vector3 pos) : c_CarBaseClass(fileName,pos)
 {
 	Driving = false;
 	VelocityZ = 0;
@@ -141,8 +141,9 @@ void c_FirstCar::Movement(double dt)
 			}
 		}
 	}
-
-	//gotCollide();
+	OBB.setPos(pos);
+	if (gotCollide())
+		std::cout << "collided" << std::endl;
 }
 
 

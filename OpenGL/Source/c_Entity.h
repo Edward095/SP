@@ -8,18 +8,22 @@ class c_Entity
 {
 public:
 	c_Entity();
-	c_Entity(const char* meshPath,Position pos);
+	c_Entity(const char* meshPath, Vector3 pos);
 	~c_Entity();
 
+	void init(const char* meshPath, Vector3 pos);
 	Mesh* getMesh();
-	Position getPos();
+	Vector3 getPos();
 	c_Collision getOBB();
+	int getUnique();
 
 protected:
+	static int ID;
+	int uniqueID;
 	const char* meshPath;
 	Mesh* mesh;
 	c_Collision OBB;
-	Position pos;
+	Vector3 pos;
 };
 
 #endif

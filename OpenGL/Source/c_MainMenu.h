@@ -8,7 +8,6 @@
 #include "Light.h"
 
 #include "c_Npc.h"
-#include "c_FirstCar.h"
 
 class c_MainMenu : public Scene
 {
@@ -94,6 +93,8 @@ private:
 	void updateOption(double dt);
 
 	c_Npc Npc;
+
+
 };
 
 #endif C_MAINMENU_H
