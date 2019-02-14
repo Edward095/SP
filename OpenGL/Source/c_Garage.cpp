@@ -210,6 +210,10 @@ void c_Garage::Init()
 	v_Car3Grey = LoadTGA("Image//Car3Grey.tga");
 	v_Car3Black = LoadTGA("Image//Car3Black.tga");
 
+	v_Car1Stats = LoadTGA("Image//Car1Stats.tga");
+	v_Car2Stats = LoadTGA("Image//Car2Stats.tga");
+	v_Car3Stats = LoadTGA("Image//Car3Stats.tga");
+
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
 	//Enable depth buffer and depth testing
@@ -302,6 +306,11 @@ void c_Garage::Init()
 	meshList[GARAGEBG] = MeshBuilder::GenerateQuad("background", Color(0, 0, 0), 21);
 	meshList[GARAGEBG]->textureID = LoadTGA("Image//GarageBG.tga");
 
+	meshList[STATBOARD] = MeshBuilder::GenerateOBJ("statboard", "OBJ//StatBoard.obj");
+
+	meshList[UI] = MeshBuilder::GenerateQuad("controls", Color(0, 0, 0), 3);
+	meshList[UI]->textureID = LoadTGA("Image//UI.tga");
+
 	v_RotateCar = 0;
 	v_ElapsedTime = 0;
 	v_BounceTime = 0;
@@ -332,6 +341,10 @@ void c_Garage::Update(double dt)
 	{
 		v_ColourList.f_ChangeCurrentColour('L');
 		v_BounceTime = v_ElapsedTime + 0.250;
+	}
+	if (Application::IsKeyPressed(VK_RETURN))
+	{
+
 	}
 
 	f_UpdateCurColour();
@@ -486,6 +499,13 @@ void c_Garage::Render()
 
 	f_RenderFinal();
 
+	f_RenderStats();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 4, 1);
+	modelStack.Scale(2.5f, 2.5f, 2.5f);
+	RenderMesh(meshList[UI], false);
+	modelStack.PopMatrix();
 }
 
 void c_Garage::initLights()
@@ -1035,6 +1055,33 @@ void c_Garage::f_RenderFinal()
 		}
 		break;
 	default:
+		break;
+	}
+	modelStack.PopMatrix();
+}
+
+void c_Garage::f_RenderStats()
+{
+	modelStack.PushMatrix();
+	modelStack.Scale(2, 2, 2);
+	modelStack.Translate(2.8f, 0.8f, 0);
+	switch (v_CarList.f_GetCurCar()->f_GetCarNum())
+	{
+	case 0:
+		meshList[STATBOARD]->textureID = v_Car1Stats;
+		RenderMesh(meshList[STATBOARD], false);
+		break;
+	case 1:
+		meshList[STATBOARD]->textureID = v_Car2Stats;
+		RenderMesh(meshList[STATBOARD], false);
+		break;
+	case 2:
+		meshList[STATBOARD]->textureID = v_Car3Stats;
+		RenderMesh(meshList[STATBOARD], false);
+		break;
+	default:
+		meshList[STATBOARD]->textureID = v_Car1Stats;
+		RenderMesh(meshList[STATBOARD], false);
 		break;
 	}
 	modelStack.PopMatrix();
