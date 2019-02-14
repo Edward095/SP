@@ -10,8 +10,6 @@
 #include "Vertex.h"
 #include "Utility.h"
 #include "LoadTGA.h"
-
-//Include your Files here
 #include "c_Npc.h"
 #include "c_LevelOne.h"
 
@@ -98,8 +96,7 @@ void c_MainMenu::Init()
 
 	//NPC init
 	Npc.Init();
-	LevelOne.Init();
-
+LevelOne.Init();
 	/***************************************************************************/
 }
 void c_MainMenu::Update(double dt)
@@ -353,7 +350,7 @@ void c_MainMenu::renderNewGame()
 }
 void c_MainMenu::updateNewGame(double dt)
 {
-	
+
 }
 void c_MainMenu::renderContinue()
 {

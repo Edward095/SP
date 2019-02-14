@@ -1,2 +1,20 @@
-﻿  c_MainMenu.cpp
+﻿  Application.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  d:\users\539\desktop\sp2\sp\glfw\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+  FirstPersonCamera.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(72): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(117): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(120): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(125): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(128): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(133): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(136): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(141): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(144): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(156): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(160): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(164): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\firstpersoncamera.cpp(168): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  c_MainMenu.cpp
+  Generating Code...
   OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\OpenGL.exe

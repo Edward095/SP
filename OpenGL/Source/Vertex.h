@@ -6,6 +6,10 @@
 struct Position
 {
 	float x, y, z;
+	Position operator+(const Position& pos) const { return { x + pos.x,y + pos.y,z + pos.z }; }
+	Position operator- (const Position & pos) const { return{ x - pos.x, y - pos.y, z - pos.z }; }
+	//Vector3 operator=(Position& pos) { return { x = pos.x,y = pos.y,z = pos.z }; }
+	Position operator=(Position& pos) { return { x = pos.x,y = pos.y,z = pos.z }; }
 	Position(float x = 0, float y = 0, float z = 0) { Set(x, y, z); }
 	void Set(float x, float y, float z) { this->x = x; this->y = y; this->z = z; }
 };

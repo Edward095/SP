@@ -2,8 +2,8 @@
 #define C_COLLISION_H
 
 #include <Vector3.h>
-#include "Utility.h"
 #include <vector>
+#include "Utility.h"
 
 class c_Collision
 {
@@ -18,6 +18,7 @@ public:
 	void calcNewAxis(float rotateAmt, Vector3 Axis);
 	void updateHighLow();
 	void setHighLow(const char *file_path);
+	void setPos(Vector3 pos );
 	bool getSeparatingPlane(const Vector3& RPos, const Vector3& Plane, c_Collision& other);
 	bool OBB(c_Collision& other);
 	Vector3 getDimensions();

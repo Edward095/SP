@@ -205,9 +205,10 @@ bool c_Collision::getSeparatingPlane(const Vector3& RPos, const Vector3& Plane, 
 }
 bool c_Collision::OBB(c_Collision& other)
 {
-	static Vector3 RPos;//(other.pos.x - pos.x, other.pos.y - pos.y, other.pos.z - pos.z);
+	static Vector3 RPos;
+	//RPos.Set(other.pos.x - pos.x, other.pos.y - pos.y, other.pos.z - pos.z);
 	RPos = other.pos - pos;
-	//static Vector3 RPos(pos.x - other.pos.x, pos.y - other.pos.y, pos.z - other.pos.z);
+
 	Vector3 otherX = other.getXAxis();
 	Vector3 otherY = other.getYAxis();
 	Vector3 otherZ = other.getZAxis();
@@ -227,4 +228,8 @@ bool c_Collision::OBB(c_Collision& other)
 		getSeparatingPlane(RPos, localZ.Cross(otherX), other) ||
 		getSeparatingPlane(RPos, localZ.Cross(otherY), other) ||
 		getSeparatingPlane(RPos, localZ.Cross(otherZ), other));
+}
+void c_Collision::setPos(Vector3 pos)
+{
+	this->pos = pos;
 }

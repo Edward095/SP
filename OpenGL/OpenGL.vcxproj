@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\c_ObjectManager.cpp" />
     <ClCompile Include="Source\c_Entity.cpp" />
     <ClCompile Include="Source\c_Garage.cpp" />
     <ClCompile Include="Source\c_CarBaseClass.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\c_ObjectManager.h" />
     <ClInclude Include="Source\c_Entity.h" />
     <ClInclude Include="Source\c_Garage.h" />
     <ClInclude Include="Source\c_CarBaseClass.h" />

@@ -15,10 +15,6 @@ class c_MainMenu : public Scene
 public:
 	enum GEOMETRY_TYPE
 	{
-		box1,
-		box2,
-
-
 		TEXT,
 		ARROW,
 		NUM_GEOMETRY,
@@ -99,6 +95,7 @@ private:
 
 	c_Npc Npc;
 	c_LevelOne LevelOne;
+
 };
 
 #endif C_MAINMENU_H

@@ -7,13 +7,9 @@ class c_FirstCar : public c_CarBaseClass
 {
 public:
 	c_FirstCar();
+	c_FirstCar(const char* fileName, Vector3 pos);
 	~c_FirstCar();
 	virtual void Movement(double dt);
-
-	virtual float GetPosX();
-	virtual float GetPosY();
-	virtual float GetPosZ();
-
 	
 };
 
