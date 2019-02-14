@@ -8,6 +8,9 @@
 #include "FirstPersonCamera.h"
 #include "Light.h"
 #include "Mesh.h"
+#include "c_Sound.h"
+
+#include "c_LevelOne.h"
 
 
 class c_Car
@@ -87,7 +90,7 @@ public:
 		COLOUR_WHITE,
 		COLOUR_GREY,
 		COLOUR_BLACK,
-		// Cars w/o colour
+		// Cars preview
 		CAR1PREVIEW,
 		CAR2PREVIEW,
 		CAR3PREVIEW,
@@ -95,6 +98,10 @@ public:
 		car1,
 		car2,
 		car3,
+		// Car stat board
+		STATBOARD,
+		// UI
+		UI,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -127,6 +134,11 @@ public:
 		U_TEXT_COLOR,
 		U_TOTAL,
 	};
+	enum  GAME_STATE_GARAGE
+	{
+		GARAGE_,
+		LEVELONE_,
+	};
 
 	void Init();
 	void Update(double dt);
@@ -142,14 +154,18 @@ private:
 	FirstPersonCamera camera;
 	MS modelStack, viewStack, projectionStack;
 	double v_BounceTime;
+	double v_BTPause;
 	double v_ElapsedTime;
-	float v_RotateCar;
+	float v_RotateCar, v_ConfirmRotation;
 	float v_ScaleBlue, v_ScaleRed, v_ScalePurple, v_ScaleGreen, v_ScalePink, v_ScaleYellow, v_ScaleWhite, v_ScaleGrey, v_ScaleBlack;
 	float v_MoveBlue, v_MoveRed, v_MovePurple, v_MoveGreen, v_MovePink, v_MoveYellow, v_MoveWhite, v_MoveGrey, v_MoveBlack;
 	float v_ScalePreview1, v_ScalePreview2, v_ScalePreview3;
 	unsigned v_Car1Blue, v_Car1Red, v_Car1Purple, v_Car1Green, v_Car1Pink, v_Car1Yellow, v_Car1White, v_Car1Grey, v_Car1Black;
 	unsigned v_Car2Blue, v_Car2Red, v_Car2Purple, v_Car2Green, v_Car2Pink, v_Car2Yellow, v_Car2White, v_Car2Grey, v_Car2Black;
 	unsigned v_Car3Blue, v_Car3Red, v_Car3Purple, v_Car3Green, v_Car3Pink, v_Car3Yellow, v_Car3White, v_Car3Grey, v_Car3Black;
+	unsigned v_Car1Stats, v_Car2Stats, v_Car3Stats;
+	GAME_STATE_GARAGE e_GameState_Garage;
+	bool v_MusicPause;
 
 	Light light[1];
 
@@ -165,9 +181,17 @@ private:
 	void f_RenderPreviews();
 	void f_UpdateCurCar();
 	void f_RenderFinal();
+	void f_RenderStats();
+
+	void f_UpdateGarage(double dt);
+	void f_RenderGarage();
 
 	c_List v_CarList;
 	c_List v_ColourList;
+	c_Sound v_Garage_SFX;
+
+	c_LevelOne levelOne;
+
 };
 
 #endif

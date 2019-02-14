@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 d:\users\539\desktop\sp2\sp\opengl\debug\vc141.pdb
 d:\users\539\desktop\sp2\sp\opengl\debug\vc141.idb
 d:\users\539\desktop\sp2\sp\opengl\debug\utility.obj
@@ -29,3 +30,34 @@ d:\users\539\desktop\sp2\sp\opengl\debug\opengl.tlog\cl.write.1.tlog
 d:\users\539\desktop\sp2\sp\opengl\debug\opengl.tlog\link.command.1.tlog
 d:\users\539\desktop\sp2\sp\opengl\debug\opengl.tlog\link.read.1.tlog
 d:\users\539\desktop\sp2\sp\opengl\debug\opengl.tlog\link.write.1.tlog
+=======
+c:\users\marc-\documents\github\sp\opengl\debug\vc141.pdb
+c:\users\marc-\documents\github\sp\opengl\debug\vc141.idb
+c:\users\marc-\documents\github\sp\opengl\debug\utility.obj
+c:\users\marc-\documents\github\sp\opengl\debug\shader.obj
+c:\users\marc-\documents\github\sp\opengl\debug\main.obj
+c:\users\marc-\documents\github\sp\opengl\debug\application.obj
+c:\users\marc-\documents\github\sp\opengl\debug\meshbuilder.obj
+c:\users\marc-\documents\github\sp\opengl\debug\mesh.obj
+c:\users\marc-\documents\github\sp\opengl\debug\loadtga.obj
+c:\users\marc-\documents\github\sp\opengl\debug\camera.obj
+c:\users\marc-\documents\github\sp\opengl\debug\loadobj.obj
+c:\users\marc-\documents\github\sp\opengl\debug\firstpersoncamera.obj
+c:\users\marc-\documents\github\sp\opengl\debug\c_mainmenu.obj
+c:\users\marc-\documents\github\sp\opengl\debug\c_collision.obj
+c:\users\marc-\documents\github\sp\opengl\debug\c_sound.obj
+c:\users\marc-\documents\github\sp\opengl\debug\c_npc.obj
+c:\users\marc-\documents\github\sp\opengl\debug\c_firstcar.obj
+c:\users\marc-\documents\github\sp\opengl\debug\c_carbaseclass.obj
+c:\users\marc-\documents\github\sp\opengl\debug\c_garage.obj
+c:\users\marc-\documents\github\sp\opengl\debug\c_entity.obj
+c:\users\marc-\documents\github\sp\debug\opengl.exe
+c:\users\marc-\documents\github\sp\debug\opengl.ilk
+c:\users\marc-\documents\github\sp\debug\opengl.pdb
+c:\users\marc-\documents\github\sp\opengl\debug\opengl.tlog\cl.command.1.tlog
+c:\users\marc-\documents\github\sp\opengl\debug\opengl.tlog\cl.read.1.tlog
+c:\users\marc-\documents\github\sp\opengl\debug\opengl.tlog\cl.write.1.tlog
+c:\users\marc-\documents\github\sp\opengl\debug\opengl.tlog\link.command.1.tlog
+c:\users\marc-\documents\github\sp\opengl\debug\opengl.tlog\link.read.1.tlog
+c:\users\marc-\documents\github\sp\opengl\debug\opengl.tlog\link.write.1.tlog
+>>>>>>> Marc

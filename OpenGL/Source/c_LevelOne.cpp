@@ -115,15 +115,12 @@ void c_LevelOne::Init()
 	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
 
 	meshList[TRACK] = MeshBuilder::GenerateOBJ("race track", "OBJ//RaceTrack.obj");
-	meshList[CAR1] = MeshBuilder::GenerateOBJ("race track", "OBJ//Car1Body.obj");
-	car.init("OBJ//Car1Body.obj","Image//Car1Preview.tga" ,Vector3(0, 0, 0)); 
+
+	car.init("OBJ//Car1Body.obj","Image//Car1Blue.tga", Vector3(0, 0, 0));
 	//RenderMesh(car.getMesh(), true);
 
 	//Initialization of Variables
-	talk = false;
-	elapsedTime = 0;
-	TimePassed = 0;
-	AbletoPress = true;
+	
 }
 void c_LevelOne::Update(double dt)
 {
@@ -138,20 +135,13 @@ void c_LevelOne::Update(double dt)
 
 	camera.Update(dt); 
   
-	if (AbletoPress == true)
+	car.updatePos(car.getPos());
+	if (!car.gotCollide())
 	{
-		if (Application::IsKeyPressed('F'))
-		{
-			talk = true;
-			TimePassed = elapsedTime + 3;
-		}
-	}
-	if (elapsedTime > TimePassed)
-	{
-		//AbletoPress = false;
-		//talk = false;
+		
 	}
 	car.Movement(dt);
+	
 }
 
 
@@ -230,44 +220,6 @@ void c_LevelOne::Render()
 	modelStack.Rotate(car.GetSteeringAngle(), 0, 1, 0);
 	RenderMesh(car.getMesh(), true);
 	//RenderMesh(meshList[CAR1], false);
-	modelStack.PopMatrix();
-
-	////text for talking to NPC
-	//modelStack.PushMatrix();
-	//int cameraX = static_cast<int>(camera.position.x);
-	//int cameraY = static_cast<int>(camera.position.y);
-	//int cameraZ = static_cast<int>(camera.position.z);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(cameraX), Color(0, 0, 1), 3, 1, 19);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(cameraY), Color(0, 0, 1), 3, 1, 18);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(cameraZ), Color(0, 0, 1), 3, 1, 17);
-
-	if (camera.position.z < 60 && camera.position.z > -20 && talk == false)
-	{
-		modelStack.PushMatrix();
-		RenderTextOnScreen(meshList[TEXT], "Press 'F' to talk to NPC", Color(1, 0, 0), 3, 6, 10);
-		modelStack.PopMatrix();
-	}
-
-	if (camera.position.z < 60 && camera.position.z > -20 && talk == true && elapsedTime < TimePassed)
-	{
-		modelStack.PushMatrix();
-		RenderTextOnScreen(meshList[TEXT], "Hello!", Color(1, 0, 0), 3, 11, 10);
-		RenderTextOnScreen(meshList[TEXT], "Welcome to our Racing Game!", Color(1, 0, 0), 3, 5, 9);
-		modelStack.PopMatrix();
-		AbletoPress = false;
-		
-	}
-	if (camera.position.z < 60 && camera.position.z > -20 && talk == true && elapsedTime > TimePassed && elapsedTime < TimePassed + 3)
-	{
-		modelStack.PushMatrix();
-		RenderTextOnScreen(meshList[TEXT], "Test", Color(1, 0, 0), 3, 11, 9);
-		modelStack.PopMatrix();
-		AbletoPress = false;
-	}
-
-
-	modelStack.PushMatrix();
-	RenderTextOnScreen(meshList[TEXT], std::to_string(camera.Position.x), Color(1, 0, 0), 3, 3, 10);
 	modelStack.PopMatrix();
 
 }
