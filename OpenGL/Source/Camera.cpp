@@ -57,17 +57,21 @@ To be called every frame. Camera will get user inputs and update its position an
 /******************************************************************************/
 void Camera::Update(double dt)
 {
-	Vector3 forward = target - position;
-	if (Application::IsKeyPressed('E'))
-		position += 0.3  * dt * forward;
-	if(Application::IsKeyPressed('Q'))
-		position -= 0.3 * dt * forward;
-	if (Application::IsKeyPressed('A'))
-		position -= forward.Cross(up).Normalized() * 0.5;
-	if (Application::IsKeyPressed('D'))
-		position += forward.Cross(up).Normalized() * 0.5;
-	if (Application::IsKeyPressed('W'))
-		position += Vector3(0, 1, 0) * 100 * dt;
-	if (Application::IsKeyPressed('S'))
-		position -= Vector3(0, 1, 0) * 100 * dt;
+	/*static const float CAMERA_SPEED = 20.f;
+	if (Application::IsKeyPressed(VK_LEFT) || Application::IsKeyPressed('A'))
+	{
+		position.x -= (float)(CAMERA_SPEED * 0.2 * dt);
+	}
+	if (Application::IsKeyPressed(VK_RIGHT) || Application::IsKeyPressed('D'))
+	{
+		position.x += (float)(CAMERA_SPEED * 0.2 * dt);
+	}
+	if (Application::IsKeyPressed(VK_UP) || Application::IsKeyPressed('W'))
+	{
+		position.y += (float)(CAMERA_SPEED * 0.2 * dt);
+	}
+	if (Application::IsKeyPressed(VK_DOWN) || Application::IsKeyPressed('S'))
+	{
+		position.y -= (float)(CAMERA_SPEED * 0.2 * dt);
+	}*/
 }

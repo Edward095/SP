@@ -74,7 +74,7 @@ void c_Npc::Init()
 	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID,
 		"textColor");
 	//Initialize camera settings
-	camera.Init(Vector3(0, 0, 90));
+	camera.Init(Vector3(0, 1, 120), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -148,7 +148,7 @@ void c_Npc::Update(double dt)
 }
 
 
-static const float SKYBOXSIZE = 200.f;
+static const float SKYBOXSIZE = 500.f;
 
 void c_Npc::Render()
 {
@@ -159,7 +159,8 @@ void c_Npc::Render()
 	Mtx44 MVP;
 
 	//Define the view/ camera lookat and load the view matrix
-	viewStack.LoadMatrix(camera.LookAt());
+	viewStack.LoadIdentity();
+	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
 	modelStack.LoadIdentity();
 
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();

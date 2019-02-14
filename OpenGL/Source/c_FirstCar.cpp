@@ -145,5 +145,3 @@ void c_FirstCar::Movement(double dt)
 	if (gotCollide())
 		std::cout << "collided" << std::endl;
 }
-
-

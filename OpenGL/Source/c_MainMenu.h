@@ -8,6 +8,7 @@
 #include "Light.h"
 
 #include "c_Npc.h"
+#include "c_LevelOne.h"
 
 class c_MainMenu : public Scene
 {
@@ -93,7 +94,7 @@ private:
 	void updateOption(double dt);
 
 	c_Npc Npc;
-
+	c_LevelOne LevelOne;
 
 };
 

@@ -9,7 +9,8 @@ public:
 	c_FirstCar();
 	c_FirstCar(const char* fileName, Vector3 pos);
 	~c_FirstCar();
-	virtual void Movement(double dt);	
+
+	virtual void Movement(double dt);
 };
 
 

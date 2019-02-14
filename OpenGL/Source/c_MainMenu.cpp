@@ -12,10 +12,6 @@
 #include "LoadTGA.h"
 
 
-
-
-
-
 c_MainMenu::c_MainMenu()
 {
 }
@@ -34,6 +30,7 @@ void c_MainMenu::Init()
 	e_GameState = MENU;
 	//NPC init
 	Npc.Init();
+	LevelOne.Init();
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -80,7 +77,7 @@ void c_MainMenu::Init()
 	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID,
 		"textColor");
 	//Initialize camera settings
-	camera.Init(Vector3(0, 0, 15));
+	camera.Init(Vector3(0, 1, 15), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -136,7 +133,8 @@ void c_MainMenu::Render()
 	Mtx44 MVP;
 
 	//Define the view/ camera lookat and load the view matrix
-	viewStack.LoadMatrix(camera.LookAt());
+	viewStack.LoadIdentity();
+	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
 	modelStack.LoadIdentity();
 
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
@@ -150,10 +148,9 @@ void c_MainMenu::Render()
 		renderNewGame();
 	else if (e_GameState == OPTIONS)
 		renderOptions();
-	      
 	else
 	{
-
+		
 	}
 
 }

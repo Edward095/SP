@@ -152,6 +152,7 @@
     <ClCompile Include="Source\c_Garage.cpp" />
     <ClCompile Include="Source\c_CarBaseClass.cpp" />
     <ClCompile Include="Source\c_FirstCar.cpp" />
+    <ClCompile Include="Source\c_LevelOne.cpp" />
     <ClCompile Include="Source\c_Npc.cpp" />
     <ClCompile Include="Source\c_Sound.cpp" />
     <ClCompile Include="Source\c_Collision.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="Source\c_Garage.h" />
     <ClInclude Include="Source\c_CarBaseClass.h" />
     <ClInclude Include="Source\c_FirstCar.h" />
+    <ClInclude Include="Source\c_LevelOne.h" />
     <ClInclude Include="Source\c_Npc.h" />
     <ClInclude Include="Source\c_Sound.h" />
     <ClInclude Include="Source\c_Collision.h" />

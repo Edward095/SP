@@ -63,10 +63,7 @@
     <ClCompile Include="Source\c_CarBaseClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\c_Garage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\c_Entity.cpp">
+    <ClCompile Include="Source\c_LevelOne.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\c_ObjectManager.cpp">
@@ -128,10 +125,7 @@
     <ClInclude Include="Source\c_CarBaseClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\c_Garage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\c_Entity.h">
+    <ClInclude Include="Source\c_LevelOne.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\c_ObjectManager.h">
