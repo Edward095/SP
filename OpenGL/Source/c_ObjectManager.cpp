@@ -29,3 +29,7 @@ std::vector <c_Entity*> c_ObjectManager::getObjects()
 {
 	return objects;
 }
+void c_ObjectManager::delInstance()
+{
+	delete instance;
+}

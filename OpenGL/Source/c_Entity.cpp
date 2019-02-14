@@ -1,17 +1,11 @@
 #include "c_Entity.h"
 #include "MeshBuilder.h"
+#include "LoadTGA.h"
 
 int c_Entity::ID = 0;
 
 c_Entity::c_Entity()
 {
-}
-c_Entity::c_Entity(const char* meshPath, Vector3 pos)
-{
-	this->pos = pos;
-	this->meshPath = meshPath;
-	mesh = MeshBuilder::GenerateOBJ("Mesh",meshPath);
-	OBB.setHighLow(meshPath);
 }
 
 
@@ -19,11 +13,13 @@ c_Entity::~c_Entity()
 {
 }
 
-void c_Entity::init(const char* meshPath, Vector3 pos)
+void c_Entity::init(const char* meshPath,const char* TGApath, Vector3 pos)
 {
 	this->pos = pos;
 	this->meshPath = meshPath;
+	this->TGApath = TGApath;
 	mesh = MeshBuilder::GenerateOBJ("Mesh", meshPath);
+	mesh->textureID = LoadTGA(TGApath);
 	OBB.setHighLow(meshPath);
 	ID += 1;
 	uniqueID = ID;
