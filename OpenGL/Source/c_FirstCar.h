@@ -9,8 +9,11 @@ public:
 	c_FirstCar();
 	~c_FirstCar();
 	virtual void Movement(double dt);
-	virtual float GetVelocityZ();
-	virtual void F_PowerUp(bool check);
+
+	virtual float GetPosX();
+	virtual float GetPosY();
+	virtual float GetPosZ();
+
 	
 };
 

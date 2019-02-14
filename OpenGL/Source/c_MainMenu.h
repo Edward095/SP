@@ -6,7 +6,7 @@
 #include "FirstPersonCamera.h"
 #include "MatrixStack.h"
 #include "Light.h"
-#include "c_Collision.h"
+
 #include "c_Npc.h"
 #include "c_LevelOne.h"
 
@@ -89,13 +89,14 @@ private:
 	void updateLights(int num);
 
 	void renderSelection();
+	void updateSelection(double dt);
 	void renderNewGame();
+	void updateNewGame(double dt);
 	void renderContinue();
+	void updateContinue(double dt);
 	void renderOptions();
+	void updateOption(double dt);
 
-
-	c_Collision cube1, cube2;
-	float x, z, y;
 	c_Npc Npc;
 	c_LevelOne LevelOne;
 };
