@@ -10,6 +10,8 @@
 #include "Mesh.h"
 #include "c_Sound.h"
 
+#include "c_LevelOne.h"
+
 
 class c_Car
 {
@@ -135,7 +137,7 @@ public:
 	enum  GAME_STATE_GARAGE
 	{
 		GARAGE_,
-		NPC_,
+		LEVELONE_,
 	};
 
 	void Init();
@@ -181,9 +183,14 @@ private:
 	void f_RenderFinal();
 	void f_RenderStats();
 
+	void f_UpdateGarage(double dt);
+	void f_RenderGarage();
+
 	c_List v_CarList;
 	c_List v_ColourList;
 	c_Sound v_Garage_SFX;
+
+	c_LevelOne levelOne;
 
 };
 

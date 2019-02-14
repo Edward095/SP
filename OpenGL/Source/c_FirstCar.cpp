@@ -58,8 +58,8 @@ void c_FirstCar::Movement(double dt)
 			if (VelocityZ < 0)
 			{
 				VelocityZ = 0;
-				Driving = false;
-				Backwards = false;
+				//Driving = false;
+				//Backwards = false;
 			}
 
 		}
@@ -132,8 +132,8 @@ void c_FirstCar::Movement(double dt)
 			if (VelocityZ > 0)
 			{
 				VelocityZ = 0;
-				Driving = false;
-				Backwards = false;
+				//Driving = false;
+				//Backwards = false;
 			}
 		}
 	}
