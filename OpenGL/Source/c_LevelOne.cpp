@@ -115,8 +115,8 @@ void c_LevelOne::Init()
 	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
 
 	meshList[TRACK] = MeshBuilder::GenerateOBJ("race track", "OBJ//RaceTrack.obj");
-
-	car.init("OBJ//Car1Body.obj", Vector3(0, 0, 0));
+	meshList[CAR1] = MeshBuilder::GenerateOBJ("race track", "OBJ//Car1Body.obj");
+	car.init("OBJ//Car1Body.obj","Image//Car1Preview.tga" ,Vector3(0, 0, 0)); 
 	//RenderMesh(car.getMesh(), true);
 
 	//Initialization of Variables
@@ -229,6 +229,7 @@ void c_LevelOne::Render()
 	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Rotate(car.GetSteeringAngle(), 0, 1, 0);
 	RenderMesh(car.getMesh(), true);
+	//RenderMesh(meshList[CAR1], false);
 	modelStack.PopMatrix();
 
 	////text for talking to NPC

@@ -1,1 +1,8 @@
-﻿
+﻿  c_LevelOne.cpp
+c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(130): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  Generating code
+  6 of 1084 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  OpenGL.vcxproj -> C:\Users\ASUS\Desktop\SP2\SP\Release\OpenGL.exe
