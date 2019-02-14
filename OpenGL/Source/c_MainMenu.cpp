@@ -121,7 +121,7 @@ void c_MainMenu::Update(double dt)
 		break;
 	}
 	
-	camera.Update(dt);
+	//camera.Update(dt);
 	
 }
 void c_MainMenu::Render()
