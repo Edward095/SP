@@ -91,14 +91,13 @@ void c_LevelOne::Init()
 	
 
 	//initialization of the Enums
-	meshList[FRONT] = MeshBuilder::GenerateQuad("front", Color(1, 1, 1), 1.f);
+	/*meshList[FRONT] = MeshBuilder::GenerateQuad("front", Color(1, 1, 1), 1.f);
 	meshList[FRONT]->textureID = LoadTGA("Image//NpcFront.tga");
 
 	meshList[TOP] = MeshBuilder::GenerateQuad("Top", Color(1, 1, 1), 1.f);
 	meshList[TOP]->textureID = LoadTGA("Image//NpcTop.tga");
 
-	meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
-	meshList[BOTTOM]->textureID = LoadTGA("Image//NpcBottom.tga");
+	
 
 	meshList[LEFT] = MeshBuilder::GenerateQuad("left", Color(1, 1, 1), 1.f);
 	meshList[LEFT]->textureID = LoadTGA("Image//NpcLeft.tga");
@@ -107,16 +106,24 @@ void c_LevelOne::Init()
 	meshList[RIGHT]->textureID = LoadTGA("Image//NpcRight.tga");
 
 	meshList[BACK] = MeshBuilder::GenerateQuad("Back", Color(1, 1, 1), 1.f);
-	meshList[BACK]->textureID = LoadTGA("Image//NpcBack.tga");
+	meshList[BACK]->textureID = LoadTGA("Image//NpcBack.tga");*/
 
+	meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
+	meshList[BOTTOM]->textureID = LoadTGA("Image//NpcBottom.tga");
 	//texutre for obj later
 
 	meshList[TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
 
 	meshList[TRACK] = MeshBuilder::GenerateOBJ("race track", "OBJ//RaceTrack.obj");
+	front.init("front", "quad", "Image//NpcFront.tga", (0, 0, 0));
+	top.init("top", "quad", "Image//NpcTop.tga", (0, 0, 0));
+	//bottom.init("bottom", "quad", "Image//NpcBottom.tga", (0, 0, 0));
+	left.init("left", "quad", "Image//NpcLeft.tga", (0, 0, 0));
+	right.init("right", "quad", "Image//NpcRight.tga", (0, 0, 0));
+	back.init("back", "quad", "Image//NpcBack.tga", (0, 0, 0));
 
-	car.init("OBJ//Car1Body.obj","Image//Car1Blue.tga", Vector3(0, 0, 0));
+	car.init("player1","OBJ//Car1Body.obj","Image//Car1Blue.tga", Vector3(0, 0, 0));
 	//RenderMesh(car.getMesh(), true);
 
 	//Initialization of Variables
@@ -135,12 +142,12 @@ void c_LevelOne::Update(double dt)
 
 	camera.Update(dt); 
   
-	car.updatePos(car.getPos());
+	car.updatePos(car.getPos().x,car.getPos().y,car.getPos().z);
 	if (!car.gotCollide())
 	{
-		
+		car.Movement(dt);
 	}
-	car.Movement(dt);
+	
 	
 }
 
@@ -149,6 +156,12 @@ static const float SKYBOXSIZE = 1500.f;
 
 void c_LevelOne::Render()
 {
+	front.getOBB().defaultData();
+	top.getOBB().defaultData();
+	left.getOBB().defaultData();
+	right.getOBB().defaultData();
+	back.getOBB().defaultData();
+
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -169,15 +182,27 @@ void c_LevelOne::Render()
 	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 	modelStack.Rotate(180, 1, 0, 0);
 	modelStack.Rotate(180, 0, 0, 1);
-	RenderMesh(meshList[FRONT], false);
+	RenderMesh(front.getMesh(), false);
 	modelStack.PopMatrix();
+
+	//UpdateCollisions
+	front.updatePos(0,0,100);
+	front.getOBB().calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	front.getOBB().calcNewAxis(180.f, (1, 0, 0));
+	front.getOBB().calcNewAxis(180.f, (0, 0, 1));
+
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 100, 0);
 	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 	modelStack.Rotate(90, 1, 0, 0);
-	RenderMesh(meshList[TOP], false);
+	RenderMesh(top.getMesh(), false);
 	modelStack.PopMatrix();
+
+	//UpdateCollisions
+	top.updatePos(0,100,0);
+	top.getOBB().calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	top.getOBB().calcNewAxis(90.f, (1, 0, 0));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, -100, 0);
@@ -190,22 +215,36 @@ void c_LevelOne::Render()
 	modelStack.Translate(-1000, 0, 0);
 	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 	modelStack.Rotate(90, 0, 1, 0);
-	RenderMesh(meshList[LEFT], false);
+	RenderMesh(left.getMesh(), false);
 	modelStack.PopMatrix();
+
+	//UpdateCollisions
+	left.updatePos(-1000,0,0);
+	left.getOBB().calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	left.getOBB().calcNewAxis(90.f, (0, 1, 0));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(1000, 0, 0);
 	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 	modelStack.Rotate(-90, 0, 1, 0);
-	RenderMesh(meshList[RIGHT], false);
+	RenderMesh(right.getMesh(), false);
 	modelStack.PopMatrix();
+
+	//UpdateCollisions
+	right.updatePos(1000,0,0);
+	right.getOBB().calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	right.getOBB().calcNewAxis(-90.f, (0, 1, 0));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -100);
 	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 	//modelStack.Rotate(-180, 0, 1, 0);
-	RenderMesh(meshList[BACK], false);
+	RenderMesh(back.getMesh(), false);
 	modelStack.PopMatrix();
+
+	//UpdateCollisions
+	back.updatePos(0,0,-100);
+	back.getOBB().calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, 0);
@@ -220,6 +259,11 @@ void c_LevelOne::Render()
 	modelStack.Rotate(car.GetSteeringAngle(), 0, 1, 0);
 	RenderMesh(car.getMesh(), true);
 	modelStack.PopMatrix();
+
+	//UpdateCollisions
+	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
+	car.getOBB().calcNewAxis(90, (0, 1, 0));
+	car.getOBB().calcNewAxis(car.GetSteeringAngle(), (0, 1, 0));
 
 }
 void c_LevelOne::Exit()

@@ -3,7 +3,6 @@
 #include "LoadTGA.h"
 #include "c_ObjectManager.h"
 
-int c_Entity::ID = 0;
 
 c_Entity::c_Entity()
 {
@@ -14,7 +13,7 @@ c_Entity::~c_Entity()
 {
 }
 
-void c_Entity::init(const char* meshPath,const char* TGApath, Vector3 pos)
+void c_Entity::init(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos)
 {
 	//Add Object to the List
 	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
@@ -23,10 +22,10 @@ void c_Entity::init(const char* meshPath,const char* TGApath, Vector3 pos)
 	this->pos = pos;
 	this->meshPath = meshPath;
 	this->TGApath = TGApath;
+	this->uniqueName = uniqueName;
 	quadORobject();//if Quad generate Quad else generate Obj
 	mesh->textureID = LoadTGA(TGApath);
 	OBB.setHighLow(meshPath);
-	uniqueID = ++ID;
 }
 
 Mesh* c_Entity::getMesh()
@@ -41,9 +40,18 @@ c_Collision c_Entity::getOBB()
 {
 	return OBB;
 }
-int c_Entity::getUnique()
+c_Entity* c_Entity::getEntity(std::string uniqueName)
 {
-	return uniqueID;
+	c_ObjectManager* OBJmanager = c_ObjectManager::getInstance();
+
+	for (int i = 0; i < OBJmanager->getObjects().size(); i++)
+	{
+		if (OBJmanager->getObjects().at(i)->uniqueName == uniqueName)
+		{
+			return OBJmanager->getObjects().at(i);
+		}
+	}
+
 }
 bool c_Entity::gotCollide()
 {
@@ -52,7 +60,7 @@ bool c_Entity::gotCollide()
 	{
 		c_Collision collide = objectManager->getObjects().at(i)->getOBB();
 
-		if (objectManager->getObjects().at(i)->getUnique() != this->uniqueID)
+		if (objectManager->getObjects().at(i)->getUniqueName() != this->uniqueName)
 		{
 			if (OBB.OBB(collide))
 				return true;
@@ -64,12 +72,18 @@ bool c_Entity::gotCollide()
 void c_Entity::quadORobject()
 {
 	if (meshPath == "quad")
-		mesh = MeshBuilder::GenerateQuad(meshPath, Color(1, 1, 1), 5);
+		mesh = MeshBuilder::GenerateQuad(meshPath, Color(1, 1, 1), 1.f);
 	else
 		mesh = mesh = MeshBuilder::GenerateOBJ("Mesh", meshPath);
 }
-void c_Entity::updatePos(Vector3 pos)
+void c_Entity::updatePos(float xPos, float yPos, float zPos)
 {
-	this->pos = pos;
-	OBB.setPos(pos);
+	this->pos.x = xPos;
+	this->pos.y = yPos;
+	this->pos.z = zPos;
+	OBB.setPos(this->pos);
+}
+std::string c_Entity::getUniqueName()
+{
+	return uniqueName;
 }

@@ -25,46 +25,54 @@ c_Collision::~c_Collision()
 
 void c_Collision::setHighLow(const char *file_path)
 {
-	std::ifstream fileStream(file_path, std::ios::binary);
-	if (!fileStream.is_open())
+	if (file_path == "quad")
 	{
-		std::cout << "Impossible to open " << file_path << ". Are you in the right directory ?\n";
+		dimensions.Set(0.5, 0.5, 0);
+		type = file_path;
 	}
-
-	std::vector<unsigned> vertexIndices, uvIndices, normalIndices;
-	std::vector<Position> temp_vertices;
-	std::vector<TexCoord> temp_uvs;
-	std::vector<Vector3> temp_normals;
-
-	while (!fileStream.eof())
+	else
 	{
-		char buf[256];
-		fileStream.getline(buf, 256);
-		if (strncmp("v ", buf, 2) == 0)
+		std::ifstream fileStream(file_path, std::ios::binary);
+		if (!fileStream.is_open())
 		{
-			Position vertex;
-			sscanf_s((buf + 2), "%f%f%f", &vertex.x, &vertex.y, &vertex.z);
-			temp_vertices.push_back(vertex);
-
-			//Getting highest and lowest of each XYZ
-			if (vertex.x > highestX)
-				highestX = vertex.x;
-			else if (vertex.x < lowestX)
-				lowestX = vertex.x;
-			if (vertex.y > highestY)
-				highestY = vertex.y;
-			else if (vertex.y < lowestY)
-				lowestY = vertex.y;
-			if (vertex.z > highestZ)
-				highestZ = vertex.z;
-			else if (vertex.z < lowestZ)
-				lowestZ = vertex.z;
-
+			std::cout << "Impossible to open " << file_path << ". Are you in the right directory ?\n";
 		}
-	}
 
-	//dimensions.Set((highestX - lowestX), (highestY - lowestY), (highestZ - lowestZ));
-	dimensions.Set((highestX - lowestX) / 2, (highestY - lowestY) / 2, (highestZ - lowestZ) / 2);
+		std::vector<unsigned> vertexIndices, uvIndices, normalIndices;
+		std::vector<Position> temp_vertices;
+		std::vector<TexCoord> temp_uvs;
+		std::vector<Vector3> temp_normals;
+
+		while (!fileStream.eof())
+		{
+			char buf[256];
+			fileStream.getline(buf, 256);
+			if (strncmp("v ", buf, 2) == 0)
+			{
+				Position vertex;
+				sscanf_s((buf + 2), "%f%f%f", &vertex.x, &vertex.y, &vertex.z);
+				temp_vertices.push_back(vertex);
+
+				//Getting highest and lowest of each XYZ
+				if (vertex.x > highestX)
+					highestX = vertex.x;
+				else if (vertex.x < lowestX)
+					lowestX = vertex.x;
+				if (vertex.y > highestY)
+					highestY = vertex.y;
+				else if (vertex.y < lowestY)
+					lowestY = vertex.y;
+				if (vertex.z > highestZ)
+					highestZ = vertex.z;
+				else if (vertex.z < lowestZ)
+					lowestZ = vertex.z;
+
+			}
+		}
+
+		type = "OBJ";
+		dimensions.Set((highestX - lowestX) / 2, (highestY - lowestY) / 2, (highestZ - lowestZ) / 2);
+	}
 
 }
 
@@ -111,7 +119,21 @@ void c_Collision::calcNewAxis(float rotateAmt,Vector3 Axis)
 		localY = matrix * localY;
 	}
 }
-
+void c_Collision::calcNewDimensions(float xScale, float yScale, float zScale)
+{
+	this->dimensions.Set(dimensions.x*xScale, dimensions.y*yScale, dimensions.z*zScale);
+}
+void c_Collision::defaultData()
+{
+	if (type == "quad")
+		dimensions.Set(0.5, 0.5, 0);
+	else
+		dimensions.Set((highestX - lowestX) / 2, (highestY - lowestY) / 2, (highestZ - lowestZ) / 2);
+	pos = (0, 0, 0);
+	localX.Set(1, 0, 0);
+	localY.Set(0, 1, 0);
+	localZ.Set(0, 0, 1);
+}
 
 Vector3 c_Collision::getXAxis()
 {
