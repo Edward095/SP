@@ -121,7 +121,7 @@ void c_MainMenu::Update(double dt)
 		break;
 	}
 	
-	camera.Update(dt);
+	//camera.Update(dt);
 	
 }
 void c_MainMenu::Render()
@@ -349,10 +349,12 @@ void c_MainMenu::updateSelection(double dt)
 void c_MainMenu::renderNewGame()
 {
 	Npc.Render();
+	LevelOne.Render();
 }
 void c_MainMenu::updateNewGame(double dt)
 {
-	Npc.Update(dt);
+	//Npc.Update(dt);
+	LevelOne.Update(dt);
 }
 void c_MainMenu::renderContinue()
 {

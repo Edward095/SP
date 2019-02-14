@@ -255,7 +255,7 @@ void c_Garage::Init()
 
 	initLights();
 	//Initialize camera settings
-	camera.Init(Vector3(0, 1, 120), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	camera.Init(Vector3(0, 0, 15), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)

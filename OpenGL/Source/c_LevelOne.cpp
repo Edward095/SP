@@ -24,7 +24,12 @@ c_LevelOne::~c_LevelOne()
 
 void c_LevelOne::Init()
 {
-
+	CamPosX = car.getPos().x + 1;
+	CamPosY = car.getPos().y + 1;
+	CamPosZ = car.getPos().z + 1;
+	CamTargetX = car.getPos().x;
+	CamTargetY = car.getPos().y;
+	CamTargetZ = car.getPos().z;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -71,8 +76,7 @@ void c_LevelOne::Init()
 	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID,
 		"textColor");
 	//Initialize camera settings
-	//camera.Init(Vector3(0, 1, 120), Vector3(0, 0, 0), Vector3(0, 1, 0));
-	camera.Init(Vector3(car.getPos().x, 10, car.getPos().z - 20), Vector3(car.getPos().x, 5, car.getPos().z), Vector3(0, 1, 0));
+	camera.Init(Vector3(10, 2, 20), Vector3(0, 1, 0), Vector3(0, 1, 0));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -82,7 +86,7 @@ void c_LevelOne::Init()
 
 	//Set projection to Perspective and load projection matrix
 	Mtx44 projection;
-	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 10000.f);
+	projection.SetToPerspective(60.f, 4.f / 3.f, 0.1f, 10000.f);
 	projectionStack.LoadMatrix(projection);
 	
 
@@ -124,8 +128,15 @@ void c_LevelOne::Init()
 void c_LevelOne::Update(double dt)
 {
 	elapsedTime += dt;
-	camera.Init(Vector3(car.getPos().x, 10, car.getPos().z - 20), Vector3(car.getPos().x, 5, car.getPos().z), Vector3(0, 1, 0));
-	camera.Update(dt);
+
+	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 5);
+	CamPosY = car.getPos().y + 8;
+	CamPosZ = (car.getPos().z - (cos(Math::DegreeToRadian(car.GetSteeringAngle()))) * 5);
+	CamTargetX = car.getPos().x + 1;
+	CamTargetY = car.getPos().y + 5;
+	CamTargetZ = car.getPos().z + 1;
+
+	camera.Update(dt); 
   
 	if (AbletoPress == true)
 	{
@@ -162,18 +173,11 @@ void c_LevelOne::Render()
 
 	//Define the view/ camera lookat and load the view matrix
 	viewStack.LoadIdentity();
-	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
+	viewStack.LookAt(CamPosX, CamPosY , CamPosZ, CamTargetX, CamTargetY , CamTargetZ, 0, 1, 0);
 	modelStack.LoadIdentity();
 
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
-
-	//Human OBJ
-	/*modelStack.PushMatrix();
-	modelStack.Translate(0, -50, -80);
-	modelStack.Scale(0.5, 0.5, 0.5);
-	RenderMesh(meshList[NPC], false);
-	modelStack.PopMatrix();*/
 
 	//Skybox
 	modelStack.PushMatrix();
@@ -228,6 +232,8 @@ void c_LevelOne::Render()
 	modelStack.PushMatrix();
 	modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
 	modelStack.Scale(1, 1, 1);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Rotate(car.GetSteeringAngle(), 0, 1, 0);
 	RenderMesh(car.getMesh(), true);
 	modelStack.PopMatrix();
 
@@ -264,6 +270,10 @@ void c_LevelOne::Render()
 		AbletoPress = false;
 	}
 
+
+	modelStack.PushMatrix();
+	RenderTextOnScreen(meshList[TEXT], std::to_string(camera.Position.x), Color(1, 0, 0), 3, 3, 10);
+	modelStack.PopMatrix();
 
 }
 void c_LevelOne::Exit()
