@@ -112,7 +112,7 @@ void c_LevelOne::Init()
 
 	meshList[TRACK] = MeshBuilder::GenerateOBJ("race track", "OBJ//RaceTrack.obj");
 
-	car.init("OBJ//Car1Body.obj", Vector3(0, 0, 0));
+	car.init("OBJ//Car1Body.obj","Image//Car1Blue.tga", Vector3(0, 0, 0));
 	//RenderMesh(car.getMesh(), true);
 
 	//Initialization of Variables
@@ -140,7 +140,13 @@ void c_LevelOne::Update(double dt)
 		//AbletoPress = false;
 		//talk = false;
 	}
-	car.Movement(dt);
+	car.updatePos(car.getPos());
+	if (car.gotCollide())
+	{
+		car.Movement(dt);
+
+	}
+	
 }
 
 

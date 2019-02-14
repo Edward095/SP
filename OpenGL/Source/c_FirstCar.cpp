@@ -135,7 +135,4 @@ void c_FirstCar::Movement(double dt)
 			}
 		}
 	}
-	OBB.setPos(pos);
-	if (gotCollide())
-		std::cout << "collided" << std::endl;
 }

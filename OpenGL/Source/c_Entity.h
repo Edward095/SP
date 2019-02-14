@@ -4,17 +4,19 @@
 #include "Mesh.h"
 #include "c_Collision.h"
 
+
 class c_Entity
 {
 public:
 	c_Entity();
 	~c_Entity();
-
 	void init(const char* meshPath, const char* TGApath, Vector3 pos);
+	void updatePos(Vector3 pos);
+	bool gotCollide();
+	int getUnique();
 	Mesh* getMesh();
 	Vector3 getPos();
 	c_Collision getOBB();
-	int getUnique();
 
 protected:
 	static int ID;
@@ -24,6 +26,9 @@ protected:
 	Mesh* mesh;
 	c_Collision OBB;
 	Vector3 pos;
+
+private:
+	void quadORobject();
 };
 
 #endif
