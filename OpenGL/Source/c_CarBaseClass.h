@@ -12,7 +12,6 @@ public:
 	~c_CarBaseClass();
 	bool gotCollide();
 	virtual void Movement(double dt) = 0;
-	virtual void F_PowerUp(bool check) = 0;
 
 protected:
 	float VelocityZ;

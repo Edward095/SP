@@ -71,7 +71,8 @@ void c_LevelOne::Init()
 	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID,
 		"textColor");
 	//Initialize camera settings
-	camera.Init(Vector3(0, 0, 90));
+	//camera.Init(Vector3(0, 1, 120), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	camera.Init(Vector3(car.getPos().x, 10, car.getPos().z - 20), Vector3(car.getPos().x, 5, car.getPos().z), Vector3(0, 1, 0));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -104,13 +105,15 @@ void c_LevelOne::Init()
 	meshList[BACK] = MeshBuilder::GenerateQuad("Back", Color(1, 1, 1), 1.f);
 	meshList[BACK]->textureID = LoadTGA("Image//NpcBack.tga");
 
-	meshList[CAR1] = MeshBuilder::GenerateOBJ("Car1", "OBJ//NpcHuman.obj");
 	//texutre for obj later
 
 	meshList[TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
 
+	meshList[TRACK] = MeshBuilder::GenerateOBJ("race track", "OBJ//RaceTrack.obj");
 
+	car.init("OBJ//Car1Body.obj", Vector3(0, 0, 0));
+	//RenderMesh(car.getMesh(), true);
 
 	//Initialization of Variables
 	talk = false;
@@ -121,6 +124,7 @@ void c_LevelOne::Init()
 void c_LevelOne::Update(double dt)
 {
 	elapsedTime += dt;
+	camera.Init(Vector3(car.getPos().x, 10, car.getPos().z - 20), Vector3(car.getPos().x, 5, car.getPos().z), Vector3(0, 1, 0));
 	camera.Update(dt);
   
 	if (AbletoPress == true)
@@ -136,10 +140,11 @@ void c_LevelOne::Update(double dt)
 		//AbletoPress = false;
 		//talk = false;
 	}
+	car.Movement(dt);
 }
 
 
-static const float SKYBOXSIZE = 200.f;
+static const float SKYBOXSIZE = 1500.f;
 
 void c_LevelOne::Render()
 {
@@ -150,7 +155,8 @@ void c_LevelOne::Render()
 	Mtx44 MVP;
 
 	//Define the view/ camera lookat and load the view matrix
-	viewStack.LoadMatrix(camera.LookAt());
+	viewStack.LoadIdentity();
+	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
 	modelStack.LoadIdentity();
 
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
@@ -187,14 +193,14 @@ void c_LevelOne::Render()
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(-100, 0, 0);
+	modelStack.Translate(-1000, 0, 0);
 	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 	modelStack.Rotate(90, 0, 1, 0);
 	RenderMesh(meshList[LEFT], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(100, 0, 0);
+	modelStack.Translate(1000, 0, 0);
 	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 	modelStack.Rotate(-90, 0, 1, 0);
 	RenderMesh(meshList[RIGHT], false);
@@ -209,9 +215,14 @@ void c_LevelOne::Render()
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, 0);
+	modelStack.Scale(6, 1, 6);
+	RenderMesh(meshList[TRACK], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
 	modelStack.Scale(1, 1, 1);
-	//modelStack.Rotate(-180, 0, 1, 0);
-	RenderMesh(meshList[CAR1], false);
+	RenderMesh(car.getMesh(), true);
 	modelStack.PopMatrix();
 
 	////text for talking to NPC

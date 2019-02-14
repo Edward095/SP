@@ -145,16 +145,3 @@ void c_FirstCar::Movement(double dt)
 	if (gotCollide())
 		std::cout << "collided" << std::endl;
 }
-
-float c_FirstCar::GetPosX()
-{
-	return pos.x;
-}
-float c_FirstCar::GetPosY()
-{
-	return pos.y;
-}
-float c_FirstCar::GetPosZ()
-{
-	return pos.z;
-}

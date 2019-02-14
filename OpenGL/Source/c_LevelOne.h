@@ -7,7 +7,6 @@
 #include "FirstPersonCamera.h"
 #include "MatrixStack.h"
 #include "Light.h"
-//#include "c_Entity.h"
 #include "c_FirstCar.h"
 
 class c_LevelOne : public Scene
@@ -23,6 +22,7 @@ public:
 		RIGHT,
 		BOTTOM,
 		CAR1,
+		TRACK,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -80,6 +80,8 @@ private:
 	void RenderMesh(Mesh *mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
+
+	c_FirstCar car;
 
 	//Variables
 

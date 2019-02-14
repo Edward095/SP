@@ -10,8 +10,6 @@
 #include "Vertex.h"
 #include "Utility.h"
 #include "LoadTGA.h"
-#include "c_Npc.h"
-#include "c_LevelOne.h"
 
 
 c_MainMenu::c_MainMenu()
@@ -76,7 +74,7 @@ void c_MainMenu::Init()
 	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID,
 		"textColor");
 	//Initialize camera settings
-	camera.Init(Vector3(0, 0, 15));
+	camera.Init(Vector3(0, 1, 15), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -96,7 +94,8 @@ void c_MainMenu::Init()
 
 	//NPC init
 	Npc.Init();
-LevelOne.Init();
+	LevelOne.Init();
+	
 	/***************************************************************************/
 }
 void c_MainMenu::Update(double dt)
@@ -134,7 +133,8 @@ void c_MainMenu::Render()
 	Mtx44 MVP;
 
 	//Define the view/ camera lookat and load the view matrix
-	viewStack.LoadMatrix(camera.LookAt());
+	viewStack.LoadIdentity();
+	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
 	modelStack.LoadIdentity();
 
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
@@ -150,7 +150,7 @@ void c_MainMenu::Render()
 		renderOptions();
 	else
 	{
-
+		
 	}
 
 }
@@ -350,7 +350,7 @@ void c_MainMenu::renderNewGame()
 }
 void c_MainMenu::updateNewGame(double dt)
 {
-
+	LevelOne.Update(dt);
 }
 void c_MainMenu::renderContinue()
 {

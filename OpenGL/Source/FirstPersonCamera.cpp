@@ -1,178 +1,131 @@
 #include "FirstPersonCamera.h"
-#include "Application.h"
-
 
 FirstPersonCamera::FirstPersonCamera()
 {
-	position.Set(1, 0, 0);
-	target.Set(0, 0, 0);
-	up.Set(0, 1, 0);
+
 }
 
 FirstPersonCamera::~FirstPersonCamera()
 {
 }
 
-void FirstPersonCamera::Init(const Vector3& pos)
+void FirstPersonCamera::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 {
-	firstMouse = true;
-	lastX = 400.0f;
-	lastY = 300.0f;
-	yaw = -89.0f;//rotate abt y
-	pitch = 0.0f;//rotate abt x
-	sensitivity = 0.08f;
-
-	front = Vector3(0.0f, 0.0f, 1.0f);
-	up = Vector3(0.0f, 1.0f, 0.0f);
-	this->position = pos;
-
-	UpdateMouse();
-}
-
-void FirstPersonCamera::UpdateMouse()
-{
-	if (firstMouse)
-	{
-		lastX = Application::mouse_x;
-		lastY = Application::mouse_y;
-		firstMouse = false;
-	}
-
-	double xoffset = (Application::mouse_x - lastX);
-
-	double yoffset = (lastY - Application::mouse_y);
-	lastX = Application::mouse_x;
-	lastY = Application::mouse_y;
-
-
-	xoffset *= sensitivity;
-	yoffset *= sensitivity;
-
-	yaw += (float)xoffset;
-	pitch += (float)yoffset;
-
-	if (pitch > 89.0f)
-		pitch = 89.0f;
-	if (pitch < -89.0f)
-		pitch = -89.0f;
-
-	float pitchRad = Math::DegreeToRadian(pitch);
-	float yawRad = Math::DegreeToRadian(yaw);
-	front.x = cos(pitchRad) * cos(yawRad);
-	front.y = sin(pitchRad);
-	front.z = cos(pitchRad) * sin(yawRad);
-	front.Normalize();
-
-	this->target = position + front;
-
+	this->position = Position = pos;
+	this->target = Target = target;
+	Vector3 view = (target - position).Normalized();
+	Vector3 right = view.Cross(up);
+	right.y = 0;
+	right.Normalize();
+	this->up = Up = right.Cross(view).Normalized();
 }
 
 void FirstPersonCamera::Update(double dt)
 {
-	elapsedTime += dt;
-	
-	//if (position.z > 5 && position.z < 9)//Shooting Range
-	//	WBmove(dt, 3, 9, 5);
-	//else
-	//	WBmove(dt, 3, 18, 12);//gun Room
-	WOBmove(dt);
+	Vector3 view = (target - position).Normalized();
+	Vector3 right = view.Cross(up);
+	static const float CAMERA_SPEED = 60.f;
+	Mtx44 rotation;
 
-	UpdateMouse();
-
-}
-
-Mtx44 FirstPersonCamera::LookAt()
-{
-	Vector3 f = front.Normalize();
-	Vector3 s = f.Cross(up).Normalize();
-	Vector3 u = s.Cross(f);
-
-	Mtx44 mat(s.x, u.x, -f.x, 0,
-		s.y, u.y, -f.y, 0,
-		s.z, u.z, -f.z, 0,
-		-s.Dot(target), -u.Dot(target), f.Dot(target), 1);
-
-	return mat;
-}
-
-void FirstPersonCamera::Invert()
-{
-	pitch = -pitch;
-}
-
-bool FirstPersonCamera::checkCollisions(float x, float zUpper, float zLower)
-{
-	return (position.x > x || position.x < -x ||
-		position.z >zUpper || position.z < zLower);
-}
-
-void FirstPersonCamera::WBmove(double dt, float x, float zUpper, float zLower)
-{
-	static const float FirstPersonCamera_SPEED = 50.f;
-
-	Vector3 right = front.Cross(up).Normalize();
-
-	if (Application::IsKeyPressed('D'))
+	/*if (target.x > -480.f && target.x < 480.f && target.y > 2.f && target.y < 480.f && target.z > -480.f && target.z < 480.f)
 	{
-		position += right * FirstPersonCamera_SPEED * dt;
-		if (checkCollisions(x,zUpper,zLower))
+		if (Application::IsKeyPressed('A'))
 		{
-			position -= right * FirstPersonCamera_SPEED * dt;
+			position = position - right;
+		}
+		if (Application::IsKeyPressed('D'))
+		{
+			position = position + right;
+		}
+		if (Application::IsKeyPressed('W'))
+		{
+			position = position + up;
+		}
+		if (Application::IsKeyPressed('S'))
+		{
+			position = position - up;
+		}
+
+		if (Application::IsKeyPressed('N'))
+		{
+			position = position + view.Normalized();
+		}
+		if (Application::IsKeyPressed('M'))
+		{
+			position = position - view.Normalized();
 		}
 	}
-	if (Application::IsKeyPressed('W'))
+	else
 	{
-		position += front * FirstPersonCamera_SPEED * dt;
-		if (checkCollisions(x, zUpper, zLower))
+		if (target.x >= 480.f)
 		{
-			position -= front * FirstPersonCamera_SPEED * dt;
+			position.x = position.x - 0.1;
 		}
-	}
-	if (Application::IsKeyPressed('A'))
-	{
-		position -= right * FirstPersonCamera_SPEED * dt;
-		if (checkCollisions(x, zUpper, zLower))
+		else
 		{
-			position += right * FirstPersonCamera_SPEED * dt;
+			position.x = position.x + 0.1;
 		}
-	}
-	if (Application::IsKeyPressed('S'))
-	{
-		position -= front * FirstPersonCamera_SPEED * dt;
-		if (checkCollisions(x, zUpper, zLower))
-		{
-			position += front * FirstPersonCamera_SPEED * dt;
-		}
-	}
-}
-void FirstPersonCamera::WOBmove(double dt)
-{
-	static const float FirstPersonCamera_SPEED = 10.f;
 
-	Vector3 right = front.Cross(up).Normalize();
+		if (target.y >= 480.f)
+		{
+			position.y = position.y - 0.1;
+		}
+		if (target.y <= 2.f)
+		{
+			position.y = position.y + 0.1;
+		}
 
+		if (target.z >= 480.f)
+		{
+			position.z = position.z - 0.1;
+		}
+		else
+		{
+			position.z = position.z + 0.1;
+		}
+	}
+	target = position + view;*/
+
+	/*if (Application::IsKeyPressed(VK_LEFT))
+	{
+		float yaw = (float)(CAMERA_SPEED * dt);
+		rotation.SetToRotation(yaw, 0, 1, 0);
+		up = rotation * up;
+		view = rotation * view;
+		target = position + view;
+	}
 	if (Application::IsKeyPressed(VK_RIGHT))
 	{
-		position += right * FirstPersonCamera_SPEED * dt;
+		float yaw = (float)(-CAMERA_SPEED * dt);
+		rotation.SetToRotation(yaw, 0, 1, 0);
+		up = rotation * up;
+		view = rotation * view;
+		target = position + view;
 	}
 	if (Application::IsKeyPressed(VK_UP))
 	{
-		position += front * FirstPersonCamera_SPEED * dt;
+		float pitch = (float)(CAMERA_SPEED * dt);
+		view = (target - position).Normalized();
+		right = view.Cross(up);
+		right.y = 0;
+		right.Normalize();
+		up = right.Cross(view).Normalized();
+		rotation.SetToRotation(pitch, right.x, right.y, right.z);
+		right = rotation * right;
+		view = rotation * view;
+		target = position + view;
 	}
-	if (Application::IsKeyPressed(VK_LEFT))
+	else if (Application::IsKeyPressed(VK_DOWN))
 	{
-		position -= right * FirstPersonCamera_SPEED * dt;
-	}
-	if (Application::IsKeyPressed(VK_DOWN))
-	{
-		position -= front * FirstPersonCamera_SPEED * dt;
-	}
-	if (Application::IsKeyPressed('Q'))
-	{
-		position += Vector3(0, 1, 0) * 0.75f;
-	}
-	if (Application::IsKeyPressed('E'))
-	{
-		position += Vector3(0, -1, 0) * 0.75f;
-	}
+		float pitch = (float)(-CAMERA_SPEED * dt);
+		view = (target - position).Normalized();
+		right = view.Cross(up);
+		right.y = 0;
+		right.Normalize();
+		up = right.Cross(view).Normalized();
+		rotation.SetToRotation(pitch, right.x, right.y, right.z);
+		right = rotation * right;
+		view = rotation * view;
+		target = position + view;
+	}*/
 }

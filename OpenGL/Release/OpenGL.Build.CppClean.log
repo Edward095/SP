@@ -1,62 +1,33 @@
-f:\sidm\year 1\semester 2\computer graphics\opengl\opengl\release\vc141.pdb
-f:\sidm\year 1\semester 2\computer graphics\opengl\opengl\release\utility.obj
-f:\sidm\year 1\semester 2\computer graphics\opengl\opengl\release\shader.obj
-f:\sidm\year 1\semester 2\computer graphics\opengl\opengl\release\main.obj
-f:\sidm\year 1\semester 2\computer graphics\opengl\opengl\release\meshbuilder.obj
-f:\sidm\year 1\semester 2\computer graphics\opengl\opengl\release\mesh.obj
-f:\sidm\year 1\semester 2\computer graphics\opengl\opengl\release\loadtga.obj
-f:\sidm\year 1\semester 2\computer graphics\opengl\opengl\release\camera.obj
-f:\sidm\year 1\semester 2\computer graphics\opengl\opengl\release\loadobj.obj
-f:\sidm\year 1\semester 2\computer graphics\opengl\opengl\release\assignment02.obj
-f:\sidm\year 1\semester 2\computer graphics\opengl\opengl\release\firstpersoncamera.obj
-f:\sidm\year 1\semester 2\computer graphics\opengl\opengl\release\c_render.obj
-f:\sidm\year 1\semester 2\computer graphics\opengl\opengl\release\test.obj
-f:\sidm\year 1\semester 2\computer graphics\opengl\opengl\release\application.obj
-d:\users\539\desktop\opengl\opengl\release\vc141.pdb
-d:\users\539\desktop\opengl\opengl\release\test.obj
-d:\users\539\desktop\opengl\opengl\release\utility.obj
-d:\users\539\desktop\opengl\opengl\release\shader.obj
-d:\users\539\desktop\opengl\opengl\release\main.obj
-d:\users\539\desktop\opengl\opengl\release\application.obj
-d:\users\539\desktop\opengl\opengl\release\meshbuilder.obj
-d:\users\539\desktop\opengl\opengl\release\mesh.obj
-d:\users\539\desktop\opengl\opengl\release\loadtga.obj
-d:\users\539\desktop\opengl\opengl\release\camera.obj
-d:\users\539\desktop\opengl\opengl\release\loadobj.obj
-d:\users\539\desktop\opengl\opengl\release\assignment02.obj
-d:\users\539\desktop\opengl\opengl\release\firstpersoncamera.obj
-d:\users\539\desktop\opengl\opengl\release\c_render.obj
-d:\users\539\desktop\opengl\opengl\release\game.obj
-d:\users\539\desktop\sp2\sp\opengl\release\vc141.pdb
-d:\users\539\desktop\sp2\sp\opengl\release\utility.obj
-d:\users\539\desktop\sp2\sp\opengl\release\shader.obj
-d:\users\539\desktop\sp2\sp\opengl\release\main.obj
-d:\users\539\desktop\sp2\sp\opengl\release\meshbuilder.obj
-d:\users\539\desktop\sp2\sp\opengl\release\mesh.obj
-d:\users\539\desktop\sp2\sp\opengl\release\loadtga.obj
-d:\users\539\desktop\sp2\sp\opengl\release\camera.obj
-d:\users\539\desktop\sp2\sp\opengl\release\loadobj.obj
-d:\users\539\desktop\sp2\sp\opengl\release\firstpersoncamera.obj
-d:\users\539\desktop\sp2\sp\opengl\release\c_collision.obj
-d:\users\539\desktop\sp2\sp\opengl\release\game.obj
-d:\users\539\desktop\sp2\sp\opengl\release\application.obj
-d:\users\539\desktop\sp2\sp\opengl\release\c_render.obj
-f:\sidm\year 1\semester 2\computer graphics\opengl\release\opengl.exe
-f:\sidm\year 1\semester 2\computer graphics\opengl\release\opengl.pdb
-d:\users\539\desktop\opengl\release\opengl.exe
-d:\users\539\desktop\opengl\release\opengl.pdb
-f:\sidm\year 1\semester 2\computer graphics\opengl\release\opengl.ipdb
-f:\sidm\year 1\semester 2\computer graphics\opengl\release\opengl.iobj
-d:\users\539\desktop\opengl\release\opengl.ipdb
-d:\users\539\desktop\opengl\release\opengl.iobj
-d:\users\539\desktop\sp2\sp\opengl\release\c_mainmenu.obj
-d:\users\539\desktop\sp2\sp\opengl\release\test.obj
-d:\users\539\desktop\sp2\sp\release\opengl.pdb
-d:\users\539\desktop\sp2\sp\release\opengl.exe
-d:\users\539\desktop\sp2\sp\opengl\release\opengl.tlog\cl.command.1.tlog
-d:\users\539\desktop\sp2\sp\opengl\release\opengl.tlog\cl.read.1.tlog
-d:\users\539\desktop\sp2\sp\opengl\release\opengl.tlog\cl.write.1.tlog
-d:\users\539\desktop\sp2\sp\opengl\release\opengl.tlog\link.command.1.tlog
-d:\users\539\desktop\sp2\sp\opengl\release\opengl.tlog\link.read.1.tlog
-d:\users\539\desktop\sp2\sp\opengl\release\opengl.tlog\link.write.1.tlog
-d:\users\539\desktop\sp2\sp\opengl\release\opengl.tlog\opengl.write.1u.tlog
+c:\users\asus\desktop\sp2\sp\opengl\release\c_sound.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\c_collision.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\loadobj.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\loadtga.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\mesh.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\meshbuilder.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\main.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\shader.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\utility.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\vc141.pdb
+c:\users\asus\desktop\sp2\sp\opengl\release\application.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\camera.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\firstpersoncamera.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\c_mainmenu.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\c_npc.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\c_levelone.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\c_carbaseclass.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\c_garage.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\c_entity.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\c_objectmanager.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\c_firstcar.obj
+c:\users\asus\desktop\sp2\sp\release\opengl.exe
+c:\users\asus\desktop\sp2\sp\release\opengl.pdb
+c:\users\asus\desktop\sp2\sp\release\opengl.ipdb
+c:\users\asus\desktop\sp2\sp\release\opengl.iobj
+c:\users\asus\desktop\sp2\sp\opengl\release\vc141.pdb~temp
+c:\users\asus\desktop\sp2\sp\opengl\release\opengl.tlog\cl.command.1.tlog
+c:\users\asus\desktop\sp2\sp\opengl\release\opengl.tlog\cl.read.1.tlog
+c:\users\asus\desktop\sp2\sp\opengl\release\opengl.tlog\cl.write.1.tlog
+c:\users\asus\desktop\sp2\sp\opengl\release\opengl.tlog\link.command.1.tlog
+c:\users\asus\desktop\sp2\sp\opengl\release\opengl.tlog\link.read.1.tlog
+c:\users\asus\desktop\sp2\sp\opengl\release\opengl.tlog\link.write.1.tlog
+c:\users\asus\desktop\sp2\sp\opengl\release\opengl.tlog\opengl.write.1u.tlog
