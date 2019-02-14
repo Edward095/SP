@@ -7,7 +7,8 @@
 #include "FirstPersonCamera.h"
 #include "MatrixStack.h"
 #include "Light.h"
-#include "c_CarBaseClass.h"
+//#include "c_Entity.h"
+#include "c_FirstCar.h"
 
 class c_LevelOne : public Scene
 {
