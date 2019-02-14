@@ -13,6 +13,7 @@
 
 //Include your Files here
 #include "c_Npc.h"
+#include "c_LevelOne.h"
 
 
 c_MainMenu::c_MainMenu()
@@ -110,6 +111,7 @@ void c_MainMenu::Init()
 	cube2.setHighLow("OBJ//Cube.obj");
 	//NPC init
 	Npc.Init();
+	LevelOne.Init();
 	/***************************************************************************/
 }
 void c_MainMenu::Update(double dt)
@@ -179,6 +181,7 @@ void c_MainMenu::Update(double dt)
 
 	//NPC UPDATE
 	Npc.Update(dt);
+	LevelOne.Update(dt);
 }
 void c_MainMenu::Render()
 {
@@ -203,7 +206,8 @@ void c_MainMenu::Render()
 		renderNewGame();
 	else if (e_GameState == OPTIONS)
 		//renderOptions();
-	      Npc.Render();
+	    //Npc.Render();
+		LevelOne.Render();
 	else
 	{
 

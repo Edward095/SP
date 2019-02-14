@@ -8,6 +8,7 @@
 #include "Light.h"
 #include "c_Collision.h"
 #include "c_Npc.h"
+#include "c_LevelOne.h"
 
 class c_MainMenu : public Scene
 {
@@ -96,6 +97,7 @@ private:
 	c_Collision cube1, cube2;
 	float x, z, y;
 	c_Npc Npc;
+	c_LevelOne LevelOne;
 };
 
 #endif C_MAINMENU_H
