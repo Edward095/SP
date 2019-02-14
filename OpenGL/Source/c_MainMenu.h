@@ -6,6 +6,7 @@
 #include "FirstPersonCamera.h"
 #include "MatrixStack.h"
 #include "Light.h"
+#include "c_Sound.h"
 
 #include "c_Npc.h"
 #include "c_LevelOne.h"
