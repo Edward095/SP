@@ -23,7 +23,7 @@
     <ProjectGuid>{03D83DD6-33F6-417D-B9B2-E49747860EFC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>OpenGL</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
     <ProjectName>
     </ProjectName>
   </PropertyGroup>
@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\c_Entity.cpp" />
     <ClCompile Include="Source\c_Garage.cpp" />
     <ClCompile Include="Source\c_CarBaseClass.cpp" />
     <ClCompile Include="Source\c_FirstCar.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\c_Entity.h" />
     <ClInclude Include="Source\c_Garage.h" />
     <ClInclude Include="Source\c_CarBaseClass.h" />
     <ClInclude Include="Source\c_FirstCar.h" />
