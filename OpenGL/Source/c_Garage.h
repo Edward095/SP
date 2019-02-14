@@ -131,6 +131,11 @@ public:
 		U_TEXT_COLOR,
 		U_TOTAL,
 	};
+	enum  GAME_STATE_GARAGE
+	{
+		GARAGE_,
+		NPC_,
+	};
 
 	void Init();
 	void Update(double dt);
@@ -155,6 +160,7 @@ private:
 	unsigned v_Car2Blue, v_Car2Red, v_Car2Purple, v_Car2Green, v_Car2Pink, v_Car2Yellow, v_Car2White, v_Car2Grey, v_Car2Black;
 	unsigned v_Car3Blue, v_Car3Red, v_Car3Purple, v_Car3Green, v_Car3Pink, v_Car3Yellow, v_Car3White, v_Car3Grey, v_Car3Black;
 	unsigned v_Car1Stats, v_Car2Stats, v_Car3Stats;
+	GAME_STATE_GARAGE e_GameState_Garage;
 
 	Light light[1];
 

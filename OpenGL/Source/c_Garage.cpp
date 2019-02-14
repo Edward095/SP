@@ -214,6 +214,8 @@ void c_Garage::Init()
 	v_Car2Stats = LoadTGA("Image//Car2Stats.tga");
 	v_Car3Stats = LoadTGA("Image//Car3Stats.tga");
 
+	e_GameState_Garage = GARAGE_;
+
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
 	//Enable depth buffer and depth testing
@@ -344,7 +346,7 @@ void c_Garage::Update(double dt)
 	}
 	if (Application::IsKeyPressed(VK_RETURN))
 	{
-
+		e_GameState_Garage = NPC_;
 	}
 
 	f_UpdateCurColour();
