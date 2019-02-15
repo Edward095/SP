@@ -16,11 +16,12 @@ public:
 	enum GEOMETRY_TYPE
 	{
 		TEXT,
-		FRONT,
-		TOP,
+		/*FRONT,
+		
 		BACK,
 		LEFT,
-		RIGHT,
+		RIGHT,*/
+		TOP,
 		BOTTOM,
 		CAR1,
 		TRACK,
@@ -84,6 +85,11 @@ private:
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
 	c_FirstCar car;
+	
+	c_Entity front;
+	c_Entity back;
+	c_Entity left;
+	c_Entity right;
 	c_Entity nitro;
 
 	//Variables
