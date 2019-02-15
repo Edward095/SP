@@ -34,7 +34,7 @@ void c_FirstCar::Movement(double dt)
 		{
 			Driving = true;
 			Backwards = false;
-			Ability();
+			Ability(dt);
 			if (Acceleration > 1)
 				Acceleration = 1;
 			if (VelocityZ > 1 && (PressQ || Nitro))
@@ -112,7 +112,7 @@ void c_FirstCar::Movement(double dt)
 		{
 			Backwards = true;
 			Driving = false;
-			Ability();
+			Ability(dt);
 			if (Acceleration < -1)
 				Acceleration = -1;
 			if (VelocityZ < -1 && (PressQ || Nitro))
