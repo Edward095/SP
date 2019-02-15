@@ -35,3 +35,7 @@ OpenGL/Release/OpenGL.log
 *.db-wal
 *.db-shm
 *.ipch
+.vs/OpenGL/v15/.suo
+*.db
+*.log
+*.ipdb

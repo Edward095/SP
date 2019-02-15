@@ -30,6 +30,8 @@ void c_LevelOne::Init()
 	CamTargetX = car.getPos().x;
 	CamTargetY = car.getPos().y;
 	CamTargetZ = car.getPos().z;
+	elapsedTime = 0;
+	FreezeTime = 0;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -76,7 +78,7 @@ void c_LevelOne::Init()
 	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID,
 		"textColor");
 	//Initialize camera settings
-	camera.Init(Vector3(10, 2, 20), Vector3(0, 1, 0), Vector3(0, 1, 0));
+	camera.Init(Vector3(0, 8, 5), Vector3(0, 1, 0), Vector3(0, 1, 0));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -91,14 +93,12 @@ void c_LevelOne::Init()
 	
 
 	//initialization of the Enums
-	meshList[FRONT] = MeshBuilder::GenerateQuad("front", Color(1, 1, 1), 1.f);
+	/*meshList[FRONT] = MeshBuilder::GenerateQuad("front", Color(1, 1, 1), 1.f);
 	meshList[FRONT]->textureID = LoadTGA("Image//NpcFront.tga");
 
-	meshList[TOP] = MeshBuilder::GenerateQuad("Top", Color(1, 1, 1), 1.f);
-	meshList[TOP]->textureID = LoadTGA("Image//NpcTop.tga");
+	
 
-	meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
-	meshList[BOTTOM]->textureID = LoadTGA("Image//NpcBottom.tga");
+	
 
 	meshList[LEFT] = MeshBuilder::GenerateQuad("left", Color(1, 1, 1), 1.f);
 	meshList[LEFT]->textureID = LoadTGA("Image//NpcLeft.tga");
@@ -107,8 +107,12 @@ void c_LevelOne::Init()
 	meshList[RIGHT]->textureID = LoadTGA("Image//NpcRight.tga");
 
 	meshList[BACK] = MeshBuilder::GenerateQuad("Back", Color(1, 1, 1), 1.f);
-	meshList[BACK]->textureID = LoadTGA("Image//NpcBack.tga");
+	meshList[BACK]->textureID = LoadTGA("Image//NpcBack.tga");*/
 
+	meshList[TOP] = MeshBuilder::GenerateQuad("Top", Color(1, 1, 1), 1.f);
+	meshList[TOP]->textureID = LoadTGA("Image//NpcTop.tga");
+	meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
+	meshList[BOTTOM]->textureID = LoadTGA("Image//NpcBottom.tga");
 	//texutre for obj later
 
 	meshList[TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -116,55 +120,68 @@ void c_LevelOne::Init()
 
 	meshList[TRACK] = MeshBuilder::GenerateOBJ("race track", "OBJ//RaceTrack.obj");
 
-	car.init("OBJ//Car1Body.obj","Image//Car1Blue.tga", Vector3(0, 0, 0));
+	front.init("front", "quad", "Image//NpcFront.tga", (0, 0, 0));
+	//top.init("top", "quad", "Image//NpcTop.tga", (0, 0, 0));
+	//bottom.init("bottom", "quad", "Image//NpcBottom.tga", (0, 0, 0));
+	left.init("left", "quad", "Image//NpcLeft.tga", (0, 0, 0));
+	right.init("right", "quad", "Image//NpcRight.tga", (0, 0, 0));
+	back.init("back", "quad", "Image//NpcBack.tga", (0, 0, 0));
+
+	car.init("player1","OBJ//Car1Body.obj","Image//Car1Blue.tga", Vector3(0, 0, 0));
+	nitro.init("Nitro","OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(6, 0, 6));
 	//RenderMesh(car.getMesh(), true);
 
 	//Initialization of Variables
-	talk = false;
-	elapsedTime = 0;
-	TimePassed = 0;
-	AbletoPress = true;
+	
 }
 void c_LevelOne::Update(double dt)
 {
 	elapsedTime += dt;
+	FreezeTime  = (dt + (dt* 0.1));
+
+	if (Application::IsKeyPressed('V'))
+	{
+		Freeze = true;
+		
+	}
+	if (Freeze)
+	{
+		elapsedTime -= FreezeTime;
+	}
+	if (Application::IsKeyPressed('B'))
+	{
+		Freeze = false;
+	}
 
 	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 5);
 	CamPosY = car.getPos().y + 8;
 	CamPosZ = (car.getPos().z - (cos(Math::DegreeToRadian(car.GetSteeringAngle()))) * 5);
-	CamTargetX = car.getPos().x + 1;
+	CamTargetX = car.getPos().x;
 	CamTargetY = car.getPos().y + 5;
-	CamTargetZ = car.getPos().z + 1;
+	CamTargetZ = car.getPos().z;
 
 	camera.Update(dt); 
   
-	if (AbletoPress == true)
-	{
-		if (Application::IsKeyPressed('F'))
-		{
-			talk = true;
-			TimePassed = elapsedTime + 3;
-		}
-	}
-	if (elapsedTime > TimePassed)
-	{
-		//AbletoPress = false;
-		//talk = false;
-	}
-	car.updatePos(car.getPos());
-	if (car.gotCollide())
-	{
-		car.Movement(dt);
-
-	}
+	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
+	car.Movement(dt);
 	
+	if (car.getPos().x == nitro.getPos().x && car.getPos().z == nitro.getPos().z)
+	{
+		car.PowerUp(true);
+	}
 }
 
 
 static const float SKYBOXSIZE = 1500.f;
+static const float translateLength = SKYBOXSIZE / 2;
 
 void c_LevelOne::Render()
 {
+	front.getOBB()->defaultData();
+	left.getOBB()->defaultData();
+	right.getOBB()->defaultData();
+	back.getOBB()->defaultData();
+
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -181,47 +198,73 @@ void c_LevelOne::Render()
 
 	//Skybox
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 100);
+	modelStack.Translate(0, 0, translateLength);
 	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 	modelStack.Rotate(180, 1, 0, 0);
 	modelStack.Rotate(180, 0, 0, 1);
-	RenderMesh(meshList[FRONT], false);
+	RenderMesh(front.getMesh(), false);
 	modelStack.PopMatrix();
 
+	//UpdateCollisions
+	front.updatePos(0,0, translateLength);
+	front.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	front.getOBB()->calcNewAxis(180.f, (1, 0, 0));
+	front.getOBB()->calcNewAxis(180.f, (0, 0, 1));
+
+
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 100, 0);
+	modelStack.Translate(0, translateLength, 0);
 	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 	modelStack.Rotate(90, 1, 0, 0);
 	RenderMesh(meshList[TOP], false);
 	modelStack.PopMatrix();
 
+	////UpdateCollisions
+	//top.updatePos(0,100,0);
+	//top.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	//top.getOBB()->calcNewAxis(90.f, (1, 0, 0));
+
 	modelStack.PushMatrix();
-	modelStack.Translate(0, -100, 0);
+	modelStack.Translate(0, -translateLength, 0);
 	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 	modelStack.Rotate(-90, 1, 0, 0);
 	RenderMesh(meshList[BOTTOM], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(-1000, 0, 0);
+	modelStack.Translate(-translateLength, 0, 0);
 	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 	modelStack.Rotate(90, 0, 1, 0);
-	RenderMesh(meshList[LEFT], false);
+	RenderMesh(left.getMesh(), false);
 	modelStack.PopMatrix();
 
+	//UpdateCollisions
+	left.updatePos(-translateLength,0,0);
+	left.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	left.getOBB()->calcNewAxis(90.f, (0, 1, 0));
+
 	modelStack.PushMatrix();
-	modelStack.Translate(1000, 0, 0);
+	modelStack.Translate(translateLength, 0, 0);
 	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 	modelStack.Rotate(-90, 0, 1, 0);
-	RenderMesh(meshList[RIGHT], false);
+	RenderMesh(right.getMesh(), false);
 	modelStack.PopMatrix();
 
+	//UpdateCollisions
+	right.updatePos(translateLength,0,0);
+	right.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	right.getOBB()->calcNewAxis(-90.f, (0, 1, 0));
+
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, -100);
+	modelStack.Translate(0, 0, -translateLength);
 	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 	//modelStack.Rotate(-180, 0, 1, 0);
-	RenderMesh(meshList[BACK], false);
+	RenderMesh(back.getMesh(), false);
 	modelStack.PopMatrix();
+
+	//UpdateCollisions
+	back.updatePos(0,0,-translateLength);
+	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, 0);
@@ -231,49 +274,26 @@ void c_LevelOne::Render()
 
 	modelStack.PushMatrix();
 	modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
-	modelStack.Scale(1, 1, 1);
+	//modelStack.Scale(1, 1, 1);
 	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Rotate(car.GetSteeringAngle(), 0, 1, 0);
 	RenderMesh(car.getMesh(), true);
+	//RenderMesh(meshList[CAR1], false);
 	modelStack.PopMatrix();
 
-	////text for talking to NPC
-	//modelStack.PushMatrix();
-	//int cameraX = static_cast<int>(camera.position.x);
-	//int cameraY = static_cast<int>(camera.position.y);
-	//int cameraZ = static_cast<int>(camera.position.z);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(cameraX), Color(0, 0, 1), 3, 1, 19);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(cameraY), Color(0, 0, 1), 3, 1, 18);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(cameraZ), Color(0, 0, 1), 3, 1, 17);
-
-	if (camera.position.z < 60 && camera.position.z > -20 && talk == false)
-	{
-		modelStack.PushMatrix();
-		RenderTextOnScreen(meshList[TEXT], "Press 'F' to talk to NPC", Color(1, 0, 0), 3, 6, 10);
-		modelStack.PopMatrix();
-	}
-
-	if (camera.position.z < 60 && camera.position.z > -20 && talk == true && elapsedTime < TimePassed)
-	{
-		modelStack.PushMatrix();
-		RenderTextOnScreen(meshList[TEXT], "Hello!", Color(1, 0, 0), 3, 11, 10);
-		RenderTextOnScreen(meshList[TEXT], "Welcome to our Racing Game!", Color(1, 0, 0), 3, 5, 9);
-		modelStack.PopMatrix();
-		AbletoPress = false;
-		
-	}
-	if (camera.position.z < 60 && camera.position.z > -20 && talk == true && elapsedTime > TimePassed && elapsedTime < TimePassed + 3)
-	{
-		modelStack.PushMatrix();
-		RenderTextOnScreen(meshList[TEXT], "Test", Color(1, 0, 0), 3, 11, 9);
-		modelStack.PopMatrix();
-		AbletoPress = false;
-	}
-
-
+	//UpdateCollisions
+	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
+	car.getOBB()->calcNewAxis(90, (0, 1, 0));
+	car.getOBB()->calcNewAxis(car.GetSteeringAngle(), (0, 1, 0));
+	
 	modelStack.PushMatrix();
-	RenderTextOnScreen(meshList[TEXT], std::to_string(camera.Position.x), Color(1, 0, 0), 3, 3, 10);
+	modelStack.Translate(nitro.getPos().x, 0, nitro.getPos().z);
+	modelStack.Scale(0.8, 0.8, 0.8);
+	RenderMesh(nitro.getMesh(), true);
+	//RenderMesh(meshList[NITRO], false);
 	modelStack.PopMatrix();
+
+	RenderTextOnScreen(meshList[TEXT], std::to_string(elapsedTime), Color(1, 0, 0), 4, 1, 13);
 
 }
 void c_LevelOne::Exit()
@@ -499,3 +519,16 @@ void c_LevelOne::RenderText(Mesh* mesh, std::string text, Color color, float spa
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 	glEnable(GL_DEPTH_TEST);
 }
+/*
+time+=dt;
+
+std::string time2;
+
+time2 = std::to_string(time);
+
+4.54543553
+4.5
+rendertoscreen(time[0],);
+rendertoscreen(time[1],);
+rendertoscreen(time[2],);
+*/

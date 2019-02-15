@@ -16,12 +16,14 @@ public:
 	//void updateHighLow();
 
 	//Function
+	void defaultData();
+	void calcNewDimensions(float xScale, float yScale, float zScale);
 	void calcNewAxis(float rotateAmt, Vector3 Axis);
 	void setHighLow(const char *file_path);
 	void setPos(Vector3 pos );
-	bool getSeparatingPlane(const Vector3& RPos, const Vector3& Plane, c_Collision& other);
-	bool OBB(c_Collision& other);
-	bool checkSurroundingOBJ(c_Collision& other);
+	bool getSeparatingPlane(const Vector3& RPos, const Vector3& Plane, c_Collision* other);
+	bool OBB(c_Collision* other);
+	bool checkSurroundingOBJ(c_Collision* other);
 	Vector3 getDimensions();
 	//Vector3 getHalfDimensions();
 	Vector3 getXAxis();
@@ -38,6 +40,7 @@ private:
 	Vector3 dimensions;
 	//Vector3 halfDimensions;
 	Vector3 localX, localY, localZ;
+	std::string type;
 
 	/*Vector3 frontTopLeft, frontTopRight, frontBottomLeft, frontBottomRight;
 	Vector3 backTopLeft, backTopRight, backBottomLeft, backBottomRight;
