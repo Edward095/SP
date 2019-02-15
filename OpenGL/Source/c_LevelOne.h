@@ -100,6 +100,8 @@ private:
 	float CamTargetY;
 	float CamTargetZ;
 	bool Freeze = false;
+	int duration;
+	std::string elapedTimeCut;
 };
 
 #endif

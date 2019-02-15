@@ -11,7 +11,7 @@ public:
 	void updateAppearance(const char* meshPath, const char* TGApath);
 	virtual void Movement(double dt) = 0;
 	virtual float GetSteeringAngle();
-	virtual void Ability() = 0;
+	virtual void Ability(double dt) = 0;
 	virtual void PowerUp(bool check) = 0;
 
 protected:
@@ -19,7 +19,7 @@ protected:
 	float MaxSpeed;
 	float SteeringAngle;
 	float Acceleration;
-	
+	int Duration;
 
 	bool Driving = false;
 	bool Backwards = false;

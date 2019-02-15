@@ -32,6 +32,7 @@ void c_LevelOne::Init()
 	CamTargetZ = car.getPos().z;
 	elapsedTime = 0;
 	FreezeTime = 0;
+	duration = 0;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -129,23 +130,21 @@ void c_LevelOne::Init()
 void c_LevelOne::Update(double dt)
 {
 	elapsedTime += dt;
-	FreezeTime  = (dt + (dt* 0.1));
+	FreezeTime  = (dt + (dt* 0));
 
-
-	if (Application::IsKeyPressed('V'))
-	{
+	if (Application::IsKeyPressed('F'))
 		Freeze = true;
-		
-	}
-	if (Freeze)
+
+	if (Freeze && duration <= 150)
 	{
+		duration++;
 		elapsedTime -= FreezeTime;
-		
+
+		if (duration >= 150) // 3 sec/dt
+			Freeze = false;
 	}
-	if (Application::IsKeyPressed('B'))
-	{
-		Freeze = false;
-	}
+
+	
 
 	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 5);
 	CamPosY = car.getPos().y + 8;
@@ -254,8 +253,9 @@ void c_LevelOne::Render()
 	//RenderMesh(meshList[NITRO], false);
 	modelStack.PopMatrix();
 	
-	RenderTextOnScreen(meshList[TEXT], std::to_string(elapsedTime), Color(1, 0, 0), 4, 1, 13);
-
+	elapedTimeCut = std::to_string(elapsedTime);
+	elapedTimeCut.resize(5);
+	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
 }
 void c_LevelOne::Exit()
 {
