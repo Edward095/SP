@@ -11,7 +11,7 @@ c_Collision::c_Collision()
 	pos.Set(0, 0, 0);
 	//max.Set(0, 0, 0);
 	//min.Set(0, 0, 0);
-	dimensions.Set(0, 0, 0);
+	dimensions = Vector3(0, 0, 0);
 	localX.Set(1, 0, 0);
 	localY.Set(0, 1, 0);
 	localZ.Set(0, 0, 1);
@@ -160,12 +160,12 @@ void c_Collision::setPos(Vector3 pos)
 {
 	this->pos = pos;
 }
-bool c_Collision::getSeparatingPlane(const Vector3& RPos, const Vector3& Plane, c_Collision& other)
+bool c_Collision::getSeparatingPlane(const Vector3& RPos, const Vector3& Plane, c_Collision* other)
 {
-	Vector3 otherX = other.getXAxis();
-	Vector3 otherY = other.getYAxis();
-	Vector3 otherZ = other.getZAxis();
-	Vector3 otherDimension = other.getDimensions();
+	Vector3 otherX = other->getXAxis();
+	Vector3 otherY = other->getYAxis();
+	Vector3 otherZ = other->getZAxis();
+	Vector3 otherDimension = other->getDimensions();
 
 	return (fabs(RPos.Dot(Plane)) >
 		(fabs((localX*dimensions.x).Dot(Plane)) +
@@ -175,15 +175,15 @@ bool c_Collision::getSeparatingPlane(const Vector3& RPos, const Vector3& Plane, 
 			fabs((otherY*otherDimension.y).Dot(Plane)) +
 			fabs((otherZ*otherDimension.z).Dot(Plane))));
 }
-bool c_Collision::OBB(c_Collision& other)
+bool c_Collision::OBB(c_Collision* other)
 {
 	static Vector3 RPos;
 	//RPos.Set(other.pos.x - pos.x, other.pos.y - pos.y, other.pos.z - pos.z);
-	RPos = other.pos - pos;
+	RPos = other->pos - pos;
 
-	Vector3 otherX = other.getXAxis();
-	Vector3 otherY = other.getYAxis();
-	Vector3 otherZ = other.getZAxis();
+	Vector3 otherX = other->getXAxis();
+	Vector3 otherY = other->getYAxis();
+	Vector3 otherZ = other->getZAxis();
 
 	return !(getSeparatingPlane(RPos, localX, other) ||
 		getSeparatingPlane(RPos, localY, other) ||
@@ -201,11 +201,11 @@ bool c_Collision::OBB(c_Collision& other)
 		getSeparatingPlane(RPos, localZ.Cross(otherY), other) ||
 		getSeparatingPlane(RPos, localZ.Cross(otherZ), other));
 }
-bool c_Collision::checkSurroundingOBJ(c_Collision& other)
+bool c_Collision::checkSurroundingOBJ(c_Collision* other)
 {
-	return (other.pos.x >= pos.x - dimensions.x && other.pos.x <= pos.x + dimensions.x
-		&& other.pos.y >= pos.y - dimensions.y && other.pos.y <= pos.y + dimensions.y
-		&& other.pos.z >= pos.z - dimensions.z && other.pos.z <= pos.z + dimensions.z);
+	return (other->pos.x >= pos.x - dimensions.x && other->pos.x <= pos.x + dimensions.x
+		&& other->pos.y >= pos.y - dimensions.y && other->pos.y <= pos.y + dimensions.y
+		&& other->pos.z >= pos.z - dimensions.z && other->pos.z <= pos.z + dimensions.z);
 }
 //void c_Collision::updateHighLow()
 //{

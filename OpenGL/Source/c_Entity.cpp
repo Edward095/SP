@@ -11,6 +11,7 @@ c_Entity::c_Entity()
 
 c_Entity::~c_Entity()
 {
+	delete OBB;
 }
 
 void c_Entity::init(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos)
@@ -25,7 +26,8 @@ void c_Entity::init(std::string uniqueName, const char* meshPath, const char* TG
 	this->uniqueName = uniqueName;
 	quadORobject();//if Quad generate Quad else generate Obj
 	mesh->textureID = LoadTGA(TGApath);
-	OBB.setHighLow(meshPath);
+	OBB = new c_Collision();
+	OBB->setHighLow(meshPath);
 }
 
 Mesh* c_Entity::getMesh()
@@ -36,7 +38,7 @@ Vector3 c_Entity::getPos()
 {
 	return pos;
 }
-c_Collision c_Entity::getOBB()
+c_Collision* c_Entity::getOBB()
 {
 	return OBB;
 }
@@ -58,11 +60,11 @@ bool c_Entity::gotCollide()
 	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
 	for (int i = 0; i < objectManager->getObjects().size(); i++)
 	{
-		c_Collision collide = objectManager->getObjects().at(i)->getOBB();
+		c_Collision* collide = objectManager->getObjects().at(i)->getOBB();
 
 		if (objectManager->getObjects().at(i)->getUniqueName() != this->uniqueName)
 		{
-			if (OBB.OBB(collide))
+			if (OBB->OBB(collide))
 				return true;
 		}
 
@@ -81,7 +83,7 @@ void c_Entity::updatePos(float xPos, float yPos, float zPos)
 	this->pos.x = xPos;
 	this->pos.y = yPos;
 	this->pos.z = zPos;
-	OBB.setPos(this->pos);
+	OBB->setPos(this->pos);
 }
 std::string c_Entity::getUniqueName()
 {

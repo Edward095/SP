@@ -142,11 +142,8 @@ void c_LevelOne::Update(double dt)
 
 	camera.Update(dt); 
   
-	car.updatePos(car.getPos().x,car.getPos().y,car.getPos().z);
-	if (!car.gotCollide())
-	{
-		car.Movement(dt);
-	}
+	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
+	car.Movement(dt);
 	
 	
 }
@@ -156,11 +153,11 @@ static const float SKYBOXSIZE = 1500.f;
 
 void c_LevelOne::Render()
 {
-	front.getOBB().defaultData();
-	top.getOBB().defaultData();
-	left.getOBB().defaultData();
-	right.getOBB().defaultData();
-	back.getOBB().defaultData();
+	front.getOBB()->defaultData();
+	top.getOBB()->defaultData();
+	left.getOBB()->defaultData();
+	right.getOBB()->defaultData();
+	back.getOBB()->defaultData();
 
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -187,9 +184,9 @@ void c_LevelOne::Render()
 
 	//UpdateCollisions
 	front.updatePos(0,0,100);
-	front.getOBB().calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	front.getOBB().calcNewAxis(180.f, (1, 0, 0));
-	front.getOBB().calcNewAxis(180.f, (0, 0, 1));
+	front.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	front.getOBB()->calcNewAxis(180.f, (1, 0, 0));
+	front.getOBB()->calcNewAxis(180.f, (0, 0, 1));
 
 
 	modelStack.PushMatrix();
@@ -201,8 +198,8 @@ void c_LevelOne::Render()
 
 	//UpdateCollisions
 	top.updatePos(0,100,0);
-	top.getOBB().calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	top.getOBB().calcNewAxis(90.f, (1, 0, 0));
+	top.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	top.getOBB()->calcNewAxis(90.f, (1, 0, 0));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, -100, 0);
@@ -220,8 +217,8 @@ void c_LevelOne::Render()
 
 	//UpdateCollisions
 	left.updatePos(-1000,0,0);
-	left.getOBB().calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	left.getOBB().calcNewAxis(90.f, (0, 1, 0));
+	left.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	left.getOBB()->calcNewAxis(90.f, (0, 1, 0));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(1000, 0, 0);
@@ -232,8 +229,8 @@ void c_LevelOne::Render()
 
 	//UpdateCollisions
 	right.updatePos(1000,0,0);
-	right.getOBB().calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	right.getOBB().calcNewAxis(-90.f, (0, 1, 0));
+	right.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	right.getOBB()->calcNewAxis(-90.f, (0, 1, 0));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -100);
@@ -244,7 +241,7 @@ void c_LevelOne::Render()
 
 	//UpdateCollisions
 	back.updatePos(0,0,-100);
-	back.getOBB().calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, 0);
@@ -262,8 +259,8 @@ void c_LevelOne::Render()
 
 	//UpdateCollisions
 	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
-	car.getOBB().calcNewAxis(90, (0, 1, 0));
-	car.getOBB().calcNewAxis(car.GetSteeringAngle(), (0, 1, 0));
+	car.getOBB()->calcNewAxis(90, (0, 1, 0));
+	car.getOBB()->calcNewAxis(car.GetSteeringAngle(), (0, 1, 0));
 
 }
 void c_LevelOne::Exit()

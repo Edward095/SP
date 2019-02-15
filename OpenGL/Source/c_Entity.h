@@ -17,14 +17,14 @@ public:
 	c_Entity* getEntity(std::string uniqueName);
 	Mesh* getMesh();
 	Vector3 getPos();
-	c_Collision getOBB();
+	c_Collision* getOBB();
 
 protected:
 	std::string uniqueName;
 	const char* meshPath;
 	const char* TGApath;
 	Mesh* mesh;
-	c_Collision OBB;
+	c_Collision* OBB;
 	Vector3 pos;
 
 private:
