@@ -12,6 +12,7 @@ c:\users\asus\desktop\sp2\sp\opengl\release\c_mainmenu.obj
 c:\users\asus\desktop\sp2\sp\opengl\release\c_collision.obj
 c:\users\asus\desktop\sp2\sp\opengl\release\c_sound.obj
 c:\users\asus\desktop\sp2\sp\opengl\release\c_npc.obj
+c:\users\asus\desktop\sp2\sp\opengl\release\c_levelone.obj
 c:\users\asus\desktop\sp2\sp\opengl\release\c_firstcar.obj
 c:\users\asus\desktop\sp2\sp\opengl\release\c_carbaseclass.obj
 c:\users\asus\desktop\sp2\sp\opengl\release\c_garage.obj
@@ -19,7 +20,6 @@ c:\users\asus\desktop\sp2\sp\opengl\release\c_entity.obj
 c:\users\asus\desktop\sp2\sp\opengl\release\c_objectmanager.obj
 c:\users\asus\desktop\sp2\sp\opengl\release\c_scenemanager.obj
 c:\users\asus\desktop\sp2\sp\opengl\release\utility.obj
-c:\users\asus\desktop\sp2\sp\opengl\release\c_levelone.obj
 c:\users\asus\desktop\sp2\sp\release\opengl.exe
 c:\users\asus\desktop\sp2\sp\release\opengl.pdb
 c:\users\asus\desktop\sp2\sp\release\opengl.ipdb

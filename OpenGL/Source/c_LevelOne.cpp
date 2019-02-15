@@ -117,6 +117,8 @@ void c_LevelOne::Init()
 	meshList[TRACK] = MeshBuilder::GenerateOBJ("race track", "OBJ//RaceTrack.obj");
 
 	car.init("OBJ//Car1Body.obj","Image//Car1Blue.tga", Vector3(0, 0, 0));
+
+	nitro.init("OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(6, 0, 6));
 	//RenderMesh(car.getMesh(), true);
 
 	//Initialization of Variables
@@ -125,6 +127,21 @@ void c_LevelOne::Init()
 void c_LevelOne::Update(double dt)
 {
 	elapsedTime += dt;
+	FreezeTime  = (dt + (dt* 0.008));
+
+	if (Application::IsKeyPressed('V'))
+	{
+		Freeze = true;
+		
+	}
+	if (Freeze)
+	{
+		elapsedTime -= FreezeTime;
+	}
+	if (Application::IsKeyPressed('B'))
+	{
+		Freeze = false;
+	}
 
 	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 5);
 	CamPosY = car.getPos().y + 8;
@@ -142,6 +159,10 @@ void c_LevelOne::Update(double dt)
 	}
 	car.Movement(dt);
 	
+	if (car.getPos().x == nitro.getPos().x && car.getPos().z == nitro.getPos().z)
+	{
+		car.PowerUp(true);
+	}
 }
 
 
@@ -221,6 +242,15 @@ void c_LevelOne::Render()
 	RenderMesh(car.getMesh(), true);
 	//RenderMesh(meshList[CAR1], false);
 	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(nitro.getPos().x, 0, nitro.getPos().z);
+	modelStack.Scale(0.8, 0.8, 0.8);
+	RenderMesh(nitro.getMesh(), true);
+	//RenderMesh(meshList[NITRO], false);
+	modelStack.PopMatrix();
+
+	RenderTextOnScreen(meshList[TEXT], std::to_string(elapsedTime), Color(1, 0, 0), 4, 1, 13);
 
 }
 void c_LevelOne::Exit()
