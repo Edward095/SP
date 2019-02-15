@@ -110,7 +110,7 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	Scene *scene = new c_Garage();
+	Scene *scene = new c_MainMenu();
 	//Scene *scene = new c_Garage();
 	scene->Init();
 

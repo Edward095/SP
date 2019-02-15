@@ -21,6 +21,7 @@ void c_Sound::f_Init_Sound()
 	// Garage
 
 	// Gameplay
+	// driving
 
 	// Levels
 	v_L1_Music = irrklang::createIrrKlangDevice();
@@ -33,7 +34,7 @@ void c_Sound::f_Start_MainMenu_music()
 	if (!v_MM_Music)
 	{
 	}
-	v_MM_Music->play2D("SFX//MainMenu_Music_FeelGoodInc.mp3", true);
+	v_MM_Music->play2D("SFX//MainMenu_Music.wav", true);
 
 }
 
@@ -63,7 +64,7 @@ void c_Sound::f_MainMenu_ConfirmSelect()
 
 void c_Sound::f_Level_1_music()
 {
-	v_L1_Music->play2D("filename");
+	v_L1_Music->play2D("SFX//Level1_Music.wav");
 }
 
 void c_Sound::f_PauseLevel_1_music()
