@@ -12,6 +12,7 @@
 #include "c_MainMenu.h"
 #include "c_Garage.h"
 #include "c_LevelOne.h"
+#include "c_Npc.h"
 
 
 GLFWwindow* m_window;
@@ -111,7 +112,7 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	Scene *scene = new c_LevelOne();
+	Scene *scene = new c_Npc();
 	//Scene *scene = new c_Garage();
 	scene->Init();
 
