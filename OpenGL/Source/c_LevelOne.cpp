@@ -208,8 +208,8 @@ void c_LevelOne::Render()
 	//UpdateCollisions
 	front.updatePos(0,0, translateLength);
 	front.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	front.getOBB()->calcNewAxis(180.f, (1, 0, 0));
-	front.getOBB()->calcNewAxis(180.f, (0, 0, 1));
+	front.getOBB()->calcNewAxis(180.f, 1, 0, 0);
+	front.getOBB()->calcNewAxis(180.f, 0, 0, 1);
 
 
 	modelStack.PushMatrix();
@@ -241,7 +241,7 @@ void c_LevelOne::Render()
 	//UpdateCollisions
 	left.updatePos(-translateLength,0,0);
 	left.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	left.getOBB()->calcNewAxis(90.f, (0, 1, 0));
+	left.getOBB()->calcNewAxis(90.f, 0, 1, 0);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(translateLength, 0, 0);
@@ -253,7 +253,7 @@ void c_LevelOne::Render()
 	//UpdateCollisions
 	right.updatePos(translateLength,0,0);
 	right.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	right.getOBB()->calcNewAxis(-90.f, (0, 1, 0));
+	right.getOBB()->calcNewAxis(-90.f, 0, 1, 0);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -translateLength);
@@ -283,8 +283,8 @@ void c_LevelOne::Render()
 
 	//UpdateCollisions
 	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
-	car.getOBB()->calcNewAxis(90, (0, 1, 0));
-	car.getOBB()->calcNewAxis(car.GetSteeringAngle(), (0, 1, 0));
+	car.getOBB()->calcNewAxis(90, 0, 1, 0);
+	car.getOBB()->calcNewAxis(car.GetSteeringAngle(), 0, 1, 0);
 	
 	modelStack.PushMatrix();
 	modelStack.Translate(nitro.getPos().x, 0, nitro.getPos().z);

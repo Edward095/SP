@@ -25,9 +25,6 @@ protected:
 	bool Backwards = false;
 	bool PressQ = false;
 	bool Nitro = false;
-
-	bool frontCollide;
-	bool backCollide;
 };
 
 

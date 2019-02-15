@@ -55,9 +55,12 @@ c_Entity* c_Entity::getEntity(std::string uniqueName)
 	}
 
 }
-bool c_Entity::gotCollide()
+bool c_Entity::gotCollide(float x, float y, float z)
 {
 	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
+
+	updatePos(pos.x + x, pos.y + y, pos.z + z);
+
 	for (int i = 0; i < objectManager->getObjects().size(); i++)
 	{
 		c_Collision* collide = objectManager->getObjects().at(i)->getOBB();
@@ -66,9 +69,11 @@ bool c_Entity::gotCollide()
 			objectManager->getObjects().at(i)->getUniqueName() != "Nitro")
 		{
 			if (OBB->OBB(collide))
+			{
+				updatePos(pos.x - x, pos.y - y, pos.z - z);
 				return true;
+			}
 		}
-
 	}
 	return false;
 }
