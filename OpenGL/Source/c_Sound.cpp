@@ -15,21 +15,22 @@ void c_Sound::f_Init_Sound()
 {
 	// Main Menu
 	v_MM_Music = irrklang::createIrrKlangDevice();
-	v_MM_MoveSelect = irrklang::createIrrKlangDevice();
-	v_MM_ConfirmSelect = irrklang::createIrrKlangDevice();
+	v_MM_SFX = irrklang::createIrrKlangDevice();
 
 	// Garage
 
-	// Gameplay
 	// driving
 
 	// Levels
 	v_L1_Music = irrklang::createIrrKlangDevice();
 	v_L2_Music = irrklang::createIrrKlangDevice();
 	v_L3_Music = irrklang::createIrrKlangDevice();
+	// Gameplay
+
+	f_InitSFX();
 }
 
-void c_Sound::f_Start_MainMenu_music()
+void c_Sound::f_Start_Menu_music()
 {
 	if (!v_MM_Music)
 	{
@@ -38,27 +39,24 @@ void c_Sound::f_Start_MainMenu_music()
 
 }
 
-void c_Sound::f_Pause_MainMenu_Music()
+void c_Sound::f_Pause_Menu_Music()
 {
 	v_MM_Music->setAllSoundsPaused();
 }
-void c_Sound::f_Unpause_MainMenu_Music()
+void c_Sound::f_Unpause_Menu_Music()
 {
 	v_MM_Music->setAllSoundsPaused(false);
 }
 
 
-void c_Sound::f_MainMenu_MoveSelect()
+void c_Sound::f_Menu_MoveSelect()
 {
-	if (!v_MM_MoveSelect)
-	{
-	}
-	v_MM_MoveSelect->play2D("SFX//MainMenu_SFX_MoveSelect.mp3");
+	v_MM_SFX->play2D(v_MoveSound);
 }
 
-void c_Sound::f_MainMenu_ConfirmSelect()
+void c_Sound::f_Menu_ConfirmSelect()
 {
-	v_MM_ConfirmSelect->play2D("SFX//MainMenu_SFX_ConfirmSelect.ogg");
+	v_MM_SFX->play2D(v_ConfirmSound);
 }
 
 
@@ -105,4 +103,10 @@ void c_Sound::f_PauseLevel_3_music()
 void c_Sound::f_UnpauseLevel_3_music()
 {
 	v_L3_Music->setAllSoundsPaused(false);
+}
+
+void c_Sound::f_InitSFX()
+{
+	v_MoveSound = v_MM_SFX->addSoundSourceFromFile("SFX//MainMenu_SFX_MoveSelect.mp3");
+	v_ConfirmSound = v_MM_SFX->addSoundSourceFromFile("SFX//MainMenu_SFX_ConfirmSelect.ogg");
 }

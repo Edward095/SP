@@ -11,17 +11,15 @@ public:
 	~c_Sound();
 
 	void f_Init_Sound();
-	// Main Menu SFX
-	void f_Start_MainMenu_music();
-	void f_Pause_MainMenu_Music();
-	void f_Unpause_MainMenu_Music();
-	void f_MainMenu_MoveSelect();
-	void f_MainMenu_ConfirmSelect();
-	// Gameplay SFX
+	// Menu Music
+	void f_Start_Menu_music();
+	void f_Pause_Menu_Music();
+	void f_Unpause_Menu_Music();
+	// Menu SFX
+	void f_Menu_MoveSelect();
+	void f_Menu_ConfirmSelect();
 
-	// Garage SFX
-
-	// Level SFX
+	// Level Music
 	void f_Level_1_music();
 	void f_PauseLevel_1_music();
 	void f_UnpauseLevel_1_music();
@@ -35,12 +33,18 @@ public:
 	void f_UnpauseLevel_3_music();
 
 private:
+	// Music
 	irrklang::ISoundEngine* v_MM_Music;
-	irrklang::ISoundEngine* v_MM_MoveSelect;
-	irrklang::ISoundEngine* v_MM_ConfirmSelect;
 	irrklang::ISoundEngine* v_L1_Music; // Level 1 Music
 	irrklang::ISoundEngine* v_L2_Music;
 	irrklang::ISoundEngine* v_L3_Music;
+
+	// SFX
+	irrklang::ISoundEngine* v_MM_SFX;
+	irrklang::ISoundSource* v_MoveSound;
+	irrklang::ISoundSource* v_ConfirmSound;
+
+	void f_InitSFX();
 };
 
 #endif

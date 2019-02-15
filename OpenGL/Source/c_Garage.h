@@ -184,6 +184,7 @@ private:
 	c_List v_CarList;
 	c_List v_ColourList;
 	c_Sound v_Garage_SFX;
+	std::string v_CarPaths[3];
 
 };
 

@@ -105,7 +105,14 @@ c_List::c_List()
 
 c_List::~c_List()
 {
-
+	for (int i = 0; i < 3; i++)
+	{
+		delete v_CarList[i];
+	}
+	for (int i = 0; i < 9; i++)
+	{
+		delete v_ColourList[i];
+	}
 }
 
 void c_List::f_ChangeCurrentCar(char input)
@@ -213,6 +220,10 @@ void c_Garage::Init()
 	v_Car1Stats = LoadTGA("Image//Car1Stats.tga");
 	v_Car2Stats = LoadTGA("Image//Car2Stats.tga");
 	v_Car3Stats = LoadTGA("Image//Car3Stats.tga");
+
+	v_CarPaths[0] = "OBJ//Car1.obj";
+	v_CarPaths[1] = "OBJ//Car2.obj";
+	v_CarPaths[2] = "OBJ//Car3.obj";
 
 	e_GameState_Garage = GARAGE_;
 	v_MusicPause = false;
@@ -325,7 +336,7 @@ void c_Garage::Init()
 	meshList[UI]->textureID = LoadTGA("Image//UI.tga");
 
 	v_Garage_SFX.f_Init_Sound();
-	v_Garage_SFX.f_Start_MainMenu_music();
+	v_Garage_SFX.f_Start_Menu_music();
 }
 
 void c_Garage::Update(double dt)
@@ -334,31 +345,31 @@ void c_Garage::Update(double dt)
 	if (Application::IsKeyPressed(VK_UP) && v_BounceTime < v_ElapsedTime)
 	{
 		v_CarList.f_ChangeCurrentCar('O');
-		v_Garage_SFX.f_MainMenu_MoveSelect();
+		v_Garage_SFX.f_Menu_MoveSelect();
 		v_BounceTime = v_ElapsedTime + 0.250;
 	}
 	if (Application::IsKeyPressed(VK_DOWN) && v_BounceTime < v_ElapsedTime)
 	{
 		v_CarList.f_ChangeCurrentCar('P');
-		v_Garage_SFX.f_MainMenu_MoveSelect();
+		v_Garage_SFX.f_Menu_MoveSelect();
 		v_BounceTime = v_ElapsedTime + 0.250;
 	}
 	if (Application::IsKeyPressed(VK_LEFT) && v_BounceTime < v_ElapsedTime)
 	{
 		v_ColourList.f_ChangeCurrentColour('K');
-		v_Garage_SFX.f_MainMenu_MoveSelect();
+		v_Garage_SFX.f_Menu_MoveSelect();
 		v_BounceTime = v_ElapsedTime + 0.250;
 	}
 	if (Application::IsKeyPressed(VK_RIGHT) && v_BounceTime < v_ElapsedTime)
 	{
 		v_ColourList.f_ChangeCurrentColour('L');
-		v_Garage_SFX.f_MainMenu_MoveSelect();
+		v_Garage_SFX.f_Menu_MoveSelect();
 		v_BounceTime = v_ElapsedTime + 0.250;
 	}
 	if (Application::IsKeyPressed(VK_RETURN) && v_BounceTime < v_ElapsedTime)
 	{
 		v_ConfirmRotation = 900;
-		v_Garage_SFX.f_MainMenu_ConfirmSelect();
+		v_Garage_SFX.f_Menu_ConfirmSelect();
 		v_BounceTime = v_ElapsedTime + 0.250;
 		e_GameState_Garage = NPC_;
 	}
@@ -366,13 +377,13 @@ void c_Garage::Update(double dt)
 	{
 		if (v_MusicPause)
 		{
-			v_Garage_SFX.f_Unpause_MainMenu_Music();
+			v_Garage_SFX.f_Unpause_Menu_Music();
 			v_BTPause = v_ElapsedTime + 0.250;
 			v_MusicPause = !v_MusicPause;
 		}
 		else
 		{
-			v_Garage_SFX.f_Pause_MainMenu_Music();
+			v_Garage_SFX.f_Pause_Menu_Music();
 			v_BTPause = v_ElapsedTime + 0.250;
 			v_MusicPause = !v_MusicPause;
 		}
