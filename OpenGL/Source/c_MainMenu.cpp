@@ -106,7 +106,6 @@ void c_MainMenu::Update(double dt)
 		break;
 	case c_MainMenu::NEWGAME:
 		updateNewGame(dt);
-		
 		break;
 	case c_MainMenu::CONTINUE:
 		updateContinue(dt);

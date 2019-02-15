@@ -11,7 +11,7 @@
 #include "c_Sound.h"
 
 #include "c_LevelOne.h"
-
+#include "c_FirstCar.h"
 
 class c_Car
 {
@@ -137,6 +137,7 @@ public:
 	enum  GAME_STATE_GARAGE
 	{
 		GARAGE_,
+		CHANGED_,
 		LEVELONE_,
 	};
 
@@ -189,9 +190,14 @@ private:
 	c_List v_CarList;
 	c_List v_ColourList;
 	c_Sound v_Garage_SFX;
-	std::string v_CarPaths[3];
+
+	const char* v_CarPaths[3];
+	const char* v_CarColourPath1[9];
+	const char* v_CarColourPath2[9];
+	const char* v_CarColourPath3[9];
 
 	c_LevelOne levelOne;
+	//c_FirstCar firstCar;
 
 };
 

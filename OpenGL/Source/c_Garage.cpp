@@ -187,9 +187,6 @@ c_Garage::~c_Garage()
 
 void c_Garage::Init()
 {
-	levelOne.Init();
-	e_GameState_Garage = GARAGE_;
-
 	v_Car1Blue = LoadTGA("Image//Car1Blue.tga");
 	v_Car1Red = LoadTGA("Image//Car1Red.tga");
 	v_Car1Purple = LoadTGA("Image//Car1Purple.tga");
@@ -228,6 +225,39 @@ void c_Garage::Init()
 	v_CarPaths[1] = "OBJ//Car2.obj";
 	v_CarPaths[2] = "OBJ//Car3.obj";
 
+	v_CarColourPath1[0] = "Image//Car1Blue.tga";
+	v_CarColourPath1[1] = "Image//Car1Red.tga";
+	v_CarColourPath1[2] = "Image//Car1Purple.tga";
+	v_CarColourPath1[3] = "Image//Car1Green.tga";
+	v_CarColourPath1[4] = "Image//Car1Pink.tga";
+	v_CarColourPath1[5] = "Image//Car1Yellow.tga";
+	v_CarColourPath1[6] = "Image//Car1White.tga";
+	v_CarColourPath1[7] = "Image//Car1Grey.tga";
+	v_CarColourPath1[8] = "Image//Car1Black.tga";
+
+	v_CarColourPath2[0] = "Image//Car2Blue.tga";
+	v_CarColourPath2[1] = "Image//Car2Red.tga";
+	v_CarColourPath2[2] = "Image//Car2Purple.tga";
+	v_CarColourPath2[3] = "Image//Car2Green.tga";
+	v_CarColourPath2[4] = "Image//Car2Pink.tga";
+	v_CarColourPath2[5] = "Image//Car2Yellow.tga";
+	v_CarColourPath2[6] = "Image//Car2White.tga";
+	v_CarColourPath2[7] = "Image//Car2Grey.tga";
+	v_CarColourPath2[8] = "Image//Car2Black.tga";
+
+	v_CarColourPath3[0] = "Image//Car3Blue.tga";
+	v_CarColourPath3[1] = "Image//Car3Red.tga";
+	v_CarColourPath3[2] = "Image//Car3Purple.tga";
+	v_CarColourPath3[3] = "Image//Car3Green.tga";
+	v_CarColourPath3[4] = "Image//Car3Pink.tga";
+	v_CarColourPath3[5] = "Image//Car3Yellow.tga";
+	v_CarColourPath3[6] = "Image//Car3White.tga";
+	v_CarColourPath3[7] = "Image//Car3Grey.tga";
+	v_CarColourPath3[8] = "Image//Car3Black.tga";
+
+
+	//firstCar.init("player1", v_CarPaths[0], v_CarColourPath1[0], (0, 0, 0));
+	levelOne.Init();
 	e_GameState_Garage = GARAGE_;
 	v_MusicPause = false;
 
@@ -340,6 +370,8 @@ void c_Garage::Init()
 
 	v_Garage_SFX.f_Init_Sound();
 	v_Garage_SFX.f_Start_Menu_music();
+
+
 }
 
 void c_Garage::Update(double dt)
@@ -349,10 +381,22 @@ void c_Garage::Update(double dt)
 	{
 		f_UpdateGarage(dt);
 	}
-	if (e_GameState_Garage == LEVELONE_)
+	else if (e_GameState_Garage == CHANGED_)
 	{
-		v_BounceTime = v_ElapsedTime + 0.250;
-		e_GameState_Garage = LEVELONE_;
+		v_RotateCar += (float)(v_ConfirmRotation * dt);
+
+		if (v_ConfirmRotation > 50)
+		{
+			v_ConfirmRotation -= (float)(500 * dt);
+			
+		}
+		else
+			e_GameState_Garage = LEVELONE_;
+		
+	}
+	else if (e_GameState_Garage == LEVELONE_)
+	{
+		levelOne.Update(dt);
 	}
 }
 
@@ -492,13 +536,19 @@ void c_Garage::Render()
 	renderLights();
 
 	if (e_GameState_Garage == GARAGE_)
-	{
 		f_RenderGarage();
-	}
-	else
+	else if (e_GameState_Garage == CHANGED_)
 	{
-		levelOne.Render();
+		modelStack.PushMatrix();
+		modelStack.Translate(0.5f, 0, -10);
+		modelStack.Scale(1.26f, 1, 1);
+		RenderMesh(meshList[GARAGEBG], false);
+		modelStack.PopMatrix();
+
+		f_RenderFinal();
 	}
+	else if(e_GameState_Garage == LEVELONE_)
+		levelOne.Render();
 }
 
 void c_Garage::initLights()
@@ -1124,9 +1174,20 @@ void c_Garage::f_UpdateGarage(double dt)
 	{
 		v_ConfirmRotation = 900;
 		v_Garage_SFX.f_Menu_ConfirmSelect();
-
 		v_BounceTime = v_ElapsedTime + 0.250;
-		e_GameState_Garage = LEVELONE_;
+		e_GameState_Garage = CHANGED_;
+		/*if (v_CarList.f_GetCurCar()->f_GetCarNum() == 0)
+		{
+			firstCar.updateAppearance(v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+		}
+		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 1)
+		{
+			firstCar.updateAppearance(v_CarPaths[1], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+		}
+		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
+		{
+			firstCar.updateAppearance(v_CarPaths[2], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+		}*/
 	}
 	if (Application::IsKeyPressed(VK_SPACE) && v_BTPause < v_ElapsedTime)
 	{

@@ -18,7 +18,7 @@ public:
 	//Function
 	void defaultData();
 	void calcNewDimensions(float xScale, float yScale, float zScale);
-	void calcNewAxis(float rotateAmt, Vector3 Axis);
+	void calcNewAxis(float rotateAmt, float xAxis, float yAxis, float zAxis);
 	void setHighLow(const char *file_path);
 	void setPos(Vector3 pos );
 	bool getSeparatingPlane(const Vector3& RPos, const Vector3& Plane, c_Collision* other);

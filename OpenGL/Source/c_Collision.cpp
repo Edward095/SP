@@ -76,11 +76,11 @@ void c_Collision::setHighLow(const char *file_path)
 
 }
 
-void c_Collision::calcNewAxis(float rotateAmt,Vector3 Axis)
+void c_Collision::calcNewAxis(float rotateAmt, float xAxis, float yAxis, float zAxis)
 {
 	float angle = Math::DegreeToRadian(rotateAmt);
 
-	if (Axis.x == 1)
+	if (xAxis == 1)
 	{
 		//Rotate About x Axis
 		Mtx44 matrix(
@@ -94,7 +94,7 @@ void c_Collision::calcNewAxis(float rotateAmt,Vector3 Axis)
 		localY = matrix * localY;
 		localZ = matrix * localZ;
 	}
-	else if (Axis.y == 1)
+	else if (yAxis == 1)
 	{
 		//Rotate About Y axis
 		Mtx44 matrix(
@@ -106,7 +106,7 @@ void c_Collision::calcNewAxis(float rotateAmt,Vector3 Axis)
 		localX = matrix * localX;//To Get local X Axis after rotation
 		localZ = matrix * localZ;//To Get local Z Axis after rotation
 	}
-	else if(Axis.z == 1)
+	else if(zAxis == 1)
 	{
 		//Rotate About Z Axis
 		Mtx44 matrix(
