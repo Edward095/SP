@@ -30,6 +30,8 @@ void c_LevelOne::Init()
 	CamTargetX = car.getPos().x;
 	CamTargetY = car.getPos().y;
 	CamTargetZ = car.getPos().z;
+	elapsedTime = 0;
+	FreezeTime = 0;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -76,7 +78,7 @@ void c_LevelOne::Init()
 	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID,
 		"textColor");
 	//Initialize camera settings
-	camera.Init(Vector3(10, 2, 20), Vector3(0, 1, 0), Vector3(0, 1, 0));
+	camera.Init(Vector3(0, 8, 5), Vector3(0, 1, 0), Vector3(0, 1, 0));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -127,7 +129,7 @@ void c_LevelOne::Init()
 void c_LevelOne::Update(double dt)
 {
 	elapsedTime += dt;
-	FreezeTime  = (dt + (dt* 0.008));
+	FreezeTime  = (dt + (dt* 0.1));
 
 	if (Application::IsKeyPressed('V'))
 	{
@@ -146,9 +148,9 @@ void c_LevelOne::Update(double dt)
 	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 5);
 	CamPosY = car.getPos().y + 8;
 	CamPosZ = (car.getPos().z - (cos(Math::DegreeToRadian(car.GetSteeringAngle()))) * 5);
-	CamTargetX = car.getPos().x + 1;
+	CamTargetX = car.getPos().x;
 	CamTargetY = car.getPos().y + 5;
-	CamTargetZ = car.getPos().z + 1;
+	CamTargetZ = car.getPos().z;
 
 	camera.Update(dt); 
   
@@ -236,7 +238,7 @@ void c_LevelOne::Render()
 
 	modelStack.PushMatrix();
 	modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
-	modelStack.Scale(1, 1, 1);
+	//modelStack.Scale(1, 1, 1);
 	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Rotate(car.GetSteeringAngle(), 0, 1, 0);
 	RenderMesh(car.getMesh(), true);
