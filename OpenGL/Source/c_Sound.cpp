@@ -13,7 +13,7 @@ c_Sound::~c_Sound()
 
 void c_Sound::f_Init_Sound()
 {
-	// Main Menu
+	// Menu
 	v_MM_Music = irrklang::createIrrKlangDevice();
 	v_MM_SFX = irrklang::createIrrKlangDevice();
 
