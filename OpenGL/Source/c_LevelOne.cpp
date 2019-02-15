@@ -10,7 +10,7 @@
 #include "Vertex.h"
 #include "Utility.h"
 #include "LoadTGA.h"
-
+#include <iomanip>
 
 
 c_LevelOne::c_LevelOne()
@@ -30,6 +30,8 @@ void c_LevelOne::Init()
 	CamTargetX = car.getPos().x;
 	CamTargetY = car.getPos().y;
 	CamTargetZ = car.getPos().z;
+	elapsedTime = 0;
+	FreezeTime = 0;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -129,6 +131,7 @@ void c_LevelOne::Update(double dt)
 	elapsedTime += dt;
 	FreezeTime  = (dt + (dt* 0.008));
 
+
 	if (Application::IsKeyPressed('V'))
 	{
 		Freeze = true;
@@ -137,6 +140,7 @@ void c_LevelOne::Update(double dt)
 	if (Freeze)
 	{
 		elapsedTime -= FreezeTime;
+		
 	}
 	if (Application::IsKeyPressed('B'))
 	{
@@ -249,7 +253,7 @@ void c_LevelOne::Render()
 	RenderMesh(nitro.getMesh(), true);
 	//RenderMesh(meshList[NITRO], false);
 	modelStack.PopMatrix();
-
+	
 	RenderTextOnScreen(meshList[TEXT], std::to_string(elapsedTime), Color(1, 0, 0), 4, 1, 13);
 
 }

@@ -30,7 +30,7 @@ void c_MainMenu::Init()
 	e_GameState = MENU;
 	//NPC init
 	Npc.Init();
-	LevelOne.Init();
+	//LevelOne.Init();
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

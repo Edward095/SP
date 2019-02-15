@@ -1,1 +1,15 @@
-﻿
+﻿  c_Garage.cpp
+c:\users\asus\desktop\sp2\sp\opengl\source\c_garage.cpp(300): warning C4305: 'argument': truncation from 'double' to 'float'
+  c_LevelOne.cpp
+c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(131): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(132): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(253): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(258): error C2143: syntax error: missing ';' before ')'
+c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(260): error C2065: 'elapsedTimeP': undeclared identifier
+c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(260): error C2660: 'c_LevelOne::RenderTextOnScreen': function does not take 5 arguments
+  c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.h(84): note: see declaration of 'c_LevelOne::RenderTextOnScreen'
+  c_Npc.cpp
+  c_MainMenu.cpp
+  Application.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  c:\users\asus\desktop\sp2\sp\glfw\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
