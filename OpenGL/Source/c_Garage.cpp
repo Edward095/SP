@@ -187,6 +187,9 @@ c_Garage::~c_Garage()
 
 void c_Garage::Init()
 {
+	levelOne.Init();
+	e_GameState_Garage = GARAGE_;
+
 	v_Car1Blue = LoadTGA("Image//Car1Blue.tga");
 	v_Car1Red = LoadTGA("Image//Car1Red.tga");
 	v_Car1Purple = LoadTGA("Image//Car1Purple.tga");
@@ -342,60 +345,16 @@ void c_Garage::Init()
 void c_Garage::Update(double dt)
 {
 	v_ElapsedTime += dt;
-	if (Application::IsKeyPressed(VK_UP) && v_BounceTime < v_ElapsedTime)
+	if (e_GameState_Garage == GARAGE_)
 	{
-		v_CarList.f_ChangeCurrentCar('O');
-		v_Garage_SFX.f_Menu_MoveSelect();
-		v_BounceTime = v_ElapsedTime + 0.250;
+		f_UpdateGarage(dt);
 	}
-	if (Application::IsKeyPressed(VK_DOWN) && v_BounceTime < v_ElapsedTime)
-	{
-		v_CarList.f_ChangeCurrentCar('P');
-		v_Garage_SFX.f_Menu_MoveSelect();
-		v_BounceTime = v_ElapsedTime + 0.250;
-	}
-	if (Application::IsKeyPressed(VK_LEFT) && v_BounceTime < v_ElapsedTime)
-	{
-		v_ColourList.f_ChangeCurrentColour('K');
-		v_Garage_SFX.f_Menu_MoveSelect();
-		v_BounceTime = v_ElapsedTime + 0.250;
-	}
-	if (Application::IsKeyPressed(VK_RIGHT) && v_BounceTime < v_ElapsedTime)
-	{
-		v_ColourList.f_ChangeCurrentColour('L');
-		v_Garage_SFX.f_Menu_MoveSelect();
-		v_BounceTime = v_ElapsedTime + 0.250;
-	}
-	if (Application::IsKeyPressed(VK_RETURN) && v_BounceTime < v_ElapsedTime)
+	if (e_GameState_Garage == LEVELONE_)
 	{
 		v_ConfirmRotation = 900;
 		v_Garage_SFX.f_Menu_ConfirmSelect();
 		v_BounceTime = v_ElapsedTime + 0.250;
 		e_GameState_Garage = NPC_;
-	}
-	if (Application::IsKeyPressed(VK_SPACE) && v_BTPause < v_ElapsedTime)
-	{
-		if (v_MusicPause)
-		{
-			v_Garage_SFX.f_Unpause_Menu_Music();
-			v_BTPause = v_ElapsedTime + 0.250;
-			v_MusicPause = !v_MusicPause;
-		}
-		else
-		{
-			v_Garage_SFX.f_Pause_Menu_Music();
-			v_BTPause = v_ElapsedTime + 0.250;
-			v_MusicPause = !v_MusicPause;
-		}
-	}
-	f_UpdateCurColour();
-	f_UpdateCurCar();
-
-	v_RotateCar += (float)(v_ConfirmRotation * dt);
-
-	if (v_ConfirmRotation > 50)
-	{
-		v_ConfirmRotation -= (float)(500 * dt);
 	}
 }
 
@@ -534,25 +493,14 @@ void c_Garage::Render()
 
 	renderLights();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(0.5f, 0, -10);
-	modelStack.Scale(1.26f, 1, 1);
-	RenderMesh(meshList[GARAGEBG], false);
-	modelStack.PopMatrix();
-
-	f_RenderPallet();
-
-	f_RenderPreviews();
-
-	f_RenderFinal();
-
-	f_RenderStats();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 4, 1);
-	modelStack.Scale(2.5f, 2.5f, 2.5f);
-	RenderMesh(meshList[UI], false);
-	modelStack.PopMatrix();
+	if (e_GameState_Garage == GARAGE_)
+	{
+		f_RenderGarage();
+	}
+	else
+	{
+		levelOne.Render();
+	}
 }
 
 void c_Garage::initLights()
@@ -1148,3 +1096,84 @@ void c_Garage::Exit()
 
 
 
+void c_Garage::f_UpdateGarage(double dt)
+{
+	if (Application::IsKeyPressed(VK_UP) && v_BounceTime < v_ElapsedTime)
+	{
+		v_CarList.f_ChangeCurrentCar('O');
+		v_Garage_SFX.f_MainMenu_MoveSelect();
+		v_BounceTime = v_ElapsedTime + 0.250;
+	}
+	if (Application::IsKeyPressed(VK_DOWN) && v_BounceTime < v_ElapsedTime)
+	{
+		v_CarList.f_ChangeCurrentCar('P');
+		v_Garage_SFX.f_MainMenu_MoveSelect();
+		v_BounceTime = v_ElapsedTime + 0.250;
+	}
+	if (Application::IsKeyPressed(VK_LEFT) && v_BounceTime < v_ElapsedTime)
+	{
+		v_ColourList.f_ChangeCurrentColour('K');
+		v_Garage_SFX.f_MainMenu_MoveSelect();
+		v_BounceTime = v_ElapsedTime + 0.250;
+	}
+	if (Application::IsKeyPressed(VK_RIGHT) && v_BounceTime < v_ElapsedTime)
+	{
+		v_ColourList.f_ChangeCurrentColour('L');
+		v_Garage_SFX.f_MainMenu_MoveSelect();
+		v_BounceTime = v_ElapsedTime + 0.250;
+	}
+	if (Application::IsKeyPressed(VK_RETURN) && v_BounceTime < v_ElapsedTime)
+	{
+		v_ConfirmRotation = 900;
+		v_Garage_SFX.f_MainMenu_ConfirmSelect();
+
+		v_BounceTime = v_ElapsedTime + 0.250;
+		e_GameState_Garage = LEVELONE_;
+	}
+	if (Application::IsKeyPressed(VK_SPACE) && v_BTPause < v_ElapsedTime)
+	{
+		if (v_MusicPause)
+		{
+			v_Garage_SFX.f_Unpause_MainMenu_Music();
+			v_BTPause = v_ElapsedTime + 0.250;
+			v_MusicPause = !v_MusicPause;
+		}
+		else
+		{
+			v_Garage_SFX.f_Pause_MainMenu_Music();
+			v_BTPause = v_ElapsedTime + 0.250;
+			v_MusicPause = !v_MusicPause;
+		}
+	}
+	f_UpdateCurColour();
+	f_UpdateCurCar();
+
+	v_RotateCar += (float)(v_ConfirmRotation * dt);
+
+	if (v_ConfirmRotation > 50)
+	{
+		v_ConfirmRotation -= (float)(500 * dt);
+	}
+}
+void c_Garage::f_RenderGarage()
+{
+	modelStack.PushMatrix();
+	modelStack.Translate(0.5f, 0, -10);
+	modelStack.Scale(1.26f, 1, 1);
+	RenderMesh(meshList[GARAGEBG], false);
+	modelStack.PopMatrix();
+
+	f_RenderPallet();
+
+	f_RenderPreviews();
+
+	f_RenderFinal();
+
+	f_RenderStats();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 4, 1);
+	modelStack.Scale(2.5f, 2.5f, 2.5f);
+	RenderMesh(meshList[UI], false);
+	modelStack.PopMatrix();
+}

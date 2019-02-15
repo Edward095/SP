@@ -30,7 +30,6 @@ void c_MainMenu::Init()
 	e_GameState = MENU;
 	//NPC init
 	Npc.Init();
-	LevelOne.Init();
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -349,12 +348,10 @@ void c_MainMenu::updateSelection(double dt)
 void c_MainMenu::renderNewGame()
 {
 	Npc.Render();
-	LevelOne.Render();
 }
 void c_MainMenu::updateNewGame(double dt)
 {
-	//Npc.Update(dt);
-	LevelOne.Update(dt);
+	Npc.Update(dt);
 }
 void c_MainMenu::renderContinue()
 {

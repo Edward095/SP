@@ -9,7 +9,8 @@ public:
 	c_FirstCar();
 	~c_FirstCar();
 	virtual void Movement(double dt);
-
+	virtual void Ability();
+	virtual void PowerUp(bool check);
 };
 
 

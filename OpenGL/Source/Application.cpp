@@ -11,6 +11,8 @@
 #include "Application.h"
 #include "c_MainMenu.h"
 #include "c_Garage.h"
+#include "c_LevelOne.h"
+#include "c_Npc.h"
 
 
 GLFWwindow* m_window;

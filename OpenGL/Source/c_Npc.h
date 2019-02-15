@@ -4,7 +4,7 @@
 #include "Scene.h"
 #include "Scene.h"
 #include "Mesh.h"
-#include "FirstPersonCamera.h"
+#include "NPCCamera.h"
 #include "MatrixStack.h"
 #include "Light.h"
 #include "c_Garage.h"
@@ -78,7 +78,7 @@ private:
 	Mesh* meshList[NUM_GEOMETRY];
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
-	FirstPersonCamera camera;
+	NPCCamera camera;
 	MS modelStack, viewStack, projectionStack;
 	//Gamestate
 	GAME_STATE_NPC e_GameState_NPC;
