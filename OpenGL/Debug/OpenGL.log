@@ -1,26 +1,3 @@
-<<<<<<< HEAD
 ﻿  c_Garage.cpp
 c:\users\marc-\documents\github\sp\opengl\source\c_garage.cpp(311): warning C4305: 'argument': truncation from 'double' to 'float'
   OpenGL.vcxproj -> C:\Users\marc-\Documents\GitHub\SP\Debug\OpenGL.exe
-=======
-﻿  c_FirstCar.cpp
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(27): warning C4305: '+=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(28): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(46): warning C4305: '-=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(47): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(55): warning C4305: '-=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(56): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(65): warning C4305: '-=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(76): warning C4305: '-=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(77): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(104): warning C4305: '-=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(105): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(124): warning C4305: '+=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(125): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(133): warning C4305: '+=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(134): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(144): warning C4305: '+=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(155): warning C4305: '-=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(156): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-  OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\OpenGL.exe
->>>>>>> Edward
