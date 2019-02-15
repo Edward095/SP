@@ -8,6 +8,7 @@
 #include "MatrixStack.h"
 #include "Light.h"
 #include "c_FirstCar.h"
+#include "c_Entity.h"
 
 class c_LevelOne : public Scene
 {
@@ -23,6 +24,7 @@ public:
 		BOTTOM,
 		CAR1,
 		TRACK,
+		NITRO,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -82,16 +84,19 @@ private:
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
 	c_FirstCar car;
+	
 	c_Entity front;
 	c_Entity top;
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
+	c_Entity nitro;
 
 	//Variables
 
 	bool talk;
 	float elapsedTime;
+	float FreezeTime;
 	float TimePassed;
 	bool AbletoPress;
 	float CamPosX;
@@ -100,6 +105,7 @@ private:
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
+	bool Freeze = false;
 };
 
 #endif

@@ -26,16 +26,20 @@ void c_FirstCar::Movement(double dt)
 			pos.z += (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			Driving = true;
 			Backwards = false;
-
+			Ability();
 			if (Acceleration > 1)
 			{
 				Acceleration = 1;
 			}
-			if (VelocityZ > 1)
+
+			if (VelocityZ > 1 && (PressQ || Nitro))
+			{
+				VelocityZ = 1.5;
+			}
+			else if (VelocityZ > 1 && (!PressQ || !Nitro))
 			{
 				VelocityZ = 1;
 			}
-
 		}
 
 
@@ -102,16 +106,20 @@ void c_FirstCar::Movement(double dt)
 		pos.z += (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		Backwards = true;
 		Driving = false;
-
+		Ability();
 		if (Acceleration < -1)
 		{
 			Acceleration = -1;
 		}
-		if (VelocityZ < -1)
+
+		if (VelocityZ < -1 && (PressQ || Nitro))
+		{
+			VelocityZ = -2;
+		}
+		else if (VelocityZ < -1 && (!PressQ || !Nitro))
 		{
 			VelocityZ = -1;
 		}
-
 	}
 
 	if (Backwards)
@@ -137,4 +145,33 @@ void c_FirstCar::Movement(double dt)
 			}
 		}
 	}
+}
+
+void c_FirstCar::Ability()
+{
+	if (Application::IsKeyPressed('Q'))
+	{
+		if (Driving || Backwards)
+		{
+			PressQ = true;
+		}
+	}
+
+	if (PressQ)
+	{
+		if (VelocityZ < 1)
+		{
+			PressQ = false;
+		}
+	}
+
+}
+
+void c_FirstCar::PowerUp(bool check)
+{
+	if (check)
+	{
+		Nitro = true;
+	}
+
 }
