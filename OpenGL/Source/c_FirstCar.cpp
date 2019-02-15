@@ -15,6 +15,7 @@ c_FirstCar::c_FirstCar()
 	SteeringAngle = 0;
 	frontCollide = false;
 	backCollide = false;
+	Duration = 0;
 }
 c_FirstCar::~c_FirstCar()
 {
@@ -31,16 +32,11 @@ void c_FirstCar::Movement(double dt)
 		pos.x += (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		pos.y = pos.y;
 		pos.z += (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
-		if (!backCollide)
-		{
-			if (gotCollide())
-			{
-				frontCollide = true;
-				pos.x -= (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
-				pos.y = pos.y;
-				pos.z -= (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
-			}
-			else
+
+			Driving = true;
+			Backwards = false;
+			Ability(dt);
+			if (Acceleration > 1)
 			{
 				Driving = true;
 				Backwards = false;
@@ -53,18 +49,6 @@ void c_FirstCar::Movement(double dt)
 					VelocityZ = 1;
 			}
 		}
-		Driving = true;
-		Backwards = false;
-		Ability();
-		if (Acceleration > 1)
-			Acceleration = 1;
-
-		if (VelocityZ > 1 && (PressQ || Nitro))
-			VelocityZ = 1.5;
-		else if (VelocityZ > 1 && (!PressQ || !Nitro))
-			VelocityZ = 1;
-		backCollide = false;
-	}
 	if (Driving)
 	{
 		if (!Application::IsKeyPressed('W'))
@@ -151,7 +135,7 @@ void c_FirstCar::Movement(double dt)
 		}
 		Backwards = true;
 		Driving = false;
-		Ability();
+		Ability(dt);
 		if (Acceleration < -1)
 			Acceleration = -1;
 		if (VelocityZ < -1 && (PressQ || Nitro))
@@ -186,24 +170,23 @@ void c_FirstCar::Movement(double dt)
 	}
 }
 
-void c_FirstCar::Ability()
+void c_FirstCar::Ability(double dt)
 {
 	if (Application::IsKeyPressed('Q'))
 	{
 		if (Driving || Backwards)
-		{
 			PressQ = true;
-		}
 	}
 
 	if (PressQ)
 	{
-		if (VelocityZ < 1)
+		Duration++;
+		if (Duration >= 150) // 3 sec/dt
 		{
 			PressQ = false;
+			Duration = 0;
 		}
 	}
-
 }
 
 void c_FirstCar::PowerUp(bool check)
