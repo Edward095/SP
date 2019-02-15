@@ -111,6 +111,8 @@ private:
 	bool AbleToPress;
 	bool Talk;
 	bool LevelSelection;
+	bool Level1;
+	bool Level2;
 };
 
 #endif
