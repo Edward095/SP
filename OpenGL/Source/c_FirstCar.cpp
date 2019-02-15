@@ -7,6 +7,9 @@ c_FirstCar::c_FirstCar()
 	Driving = false;
 	VelocityZ = 0;
 	Acceleration = 0;
+	pos.x = 0;
+	pos.y = 1;
+	pos.z = 0;
 }
 c_FirstCar::~c_FirstCar()
 {
@@ -16,7 +19,7 @@ c_FirstCar::~c_FirstCar()
 void c_FirstCar::Movement(double dt)
 {
 	
-		if (Application::IsKeyPressed('W'))
+		if (Application::IsKeyPressed('W') && Backwards == false)
 		{
 			Acceleration += 0.1;
 			//steeringAngle = 0;
@@ -62,8 +65,8 @@ void c_FirstCar::Movement(double dt)
 			if (VelocityZ < 0)
 			{
 				VelocityZ = 0;
-				//Driving = false;
-				//Backwards = false;
+				Driving = false;
+				Backwards = false;
 			}
 
 		}
@@ -97,7 +100,7 @@ void c_FirstCar::Movement(double dt)
 	}
 
 
-	if (Application::IsKeyPressed('S'))
+	if (Application::IsKeyPressed('S') && Driving == false)
 	{
 		Acceleration -= 0.1;
 		VelocityZ += Acceleration * dt;
@@ -140,8 +143,8 @@ void c_FirstCar::Movement(double dt)
 			if (VelocityZ > 0)
 			{
 				VelocityZ = 0;
-				//Driving = false;
-				//Backwards = false;
+				Driving = false;
+				Backwards = false;
 			}
 		}
 	}

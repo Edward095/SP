@@ -19,6 +19,7 @@ protected:
 	float MaxSpeed;
 	float SteeringAngle;
 	float Acceleration;
+	
 
 	bool Driving = false;
 	bool Backwards = false;
