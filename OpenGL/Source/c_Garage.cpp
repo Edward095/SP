@@ -351,10 +351,8 @@ void c_Garage::Update(double dt)
 	}
 	if (e_GameState_Garage == LEVELONE_)
 	{
-		v_ConfirmRotation = 900;
-		v_Garage_SFX.f_Menu_ConfirmSelect();
 		v_BounceTime = v_ElapsedTime + 0.250;
-		e_GameState_Garage = NPC_;
+		e_GameState_Garage = LEVELONE_;
 	}
 }
 
@@ -1101,31 +1099,31 @@ void c_Garage::f_UpdateGarage(double dt)
 	if (Application::IsKeyPressed(VK_UP) && v_BounceTime < v_ElapsedTime)
 	{
 		v_CarList.f_ChangeCurrentCar('O');
-		v_Garage_SFX.f_MainMenu_MoveSelect();
+		v_Garage_SFX.f_Menu_MoveSelect();
 		v_BounceTime = v_ElapsedTime + 0.250;
 	}
 	if (Application::IsKeyPressed(VK_DOWN) && v_BounceTime < v_ElapsedTime)
 	{
 		v_CarList.f_ChangeCurrentCar('P');
-		v_Garage_SFX.f_MainMenu_MoveSelect();
+		v_Garage_SFX.f_Menu_MoveSelect();
 		v_BounceTime = v_ElapsedTime + 0.250;
 	}
 	if (Application::IsKeyPressed(VK_LEFT) && v_BounceTime < v_ElapsedTime)
 	{
 		v_ColourList.f_ChangeCurrentColour('K');
-		v_Garage_SFX.f_MainMenu_MoveSelect();
+		v_Garage_SFX.f_Menu_MoveSelect();
 		v_BounceTime = v_ElapsedTime + 0.250;
 	}
 	if (Application::IsKeyPressed(VK_RIGHT) && v_BounceTime < v_ElapsedTime)
 	{
 		v_ColourList.f_ChangeCurrentColour('L');
-		v_Garage_SFX.f_MainMenu_MoveSelect();
+		v_Garage_SFX.f_Menu_MoveSelect();
 		v_BounceTime = v_ElapsedTime + 0.250;
 	}
-	if (Application::IsKeyPressed(VK_RETURN) && v_BounceTime < v_ElapsedTime)
+  	if (Application::IsKeyPressed(VK_RETURN) && v_BounceTime < v_ElapsedTime)
 	{
 		v_ConfirmRotation = 900;
-		v_Garage_SFX.f_MainMenu_ConfirmSelect();
+		v_Garage_SFX.f_Menu_ConfirmSelect();
 
 		v_BounceTime = v_ElapsedTime + 0.250;
 		e_GameState_Garage = LEVELONE_;
@@ -1134,13 +1132,13 @@ void c_Garage::f_UpdateGarage(double dt)
 	{
 		if (v_MusicPause)
 		{
-			v_Garage_SFX.f_Unpause_MainMenu_Music();
+			v_Garage_SFX.f_Unpause_Menu_Music();
 			v_BTPause = v_ElapsedTime + 0.250;
 			v_MusicPause = !v_MusicPause;
 		}
 		else
 		{
-			v_Garage_SFX.f_Pause_MainMenu_Music();
+			v_Garage_SFX.f_Pause_Menu_Music();
 			v_BTPause = v_ElapsedTime + 0.250;
 			v_MusicPause = !v_MusicPause;
 		}

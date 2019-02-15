@@ -35,7 +35,7 @@ public:
 private:
 	// Music
 	irrklang::ISoundEngine* v_MM_Music;
-	irrklang::ISoundEngine* v_L1_Music; // Level 1 Music
+	irrklang::ISoundEngine* v_L1_Music; 
 	irrklang::ISoundEngine* v_L2_Music;
 	irrklang::ISoundEngine* v_L3_Music;
 
