@@ -14,6 +14,7 @@ c_FirstCar::c_FirstCar()
 	MaxSpeed = 0;
 	SteeringAngle = 0;
 	Duration = 0;
+
 }
 c_FirstCar::~c_FirstCar()
 {
@@ -136,7 +137,6 @@ void c_FirstCar::Movement(double dt)
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
-
 			if (!gotCollide(updateX, pos.y, updateZ))
 			{
 				if (Acceleration > 0)
