@@ -62,7 +62,8 @@ bool c_Entity::gotCollide()
 	{
 		c_Collision* collide = objectManager->getObjects().at(i)->getOBB();
 
-		if (objectManager->getObjects().at(i)->getUniqueName() != this->uniqueName)
+		if (objectManager->getObjects().at(i)->getUniqueName() != this->uniqueName &&
+			objectManager->getObjects().at(i)->getUniqueName() != "Nitro")
 		{
 			if (OBB->OBB(collide))
 				return true;

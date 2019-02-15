@@ -1,5 +1,12 @@
-﻿  c_Entity.cpp
-d:\users\539\desktop\sp2\sp\opengl\source\c_entity.cpp(49): warning C4018: '<': signed/unsigned mismatch
-d:\users\539\desktop\sp2\sp\opengl\source\c_entity.cpp(61): warning C4018: '<': signed/unsigned mismatch
-d:\users\539\desktop\sp2\sp\opengl\source\c_entity.cpp(57): warning C4715: 'c_Entity::getEntity': not all control paths return a value
+﻿  c_FirstCar.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(25): warning C4305: '+=': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(27): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(83): warning C4305: '-=': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(84): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(99): warning C4305: '-=': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(144): warning C4305: '-=': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(145): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(203): warning C4305: '+=': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(204): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_firstcar.cpp(212): warning C4305: '+=': truncation from 'double' to 'float'
   OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\OpenGL.exe

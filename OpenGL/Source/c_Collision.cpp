@@ -27,7 +27,7 @@ void c_Collision::setHighLow(const char *file_path)
 {
 	if (file_path == "quad")
 	{
-		dimensions.Set(0.5, 0.5, 0);
+		dimensions.Set(1, 1, 0);
 		type = file_path;
 	}
 	else
@@ -71,7 +71,7 @@ void c_Collision::setHighLow(const char *file_path)
 		}
 
 		type = "OBJ";
-		dimensions.Set((highestX - lowestX) / 2, (highestY - lowestY) / 2, (highestZ - lowestZ) / 2);
+		dimensions.Set((highestX - lowestX) / 1.5, (highestY - lowestY) / 1.5, (highestZ - lowestZ) / 1.5);
 	}
 
 }

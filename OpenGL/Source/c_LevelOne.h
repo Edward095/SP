@@ -17,10 +17,11 @@ public:
 	{
 		TEXT,
 		/*FRONT,
-		TOP,
+		
 		BACK,
 		LEFT,
 		RIGHT,*/
+		TOP,
 		BOTTOM,
 		CAR1,
 		TRACK,
@@ -86,7 +87,6 @@ private:
 	c_FirstCar car;
 	
 	c_Entity front;
-	c_Entity top;
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
