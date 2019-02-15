@@ -3,4 +3,8 @@
   timer.cpp
   Vector3.cpp
   Generating Code...
+<<<<<<< HEAD
   Common.vcxproj -> C:\Users\marc-\Documents\GitHub\SP\Debug\Common.lib
+=======
+  Common.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\Common.lib
+>>>>>>> da84c47c6fdf403a89647e88fdab9a1a6a72fa29
