@@ -62,7 +62,7 @@ void c_Sound::f_Menu_ConfirmSelect()
 
 void c_Sound::f_Level_1_music()
 {
-	v_L1_Music->play2D("SFX//Level1_Music.wav");
+	v_L1_Music->play2D("SFX//Level1_Music.mp3");
 }
 
 void c_Sound::f_PauseLevel_1_music()
@@ -77,7 +77,7 @@ void c_Sound::f_UnpauseLevel_1_music()
 
 void c_Sound::f_Level_2_music()
 {
-	v_L2_Music->play2D("filename");
+	v_L2_Music->play2D("SFX//Level2_Music.mp3");
 }
 
 void c_Sound::f_PauseLevel_2_music()
@@ -92,7 +92,7 @@ void c_Sound::f_UnpauseLevel_2_music()
 
 void c_Sound::f_Level_3_music()
 {
-	v_L3_Music->play2D("filename");
+	v_L3_Music->play2D("SFX//Level3_Music.mp3");
 }
 
 void c_Sound::f_PauseLevel_3_music()
