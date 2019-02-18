@@ -11,7 +11,6 @@
 #include "Application.h"
 
 #include "c_Npc.h"
-#include "c_LevelOne.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game

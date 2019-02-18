@@ -121,9 +121,6 @@ void c_LevelOne::Init()
 
 	meshList[TRACK] = MeshBuilder::GenerateOBJ("race track", "OBJ//RaceTrack.obj");
 
-    meshList[RAIN] = MeshBuilder::GenerateOBJ("Raindrops", "OBJ//Raindrop.obj");
-	meshList[RAIN]->textureID = LoadTGA("Image//Rain.tga");
-
 	front.init("front", "quad", "Image//NpcFront.tga", (0, 0, 0));
 	//top.init("top", "quad", "Image//NpcTop.tga", (0, 0, 0));
 	//bottom.init("bottom", "quad", "Image//NpcBottom.tga", (0, 0, 0));
@@ -136,7 +133,6 @@ void c_LevelOne::Init()
 	//RenderMesh(car.getMesh(), true);
 
 	//Initialization of Variables
-	Rain = 50;
 	
 }
 void c_LevelOne::Update(double dt)
@@ -156,11 +152,7 @@ void c_LevelOne::Update(double dt)
 			Freeze = false;
 	}
 
-	Rain -= 40 * dt; 
-	if (Rain < -50)
-	{
-		Rain = 50;
-	}
+	
 
 	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
 	CamPosY = car.getPos().y + 8;
@@ -190,7 +182,6 @@ void c_LevelOne::Render()
 	left.getOBB()->defaultData();
 	right.getOBB()->defaultData();
 	back.getOBB()->defaultData();
-
 
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -306,8 +297,6 @@ void c_LevelOne::Render()
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
-
-	RenderRain();
 }
 void c_LevelOne::Exit()
 {
@@ -545,21 +534,3 @@ rendertoscreen(time[0],);
 rendertoscreen(time[1],);
 rendertoscreen(time[2],);
 */
-
-
-void c_LevelOne::RenderRain()
-{
-	for (int z = -25; z < 25; z += 1)
-	{
-		for (int x = -25; x < 25; x+= 1)
-		{
-			modelStack.PushMatrix();
-			modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
-			modelStack.Translate(x, Rain, z);
-			modelStack.Scale(0.1, 0.2, 0.1);
-			RenderMesh(meshList[RAIN], false);
-			modelStack.PopMatrix();
-		}
-		
-	}
-}
