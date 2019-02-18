@@ -17,17 +17,13 @@ public:
 	enum GEOMETRY_TYPE
 	{
 		TEXT,
-		/*FRONT,
-		
-		BACK,
-		LEFT,
-		RIGHT,*/
 		TOP,
 		BOTTOM,
 		CAR1,
 		TRACK,
 		BOOSTPAD,
 		SLOWPAD,
+		RAIN,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE

@@ -161,6 +161,7 @@
     <ClCompile Include="Source\c_Sound.cpp" />
     <ClCompile Include="Source\c_Collision.cpp" />
     <ClCompile Include="Source\c_MainMenu.cpp" />
+    <ClCompile Include="Source\c_ThirdCar.cpp" />
     <ClCompile Include="Source\FirstPersonCamera.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Source\c_Npc.h" />
     <ClInclude Include="Source\c_Sound.h" />
     <ClInclude Include="Source\c_Collision.h" />
+    <ClInclude Include="Source\c_ThirdCar.h" />
     <ClInclude Include="Source\FirstPersonCamera.h" />
     <ClInclude Include="Source\LoadOBJ.h" />
     <ClInclude Include="Source\LoadTGA.h" />

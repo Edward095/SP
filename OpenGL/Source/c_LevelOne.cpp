@@ -136,8 +136,6 @@ void c_LevelOne::Init()
 	car.init("player1");
 	AI.init("Nitro","OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(6, 0, 6));
 	//RenderMesh(car.getMesh(), true);
-
-	//Initialization of Variables
 	
 }
 void c_LevelOne::Update(double dt)
