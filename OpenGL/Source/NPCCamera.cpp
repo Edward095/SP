@@ -72,6 +72,7 @@ void NPCCamera::Update(double dt)
 	elapsedTime += dt;
 	
 	UpdateMouse();
+	position.y = -1;
 	WOBmove(dt);
 
 }

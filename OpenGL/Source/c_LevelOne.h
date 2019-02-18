@@ -10,6 +10,8 @@
 #include "c_FirstCar.h"
 #include "c_Entity.h"
 #include "c_BoosterPad.h"
+#include "c_AI.h"
+
 
 class c_LevelOne : public Scene
 {
@@ -17,17 +19,13 @@ public:
 	enum GEOMETRY_TYPE
 	{
 		TEXT,
-		/*FRONT,
-		
-		BACK,
-		LEFT,
-		RIGHT,*/
 		TOP,
 		BOTTOM,
 		CAR1,
 		TRACK,
 		BOOSTPAD,
 		SLOWPAD,
+		RAIN,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -93,6 +91,7 @@ private:
 	c_Entity left;
 	c_Entity right;
 	c_Entity nitro;
+	c_AI AI;
 
 	c_BoosterPad boost;
 
