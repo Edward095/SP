@@ -45,8 +45,8 @@ void c_FirstCar::Movement(double dt)
 		}
 		else
 		{
-			Acceleration -= 0.1;
-			VelocityZ -= Acceleration * dt;
+			Acceleration = 0;
+			VelocityZ = 0;
 		}
 		
 	}
@@ -75,8 +75,8 @@ void c_FirstCar::Movement(double dt)
 			}
 			else
 			{
-				Acceleration -= 0.1;
-				VelocityZ -= Acceleration * dt;
+				Acceleration = 0;
+				VelocityZ = 0;
 			}
 		}
 	}
@@ -123,8 +123,8 @@ void c_FirstCar::Movement(double dt)
 		}
 		else
 		{
-			Acceleration += 0.1;
-			VelocityZ -= Acceleration * dt;
+			Acceleration = 0;
+			VelocityZ = 0;
 		}
 	}
 
@@ -153,8 +153,8 @@ void c_FirstCar::Movement(double dt)
 			}
 			else
 			{
-				Acceleration -= 0.1;
-				VelocityZ -= Acceleration * dt;
+				Acceleration = 0;
+				VelocityZ = 0;
 			}
 		}
 	}

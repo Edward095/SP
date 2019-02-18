@@ -121,6 +121,9 @@ void c_LevelOne::Init()
 
 	meshList[TRACK] = MeshBuilder::GenerateOBJ("race track", "OBJ//RaceTrack.obj");
 
+	meshList[BOOSTPAD] = MeshBuilder::GenerateOBJ("boostpad", "OBJ//Pad.obj");
+	meshList[BOOSTPAD]->textureID = LoadTGA("Image//BoostPad.tga");
+
 	front.init("front", "quad", "Image//NpcFront.tga", (0, 0, 0));
 	//top.init("top", "quad", "Image//NpcTop.tga", (0, 0, 0));
 	//bottom.init("bottom", "quad", "Image//NpcBottom.tga", (0, 0, 0));
@@ -133,6 +136,8 @@ void c_LevelOne::Init()
 	//RenderMesh(car.getMesh(), true);
 
 	//Initialization of Variables
+	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 4.f, 0));
+	boost.updatePos(20, 4, 0);
 	
 }
 void c_LevelOne::Update(double dt)
@@ -293,7 +298,16 @@ void c_LevelOne::Render()
 	RenderMesh(nitro.getMesh(), true);
 	//RenderMesh(meshList[NITRO], false);
 	modelStack.PopMatrix();
-	
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+	boost.getOBB()->calcNewDimensions(3, 1, 3);
+
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);

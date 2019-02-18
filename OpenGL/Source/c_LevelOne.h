@@ -9,6 +9,7 @@
 #include "Light.h"
 #include "c_FirstCar.h"
 #include "c_Entity.h"
+#include "c_BoosterPad.h"
 
 class c_LevelOne : public Scene
 {
@@ -92,6 +93,8 @@ private:
 	c_Entity left;
 	c_Entity right;
 	c_Entity nitro;
+
+	c_BoosterPad boost;
 
 	//Variables
 
