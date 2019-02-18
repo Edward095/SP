@@ -92,7 +92,7 @@ bool c_Entity::gotCollide(float x, float y, float z)
 		{
 			if (OBB->OBB(collide))
 			{
-				updatePos(pos.x - x, pos.y - y, pos.z -  z);
+				updatePos(pos.x - x, pos.y - y, pos.z - z);
 				return true;
 			}
 		}
