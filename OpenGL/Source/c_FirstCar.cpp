@@ -15,6 +15,9 @@ c_FirstCar::c_FirstCar()
 	SteeringAngle = 0;
 	Duration = 0;
 
+	counter = 0;
+	collided = false;
+	bAcceleration = 0;
 }
 c_FirstCar::~c_FirstCar()
 {
@@ -45,8 +48,11 @@ void c_FirstCar::Movement(double dt)
 		}
 		else
 		{
-			Acceleration -= 0.1;
-			VelocityZ -= Acceleration * dt;
+			Driving = false;
+			Backwards = false;
+			collided = true;
+			Acceleration = 0;
+			VelocityZ = 0;
 		}
 		
 	}
@@ -75,8 +81,11 @@ void c_FirstCar::Movement(double dt)
 			}
 			else
 			{
-				Acceleration -= 0.1;
-				VelocityZ -= Acceleration * dt;
+				Driving = false;
+				Backwards = false;
+				collided = true;
+				Acceleration = 0;
+				VelocityZ = 0;
 			}
 		}
 	}
@@ -123,8 +132,11 @@ void c_FirstCar::Movement(double dt)
 		}
 		else
 		{
-			Acceleration += 0.1;
-			VelocityZ -= Acceleration * dt;
+			Driving = false;
+			Backwards = false;
+			collided = true;
+			Acceleration = 0;
+			VelocityZ = 0;
 		}
 	}
 
@@ -153,10 +165,27 @@ void c_FirstCar::Movement(double dt)
 			}
 			else
 			{
-				Acceleration -= 0.1;
-				VelocityZ -= Acceleration * dt;
+				Driving = false;
+				Backwards = false;
+				collided = true;
+				Acceleration = 0;
+				VelocityZ = 0;
 			}
 		}
+	}
+	if (collided)
+	{
+		if (counter <= 5)
+		{
+			bounceBack(dt);
+			counter++;
+		}
+		else
+		{
+			counter = 0;
+			collided = false;
+		}
+
 	}
 }
 
@@ -186,4 +215,20 @@ void c_FirstCar::PowerUp(bool check)
 		Nitro = true;
 	}
 
+}
+
+
+
+void c_FirstCar::bounceBack(double dt)
+{/*
+	if (Backwards)
+		bAcceleration += 0.1;
+	else if (Driving)
+		bAcceleration -= 0.1;
+
+	VelocityZ += bAcceleration * dt;
+	float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+	float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+
+	pos.Set(pos.x + updateX, pos.y, pos.z + updateZ);*/
 }
