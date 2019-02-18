@@ -13,6 +13,8 @@
 #include "c_LevelOne.h"
 #include "c_FirstCar.h"
 
+#include "c_MultiplayerLevel.h"
+
 class c_Car
 {
 private:
@@ -196,8 +198,10 @@ private:
 	const char* v_CarColourPath2[9];
 	const char* v_CarColourPath3[9];
 
-	c_LevelOne levelOne;
+	//c_LevelOne levelOne;
 	c_FirstCar firstCar;
+
+	c_MultiplayerLevel level;
 
 };
 
