@@ -27,7 +27,7 @@ c_Npc::~c_Npc()
 void c_Npc::Init()
 {
 	Garage.Init();
-	LevelOne.Init();
+	//LevelOne.Init();
 	e_GameState_NPC = _NPC;
 
 	// Set background color to black

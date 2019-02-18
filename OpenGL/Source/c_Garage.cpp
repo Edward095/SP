@@ -1220,8 +1220,8 @@ void c_Garage::f_UpdateGarage(double dt)
 void c_Garage::f_RenderGarage()
 {
 	modelStack.PushMatrix();
-	modelStack.Translate(0.5f, 0, -10);
-	modelStack.Scale(1.26f, 1, 1);
+	modelStack.Translate(0, 0.6f, -10);
+	modelStack.Scale(1.35f, 1, 1);
 	RenderMesh(meshList[GARAGEBG], false);
 	modelStack.PopMatrix();
 

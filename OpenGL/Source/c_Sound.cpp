@@ -108,6 +108,20 @@ void c_Sound::f_Game_Nitro()
 	s_GP_SFX->play2D(s_Nitro);
 }
 
+void c_Sound::f_Game_Boost()
+{
+	s_GP_SFX->play2D(s_BoostPad);
+}
+
+void c_Sound::f_Game_Slow()
+{
+	s_GP_SFX->play2D(s_SlowPad);
+}
+void c_Sound::f_Game_Teleport()
+{
+	s_GP_SFX->play2D(s_Teleport);
+}
+
 void c_Sound::f_InitSFX()
 {
 	// Menu
@@ -116,6 +130,9 @@ void c_Sound::f_InitSFX()
 
 	// Gameplay
 	s_Nitro = s_GP_SFX->addSoundSourceFromFile("SFX//Game_SFX_Nitro.mp3");
+	s_BoostPad = s_GP_SFX->addSoundSourceFromFile("SFX//Game_SFX_BoostPad.wav");
+	s_SlowPad = s_GP_SFX->addSoundSourceFromFile("SFX//Game_SFX_SlowPad.wav");
+	s_Teleport = s_GP_SFX->addSoundSourceFromFile("SFX//Game_SFX_Teleport.wav");
 }
 
 void c_Sound::f_AdjustMusicVolume(float v_Volume)

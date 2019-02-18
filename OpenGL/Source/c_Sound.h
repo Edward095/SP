@@ -24,6 +24,9 @@ public:
 
 	// Game SFX
 	void f_Game_Nitro();
+	void f_Game_Boost();
+	void f_Game_Slow();
+	void f_Game_Teleport();
 
 	// Level Music
 	void f_Level_1_music();
@@ -52,6 +55,9 @@ private:
 
 	irrklang::ISoundEngine* s_GP_SFX;
 	irrklang::ISoundSource* s_Nitro;
+	irrklang::ISoundSource* s_BoostPad;
+	irrklang::ISoundSource* s_SlowPad;
+	irrklang::ISoundSource* s_Teleport;
 
 	void f_InitSFX();
 };

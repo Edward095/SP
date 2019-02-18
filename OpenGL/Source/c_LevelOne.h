@@ -25,7 +25,8 @@ public:
 		BOTTOM,
 		CAR1,
 		TRACK,
-		NITRO,
+		BOOSTPAD,
+		SLOWPAD,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
