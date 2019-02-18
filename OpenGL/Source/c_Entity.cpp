@@ -26,8 +26,30 @@ void c_Entity::init(std::string uniqueName, const char* meshPath, const char* TG
 	this->uniqueName = uniqueName;
 	quadORobject();//if Quad generate Quad else generate Obj
 	mesh->textureID = LoadTGA(TGApath);
-	OBB = new c_Collision();
+	OBB = new c_Collision;
 	OBB->setHighLow(meshPath);
+}
+void c_Entity::init(std::string uniqueName)
+{
+	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
+
+	for (int i = 0; i < objectManager->getObjects().size(); i++)
+	{
+		if (objectManager->getObjects().at(i)->getUniqueName() == uniqueName)
+		{
+			c_Entity* other = objectManager->getObjects().at(i);
+
+			this->pos = other->pos;
+			this->meshPath = other->meshPath;
+			this->TGApath = other->TGApath;
+			this->uniqueName = uniqueName;
+			this->mesh = other->mesh;
+			this->mesh->textureID = LoadTGA(TGApath);
+			this->OBB = other->OBB;
+			this->OBB->setHighLow(meshPath);
+		}
+	}
+
 }
 
 Mesh* c_Entity::getMesh()

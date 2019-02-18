@@ -128,7 +128,7 @@ void c_LevelOne::Init()
 	right.init("right", "quad", "Image//NpcRight.tga", (0, 0, 0));
 	back.init("back", "quad", "Image//NpcBack.tga", (0, 0, 0));
 
-	car.init("player1","OBJ//Car1Body.obj","Image//Car1Blue.tga", Vector3(0, 0, 0));
+	car.init("player1");
 	nitro.init("Nitro","OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(6, 0, 6));
 	//RenderMesh(car.getMesh(), true);
 
@@ -154,9 +154,9 @@ void c_LevelOne::Update(double dt)
 
 	
 
-	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 5);
+	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
 	CamPosY = car.getPos().y + 8;
-	CamPosZ = (car.getPos().z - (cos(Math::DegreeToRadian(car.GetSteeringAngle()))) * 5);
+	CamPosZ = (car.getPos().z - (cos(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
 	CamTargetX = car.getPos().x;
 	CamTargetY = car.getPos().y + 5;
 	CamTargetZ = car.getPos().z;

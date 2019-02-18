@@ -8,6 +8,7 @@
 #include "MatrixStack.h"
 #include "Light.h"
 #include "c_Garage.h"
+#include "c_LevelOne.h"
 
 class c_Npc :
 	public Scene
@@ -60,6 +61,7 @@ public:
 	{
 		_NPC,
 		GARAGE,
+		LEVEL1,
 
 	};
 
@@ -88,6 +90,7 @@ private:
 	
 	//Class
 	c_Garage Garage;
+	c_LevelOne LevelOne;
 
 
 	//Function
@@ -111,6 +114,8 @@ private:
 	bool AbleToPress;
 	bool Talk;
 	bool LevelSelection;
+	bool Level1;
+	bool Level2;
 };
 
 #endif
