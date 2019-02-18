@@ -1,6 +1,7 @@
 ﻿  c_SceneManager.cpp
   c_ObjectManager.cpp
   c_Entity.cpp
+<<<<<<< HEAD
 d:\users\539\desktop\sp2\sp\opengl\source\c_entity.cpp(36): warning C4018: '<': signed/unsigned mismatch
 d:\users\539\desktop\sp2\sp\opengl\source\c_entity.cpp(71): warning C4018: '<': signed/unsigned mismatch
 d:\users\539\desktop\sp2\sp\opengl\source\c_entity.cpp(86): warning C4018: '<': signed/unsigned mismatch
@@ -47,10 +48,57 @@ d:\users\539\desktop\sp2\sp\opengl\source\loadobj.cpp(119): warning C4244: 'init
 d:\users\539\desktop\sp2\sp\opengl\source\loadobj.cpp(120): warning C4018: '<': signed/unsigned mismatch
 d:\users\539\desktop\sp2\sp\opengl\source\loadobj.cpp(122): warning C4018: '<': signed/unsigned mismatch
 d:\users\539\desktop\sp2\sp\opengl\source\loadobj.cpp(124): warning C4018: '>': signed/unsigned mismatch
+=======
+c:\users\marc-\documents\github\sp\opengl\source\c_entity.cpp(49): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_entity.cpp(64): warning C4018: '<': signed/unsigned mismatch
+  c_Garage.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_garage.cpp(341): warning C4305: 'argument': truncation from 'double' to 'float'
+  c_CarBaseClass.cpp
+  c_FirstCar.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(28): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(29): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(47): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(48): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(56): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(57): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(66): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(77): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(78): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(105): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(106): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(125): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(126): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(134): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(135): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(145): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(156): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(157): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+  c_LevelOne.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(124): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(127): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(128): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(129): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(140): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(141): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(292): warning C4305: 'argument': truncation from 'double' to 'float'
+  c_Npc.cpp
+  c_Sound.cpp
+  c_Collision.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_collision.cpp(74): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_collision.cpp(132): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  c_MainMenu.cpp
+  FirstPersonCamera.cpp
+  LoadOBJ.cpp
+c:\users\marc-\documents\github\sp\opengl\source\loadobj.cpp(119): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\loadobj.cpp(120): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\loadobj.cpp(122): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\loadobj.cpp(124): warning C4018: '>': signed/unsigned mismatch
+>>>>>>> Marc
   Camera.cpp
   LoadTGA.cpp
   Mesh.cpp
   MeshBuilder.cpp
+<<<<<<< HEAD
 d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(322): warning C4018: '<': signed/unsigned mismatch
 d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(673): warning C4018: '<': signed/unsigned mismatch
 d:\users\539\desktop\sp2\sp\opengl\source\meshbuilder.cpp(1001): warning C4101: 'x1': unreferenced local variable
@@ -71,10 +119,40 @@ d:\users\539\desktop\sp2\sp\opengl\source\npccamera.cpp(151): warning C4244: 'ar
 d:\users\539\desktop\sp2\sp\opengl\source\npccamera.cpp(155): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 d:\users\539\desktop\sp2\sp\opengl\source\npccamera.cpp(159): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 d:\users\539\desktop\sp2\sp\opengl\source\npccamera.cpp(163): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+=======
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(322): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(673): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1001): warning C4101: 'x1': unreferenced local variable
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1001): warning C4101: 'z1': unreferenced local variable
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1095): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1102): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1103): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1105): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1148): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1150): warning C4018: '>': signed/unsigned mismatch
+  Application.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  c:\users\marc-\documents\github\sp\glfw\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+  main.cpp
+  NPCCamera.cpp
+c:\users\marc-\documents\github\sp\opengl\source\npccamera.cpp(72): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\npccamera.cpp(151): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\npccamera.cpp(155): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\npccamera.cpp(159): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\npccamera.cpp(163): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+>>>>>>> Marc
   Compiling...
   shader.cpp
   Utility.cpp
   Generating code
+<<<<<<< HEAD
   All 1127 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Release\OpenGL.exe
+=======
+  1133 of 1141 functions (99.3%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  OpenGL.vcxproj -> C:\Users\marc-\Documents\GitHub\SP\Release\OpenGL.exe
+>>>>>>> Marc
