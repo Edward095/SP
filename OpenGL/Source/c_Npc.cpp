@@ -26,8 +26,6 @@ c_Npc::~c_Npc()
 
 void c_Npc::Init()
 {
-	Garage.Init();
-	LevelOne.Init();
 	e_GameState_NPC = _NPC;
 
 	// Set background color to black
@@ -227,32 +225,17 @@ void c_Npc::UpdateNpc(double dt)
 		{
 			if (ArrowY == 7)
 			{
-				/*e_GameState_NPC = GARAGE;*/
-				//Garage.Update(dt);
 				Level1 = true;
 				LevelSelection = true;
+				e_GameState_NPC = GARAGE;
+				Garage.Init();
 			}
 			else if (ArrowY == 6)
 			{
 				Level2 = true;
 				LevelSelection = true;
-			}
-		}
-		else if (LevelSelection == true)
-		{
-			if (ArrowY == 7)
-			{
 				e_GameState_NPC = GARAGE;
-				//Garage.Update(dt);
-				//Level 1
-			}
-			else if (ArrowY == 6)
-			{
-				//Load Selected Level
-				if (Level1 == true)
-				{
-					e_GameState_NPC = LEVEL1;
-				}
+				Garage.Init();
 			}
 		}
 	}
@@ -384,22 +367,6 @@ void c_Npc::RenderNpc()
 	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && ElapsedTime > TimePassed && LevelSelection == false)
 	{
 		RenderTextOnScreen(meshList[TEXT], "Level 2", Color(1, 0, 0), 5, 7, 6);
-		AbleToPress = true;
-	}
-
-	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && ElapsedTime > TimePassed && LevelSelection == true)
-	{
-		RenderTextOnScreen(meshList[TEXT], "Customize Car?", Color(1, 0, 0), 3, 9, 13);
-		AbleToPress = true;
-	}
-	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && ElapsedTime > TimePassed && LevelSelection == true)
-	{
-		RenderTextOnScreen(meshList[TEXT], "Yes", Color(1, 0, 0), 5, 7, 7);
-		AbleToPress = true;
-	}
-	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && ElapsedTime > TimePassed && LevelSelection == true)
-	{
-		RenderTextOnScreen(meshList[TEXT], "No", Color(1, 0, 0), 5, 7, 6);
 		AbleToPress = true;
 	}
 	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < 40 && camera.position.x > -40)
