@@ -1182,11 +1182,11 @@ void c_Garage::f_UpdateGarage(double dt)
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 1)
 		{
-			firstCar.updateAppearance(v_CarPaths[1], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+			firstCar.updateAppearance(v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
 		{
-			firstCar.updateAppearance(v_CarPaths[2], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+			firstCar.updateAppearance(v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
 		}*/
 	}
 	if (Application::IsKeyPressed(VK_SPACE) && v_BTPause < v_ElapsedTime)

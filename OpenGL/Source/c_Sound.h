@@ -11,6 +11,9 @@ public:
 	~c_Sound();
 
 	void f_Init_Sound();
+	void f_AdjustMusicVolume(float v_Volume);
+	void f_AdjustSFXVolume(float v_Volume);
+
 	// Menu Music
 	void f_Start_Menu_music();
 	void f_Pause_Menu_Music();
@@ -18,6 +21,9 @@ public:
 	// Menu SFX
 	void f_Menu_MoveSelect();
 	void f_Menu_ConfirmSelect();
+
+	// Game SFX
+	void f_Game_Nitro();
 
 	// Level Music
 	void f_Level_1_music();
@@ -34,15 +40,18 @@ public:
 
 private:
 	// Music
-	irrklang::ISoundEngine* v_MM_Music;
-	irrklang::ISoundEngine* v_L1_Music; 
-	irrklang::ISoundEngine* v_L2_Music;
-	irrklang::ISoundEngine* v_L3_Music;
+	irrklang::ISoundEngine* s_MM_Music;
+	irrklang::ISoundEngine* s_L1_Music; 
+	irrklang::ISoundEngine* s_L2_Music;
+	irrklang::ISoundEngine* s_L3_Music;
 
 	// SFX
-	irrklang::ISoundEngine* v_MM_SFX;
-	irrklang::ISoundSource* v_MoveSound;
-	irrklang::ISoundSource* v_ConfirmSound;
+	irrklang::ISoundEngine* s_MM_SFX;
+	irrklang::ISoundSource* s_MoveSound;
+	irrklang::ISoundSource* s_ConfirmSound;
+
+	irrklang::ISoundEngine* s_GP_SFX;
+	irrklang::ISoundSource* s_Nitro;
 
 	void f_InitSFX();
 };
