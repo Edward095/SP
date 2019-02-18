@@ -156,3 +156,13 @@ void c_SecondPlayer::Movement(double dt)
 		}
 	}
 }
+
+void c_SecondPlayer::Ability(double dt)
+{
+
+}
+
+void c_SecondPlayer::PowerUp(bool check)
+{
+
+}

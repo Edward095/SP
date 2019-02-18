@@ -106,8 +106,9 @@ void c_MultiplayerLevel::Init()
 	right.init("right", "quad", "Image//NpcRight.tga", (0, 0, 0));
 	back.init("back", "quad", "Image//NpcBack.tga", (0, 0, 0));
 
-	playerTwo.init("player2", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", (10, 0, 0));
-	playerOne.init("player1");	
+	playerOne.init("player1");
+	playerTwo.init("player2", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", (10, 0, 5));
+	playerTwo.updatePos(10, 0, 5);
 }
 void c_MultiplayerLevel::Update(double dt)
 {
@@ -138,11 +139,11 @@ void c_MultiplayerLevel::Render()
 {
 	glEnable(GL_SCISSOR_TEST);
 
-	glViewport(0, 0, 800, 600);
-	glScissor(0, 0, 800, 600);
+	glViewport(0, 0, 400, 600);
+	glScissor(0, 0, 400, 600);
 	renderPlayerOne();
 
-	glViewport(400, 0, 800, 600);
+	glViewport(0, 0, 800, 600);
 	glScissor(400, 0, 800, 600);
 	renderPlayerTwo();
 

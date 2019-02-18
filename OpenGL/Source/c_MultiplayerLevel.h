@@ -8,6 +8,7 @@
 #include "Light.h"
 
 #include "c_FirstCar.h"
+#include "c_SecondPlayer.h"
 
 class c_MultiplayerLevel : public Scene
 {
@@ -97,7 +98,7 @@ private:
 	c_Entity right;
 
 	c_FirstCar playerOne;
-	c_FirstCar playerTwo;
+	c_SecondPlayer playerTwo;
 };
 
 #endif

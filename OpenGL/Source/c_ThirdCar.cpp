@@ -1,6 +1,7 @@
 #include "c_ThirdCar.h"
 #include "Application.h"
-
+#include "c_ObjectManager.h"
+#include "LoadTGA.h"
 
 c_ThirdCar::c_ThirdCar()
 {

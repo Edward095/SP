@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\c_SecondCar.cpp" />
     <ClCompile Include="Source\c_MultiplayerLevel.cpp" />
     <ClCompile Include="Source\c_SecondPlayer.cpp" />
     <ClCompile Include="Source\c_AI.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\c_SecondCar.h" />
     <ClInclude Include="Source\c_MultiplayerLevel.h" />
     <ClInclude Include="Source\c_SecondPlayer.h" />
     <ClInclude Include="Source\c_AI.h" />

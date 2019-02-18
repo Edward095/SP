@@ -1,2 +1,7 @@
-﻿  c_FirstCar.cpp
-  OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\OpenGL.exe
+﻿  c_MultiplayerLevel.cpp
+c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevel.cpp(104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevel.cpp(105): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevel.cpp(106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevel.cpp(107): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevel.cpp(110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  OpenGL.vcxproj -> C:\Users\incre\OneDrive\Desktop\Edward\SP\Debug\OpenGL.exe
