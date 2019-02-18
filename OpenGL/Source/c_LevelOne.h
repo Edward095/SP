@@ -27,6 +27,9 @@ public:
 		TRACK,
 		BOOSTPAD,
 		SLOWPAD,
+		NITRO,
+		RAIN,
+
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -66,6 +69,7 @@ public:
 	void Update(double dt);
 	void Render();
 	void Exit();
+	void RenderRain();
 
 private:
 	unsigned m_vertexArrayID;
@@ -106,6 +110,7 @@ private:
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
+	float Rain;
 	bool Freeze = false;
 	int duration;
 	std::string elapedTimeCut;
