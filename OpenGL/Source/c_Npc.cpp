@@ -27,6 +27,7 @@ c_Npc::~c_Npc()
 void c_Npc::Init()
 {
 	Garage.Init();
+	LevelOne.Init();
 	e_GameState_NPC = _NPC;
 
 	// Set background color to black
@@ -74,7 +75,7 @@ void c_Npc::Init()
 	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID,
 		"textColor");
 	//Initialize camera settings
-	camera.Init(Vector3(0, 0, 60));
+	camera.Init(Vector3(0, 0, 220));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -142,11 +143,13 @@ void c_Npc::Update(double dt)
 	case _NPC:
 		UpdateNpc(dt);
 		break;
-
 	case GARAGE:
 		Garage.Update(dt);
 		break;
+	case LEVEL1:
+		LevelOne.Update(dt);
 	}
+	
 }
 
 
@@ -178,6 +181,11 @@ void c_Npc::Render()
 	{
 		Garage.Render();
 	}
+	else if (e_GameState_NPC == LEVEL1)
+	{
+		LevelOne.Render();
+	}
+
 
 
 	
@@ -241,15 +249,15 @@ void c_Npc::UpdateNpc(double dt)
 			else if (ArrowY == 6)
 			{
 				//Load Selected Level
+				if (Level1 == true)
+				{
+					e_GameState_NPC = LEVEL1;
+				}
 			}
 		}
 	}
 
-	
-	if (Level1 == true)
-	{
 
-	}
 }
 
 void c_Npc::RenderNpc()
@@ -394,6 +402,12 @@ void c_Npc::RenderNpc()
 		RenderTextOnScreen(meshList[TEXT], "No", Color(1, 0, 0), 5, 7, 6);
 		AbleToPress = true;
 	}
+	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < 40 && camera.position.x > -40)
+	{
+		RenderTextOnScreen(meshList[TEXT], "Continue Game?", Color(1, 0, 0), 3, 9, 13);
+	}
+
+
 }
 void c_Npc::Exit()
 {
