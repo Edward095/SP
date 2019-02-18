@@ -18,6 +18,9 @@ public:
 	void f_Start_Menu_music();
 	void f_Pause_Menu_Music();
 	void f_Unpause_Menu_Music();
+
+	void f_WeatherRain();
+
 	// Menu SFX
 	void f_Menu_MoveSelect();
 	void f_Menu_ConfirmSelect();
@@ -48,16 +51,19 @@ private:
 	irrklang::ISoundEngine* s_L2_Music;
 	irrklang::ISoundEngine* s_L3_Music;
 
+	irrklang::ISoundEngine* s_Weather_Rain;
+
 	// SFX
 	irrklang::ISoundEngine* s_MM_SFX;
 	irrklang::ISoundSource* s_MoveSound;
 	irrklang::ISoundSource* s_ConfirmSound;
 
 	irrklang::ISoundEngine* s_GP_SFX;
-	irrklang::ISoundSource* s_Nitro;
 	irrklang::ISoundSource* s_BoostPad;
 	irrklang::ISoundSource* s_SlowPad;
+	irrklang::ISoundSource* s_Nitro;
 	irrklang::ISoundSource* s_Teleport;
+	irrklang::ISoundSource* s_FreezeTime;
 
 	void f_InitSFX();
 };
