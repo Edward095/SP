@@ -15,6 +15,7 @@ class c_MultiplayerLevel : public Scene
 public:
 	enum GEOMETRY_TYPE
 	{
+		CARAXIS,
 		TOP,
 		BOTTOM,
 		TRACK,

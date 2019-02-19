@@ -109,6 +109,7 @@ void c_MultiplayerLevel::Init()
 	playerOne.init("player1");
 	playerTwo.init("player2", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", (10, 0, 5));
 	playerTwo.updatePos(10, 0, 5);
+	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
 }
 void c_MultiplayerLevel::Update(double dt)
 {
@@ -143,8 +144,8 @@ void c_MultiplayerLevel::Render()
 	glScissor(0, 0, 960, 1080);
 	renderPlayerOne();
 
-	glViewport(960, 0, 1920, 1080);
-	glScissor(960, 0, 1920, 1080);
+	glViewport(960, 0, 960, 1080);
+	glScissor(960, 0, 960, 1080);
 	renderPlayerTwo();
 
 	glDisable(GL_SCISSOR_TEST);
@@ -328,6 +329,12 @@ void c_MultiplayerLevel::renderPlayerOne()
 	playerOne.updatePos(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
 	playerOne.getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerOne.getOBB()->calcNewAxis(playerOne.GetSteeringAngle(), 0, 1, 0);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
+	modelStack.Rotate(playerOne.GetSteeringAngle(), 0, 1, 0);
+	RenderMesh(meshList[CARAXIS], false);
+	modelStack.PopMatrix();
 
 	/****************************************************	PlayerTwo	*****************************************************/
 	modelStack.PushMatrix();

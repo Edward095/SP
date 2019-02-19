@@ -155,8 +155,6 @@ void c_LevelOne::Update(double dt)
 			Freeze = false;
 	}
 
-	
-
 	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
 	CamPosY = car.getPos().y + 8;
 	CamPosZ = (car.getPos().z - (cos(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);

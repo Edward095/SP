@@ -42,6 +42,7 @@ void c_CarBaseClass::Movement(double dt)
 
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+		OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
 		if (!gotCollide(updateX, pos.y, updateZ))
 		{
 			Driving = true;
@@ -71,6 +72,7 @@ void c_CarBaseClass::Movement(double dt)
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+			OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
 			if (!gotCollide(updateX, pos.y, updateZ))
 			{
 				if (Acceleration < 0)
@@ -122,6 +124,7 @@ void c_CarBaseClass::Movement(double dt)
 
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+		OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
 
 		if (!gotCollide(updateX, pos.y, updateZ))
 		{
@@ -153,6 +156,8 @@ void c_CarBaseClass::Movement(double dt)
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+			//OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
+
 			if (!gotCollide(updateX, pos.y, updateZ))
 			{
 				if (Acceleration > 0)
