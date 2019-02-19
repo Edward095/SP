@@ -125,9 +125,12 @@ void c_Npc::Init()
 	//booleans
 	AbleToPress = false;
 	Talk = false;
-	LevelSelection = false;
 	Level1 = false;
 	Level2 = false;
+	Level3 = false;
+	GameMode = false;
+	SinglePlayer = false;
+	MultiPlayer = false;
 
 }
 void c_Npc::Update(double dt)
@@ -196,47 +199,85 @@ void c_Npc::UpdateNpc(double dt)
 	if (Application::IsKeyPressed('F') && camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == false)
 	{
 		Talk = true;
-		TimePassed = ElapsedTime + 3;
+		GameMode = true;
 	}
 	
 	
 	if (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168)
 	{
 		ArrowY--;
-		if (ArrowY < 6)
+		if (GameMode == false)
 		{
-			ArrowY = 7;
+			if (ArrowY < 5)
+			{
+				ArrowY = 7;
+			}
+		}
+		else if (GameMode == true)
+		{
+			if (ArrowY < 6)
+			{
+				ArrowY = 7;
+			}
 		}
 		BounceTime = ElapsedTime + 0.125;
 	}
 	if (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168)
 	{
 		ArrowY++;
-		if (ArrowY > 7)
+		if (GameMode == false)
 		{
-			ArrowY = 6;
+			if (ArrowY > 7)
+			{
+				ArrowY = 5;
+			}
+		}
+		else if (GameMode == true)
+		{
+			if (ArrowY > 7)
+			{
+				ArrowY = 6;
+			}
 		}
 		BounceTime = ElapsedTime + 0.125;
 	}
 	if (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && AbleToPress == true)
 	{
 		BounceTime = ElapsedTime + 0.125;
-		if (LevelSelection == false)
+		if (GameMode == true)
+		{
+			if (ArrowY == 7)
+			{
+				SinglePlayer = true;
+				GameMode = false;
+			}
+			else if (ArrowY == 6)
+			{
+				MultiPlayer = true;
+				GameMode = false;
+			}
+		}
+		else if ((GameMode == false && SinglePlayer == true) || (GameMode == false && MultiPlayer == true))
 		{
 			if (ArrowY == 7)
 			{
 				Level1 = true;
-				LevelSelection = true;
 				e_GameState_NPC = GARAGE;
 				Garage.Init();
 			}
 			else if (ArrowY == 6)
 			{
 				Level2 = true;
-				LevelSelection = true;
 				e_GameState_NPC = GARAGE;
 				Garage.Init();
 			}
+			else if (ArrowY == 5)
+			{
+				Level3 = true;
+				e_GameState_NPC = GARAGE;
+				Garage.Init();
+			}
+			
 		}
 	}
 
@@ -313,7 +354,7 @@ void c_Npc::RenderNpc()
 	modelStack.PushMatrix();
 	modelStack.Translate(-180, 55, -75);
 	modelStack.Scale(20, 20, 20);
-	RenderText(meshList[TEXT], "New Game", Color(0, 0, 0), 1);
+	RenderText(meshList[TEXT], "Start Game", Color(0, 0, 0), 1);
 	modelStack.PopMatrix();
 
 
@@ -343,30 +384,44 @@ void c_Npc::RenderNpc()
 	{
 		RenderTextOnScreen(meshList[TEXT], "Press 'F' to talk to NPC", Color(1, 0, 0), 3, 6, 10);
 	}
-
-	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && ElapsedTime < TimePassed)
+	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && GameMode == true)
 	{
-		RenderTextOnScreen(meshList[TEXT], "Hello!", Color(1, 0, 0), 3, 11, 10);
-		RenderTextOnScreen(meshList[TEXT], "Welcome to our Racing Game!", Color(1, 0, 0), 3, 5, 9);
+		RenderTextOnScreen(meshList[TEXT], "Choose a Gamemode", Color(1, 0, 0), 3, 9, 13);
+		AbleToPress = true;
 	}
-	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && ElapsedTime > TimePassed && LevelSelection == false)
+	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && GameMode == true)
+	{
+		RenderTextOnScreen(meshList[TEXT], "SinglePlayer", Color(1, 0, 0), 5, 7, 7);
+		AbleToPress = true;
+	}
+	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && GameMode == true)
+	{
+		RenderTextOnScreen(meshList[TEXT], "MultiPlayer", Color(1, 0, 0), 5, 7, 6);
+		AbleToPress = true;
+	}
+	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && GameMode == false)
 	{
 		RenderTextOnScreen(meshList[TEXT], "Choose a Level", Color(1, 0, 0), 3, 9, 13);
 		AbleToPress = true;
 	}
-	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && ElapsedTime > TimePassed)
+	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true )
 	{
 		RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowY);
 		AbleToPress = true;
 	}
-	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && ElapsedTime > TimePassed && LevelSelection == false)
+	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && GameMode == false)
 	{
 		RenderTextOnScreen(meshList[TEXT], "Level 1", Color(1, 0, 0), 5, 7, 7);
 		AbleToPress = true;
 	}
-	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && ElapsedTime > TimePassed && LevelSelection == false)
+	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && GameMode == false)
 	{
 		RenderTextOnScreen(meshList[TEXT], "Level 2", Color(1, 0, 0), 5, 7, 6);
+		AbleToPress = true;
+	}
+	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168 && Talk == true && GameMode == false)
+	{
+		RenderTextOnScreen(meshList[TEXT], "Level 3", Color(1, 0, 0), 5, 7, 5);
 		AbleToPress = true;
 	}
 	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < 40 && camera.position.x > -40)
@@ -599,3 +654,31 @@ void c_Npc::RenderText(Mesh* mesh, std::string text, Color color, float spacing)
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 	glEnable(GL_DEPTH_TEST);
 }
+
+
+bool c_Npc::GetSinglePlayer()
+{
+	return SinglePlayer;
+}
+
+bool c_Npc::GetMultiPlayer()
+{
+	return MultiPlayer;
+}
+
+bool c_Npc::GetLevel1()
+{
+	return Level1;
+}
+
+bool c_Npc::GetLevel2()
+{
+	return Level2;
+}
+
+bool c_Npc::GetLevel3()
+{
+	return Level3;
+}
+
+

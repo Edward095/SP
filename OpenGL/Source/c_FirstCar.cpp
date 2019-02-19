@@ -5,16 +5,18 @@
 c_FirstCar::c_FirstCar()
 {
 	Driving = false;
+	Backwards = false;
 	VelocityZ = 0;
 	Acceleration = 0;
 	pos.x = 0;
 	pos.y = 1;
 	pos.z = 0;
 
-	MaxSpeed = 0;
+	MaxSpeed = 1;
 	SteeringAngle = 0;
 	Duration = 0;
-
+	MaxAcceleration = 1;
+	Friction = 0.5;
 }
 c_FirstCar::~c_FirstCar()
 {
@@ -23,7 +25,8 @@ c_FirstCar::~c_FirstCar()
 
 void c_FirstCar::Movement(double dt)
 {
-	
+
+	Ability(dt);
 	if (Application::IsKeyPressed('W') && Backwards == false)
 	{
 		Acceleration += 0.1;
@@ -35,13 +38,13 @@ void c_FirstCar::Movement(double dt)
 		{
 			Driving = true;
 			Backwards = false;
-			Ability(dt);
-			if (Acceleration > 1)
-				Acceleration = 1;
-			if (VelocityZ > 1 && (PressQ || Nitro))
-				VelocityZ = 1.5;
-			else if (VelocityZ > 1 && (!PressQ || !Nitro))
-				VelocityZ = 1;
+			//Ability(dt);
+			if (Acceleration > MaxAcceleration - Friction)
+				Acceleration = MaxAcceleration - Friction;
+			if (VelocityZ > MaxSpeed && (PressQ))
+				VelocityZ =  1.5;
+			else if (VelocityZ > MaxSpeed && (!PressQ || !Nitro))
+				VelocityZ = MaxSpeed;
 		}
 		else
 		{
@@ -54,8 +57,8 @@ void c_FirstCar::Movement(double dt)
 	{
 		if (!Application::IsKeyPressed('W'))
 		{
-			Acceleration -= 0.1;
-			VelocityZ += Acceleration * dt;
+			Acceleration -= Friction;
+			VelocityZ -= Acceleration * dt;
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -113,13 +116,13 @@ void c_FirstCar::Movement(double dt)
 		{
 			Backwards = true;
 			Driving = false;
-			Ability(dt);
-			if (Acceleration < -1)
-				Acceleration = -1;
-			if (VelocityZ < -1 && (PressQ || Nitro))
-				VelocityZ = -2;
-			else if (VelocityZ < -1 && (!PressQ || !Nitro))
-				VelocityZ = -1;
+			//Ability(dt);
+			if (Acceleration < -MaxAcceleration + Friction)
+				Acceleration = -MaxAcceleration + Friction;
+			if (VelocityZ < -MaxSpeed && (PressQ))
+				VelocityZ = -1.5;
+			else if (VelocityZ < -MaxSpeed && (!PressQ || !Nitro))
+				VelocityZ = -MaxSpeed;
 		}
 		else
 		{
@@ -132,8 +135,8 @@ void c_FirstCar::Movement(double dt)
 	{
 		if (!Application::IsKeyPressed('S'))
 		{
-			Acceleration += 0.1;
-			VelocityZ += Acceleration * dt;
+			Acceleration += Friction;
+			VelocityZ -= Acceleration * dt;
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
