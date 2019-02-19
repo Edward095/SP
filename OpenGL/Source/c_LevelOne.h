@@ -10,6 +10,7 @@
 #include "c_Entity.h"
 #include "c_AI.h"
 
+
 class c_LevelOne : public Scene
 {
 public:
@@ -90,6 +91,8 @@ private:
 	c_Entity nitro;
 	c_AI AI;
 
+	c_Entity boost;
+	c_Entity slow;
 	//Variables
 
 	bool talk;
@@ -104,6 +107,7 @@ private:
 	float CamTargetY;
 	float CamTargetZ;
 	bool Freeze = false;
+
 	int duration;
 	std::string elapedTimeCut;
 };

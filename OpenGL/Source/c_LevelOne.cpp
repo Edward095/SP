@@ -134,8 +134,16 @@ void c_LevelOne::Init()
 	back.init("back", "quad", "Image//NpcBack.tga", (0, 0, 0));
 
 	car.init("player1");
+	car.SetFriction(0.1);
+	car.SetSteering(5);
 	AI.init("Nitro","OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(6, 0, 6));
 	//RenderMesh(car.getMesh(), true);
+
+
+	//Initialization of Variables
+	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
+	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
+
 	
 }
 void c_LevelOne::Update(double dt)
@@ -171,6 +179,7 @@ void c_LevelOne::Update(double dt)
 	{
 		car.PowerUp(true);
 	}
+
 }
 
 
@@ -183,6 +192,10 @@ void c_LevelOne::Render()
 	left.getOBB()->defaultData();
 	right.getOBB()->defaultData();
 	back.getOBB()->defaultData();
+	car.getOBB()->defaultData();
+	AI.getOBB()->defaultData();
+	boost.getOBB()->defaultData();
+	slow.getOBB()->defaultData();
 
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -297,9 +310,32 @@ void c_LevelOne::Render()
 
 	AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 	AI.getOBB()->calcNewAxis(AI.GetSteeringAngle(), 0, 1, 0);
+
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+	boost.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
+	slow.getOBB()->calcNewDimensions(3, 1, 3);
+
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 }
 void c_LevelOne::Exit()
 {

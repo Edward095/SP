@@ -82,7 +82,6 @@ void c_MultiplayerLevel::Init()
 		"textColor");
 	//Initialize camera settings
 	playerOneCam.Init(Vector3(0, 8, 5), Vector3(0, 1, 0), Vector3(0, 1, 0));
-	playerTwoCam.Init(Vector3(0, 8, 5), Vector3(0, 1, 0), Vector3(0, 1, 0));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -92,7 +91,7 @@ void c_MultiplayerLevel::Init()
 
 	//Set projection to Perspective and load projection matrix
 	Mtx44 projection;
-	projection.SetToPerspective(60.f, 3.f/4.f, 0.1f, 10000.f);
+	projection.SetToPerspective(60.f, 4.f / 3.f, 0.1f, 10000.f);
 	projectionStack.LoadMatrix(projection);
 
 	meshList[TRACK] = MeshBuilder::GenerateOBJ("race track", "OBJ//RaceTrack.obj");
@@ -120,7 +119,7 @@ void c_MultiplayerLevel::Update(double dt)
 	playerOneCamTargetY = playerOne.getPos().y + 5;
 	playerOneCamTargetZ = playerOne.getPos().z;
 
-  	playerTwoCamPosX = (playerTwo.getPos().x - (sin(Math::DegreeToRadian(playerTwo.GetSteeringAngle()))) * 10);
+	playerTwoCamPosX = (playerTwo.getPos().x - (sin(Math::DegreeToRadian(playerTwo.GetSteeringAngle()))) * 10);
 	playerTwoCamPosY = playerTwo.getPos().y + 8;
 	playerTwoCamPosZ = (playerTwo.getPos().z - (cos(Math::DegreeToRadian(playerTwo.GetSteeringAngle()))) * 10);
 	playerTwoCamTargetX = playerTwo.getPos().x;
@@ -315,8 +314,6 @@ void c_MultiplayerLevel::renderPlayerOne()
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
-	renderEnviroment();
-	updateEnviromentCollision();
 	/****************************************************	PlayerOne	*****************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
@@ -365,8 +362,6 @@ void c_MultiplayerLevel::renderPlayerTwo()
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
-	renderEnviroment();
-	updateEnviromentCollision();
 	/****************************************************	PlayerOne	*****************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);

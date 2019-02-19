@@ -13,16 +13,19 @@ c_FirstCar::c_FirstCar()
 	pos.y = 1;
 	pos.z = 0;
 
-	MaxSpeed = 0;
+	MaxSpeed = 1;
 	SteeringAngle = 0;
 	Duration = 0;
-
+	MaxAcceleration = 1;
+	Friction = 0.04;
+	Steering = 3;
 	once = false;
 }
 c_FirstCar::~c_FirstCar()
 {
 
 }
+
 void c_FirstCar::Ability(double dt)
 {
 	//if (Application::IsKeyPressed('Q'))
@@ -59,6 +62,7 @@ void c_FirstCar::Ability(double dt)
 			Duration = 0;
 		}
 	}
+
 }
 
 void c_FirstCar::PowerUp(bool check)

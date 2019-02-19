@@ -15,9 +15,12 @@ c_CarBaseClass::~c_CarBaseClass()
 	pos.y = 1;
 	pos.z = 0;
 
-	MaxSpeed = 0;
+	MaxSpeed = 1;
 	SteeringAngle = 0;
+	Steering = 3;
 	Duration = 0;
+	MaxAcceleration = 1;
+	Friction = 0.5;
 }
 
 float c_CarBaseClass::GetSteeringAngle()
@@ -35,24 +38,35 @@ void c_CarBaseClass::updateAppearance(const char* meshPath, const char* TGApath)
 void c_CarBaseClass::Movement(double dt)
 {
 	Ability(dt);
+	PadEffect(dt);
 	if (Application::IsKeyPressed('W') && Backwards == false)
 	{
-		Acceleration += 0.1;
+		Acceleration += (MaxAcceleration - Friction);
 		VelocityZ += Acceleration * dt;
 
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
-		OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
+		//OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
+		if (gotCollide("Boostpad"))
+			BoostPad = true;
+		if (gotCollide("Slowpad"))
+			SlowPad = true;
+
 		if (!gotCollide(updateX, pos.y, updateZ))
 		{
 			Driving = true;
 			Backwards = false;
-			if (Acceleration > 1)
-				Acceleration = 1;
-			if (VelocityZ > 1 && (PressQ || Nitro))
+			if (Acceleration > MaxAcceleration - Friction)
+				Acceleration = MaxAcceleration - Friction;
+			if (VelocityZ > MaxSpeed && (PressQ))
 				VelocityZ = 1.5;
-			else if (VelocityZ > 1 && (!PressQ || !Nitro))
-				VelocityZ = 1;
+			else if (VelocityZ > MaxSpeed && (!PressQ || !Nitro))
+				VelocityZ = MaxSpeed;
+			if (BoostPad)
+				VelocityZ = 1.8f;
+			if (SlowPad)
+				VelocityZ = 0.5f;
+
 		}
 		else
 		{
@@ -67,8 +81,8 @@ void c_CarBaseClass::Movement(double dt)
 	{
 		if (!Application::IsKeyPressed('W'))
 		{
-			Acceleration -= 0.1;
-			VelocityZ += Acceleration * dt;
+			Acceleration += -Friction;
+			VelocityZ -= Acceleration * dt;
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -101,9 +115,9 @@ void c_CarBaseClass::Movement(double dt)
 	if (Application::IsKeyPressed('D'))
 	{
 		if (Driving)
-			SteeringAngle -= 3;
+			SteeringAngle -= Steering;
 		if (Backwards)
-			SteeringAngle += 3;
+			SteeringAngle += Steering;
 
 	}
 
@@ -111,15 +125,15 @@ void c_CarBaseClass::Movement(double dt)
 	if (Application::IsKeyPressed('A'))
 	{
 		if (Driving)
-			SteeringAngle += 3;
+			SteeringAngle += Steering;
 		if (Backwards)
-			SteeringAngle -= 3;
+			SteeringAngle -= Steering;
 	}
 
 
 	if (Application::IsKeyPressed('S') && Driving == false)
 	{
-		Acceleration -= 0.1;
+		Acceleration -= (MaxAcceleration - Friction);
 		VelocityZ += Acceleration * dt;
 
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -131,12 +145,12 @@ void c_CarBaseClass::Movement(double dt)
 			Backwards = true;
 			Driving = false;
 			
-			if (Acceleration < -1)
-				Acceleration = -1;
-			if (VelocityZ < -1 && (PressQ || Nitro))
+			if (Acceleration < -(MaxAcceleration - Friction))
+				Acceleration = -(MaxAcceleration - Friction);
+			if (VelocityZ < -MaxSpeed && (PressQ))
 				VelocityZ = -2;
-			else if (VelocityZ < -1 && (!PressQ || !Nitro))
-				VelocityZ = -1;
+			else if (VelocityZ < -MaxSpeed && (!PressQ))
+				VelocityZ = -MaxSpeed;
 		}
 		else
 		{
@@ -151,8 +165,8 @@ void c_CarBaseClass::Movement(double dt)
 	{
 		if (!Application::IsKeyPressed('S'))
 		{
-			Acceleration += 0.1;
-			VelocityZ += Acceleration * dt;
+			Acceleration += Friction;
+			VelocityZ -= Acceleration * dt;
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -179,6 +193,55 @@ void c_CarBaseClass::Movement(double dt)
 				Acceleration = 0;
 				VelocityZ = 0;
 			}
+		}
+	}
+}
+
+
+
+float c_CarBaseClass::GetSpeed()
+{
+	return VelocityZ;
+}
+
+float c_CarBaseClass::GetMaxAcceleration()
+{
+	return MaxAcceleration;
+}
+
+float c_CarBaseClass::GetAcceleration()
+{
+	return Acceleration;
+}
+
+
+void c_CarBaseClass::SetFriction(float friction)
+{
+	this->Friction = friction;
+}
+
+void c_CarBaseClass::SetSteering(float Steering)
+{
+	this->Steering = Steering;
+
+void c_CarBaseClass::PadEffect(double dt)
+{
+	if (BoostPad)
+	{
+		Duration++;
+		if (Duration >= 25) // 3 sec/dt
+		{
+			BoostPad = false;
+			Duration = 0;
+		}
+	}
+	if (SlowPad)
+	{
+		Duration++;
+		if (Duration >= 25) // 3 sec/dt
+		{
+			SlowPad = false;
+			Duration = 0;
 		}
 	}
 }
