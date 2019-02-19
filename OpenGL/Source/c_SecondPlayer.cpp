@@ -4,6 +4,18 @@
 
 c_SecondPlayer::c_SecondPlayer()
 {
+	Driving = false;
+	VelocityZ = 0;
+	Acceleration = 0;
+	pos.x = 0;
+	pos.y = 1;
+	pos.z = 0;
+
+	MaxSpeed = 0;
+	SteeringAngle = 0;
+	Duration = 0;
+
+	once = false;
 }
 
 
