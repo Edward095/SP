@@ -107,7 +107,7 @@ void c_MultiplayerLevel::Init()
 	back.init("back", "quad", "Image//NpcBack.tga", (0, 0, 0));
 
 	playerOne.init("player1");
-	playerTwo.init("player2", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", (10, 0, 5));
+	playerTwo.init("player2");
 	playerTwo.updatePos(10, 0, 5);
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
 }

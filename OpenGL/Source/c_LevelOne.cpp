@@ -273,6 +273,7 @@ void c_LevelOne::Render()
 	modelStack.PopMatrix();
 
 	renderEnviroment();
+	updateEnviromentCollision();
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, -3, 0);
