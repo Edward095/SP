@@ -147,13 +147,16 @@ private:
 
 	Light lights[6];
 
-	/*void initLights();
+	void initLights();
 	void renderLights();
-	void updateLights(int num);*/
+	void updateLights(int num);
 
 	void RenderMesh(Mesh *mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
+
+	void renderEnviroment();
+	void updateEnviromentCollision();
 
 	c_FirstCar car;
 	
