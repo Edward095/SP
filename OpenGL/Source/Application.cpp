@@ -75,7 +75,7 @@ void Application::Init()
 
 
 	//Create a window and create its OpenGL context
-	m_window = glfwCreateWindow(800, 600, "Assignment02", NULL, NULL);
+	m_window = glfwCreateWindow(1920, 1080, "Assignment02", NULL, NULL);// glfwGetPrimaryMonitor(), NULL);
 	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(m_window, mouse_callback);
 	glfwSetWindowSizeCallback(m_window, resize_callback);
@@ -110,7 +110,6 @@ void Application::Run()
 {
 	//Main Loop
 	Scene *scene = new c_Npc();
-	//Scene *scene = new c_Garage();
 	scene->Init();
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame

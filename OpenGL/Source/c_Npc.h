@@ -8,6 +8,7 @@
 #include "MatrixStack.h"
 #include "Light.h"
 #include "c_Garage.h"
+#include "c_LevelOne.h"
 
 class c_Npc :
 	public Scene
@@ -60,6 +61,7 @@ public:
 	{
 		_NPC,
 		GARAGE,
+		LEVEL1,
 
 	};
 
@@ -71,6 +73,13 @@ public:
 	void Exit();
 	void UpdateNpc(double dt);
 	void RenderNpc();
+
+	static bool GetSinglePlayer();
+	static bool GetMultiPlayer();
+
+	static bool GetLevel1();
+	static bool GetLevel2();
+	static bool GetLevel3();
 
 private:
 
@@ -88,6 +97,7 @@ private:
 	
 	//Class
 	c_Garage Garage;
+	c_LevelOne LevelOne;
 
 
 	//Function
@@ -98,6 +108,7 @@ private:
 	void RenderMesh(Mesh *mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
+
 
 
 	//Variables
@@ -111,8 +122,11 @@ private:
 	bool AbleToPress;
 	bool Talk;
 	bool LevelSelection;
-	bool Level1;
-	bool Level2;
+	static bool Level1;
+	static bool Level2;
+	static bool Level3;
+	static bool SinglePlayer;
+	static bool MultiPlayer;
 };
 
 #endif
