@@ -49,6 +49,10 @@ void c_CarBaseClass::Movement(double dt)
 		{
 			BoostPad = true;
 		}
+		if (gotCollide("Slowpad"))
+		{
+			SlowPad = true;
+		}
 
 		if (!gotCollide(updateX, pos.y, updateZ))
 		{
@@ -62,6 +66,8 @@ void c_CarBaseClass::Movement(double dt)
 				VelocityZ = 1;
 			if (BoostPad)
 				VelocityZ = 1.8f;
+			if (SlowPad)
+				VelocityZ = 0.5f;
 
 		}
 		else

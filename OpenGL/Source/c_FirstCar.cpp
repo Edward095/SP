@@ -69,6 +69,15 @@ void c_FirstCar::Ability(double dt)
 			Duration = 0;
 		}
 	}
+	if (SlowPad)
+	{
+		Duration++;
+		if (Duration >= 150) // 3 sec/dt
+		{
+			SlowPad = false;
+			Duration = 0;
+		}
+	}
 }
 
 void c_FirstCar::PowerUp(bool check)

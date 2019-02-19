@@ -140,6 +140,7 @@ void c_LevelOne::Init()
 
 	//Initialization of Variables
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
+	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
 
 	
 }
@@ -195,6 +196,7 @@ void c_LevelOne::Render()
 	car.getOBB()->defaultData();
 	AI.getOBB()->defaultData();
 	boost.getOBB()->defaultData();
+	slow.getOBB()->defaultData();
 
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -320,6 +322,14 @@ void c_LevelOne::Render()
 	boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
 	boost.getOBB()->calcNewDimensions(3, 1, 3);
 
+	modelStack.PushMatrix();
+	modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
+	slow.getOBB()->calcNewDimensions(3, 1, 3);
 
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);

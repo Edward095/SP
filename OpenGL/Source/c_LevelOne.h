@@ -92,6 +92,7 @@ private:
 	c_AI AI;
 
 	c_Entity boost;
+	c_Entity slow;
 	//Variables
 
 	bool talk;
