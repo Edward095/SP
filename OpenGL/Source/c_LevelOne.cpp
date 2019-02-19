@@ -134,16 +134,12 @@ void c_LevelOne::Init()
 	back.init("back", "quad", "Image//NpcBack.tga", (0, 0, 0));
 
 	car.init("player1");
-	car.SetFriction(0.01);
 	AI.init("Nitro","OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(6, 0, 6));
 	//RenderMesh(car.getMesh(), true);
 
 
 	//Initialization of Variables
-
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
-
-	Rain = 40;
 
 	
 }
@@ -164,12 +160,7 @@ void c_LevelOne::Update(double dt)
 			Freeze = false;
 	}
 
-
-	Rain -= 20 * dt; 
-	if (Rain < -40)
-	{
-		Rain = 0;
-	}
+	
 
 
 	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
@@ -304,8 +295,6 @@ void c_LevelOne::Render()
 	//RenderMesh(meshList[CAR1], false);
 	modelStack.PopMatrix();
 
-	
-
 	//UpdateCollisions
 	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
 	car.getOBB()->calcNewAxis(90, 0, 1, 0);
@@ -335,12 +324,6 @@ void c_LevelOne::Render()
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
-
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
-	RenderRain();
-
 }
 void c_LevelOne::Exit()
 {
@@ -577,20 +560,4 @@ time2 = std::to_string(time);
 rendertoscreen(time[0],);
 rendertoscreen(time[1],);
 rendertoscreen(time[2],);
-
 */
-
-
-
-void c_LevelOne::RenderRain()
-{
-				modelStack.PushMatrix();
-				modelStack.Translate(CamPosX, CamPosY, CamPosZ );
-				modelStack.Translate(0, Rain, 0);
-				//modelStack.Rotate(car.GetSteeringAngle(), 0, 1, 0);
-				modelStack.Scale(0.1, 0.2, 0.1);
-				RenderMesh(meshList[RAIN], false);
-				modelStack.PopMatrix();
-	
-}
-

@@ -32,7 +32,6 @@ void c_CarBaseClass::updateAppearance(const char* meshPath, const char* TGApath)
 	mesh->textureID = LoadTGA(TGApath);
 }
 
-
 void c_CarBaseClass::Movement(double dt)
 {
 	Ability(dt);
@@ -188,23 +187,4 @@ void c_CarBaseClass::Movement(double dt)
 			}
 		}
 	}
-
-float c_CarBaseClass::GetMaxAcceleration()
-{
-	return MaxAcceleration;
-}
-
-float c_CarBaseClass::GetAcceleration()
-{
-	return Acceleration;
-}
-
-float c_CarBaseClass::GetSpeed()
-{
-	return VelocityZ;
-}
-
-void c_CarBaseClass::SetFriction(float friction)
-{
-	this->Friction = friction;
 }
