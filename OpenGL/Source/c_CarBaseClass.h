@@ -25,6 +25,8 @@ protected:
 	bool Backwards = false;
 	bool PressQ = false;
 	bool Nitro = false;
+	bool BoostPad = false;
+	bool SlowPad = false;
 
 	bool once;
 };

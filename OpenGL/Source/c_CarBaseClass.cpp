@@ -42,6 +42,7 @@ void c_CarBaseClass::Movement(double dt)
 
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+
 		if (!gotCollide(updateX, pos.y, updateZ))
 		{
 			Driving = true;
@@ -52,6 +53,8 @@ void c_CarBaseClass::Movement(double dt)
 				VelocityZ = 1.5;
 			else if (VelocityZ > 1 && (!PressQ || !Nitro))
 				VelocityZ = 1;
+		/*	else if (VelocityZ > 1 && BoostPad)
+				VelocityZ = 2;*/
 		}
 		else
 		{

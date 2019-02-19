@@ -9,7 +9,6 @@
 #include "Light.h"
 #include "c_FirstCar.h"
 #include "c_Entity.h"
-#include "c_BoosterPad.h"
 #include "c_AI.h"
 
 
@@ -93,8 +92,7 @@ private:
 	c_Entity nitro;
 	c_AI AI;
 
-	c_BoosterPad boost;
-
+	c_Entity boost;
 	//Variables
 
 	bool talk;

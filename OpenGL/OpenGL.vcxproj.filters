@@ -81,12 +81,6 @@
     <ClCompile Include="Source\NPCCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\c_BoosterPad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\c_SlowPad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\c_AI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -168,12 +162,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\NPCCamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\c_BoosterPad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\c_SlowPad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\c_AI.h">

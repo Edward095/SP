@@ -139,8 +139,7 @@ void c_LevelOne::Init()
 
 
 	//Initialization of Variables
-	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 4.f, 0));
-	boost.updatePos(20, 4, 0);
+	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
 
 	
 }
@@ -163,6 +162,7 @@ void c_LevelOne::Update(double dt)
 
 	
 
+
 	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
 	CamPosY = car.getPos().y + 8;
 	CamPosZ = (car.getPos().z - (cos(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
@@ -179,6 +179,7 @@ void c_LevelOne::Update(double dt)
 	{
 		car.PowerUp(true);
 	}
+
 }
 
 
@@ -191,6 +192,9 @@ void c_LevelOne::Render()
 	left.getOBB()->defaultData();
 	right.getOBB()->defaultData();
 	back.getOBB()->defaultData();
+	car.getOBB()->defaultData();
+	AI.getOBB()->defaultData();
+	boost.getOBB()->defaultData();
 
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -303,6 +307,9 @@ void c_LevelOne::Render()
 	RenderMesh(AI.getMesh(), true);
 	modelStack.PopMatrix();
 
+	AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
+	AI.getOBB()->calcNewAxis(AI.GetSteeringAngle(), 0, 1, 0);
+
 
 	modelStack.PushMatrix();
 	modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
@@ -313,9 +320,6 @@ void c_LevelOne::Render()
 	boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
 	boost.getOBB()->calcNewDimensions(3, 1, 3);
 
-
-	AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
-	AI.getOBB()->calcNewAxis(AI.GetSteeringAngle(), 0, 1, 0);
 
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);

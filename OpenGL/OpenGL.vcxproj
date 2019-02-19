@@ -148,8 +148,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\c_AI.cpp" />
-    <ClCompile Include="Source\c_SlowPad.cpp" />
-    <ClCompile Include="Source\c_BoosterPad.cpp" />
     <ClCompile Include="Source\c_SceneManager.cpp" />
     <ClCompile Include="Source\c_ObjectManager.cpp" />
     <ClCompile Include="Source\c_Entity.cpp" />
@@ -176,8 +174,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\c_AI.h" />
-    <ClInclude Include="Source\c_SlowPad.h" />
-    <ClInclude Include="Source\c_BoosterPad.h" />
     <ClInclude Include="Source\c_MainMenu.h" />
     <ClInclude Include="Source\c_SceneManager.h" />
     <ClInclude Include="Source\c_ObjectManager.h" />
