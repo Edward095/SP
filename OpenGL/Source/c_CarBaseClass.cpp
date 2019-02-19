@@ -17,6 +17,7 @@ c_CarBaseClass::~c_CarBaseClass()
 
 	MaxSpeed = 1;
 	SteeringAngle = 0;
+	Steering = 3;
 	Duration = 0;
 	MaxAcceleration = 1;
 	Friction = 0.5;
@@ -118,9 +119,9 @@ void c_CarBaseClass::Movement(double dt)
 	if (Application::IsKeyPressed('D'))
 	{
 		if (Driving)
-			SteeringAngle -= 3;
+			SteeringAngle -= Steering;
 		if (Backwards)
-			SteeringAngle += 3;
+			SteeringAngle += Steering;
 
 	}
 
@@ -128,9 +129,9 @@ void c_CarBaseClass::Movement(double dt)
 	if (Application::IsKeyPressed('A'))
 	{
 		if (Driving)
-			SteeringAngle += 3;
+			SteeringAngle += Steering;
 		if (Backwards)
-			SteeringAngle -= 3;
+			SteeringAngle -= Steering;
 	}
 
 
@@ -212,4 +213,15 @@ float c_CarBaseClass::GetMaxAcceleration()
 float c_CarBaseClass::GetAcceleration()
 {
 	return Acceleration;
+}
+
+
+void c_CarBaseClass::SetFriction(float friction)
+{
+	this->Friction = friction;
+}
+
+void c_CarBaseClass::SetSteering(float Steering)
+{
+	this->Steering = Steering;
 }

@@ -17,7 +17,8 @@ c_FirstCar::c_FirstCar()
 	SteeringAngle = 0;
 	Duration = 0;
 	MaxAcceleration = 1;
-	Friction = 0.01;
+	Friction = 0.04;
+	Steering = 3;
 	once = false;
 }
 c_FirstCar::~c_FirstCar()

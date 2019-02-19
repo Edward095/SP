@@ -134,6 +134,8 @@ void c_LevelOne::Init()
 	back.init("back", "quad", "Image//NpcBack.tga", (0, 0, 0));
 
 	car.init("player1");
+	car.SetFriction(0.1);
+	car.SetSteering(5);
 	AI.init("Nitro","OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(6, 0, 6));
 	//RenderMesh(car.getMesh(), true);
 
