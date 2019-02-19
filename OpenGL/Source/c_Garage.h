@@ -198,10 +198,10 @@ private:
 	const char* v_CarColourPath2[9];
 	const char* v_CarColourPath3[9];
 
-	//c_LevelOne levelOne;
+	c_LevelOne levelOne;
 	c_FirstCar firstCar;
 
-	c_MultiplayerLevel level;
+	//c_MultiplayerLevel level;
 
 };
 
