@@ -14,6 +14,7 @@ public:
 	void init(std::string uniqueName);
 	void updatePos(float xPos,float yPos,float zPos);
 	bool gotCollide(float x, float y, float z);
+	bool gotCollide(std::string uniqueName);
 	std::string getUniqueName();
 	c_Entity* getEntity(std::string uniqueName);
 	Mesh* getMesh();

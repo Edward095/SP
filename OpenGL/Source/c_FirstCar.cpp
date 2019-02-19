@@ -1,6 +1,8 @@
 #include "c_FirstCar.h"
 #include "Application.h"
 #include "MyMath.h"
+#include "c_ObjectManager.h"
+#include "LoadTGA.h"
 
 c_FirstCar::c_FirstCar()
 {
@@ -21,7 +23,6 @@ c_FirstCar::~c_FirstCar()
 {
 
 }
-
 
 void c_FirstCar::Ability(double dt)
 {

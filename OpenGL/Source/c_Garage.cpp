@@ -393,12 +393,14 @@ void c_Garage::Update(double dt)
 		{
 			e_GameState_Garage = LEVELONE_;
 			levelOne.Init();
+			//level.Init();
 		}
 		
 	}
 	else if (e_GameState_Garage == LEVELONE_)
 	{
 		levelOne.Update(dt);
+		//level.Update(dt);
 	}
 }
 
@@ -549,8 +551,9 @@ void c_Garage::Render()
 
 		f_RenderFinal();
 	}
-	else if(e_GameState_Garage == LEVELONE_)
+	else if (e_GameState_Garage == LEVELONE_)
 		levelOne.Render();
+		//level.Render();
 }
 
 void c_Garage::initLights()

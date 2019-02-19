@@ -13,6 +13,8 @@
 #include "c_LevelOne.h"
 #include "c_FirstCar.h"
 
+#include "c_MultiplayerLevel.h"
+
 class c_Car
 {
 private:
@@ -198,6 +200,8 @@ private:
 
 	c_LevelOne levelOne;
 	c_FirstCar firstCar;
+
+	//c_MultiplayerLevel level;
 
 };
 

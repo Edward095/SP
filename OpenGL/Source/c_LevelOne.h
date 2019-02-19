@@ -2,7 +2,6 @@
 #define C_LEVELONE_H
 
 #include "Scene.h"
-#include "Scene.h"
 #include "Mesh.h"
 #include "FirstPersonCamera.h"
 #include "MatrixStack.h"
