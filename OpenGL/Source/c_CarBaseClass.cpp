@@ -38,6 +38,7 @@ void c_CarBaseClass::updateAppearance(const char* meshPath, const char* TGApath)
 void c_CarBaseClass::Movement(double dt)
 {
 	Ability(dt);
+	PadEffect(dt);
 	if (Application::IsKeyPressed('W') && Backwards == false)
 	{
 		Acceleration += (MaxAcceleration - Friction);
@@ -224,4 +225,25 @@ void c_CarBaseClass::SetFriction(float friction)
 void c_CarBaseClass::SetSteering(float Steering)
 {
 	this->Steering = Steering;
+
+void c_CarBaseClass::PadEffect(double dt)
+{
+	if (BoostPad)
+	{
+		Duration++;
+		if (Duration >= 25) // 3 sec/dt
+		{
+			BoostPad = false;
+			Duration = 0;
+		}
+	}
+	if (SlowPad)
+	{
+		Duration++;
+		if (Duration >= 25) // 3 sec/dt
+		{
+			SlowPad = false;
+			Duration = 0;
+		}
+	}
 }
