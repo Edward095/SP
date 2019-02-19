@@ -16,6 +16,8 @@ public:
 	virtual float GetMaxAcceleration();
 	virtual float GetSpeed();
 	virtual float GetAcceleration();
+	virtual void SetFriction(float friction);
+	virtual void SetSteering(float Steering);
 
 protected:
 	float VelocityZ;
@@ -24,7 +26,9 @@ protected:
 	float Acceleration;
 	float MaxAcceleration;
 	float Friction;
+	float Steering;
 	int Duration;
+
 
 	bool Driving = false;
 	bool Backwards = false;
