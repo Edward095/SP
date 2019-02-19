@@ -10,6 +10,8 @@
 #include "Vertex.h"
 #include "Utility.h"
 #include "LoadTGA.h"
+
+#include "c_Npc.h"
 // +++++++++++++++++++++++++ CAR CLASS +++++++++++++++++++++++++++
 
 c_Car::c_Car()
@@ -257,6 +259,8 @@ void c_Garage::Init()
 
 
 	firstCar.init("player1", v_CarPaths[0], v_CarColourPath1[0], (0, 0, 0));
+	if(c_Npc::GetMultiPlayer())
+		secondCar.init("player2", v_CarPaths[0], v_CarColourPath1[0], (10, 0, 5));
 	e_GameState_Garage = GARAGE_;
 	v_MusicPause = false;
 
@@ -268,6 +272,7 @@ void c_Garage::Init()
 	v_ScaleBlue = v_ScaleRed = v_ScalePurple = v_ScaleGreen = v_ScalePink = v_ScaleYellow = v_ScaleWhite = v_ScaleGrey = v_ScaleBlack = 1;
 	v_MoveBlue = v_MoveRed = v_MovePurple = v_MoveGreen = v_MovePink = v_MoveYellow = v_MoveWhite = v_MoveGrey = v_MoveBlack = 0;
 	v_ScalePreview1 = v_ScalePreview2 = v_ScalePreview3 = 1;
+	v_Car1Changed = v_Car2Changed = false;
 
 
 	// Set background color to black
@@ -376,9 +381,21 @@ void c_Garage::Init()
 void c_Garage::Update(double dt)
 {
 	v_ElapsedTime += dt;
-	if (e_GameState_Garage == GARAGE_)
+	if (e_GameState_Garage == GARAGE_ && c_Npc::GetSinglePlayer())
 	{
 		f_UpdateGarage(dt);
+
+		if(v_Car1Changed)
+			e_GameState_Garage = CHANGED_;
+	}
+	else if (e_GameState_Garage == GARAGE_ && c_Npc::GetMultiPlayer())
+	{
+		if(!v_Car1Changed)
+			f_UpdateGarage(dt);
+		else 
+			f_UpdateGarage2(dt);
+		if(v_Car1Changed && v_Car2Changed)
+			e_GameState_Garage = CHANGED_;
 	}
 	else if (e_GameState_Garage == CHANGED_)
 	{
@@ -387,20 +404,63 @@ void c_Garage::Update(double dt)
 		if (v_ConfirmRotation > 50)
 		{
 			v_ConfirmRotation -= (float)(500 * dt);
-			
 		}
 		else
 		{
-			e_GameState_Garage = LEVELONE_;
-			levelOne.Init();
-			//level.Init();
+			if (c_Npc::GetSinglePlayer())
+			{
+				if(c_Npc::GetLevel1())
+				{
+					e_GameState_Garage = SLEVELONE_;
+					sLevelOne.Init();
+				}
+				else if (c_Npc::GetLevel2())
+				{
+					e_GameState_Garage = SLEVELTWO_;
+				}
+				else if (c_Npc::GetLevel3())
+				{
+					e_GameState_Garage = SLEVELTHREE_;
+				}
+			}
+			else if (c_Npc::GetMultiPlayer())
+			{
+				if (c_Npc::GetLevel1())
+				{
+					e_GameState_Garage = MLEVELONE_;
+					mLevelOne.Init();
+				}
+				else if (c_Npc::GetLevel2())
+				{
+					e_GameState_Garage = MLEVELTWO_;
+				}
+				else if (c_Npc::GetLevel3())
+				{
+					e_GameState_Garage = MLEVELTHREE_;
+				}
+			}
 		}
 		
 	}
-	else if (e_GameState_Garage == LEVELONE_)
+	else if (e_GameState_Garage == SLEVELONE_)
 	{
-		levelOne.Update(dt);
-		//level.Update(dt);
+		sLevelOne.Update(dt);
+	}
+	else if (e_GameState_Garage == SLEVELONE_)
+	{
+	}
+	else if (e_GameState_Garage == SLEVELONE_)
+	{
+	}
+	else if (e_GameState_Garage == MLEVELONE_)
+	{
+		mLevelOne.Update(dt);
+	}
+	else if (e_GameState_Garage == MLEVELONE_)
+	{
+	}
+	else if (e_GameState_Garage == MLEVELONE_)
+	{
 	}
 }
 
@@ -539,8 +599,12 @@ void c_Garage::Render()
 
 	renderLights();
 
-	if (e_GameState_Garage == GARAGE_)
+	if (e_GameState_Garage == GARAGE_ && c_Npc::GetSinglePlayer())
 		f_RenderGarage();
+	else if (e_GameState_Garage == GARAGE_ && c_Npc::GetMultiPlayer())
+	{
+		f_RenderGarage();
+	}
 	else if (e_GameState_Garage == CHANGED_)
 	{
 		modelStack.PushMatrix();
@@ -551,9 +615,26 @@ void c_Garage::Render()
 
 		f_RenderFinal();
 	}
-	else if (e_GameState_Garage == LEVELONE_)
-		levelOne.Render();
-		//level.Render();
+	else if (e_GameState_Garage == SLEVELONE_)
+		sLevelOne.Render();
+	else if (e_GameState_Garage == SLEVELTWO_)
+	{
+
+	}
+	else if (e_GameState_Garage == SLEVELTHREE_)
+	{
+
+	}
+	else if (e_GameState_Garage == MLEVELONE_)
+		mLevelOne.Render();
+	else if (e_GameState_Garage == MLEVELTWO_)
+	{
+
+	}
+	else if (e_GameState_Garage == MLEVELTHREE_)
+	{
+
+	}
 }
 
 void c_Garage::initLights()
@@ -583,7 +664,7 @@ void c_Garage::initLights()
 		"colorTextureEnabled");
 	m_parameters[U_COLOR_TEXTURE] = glGetUniformLocation(m_programID, "colorTexture");
 
-	light[0].type = Light::LIGHT_SPOT;
+	light[0].type = Light::LIGHT_POINT;
 	light[0].position.Set(-5, 7, 0);
 	light[0].color.Set(1, 1, 1);
 	light[0].power = 1.f;
@@ -1151,6 +1232,77 @@ void c_Garage::Exit()
 
 void c_Garage::f_UpdateGarage(double dt)
 {
+	if (Application::IsKeyPressed('W') && v_BounceTime < v_ElapsedTime)
+	{
+		v_CarList.f_ChangeCurrentCar('O');
+		v_Garage_SFX.f_Menu_MoveSelect();
+		v_BounceTime = v_ElapsedTime + 0.250;
+	}
+	if (Application::IsKeyPressed('S') && v_BounceTime < v_ElapsedTime)
+	{
+		v_CarList.f_ChangeCurrentCar('P');
+		v_Garage_SFX.f_Menu_MoveSelect();
+		v_BounceTime = v_ElapsedTime + 0.250;
+	}
+	if (Application::IsKeyPressed('A') && v_BounceTime < v_ElapsedTime)
+	{
+		v_ColourList.f_ChangeCurrentColour('K');
+		v_Garage_SFX.f_Menu_MoveSelect();
+		v_BounceTime = v_ElapsedTime + 0.250;
+	}
+	if (Application::IsKeyPressed('D') && v_BounceTime < v_ElapsedTime)
+	{
+		v_ColourList.f_ChangeCurrentColour('L');
+		v_Garage_SFX.f_Menu_MoveSelect();
+		v_BounceTime = v_ElapsedTime + 0.250;
+	}
+  	if (Application::IsKeyPressed('E') && v_BounceTime < v_ElapsedTime)
+	{
+		v_ConfirmRotation = 900;
+		v_Garage_SFX.f_Menu_ConfirmSelect();
+		v_BounceTime = v_ElapsedTime + 0.250;
+		v_Car1Changed = true;
+		if (v_CarList.f_GetCurCar()->f_GetCarNum() == 0)
+		{
+			firstCar.updateAppearance(v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+		}
+		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 1)
+		{
+			firstCar.updateAppearance(v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+		}
+		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
+		{
+			firstCar.updateAppearance(v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+
+		}
+	}
+	if (Application::IsKeyPressed(VK_SPACE) && v_BTPause < v_ElapsedTime)
+	{
+		if (v_MusicPause)
+		{
+			v_Garage_SFX.f_Unpause_Menu_Music();
+			v_BTPause = v_ElapsedTime + 0.250;
+			v_MusicPause = !v_MusicPause;
+		}
+		else
+		{
+			v_Garage_SFX.f_Pause_Menu_Music();
+			v_BTPause = v_ElapsedTime + 0.250;
+			v_MusicPause = !v_MusicPause;
+		}
+	}
+	f_UpdateCurColour();
+	f_UpdateCurCar();
+
+	v_RotateCar += (float)(v_ConfirmRotation * dt);
+
+	if (v_ConfirmRotation > 50)
+	{
+		v_ConfirmRotation -= (float)(500 * dt);
+	}
+}
+void c_Garage::f_UpdateGarage2(double dt)
+{
 	if (Application::IsKeyPressed(VK_UP) && v_BounceTime < v_ElapsedTime)
 	{
 		v_CarList.f_ChangeCurrentCar('O');
@@ -1175,23 +1327,23 @@ void c_Garage::f_UpdateGarage(double dt)
 		v_Garage_SFX.f_Menu_MoveSelect();
 		v_BounceTime = v_ElapsedTime + 0.250;
 	}
-  	if (Application::IsKeyPressed(VK_RETURN) && v_BounceTime < v_ElapsedTime)
+	if (Application::IsKeyPressed(VK_RETURN) && v_BounceTime < v_ElapsedTime)
 	{
 		v_ConfirmRotation = 900;
 		v_Garage_SFX.f_Menu_ConfirmSelect();
 		v_BounceTime = v_ElapsedTime + 0.250;
-		e_GameState_Garage = CHANGED_;
+		v_Car2Changed = true;
 		if (v_CarList.f_GetCurCar()->f_GetCarNum() == 0)
 		{
-			firstCar.updateAppearance(v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+			secondCar.updateAppearance(v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 1)
 		{
-			firstCar.updateAppearance(v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+			secondCar.updateAppearance(v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
 		{
-			firstCar.updateAppearance(v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+			secondCar.updateAppearance(v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
 
 		}
 	}

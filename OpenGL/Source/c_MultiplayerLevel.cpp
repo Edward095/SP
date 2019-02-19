@@ -82,6 +82,7 @@ void c_MultiplayerLevel::Init()
 		"textColor");
 	//Initialize camera settings
 	playerOneCam.Init(Vector3(0, 8, 5), Vector3(0, 1, 0), Vector3(0, 1, 0));
+	playerTwoCam.Init(Vector3(0, 8, 5), Vector3(0, 1, 0), Vector3(0, 1, 0));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -106,8 +107,9 @@ void c_MultiplayerLevel::Init()
 	back.init("back", "quad", "Image//NpcBack.tga", (0, 0, 0));
 
 	playerOne.init("player1");
-	playerTwo.init("player2", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", (10, 0, 5));
+	playerTwo.init("player2");
 	playerTwo.updatePos(10, 0, 5);
+	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
 }
 void c_MultiplayerLevel::Update(double dt)
 {
@@ -142,8 +144,8 @@ void c_MultiplayerLevel::Render()
 	glScissor(0, 0, 960, 1080);
 	renderPlayerOne();
 
-	glViewport(960, 0, 1920, 1080);
-	glScissor(960, 0, 1920, 1080);
+	glViewport(960, 0, 960, 1080);
+	glScissor(960, 0, 960, 1080);
 	renderPlayerTwo();
 
 	glDisable(GL_SCISSOR_TEST);
@@ -313,6 +315,8 @@ void c_MultiplayerLevel::renderPlayerOne()
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
+	renderEnviroment();
+	updateEnviromentCollision();
 	/****************************************************	PlayerOne	*****************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
@@ -325,6 +329,12 @@ void c_MultiplayerLevel::renderPlayerOne()
 	playerOne.updatePos(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
 	playerOne.getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerOne.getOBB()->calcNewAxis(playerOne.GetSteeringAngle(), 0, 1, 0);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
+	modelStack.Rotate(playerOne.GetSteeringAngle(), 0, 1, 0);
+	RenderMesh(meshList[CARAXIS], false);
+	modelStack.PopMatrix();
 
 	/****************************************************	PlayerTwo	*****************************************************/
 	modelStack.PushMatrix();
@@ -355,6 +365,8 @@ void c_MultiplayerLevel::renderPlayerTwo()
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
+	renderEnviroment();
+	updateEnviromentCollision();
 	/****************************************************	PlayerOne	*****************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);

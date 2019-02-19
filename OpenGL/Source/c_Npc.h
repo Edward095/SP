@@ -74,6 +74,13 @@ public:
 	void UpdateNpc(double dt);
 	void RenderNpc();
 
+	static bool GetSinglePlayer();
+	static bool GetMultiPlayer();
+
+	static bool GetLevel1();
+	static bool GetLevel2();
+	static bool GetLevel3();
+
 private:
 
 	unsigned m_vertexArrayID;
@@ -102,11 +109,7 @@ private:
 	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
-	bool GetLevel1();
-	bool GetLevel2();
-	bool GetLevel3();
-	bool GetSinglePlayer();
-	bool GetMultiPlayer();
+
 
 	//Variables
 
@@ -119,11 +122,11 @@ private:
 	bool AbleToPress;
 	bool Talk;
 	bool LevelSelection;
-	bool Level1;
-	bool Level2;
-	bool Level3;
-	bool SinglePlayer;
-	bool MultiPlayer;
+	static bool Level1;
+	static bool Level2;
+	static bool Level3;
+	static bool SinglePlayer;
+	static bool MultiPlayer;
 };
 
 #endif

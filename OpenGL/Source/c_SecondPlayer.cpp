@@ -4,6 +4,20 @@
 
 c_SecondPlayer::c_SecondPlayer()
 {
+	Driving = false;
+	VelocityZ = 0;
+	Acceleration = 0;
+	pos.x = 0;
+	pos.y = 1;
+	pos.z = 0;
+
+	MaxSpeed = 1;
+	SteeringAngle = 0;
+	Duration = 0;
+	MaxAcceleration = 1;
+	Friction = 0.04f;
+	Steering = 3;
+	once = false;
 }
 
 
@@ -16,8 +30,8 @@ void c_SecondPlayer::Movement(double dt)
 	Ability(dt);
 	if (Application::IsKeyPressed(VK_UP) && Backwards == false)
 	{
-		Acceleration += 0.1;
-		VelocityZ += Acceleration * dt;
+		Acceleration += 0.1f;
+		VelocityZ += Acceleration * (float)dt;
 
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -45,8 +59,8 @@ void c_SecondPlayer::Movement(double dt)
 	{
 		if (!Application::IsKeyPressed(VK_UP))
 		{
-			Acceleration -= 0.1;
-			VelocityZ += Acceleration * dt;
+			Acceleration -= 0.1f;
+			VelocityZ += Acceleration * (float)dt;
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -55,7 +69,7 @@ void c_SecondPlayer::Movement(double dt)
 				if (Acceleration < 0)
 				{
 					Acceleration = 0;
-					VelocityZ -= 0.05;
+					VelocityZ -= 0.05f;
 				}
 				if (VelocityZ < 0)
 				{
@@ -96,8 +110,8 @@ void c_SecondPlayer::Movement(double dt)
 
 	if (Application::IsKeyPressed(VK_DOWN) && Driving == false)
 	{
-		Acceleration -= 0.1;
-		VelocityZ += Acceleration * dt;
+		Acceleration -= 0.1f;
+		VelocityZ += Acceleration * (float)dt;
 
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -127,8 +141,8 @@ void c_SecondPlayer::Movement(double dt)
 	{
 		if (!Application::IsKeyPressed(VK_DOWN))
 		{
-			Acceleration += 0.1;
-			VelocityZ += Acceleration * dt;
+			Acceleration += 0.1f;
+			VelocityZ += Acceleration * (float)dt;
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -137,7 +151,7 @@ void c_SecondPlayer::Movement(double dt)
 				if (Acceleration > 0)
 				{
 					Acceleration = 0;
-					VelocityZ += 0.05;
+					VelocityZ += 0.05f;
 				}
 				if (VelocityZ > 0)
 				{

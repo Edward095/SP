@@ -140,7 +140,12 @@ public:
 	{
 		GARAGE_,
 		CHANGED_,
-		LEVELONE_,
+		SLEVELONE_,
+		SLEVELTWO_,
+		SLEVELTHREE_,
+		MLEVELONE_,
+		MLEVELTWO_,
+		MLEVELTHREE_,
 	};
 
 	void Init();
@@ -169,6 +174,8 @@ private:
 	unsigned v_Car1Stats, v_Car2Stats, v_Car3Stats;
 	GAME_STATE_GARAGE e_GameState_Garage;
 	bool v_MusicPause;
+	bool v_Car1Changed;
+	bool v_Car2Changed;
 
 	Light light[1];
 
@@ -187,7 +194,9 @@ private:
 	void f_RenderStats();
 
 	void f_UpdateGarage(double dt);
+	void f_UpdateGarage2(double dt);
 	void f_RenderGarage();
+	void f_RenderGarage2();
 
 	c_List v_CarList;
 	c_List v_ColourList;
@@ -198,10 +207,11 @@ private:
 	const char* v_CarColourPath2[9];
 	const char* v_CarColourPath3[9];
 
-	c_LevelOne levelOne;
+	c_LevelOne sLevelOne;
 	c_FirstCar firstCar;
+	c_FirstCar secondCar;
 
-	//c_MultiplayerLevel level;
+	c_MultiplayerLevel mLevelOne;
 
 };
 
