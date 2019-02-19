@@ -100,6 +100,8 @@ void c_MultiplayerLevel::Init()
 	meshList[TOP]->textureID = LoadTGA("Image//NpcTop.tga");
 	meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
 	meshList[BOTTOM]->textureID = LoadTGA("Image//NpcBottom.tga");
+	meshList[TEXT] = MeshBuilder::GenerateText("text", 16, 16);
+	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
 
 	front.init("front", "quad", "Image//NpcFront.tga", (0, 0, 0));
 	left.init("left", "quad", "Image//NpcLeft.tga", (0, 0, 0));
@@ -149,6 +151,11 @@ void c_MultiplayerLevel::Render()
 	renderPlayerTwo();
 
 	glDisable(GL_SCISSOR_TEST);
+
+	elapedTimeCut = std::to_string(elapsedTime);
+	elapedTimeCut.resize(5);
+	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
+	
 }
 void c_MultiplayerLevel::Exit()
 {
@@ -203,6 +210,53 @@ void c_MultiplayerLevel::RenderMesh(Mesh *mesh, bool enableLight)
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
+}
+void c_MultiplayerLevel::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y)
+{
+	if (!mesh || mesh->textureID <= 0) //Proper error check
+	{
+		return;
+	}
+
+	glDisable(GL_DEPTH_TEST);
+
+	//Add these code just after glDisable(GL_DEPTH_TEST);
+	Mtx44 ortho;
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10); //size of screen UI
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity(); //No need camera for ortho mode
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity(); //Reset modelStack
+	modelStack.Scale(size, size, size);
+	modelStack.Translate(x, y, 0);
+
+	glUniform1i(m_parameters[U_TEXT_ENABLED], 1);
+	glUniform3fv(m_parameters[U_TEXT_COLOR], 1, &color.r);
+	glUniform1i(m_parameters[U_LIGHTENABLED], 0);
+	glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, mesh->textureID);
+	glUniform1i(m_parameters[U_COLOR_TEXTURE], 0);
+	for (unsigned i = 0; i < text.length(); ++i)
+	{
+		Mtx44 characterSpacing;
+		characterSpacing.SetToTranslation(i * 0.67f, 0, 0); // 1.0f is the spacing of each character, you may change this value
+		Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
+		glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+		mesh->Render((unsigned)text[i] * 6, 6); // always 6 because a quad is made of 6 vertices
+	}
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
+
+	//Add these code just before glEnable(GL_DEPTH_TEST);
+	projectionStack.PopMatrix();
+	viewStack.PopMatrix();
+	modelStack.PopMatrix();
+
+	glEnable(GL_DEPTH_TEST);
 }
 void c_MultiplayerLevel::initLights()
 {
@@ -348,6 +402,10 @@ void c_MultiplayerLevel::renderPlayerOne()
 	playerTwo.updatePos(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
 	playerTwo.getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerTwo.getOBB()->calcNewAxis(playerTwo.GetSteeringAngle(), 0, 1, 0);
+
+	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 }
 void c_MultiplayerLevel::renderPlayerTwo()
 {
@@ -392,6 +450,10 @@ void c_MultiplayerLevel::renderPlayerTwo()
 	playerTwo.updatePos(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
 	playerTwo.getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerTwo.getOBB()->calcNewAxis(playerTwo.GetSteeringAngle(), 0, 1, 0);
+
+	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 }
 
 static const float SKYBOXSIZE = 1500.f;

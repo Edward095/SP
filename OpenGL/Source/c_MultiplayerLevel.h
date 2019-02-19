@@ -15,6 +15,7 @@ class c_MultiplayerLevel : public Scene
 public:
 	enum GEOMETRY_TYPE
 	{
+		TEXT,
 		CARAXIS,
 		TOP,
 		BOTTOM,
@@ -72,6 +73,7 @@ private:
 	void renderLights();
 	void updateLights(int num);
 	void RenderMesh(Mesh *mesh, bool enableLight);
+	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
 	void renderEnviroment();
 	void renderPlayerOne();
@@ -96,6 +98,9 @@ private:
 	float playerTwoCamTargetX;
 	float playerTwoCamTargetY;
 	float playerTwoCamTargetZ;
+
+	float elapsedTime;
+	std::string elapedTimeCut;
 
 
 	c_Entity front;

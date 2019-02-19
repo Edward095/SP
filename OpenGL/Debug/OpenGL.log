@@ -1,7 +1,50 @@
-﻿  c_MultiplayerLevel.cpp
-d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(105): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+﻿  Application.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  d:\users\539\desktop\sp2\sp\glfw\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+  c_CarBaseClass.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(45): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(87): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(97): warning C4305: '-=': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(139): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(171): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(182): warning C4305: '+=': truncation from 'double' to 'float'
+  c_Entity.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_entity.cpp(37): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_entity.cpp(72): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_entity.cpp(87): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_entity.cpp(111): warning C4018: '<': signed/unsigned mismatch
+  c_Garage.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(261): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(342): warning C4305: 'argument': truncation from 'double' to 'float'
+  c_LevelOne.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(116): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(117): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(118): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(121): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(135): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(136): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  c_MainMenu.cpp
+  c_MultiplayerLevel.cpp
 d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(107): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(108): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(109): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(112): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  c_Npc.cpp
+  c_SecondPlayer.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_secondplayer.cpp(18): warning C4305: '=': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_secondplayer.cpp(33): warning C4305: '+=': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_secondplayer.cpp(34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_secondplayer.cpp(62): warning C4305: '-=': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_secondplayer.cpp(63): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_secondplayer.cpp(72): warning C4305: '-=': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_secondplayer.cpp(113): warning C4305: '-=': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_secondplayer.cpp(114): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_secondplayer.cpp(144): warning C4305: '+=': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_secondplayer.cpp(145): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_secondplayer.cpp(154): warning C4305: '+=': truncation from 'double' to 'float'
+  Generating Code...
+d:\users\539\desktop\sp2\sp\opengl\source\c_entity.cpp(80): warning C4715: 'c_Entity::getEntity': not all control paths return a value
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\OpenGL.exe
