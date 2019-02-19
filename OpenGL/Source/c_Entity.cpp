@@ -89,9 +89,8 @@ bool c_Entity::gotCollide(float x, float y, float z)
 		c_Collision* collide = objectManager->getObjects().at(i)->getOBB();
 
 		if (objectManager->getObjects().at(i)->getUniqueName() != this->uniqueName &&
-			objectManager->getObjects().at(i)->getUniqueName() != "Nitro") /*&&
-			objectManager->getObjects().at(i)->getUniqueName() != "player1" &&
-			objectManager->getObjects().at(i)->getUniqueName() != "player2")*/
+			objectManager->getObjects().at(i)->getUniqueName() != "Nitro" &&
+			objectManager->getObjects().at(i)->getUniqueName() != "Boostpad")
 		{
 			if (OBB->OBB(collide))
 			{
