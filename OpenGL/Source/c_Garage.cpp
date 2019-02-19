@@ -393,12 +393,14 @@ void c_Garage::Update(double dt)
 		{
 			e_GameState_Garage = LEVELONE_;
 			levelOne.Init();
+			//level.Init();
 		}
 		
 	}
 	else if (e_GameState_Garage == LEVELONE_)
 	{
 		levelOne.Update(dt);
+		//level.Update(dt);
 	}
 }
 
@@ -542,15 +544,16 @@ void c_Garage::Render()
 	else if (e_GameState_Garage == CHANGED_)
 	{
 		modelStack.PushMatrix();
-		modelStack.Translate(0.5f, 0, -10);
-		modelStack.Scale(1.26f, 1, 1);
+		modelStack.Translate(0, 0.5f, -10);
+		modelStack.Scale(1.35f, 1.1f, 1);
 		RenderMesh(meshList[GARAGEBG], false);
 		modelStack.PopMatrix();
 
 		f_RenderFinal();
 	}
-	else if(e_GameState_Garage == LEVELONE_)
+	else if (e_GameState_Garage == LEVELONE_)
 		levelOne.Render();
+		//level.Render();
 }
 
 void c_Garage::initLights()
@@ -1189,6 +1192,7 @@ void c_Garage::f_UpdateGarage(double dt)
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
 		{
 			firstCar.updateAppearance(v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+
 		}
 	}
 	if (Application::IsKeyPressed(VK_SPACE) && v_BTPause < v_ElapsedTime)
@@ -1219,8 +1223,8 @@ void c_Garage::f_UpdateGarage(double dt)
 void c_Garage::f_RenderGarage()
 {
 	modelStack.PushMatrix();
-	modelStack.Translate(0.5f, 0, -10);
-	modelStack.Scale(1.26f, 1, 1);
+	modelStack.Translate(0, 0.5f, -10);
+	modelStack.Scale(1.35f, 1.1f, 1);
 	RenderMesh(meshList[GARAGEBG], false);
 	modelStack.PopMatrix();
 

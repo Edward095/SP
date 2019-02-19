@@ -72,6 +72,7 @@ void NPCCamera::Update(double dt)
 	elapsedTime += dt;
 	
 	UpdateMouse();
+	position.y = -1;
 	WOBmove(dt);
 
 }
@@ -142,7 +143,7 @@ bool NPCCamera::checkCollisions(float x, float zUpper, float zLower)
 //}
 void NPCCamera::WOBmove(double dt)
 {
-	static const float FirstPersonCamera_SPEED = 50.f;
+	static const float FirstPersonCamera_SPEED = 100.f;
 
 	Vector3 right = front.Cross(up).Normalize();
 
