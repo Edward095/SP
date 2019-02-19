@@ -69,7 +69,7 @@ void NPCCamera::UpdateMouse()
 
 void NPCCamera::Update(double dt)
 {
-	elapsedTime += dt;
+	elapsedTime += (float)dt;
 	
 	UpdateMouse();
 	position.y = -1;
@@ -149,19 +149,19 @@ void NPCCamera::WOBmove(double dt)
 
 	if (Application::IsKeyPressed('D'))
 	{
-		position += right * FirstPersonCamera_SPEED * dt;
+		position += right * FirstPersonCamera_SPEED * (float)dt;
 	}
 	if (Application::IsKeyPressed('W'))
 	{
-		position += front * FirstPersonCamera_SPEED * dt;
+		position += front * FirstPersonCamera_SPEED * (float)dt;
 	}
 	if (Application::IsKeyPressed('A'))
 	{
-		position -= right * FirstPersonCamera_SPEED * dt;
+		position -= right * FirstPersonCamera_SPEED * (float)dt;
 	}
 	if (Application::IsKeyPressed('S'))
 	{
-		position -= front * FirstPersonCamera_SPEED * dt;
+		position -= front * FirstPersonCamera_SPEED * (float)dt;
 	}
 	/*if (Application::IsKeyPressed('Q'))
 	{

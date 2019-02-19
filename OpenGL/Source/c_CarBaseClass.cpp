@@ -17,7 +17,7 @@ c_CarBaseClass::~c_CarBaseClass()
 
 	MaxSpeed = 1;
 	SteeringAngle = 0;
-	Steering = 3;
+	Steering = 2;
 	Duration = 0;
 	MaxAcceleration = 1;
 	Friction = 0.5;
@@ -42,7 +42,7 @@ void c_CarBaseClass::Movement(double dt)
 	if (Application::IsKeyPressed('W') && Backwards == false)
 	{
 		Acceleration += (MaxAcceleration - Friction);
-		VelocityZ += Acceleration * dt;
+		VelocityZ += Acceleration * (float)dt;
 
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -84,7 +84,7 @@ void c_CarBaseClass::Movement(double dt)
 		if (!Application::IsKeyPressed('W'))
 		{
 			Acceleration += -Friction;
-			VelocityZ -= Acceleration * dt;
+			VelocityZ -= Acceleration * (float)dt;
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -94,7 +94,7 @@ void c_CarBaseClass::Movement(double dt)
 				if (Acceleration < 0)
 				{
 					Acceleration = 0;
-					VelocityZ -= 0.05;
+					VelocityZ -= 0.05f;
 				}
 				if (VelocityZ < 0)
 				{
@@ -136,7 +136,7 @@ void c_CarBaseClass::Movement(double dt)
 	if (Application::IsKeyPressed('S') && Driving == false)
 	{
 		Acceleration -= (MaxAcceleration - Friction);
-		VelocityZ += Acceleration * dt;
+		VelocityZ += Acceleration * (float)dt;
 
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -168,7 +168,7 @@ void c_CarBaseClass::Movement(double dt)
 		if (!Application::IsKeyPressed('S'))
 		{
 			Acceleration += Friction;
-			VelocityZ -= Acceleration * dt;
+			VelocityZ -= Acceleration * (float)dt;
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -179,7 +179,7 @@ void c_CarBaseClass::Movement(double dt)
 				if (Acceleration > 0)
 				{
 					Acceleration = 0;
-					VelocityZ += 0.05;
+					VelocityZ += 0.05f;
 				}
 				if (VelocityZ > 0)
 				{

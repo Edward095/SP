@@ -72,7 +72,7 @@ void c_AI::Movement(double dt)
 
 void c_AI::Move(double dt, int Points)
 {
-	Acceleration += 0.1;
+	Acceleration += 0.1f;
 	VelocityZ += Acceleration;
 
 	float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
