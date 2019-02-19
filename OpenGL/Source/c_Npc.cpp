@@ -12,7 +12,11 @@
 #include "LoadTGA.h"
 
 
-
+bool c_Npc::MultiPlayer = false;
+bool c_Npc::SinglePlayer = false;
+bool c_Npc::Level1 = false;
+bool c_Npc::Level2 = false;
+bool c_Npc::Level3 = false;
 
 
 c_Npc::c_Npc()

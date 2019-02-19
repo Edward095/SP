@@ -91,7 +91,8 @@ bool c_Entity::gotCollide(float x, float y, float z)
 		if (objectManager->getObjects().at(i)->getUniqueName() != this->uniqueName &&
 			objectManager->getObjects().at(i)->getUniqueName() != "Nitro" &&
 			objectManager->getObjects().at(i)->getUniqueName() != "Boostpad" &&
-			objectManager->getObjects().at(i)->getUniqueName() != "Slowpad")
+			objectManager->getObjects().at(i)->getUniqueName() != "Slowpad"&&
+			objectManager->getObjects().at(i)->getUniqueName() != "test")
 		{
 			if (OBB->OBB(collide))
 			{
@@ -105,14 +106,14 @@ bool c_Entity::gotCollide(float x, float y, float z)
 bool c_Entity::gotCollide(std::string uniqueName)
 {
 	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
-	c_Collision* objectToCollide;
+	c_Collision* objectToCollide = nullptr;
 
 	for (int i = 0; i < objectManager->getObjects().size(); i++)
 	{
 		if (objectManager->getObjects().at(i)->getUniqueName() == uniqueName)
 			objectToCollide = objectManager->getObjects().at(i)->getOBB();
 	}
-	if (this->OBB->OBB(objectToCollide))
+	if (objectToCollide != nullptr && this->OBB->OBB(objectToCollide))
 		return true;
 
 	return false;

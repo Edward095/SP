@@ -1,16 +1,7 @@
-﻿  c_CarBaseClass.cpp
-d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(40): warning C4305: '+=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(41): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(70): warning C4305: '-=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(71): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(81): warning C4305: '-=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(122): warning C4305: '-=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(123): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(154): warning C4305: '+=': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(155): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_carbaseclass.cpp(166): warning C4305: '+=': truncation from 'double' to 'float'
-  c_Garage.cpp
-d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(259): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(340): warning C4305: 'argument': truncation from 'double' to 'float'
-  Generating Code...
+﻿  c_MultiplayerLevel.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(105): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(107): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\OpenGL.exe

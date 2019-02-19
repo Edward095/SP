@@ -16,6 +16,7 @@ class c_LevelOne : public Scene
 public:
 	enum GEOMETRY_TYPE
 	{
+		TEST,
 		TEXT,
 		TOP,
 		BOTTOM,

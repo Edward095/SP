@@ -82,6 +82,7 @@ void c_MultiplayerLevel::Init()
 		"textColor");
 	//Initialize camera settings
 	playerOneCam.Init(Vector3(0, 8, 5), Vector3(0, 1, 0), Vector3(0, 1, 0));
+	playerTwoCam.Init(Vector3(0, 8, 5), Vector3(0, 1, 0), Vector3(0, 1, 0));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -314,6 +315,8 @@ void c_MultiplayerLevel::renderPlayerOne()
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
+	renderEnviroment();
+	updateEnviromentCollision();
 	/****************************************************	PlayerOne	*****************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
@@ -362,6 +365,8 @@ void c_MultiplayerLevel::renderPlayerTwo()
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
+	renderEnviroment();
+	updateEnviromentCollision();
 	/****************************************************	PlayerOne	*****************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);

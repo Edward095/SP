@@ -51,6 +51,8 @@ void c_CarBaseClass::Movement(double dt)
 			BoostPad = true;
 		if (gotCollide("Slowpad"))
 			SlowPad = true;
+		if (gotCollide("test"))
+			std::cout << "Collided with invissble box" << std::endl;
 
 		if (!gotCollide(updateX, pos.y, updateZ))
 		{
@@ -223,6 +225,7 @@ void c_CarBaseClass::SetFriction(float friction)
 void c_CarBaseClass::SetSteering(float Steering)
 {
 	this->Steering = Steering;
+}
 
 void c_CarBaseClass::PadEffect(double dt)
 {

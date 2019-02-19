@@ -10,6 +10,8 @@
 #include "Vertex.h"
 #include "Utility.h"
 #include "LoadTGA.h"
+
+#include "c_Npc.h"
 // +++++++++++++++++++++++++ CAR CLASS +++++++++++++++++++++++++++
 
 c_Car::c_Car()
@@ -391,16 +393,60 @@ void c_Garage::Update(double dt)
 		}
 		else
 		{
-			e_GameState_Garage = LEVELONE_;
-			levelOne.Init();
-			//level.Init();
+			if (c_Npc::GetSinglePlayer())
+			{
+				if(c_Npc::GetLevel1())
+				{
+					e_GameState_Garage = SLEVELONE_;
+					sLevelOne.Init();
+				}
+				else if (c_Npc::GetLevel2())
+				{
+					e_GameState_Garage = SLEVELTWO_;
+				}
+				else if (c_Npc::GetLevel3())
+				{
+					e_GameState_Garage = SLEVELTHREE_;
+				}
+			}
+			else if (c_Npc::GetMultiPlayer())
+			{
+				if (c_Npc::GetLevel1())
+				{
+					e_GameState_Garage = MLEVELONE_;
+					mLevelOne.Init();
+				}
+				else if (c_Npc::GetLevel2())
+				{
+					e_GameState_Garage = MLEVELTWO_;
+				}
+				else if (c_Npc::GetLevel3())
+				{
+					e_GameState_Garage = MLEVELTHREE_;
+				}
+			}
 		}
 		
 	}
-	else if (e_GameState_Garage == LEVELONE_)
+	else if (e_GameState_Garage == SLEVELONE_)
 	{
-		levelOne.Update(dt);
-		//level.Update(dt);
+		sLevelOne.Update(dt);
+	}
+	else if (e_GameState_Garage == SLEVELONE_)
+	{
+	}
+	else if (e_GameState_Garage == SLEVELONE_)
+	{
+	}
+	else if (e_GameState_Garage == MLEVELONE_)
+	{
+		mLevelOne.Update(dt);
+	}
+	else if (e_GameState_Garage == MLEVELONE_)
+	{
+	}
+	else if (e_GameState_Garage == MLEVELONE_)
+	{
 	}
 }
 
@@ -551,9 +597,26 @@ void c_Garage::Render()
 
 		f_RenderFinal();
 	}
-	else if (e_GameState_Garage == LEVELONE_)
-		levelOne.Render();
-		//level.Render();
+	else if (e_GameState_Garage == SLEVELONE_)
+		sLevelOne.Render();
+	else if (e_GameState_Garage == SLEVELTWO_)
+	{
+
+	}
+	else if (e_GameState_Garage == SLEVELTHREE_)
+	{
+
+	}
+	else if (e_GameState_Garage == MLEVELONE_)
+		mLevelOne.Render();
+	else if (e_GameState_Garage == MLEVELTWO_)
+	{
+
+	}
+	else if (e_GameState_Garage == MLEVELTHREE_)
+	{
+
+	}
 }
 
 void c_Garage::initLights()

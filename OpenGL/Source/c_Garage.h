@@ -140,7 +140,12 @@ public:
 	{
 		GARAGE_,
 		CHANGED_,
-		LEVELONE_,
+		SLEVELONE_,
+		SLEVELTWO_,
+		SLEVELTHREE_,
+		MLEVELONE_,
+		MLEVELTWO_,
+		MLEVELTHREE_,
 	};
 
 	void Init();
@@ -198,10 +203,10 @@ private:
 	const char* v_CarColourPath2[9];
 	const char* v_CarColourPath3[9];
 
-	c_LevelOne levelOne;
+	c_LevelOne sLevelOne;
 	c_FirstCar firstCar;
 
-	//c_MultiplayerLevel level;
+	c_MultiplayerLevel mLevelOne;
 
 };
 

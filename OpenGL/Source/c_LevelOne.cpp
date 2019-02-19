@@ -94,22 +94,6 @@ void c_LevelOne::Init()
 	
 
 	//initialization of the Enums
-	/*meshList[FRONT] = MeshBuilder::GenerateQuad("front", Color(1, 1, 1), 1.f);
-	meshList[FRONT]->textureID = LoadTGA("Image//NpcFront.tga");
-
-	
-
-	
-
-	meshList[LEFT] = MeshBuilder::GenerateQuad("left", Color(1, 1, 1), 1.f);
-	meshList[LEFT]->textureID = LoadTGA("Image//NpcLeft.tga");
-
-	meshList[RIGHT] = MeshBuilder::GenerateQuad("right", Color(1, 1, 1), 1.f);
-	meshList[RIGHT]->textureID = LoadTGA("Image//NpcRight.tga");
-
-	meshList[BACK] = MeshBuilder::GenerateQuad("Back", Color(1, 1, 1), 1.f);
-	meshList[BACK]->textureID = LoadTGA("Image//NpcBack.tga");*/
-
 	meshList[TOP] = MeshBuilder::GenerateQuad("Top", Color(1, 1, 1), 1.f);
 	meshList[TOP]->textureID = LoadTGA("Image//NpcTop.tga");
 	meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
