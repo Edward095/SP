@@ -71,7 +71,7 @@ void c_Collision::setHighLow(const char *file_path)
 		}
 
 		type = "OBJ";
-		dimensions.Set((highestX - lowestX) / 1.5, (highestY - lowestY) / 1.5, (highestZ - lowestZ) / 1.5);
+		dimensions.Set((highestX - lowestX) / 1.7, (highestY - lowestY) / 1.7, (highestZ - lowestZ) / 1.7);
 	}
 
 }
@@ -128,7 +128,7 @@ void c_Collision::defaultData()
 	if (type == "quad")
 		dimensions.Set(0.5, 0.5, 0);
 	else
-		dimensions.Set((highestX - lowestX) / 1.5, (highestY - lowestY) / 1.5, (highestZ - lowestZ) / 1.5);
+		dimensions.Set((highestX - lowestX) / 1.7, (highestY - lowestY) / 1.7, (highestZ - lowestZ) / 1.7);
 	pos = (0, 0, 0);
 	localX.Set(1, 0, 0);
 	localY.Set(0, 1, 0);
