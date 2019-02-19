@@ -11,6 +11,7 @@ public:
 	void updateAppearance(const char* meshPath, const char* TGApath);
 	virtual float GetSteeringAngle();
 	virtual void Movement(double dt);
+	virtual void PadEffect(double dt);
 	virtual void Ability(double dt) = 0;
 	virtual void PowerUp(bool check) = 0;
 	virtual float GetMaxAcceleration();
