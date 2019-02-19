@@ -1,7 +1,16 @@
-﻿  c_MultiplayerLevel.cpp
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevel.cpp(104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevel.cpp(105): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevel.cpp(106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevel.cpp(107): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevel.cpp(110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  OpenGL.vcxproj -> C:\Users\incre\OneDrive\Desktop\Edward\SP\Debug\OpenGL.exe
+﻿  Application.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  d:\users\539\desktop\sp2\sp\glfw\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+  c_Garage.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(259): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(340): warning C4305: 'argument': truncation from 'double' to 'float'
+  c_MainMenu.cpp
+  c_MultiplayerLevel.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(103): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(105): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(109): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  c_Npc.cpp
+  Generating Code...
+  OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\OpenGL.exe

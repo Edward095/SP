@@ -75,7 +75,7 @@ void Application::Init()
 
 
 	//Create a window and create its OpenGL context
-	m_window = glfwCreateWindow(800, 600, "Assignment02", NULL, NULL);
+	m_window = glfwCreateWindow(1920, 1080, "Assignment02", glfwGetPrimaryMonitor(), NULL);
 	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(m_window, mouse_callback);
 	glfwSetWindowSizeCallback(m_window, resize_callback);

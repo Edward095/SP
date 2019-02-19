@@ -72,8 +72,13 @@ private:
 	void updateLights(int num);
 	void RenderMesh(Mesh *mesh, bool enableLight);
 
+	void renderEnviroment();
 	void renderPlayerOne();
 	void renderPlayerTwo();
+
+	void updateEnviromentCollision();
+	void updatePlayerOneCollision();
+	void updatePlayerTwoCollision();
 
 	FirstPersonCamera playerOneCam;
 	float playerOneCamPosX;

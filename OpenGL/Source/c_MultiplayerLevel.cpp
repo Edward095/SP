@@ -82,7 +82,6 @@ void c_MultiplayerLevel::Init()
 		"textColor");
 	//Initialize camera settings
 	playerOneCam.Init(Vector3(0, 8, 5), Vector3(0, 1, 0), Vector3(0, 1, 0));
-	playerTwoCam.Init(Vector3(0, 8, 5), Vector3(0, 1, 0), Vector3(0, 1, 0));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -139,12 +138,12 @@ void c_MultiplayerLevel::Render()
 {
 	glEnable(GL_SCISSOR_TEST);
 
-	glViewport(0, 0, 400, 600);
-	glScissor(0, 0, 400, 600);
+	glViewport(0, 0, 960, 1080);
+	glScissor(0, 0, 960, 1080);
 	renderPlayerOne();
 
-	glViewport(0, 0, 800, 600);
-	glScissor(400, 0, 800, 600);
+	glViewport(960, 0, 1920, 1080);
+	glScissor(960, 0, 1920, 1080);
 	renderPlayerTwo();
 
 	glDisable(GL_SCISSOR_TEST);
@@ -298,17 +297,8 @@ void c_MultiplayerLevel::updateLights(int num)
 	}
 }
 
-static const float SKYBOXSIZE = 1500.f;
-static const float translateLength = SKYBOXSIZE / 2;
 void c_MultiplayerLevel::renderPlayerOne()
 {
-	front.getOBB()->defaultData();
-	left.getOBB()->defaultData();
-	right.getOBB()->defaultData();
-	back.getOBB()->defaultData();
-	playerOne.getOBB()->defaultData();
-	playerTwo.getOBB()->defaultData();
-
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -323,77 +313,7 @@ void c_MultiplayerLevel::renderPlayerOne()
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
-	//Skybox
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, translateLength);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(180, 1, 0, 0);
-	modelStack.Rotate(180, 0, 0, 1);
-	RenderMesh(front.getMesh(), false);
-	modelStack.PopMatrix();
-
-	//UpdateCollisions
-	front.updatePos(0, 0, translateLength);
-	front.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	front.getOBB()->calcNewAxis(180.f, 1, 0, 0);
-	front.getOBB()->calcNewAxis(180.f, 0, 0, 1);
-
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, translateLength, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(90, 1, 0, 0);
-	RenderMesh(meshList[TOP], false);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, -translateLength, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(-90, 1, 0, 0);
-	RenderMesh(meshList[BOTTOM], false);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(-translateLength, 0, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(90, 0, 1, 0);
-	RenderMesh(left.getMesh(), false);
-	modelStack.PopMatrix();
-
-	//UpdateCollisions
-	left.updatePos(-translateLength, 0, 0);
-	left.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	left.getOBB()->calcNewAxis(90.f, 0, 1, 0);
-
-	modelStack.PushMatrix();
-	modelStack.Translate(translateLength, 0, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(-90, 0, 1, 0);
-	RenderMesh(right.getMesh(), false);
-	modelStack.PopMatrix();
-
-	//UpdateCollisions
-	right.updatePos(translateLength, 0, 0);
-	right.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	right.getOBB()->calcNewAxis(-90.f, 0, 1, 0);
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, -translateLength);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	//modelStack.Rotate(-180, 0, 1, 0);
-	RenderMesh(back.getMesh(), false);
-	modelStack.PopMatrix();
-
-	//UpdateCollisions
-	back.updatePos(0, 0, -translateLength);
-	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 0);
-	modelStack.Scale(6, 1, 6);
-	RenderMesh(meshList[TRACK], false);
-	modelStack.PopMatrix();
-
+	/****************************************************	PlayerOne	*****************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
@@ -406,6 +326,7 @@ void c_MultiplayerLevel::renderPlayerOne()
 	playerOne.getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerOne.getOBB()->calcNewAxis(playerOne.GetSteeringAngle(), 0, 1, 0);
 
+	/****************************************************	PlayerTwo	*****************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
@@ -418,16 +339,8 @@ void c_MultiplayerLevel::renderPlayerOne()
 	playerTwo.getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerTwo.getOBB()->calcNewAxis(playerTwo.GetSteeringAngle(), 0, 1, 0);
 }
-
 void c_MultiplayerLevel::renderPlayerTwo()
 {
-	front.getOBB()->defaultData();
-	left.getOBB()->defaultData();
-	right.getOBB()->defaultData();
-	back.getOBB()->defaultData();
-	playerOne.getOBB()->defaultData();
-	playerTwo.getOBB()->defaultData();
-
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -442,89 +355,7 @@ void c_MultiplayerLevel::renderPlayerTwo()
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
-	//Skybox
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, translateLength);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(180, 1, 0, 0);
-	modelStack.Rotate(180, 0, 0, 1);
-	RenderMesh(front.getMesh(), false);
-	modelStack.PopMatrix();
-
-	//UpdateCollisions
-	front.updatePos(0, 0, translateLength);
-	front.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	front.getOBB()->calcNewAxis(180.f, 1, 0, 0);
-	front.getOBB()->calcNewAxis(180.f, 0, 0, 1);
-
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, translateLength, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(90, 1, 0, 0);
-	RenderMesh(meshList[TOP], false);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, -translateLength, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(-90, 1, 0, 0);
-	RenderMesh(meshList[BOTTOM], false);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(-translateLength, 0, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(90, 0, 1, 0);
-	RenderMesh(left.getMesh(), false);
-	modelStack.PopMatrix();
-
-	//UpdateCollisions
-	left.updatePos(-translateLength, 0, 0);
-	left.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	left.getOBB()->calcNewAxis(90.f, 0, 1, 0);
-
-	modelStack.PushMatrix();
-	modelStack.Translate(translateLength, 0, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(-90, 0, 1, 0);
-	RenderMesh(right.getMesh(), false);
-	modelStack.PopMatrix();
-
-	//UpdateCollisions
-	right.updatePos(translateLength, 0, 0);
-	right.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	right.getOBB()->calcNewAxis(-90.f, 0, 1, 0);
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, -translateLength);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	//modelStack.Rotate(-180, 0, 1, 0);
-	RenderMesh(back.getMesh(), false);
-	modelStack.PopMatrix();
-
-	//UpdateCollisions
-	back.updatePos(0, 0, -translateLength);
-	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 0);
-	modelStack.Scale(6, 1, 6);
-	RenderMesh(meshList[TRACK], false);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Rotate(playerTwo.GetSteeringAngle(), 0, 1, 0);
-	RenderMesh(playerTwo.getMesh(), true);
-	modelStack.PopMatrix();
-
-	//UpdateCollisions
-	playerTwo.updatePos(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
-	playerTwo.getOBB()->calcNewAxis(90, 0, 1, 0);
-	playerTwo.getOBB()->calcNewAxis(playerTwo.GetSteeringAngle(), 0, 1, 0);
-
+	/****************************************************	PlayerOne	*****************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
@@ -536,4 +367,110 @@ void c_MultiplayerLevel::renderPlayerTwo()
 	playerOne.updatePos(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
 	playerOne.getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerOne.getOBB()->calcNewAxis(playerOne.GetSteeringAngle(), 0, 1, 0);
+
+	/****************************************************	PlayerTwo	*****************************************************/
+	modelStack.PushMatrix();
+	modelStack.Translate(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Rotate(playerTwo.GetSteeringAngle(), 0, 1, 0);
+	RenderMesh(playerTwo.getMesh(), true);
+	modelStack.PopMatrix();
+
+	//UpdateCollisions
+	playerTwo.updatePos(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
+	playerTwo.getOBB()->calcNewAxis(90, 0, 1, 0);
+	playerTwo.getOBB()->calcNewAxis(playerTwo.GetSteeringAngle(), 0, 1, 0);
+}
+
+static const float SKYBOXSIZE = 1500.f;
+static const float translateLength = SKYBOXSIZE / 2;
+void c_MultiplayerLevel::renderEnviroment()
+{
+	/****************************************************Skybox*****************************************************/
+
+	//Front Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, translateLength);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(180, 1, 0, 0);
+	modelStack.Rotate(180, 0, 0, 1);
+	RenderMesh(front.getMesh(), false);
+	modelStack.PopMatrix();
+
+	//Top Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(0, translateLength, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(90, 1, 0, 0);
+	RenderMesh(meshList[TOP], false);
+	modelStack.PopMatrix();
+
+	//Bottom Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(0, -translateLength, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(-90, 1, 0, 0);
+	RenderMesh(meshList[BOTTOM], false);
+	modelStack.PopMatrix();
+
+	//Left Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(-translateLength, 0, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(90, 0, 1, 0);
+	RenderMesh(left.getMesh(), false);
+	modelStack.PopMatrix();
+
+	//Right Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(translateLength, 0, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(-90, 0, 1, 0);
+	RenderMesh(right.getMesh(), false);
+	modelStack.PopMatrix();
+
+	//Back Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, -translateLength);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	RenderMesh(back.getMesh(), false);
+	modelStack.PopMatrix();
+	/***************************************************************************************************************/
+
+	//Track
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, 0);
+	modelStack.Scale(6, 1, 6);
+	RenderMesh(meshList[TRACK], false);
+	modelStack.PopMatrix();
+}
+void c_MultiplayerLevel::updateEnviromentCollision()
+{
+	front.getOBB()->defaultData();
+	left.getOBB()->defaultData();
+	right.getOBB()->defaultData();
+	back.getOBB()->defaultData();
+	playerOne.getOBB()->defaultData();
+	playerTwo.getOBB()->defaultData();
+
+	//Front Skybox
+	front.updatePos(0, 0, translateLength);
+	front.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	front.getOBB()->calcNewAxis(180.f, 1, 0, 0);
+	front.getOBB()->calcNewAxis(180.f, 0, 0, 1);
+
+	//Left Skybox
+	left.updatePos(-translateLength, 0, 0);
+	left.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	left.getOBB()->calcNewAxis(90.f, 0, 1, 0);
+
+	//Right Skybox
+	right.updatePos(translateLength, 0, 0);
+	right.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	right.getOBB()->calcNewAxis(-90.f, 0, 1, 0);
+
+	//Back Skybox
+	back.updatePos(0, 0, -translateLength);
+	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+
 }
