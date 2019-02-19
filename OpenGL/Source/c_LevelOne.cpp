@@ -134,7 +134,7 @@ void c_LevelOne::Init()
 
 	car.init("player1");
 	car.SetFriction(0.1f);
-	car.SetSteering(5.f);
+	car.SetSteering(1.5f);
 	AI.init("Nitro","OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(6, 0, 6));
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));

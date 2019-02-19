@@ -17,7 +17,7 @@ c_CarBaseClass::~c_CarBaseClass()
 
 	MaxSpeed = 1;
 	SteeringAngle = 0;
-	Steering = 3;
+	Steering = 2;
 	Duration = 0;
 	MaxAcceleration = 1;
 	Friction = 0.5;

@@ -259,7 +259,8 @@ void c_Garage::Init()
 
 
 	firstCar.init("player1", v_CarPaths[0], v_CarColourPath1[0], (0, 0, 0));
-	secondCar.init("player2", v_CarPaths[0], v_CarColourPath1[0], (10, 0, 5));
+	if(c_Npc::GetMultiPlayer())
+		secondCar.init("player2", v_CarPaths[0], v_CarColourPath1[0], (10, 0, 5));
 	e_GameState_Garage = GARAGE_;
 	v_MusicPause = false;
 
@@ -383,6 +384,9 @@ void c_Garage::Update(double dt)
 	if (e_GameState_Garage == GARAGE_ && c_Npc::GetSinglePlayer())
 	{
 		f_UpdateGarage(dt);
+
+		if(v_Car1Changed)
+			e_GameState_Garage = CHANGED_;
 	}
 	else if (e_GameState_Garage == GARAGE_ && c_Npc::GetMultiPlayer())
 	{
