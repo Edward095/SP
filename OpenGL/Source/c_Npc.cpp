@@ -522,7 +522,7 @@ void c_Npc::initLights()
 	m_parameters[U_COLOR_TEXTURE] = glGetUniformLocation(m_programID, "colorTexture");
 
 	light[0].type = Light::LIGHT_POINT;
-	light[0].position.Set(0, -0.5f, 0);
+	light[0].position.Set(-5, 7, 0);
 	light[0].color.Set(1, 1, 1);
 	light[0].power = 1.f;
 	light[0].kC = 1.f;

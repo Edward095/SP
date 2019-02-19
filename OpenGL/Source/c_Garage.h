@@ -174,6 +174,8 @@ private:
 	unsigned v_Car1Stats, v_Car2Stats, v_Car3Stats;
 	GAME_STATE_GARAGE e_GameState_Garage;
 	bool v_MusicPause;
+	bool v_Car1Changed;
+	bool v_Car2Changed;
 
 	Light light[1];
 
@@ -192,7 +194,9 @@ private:
 	void f_RenderStats();
 
 	void f_UpdateGarage(double dt);
+	void f_UpdateGarage2(double dt);
 	void f_RenderGarage();
+	void f_RenderGarage2();
 
 	c_List v_CarList;
 	c_List v_ColourList;
@@ -205,6 +209,7 @@ private:
 
 	c_LevelOne sLevelOne;
 	c_FirstCar firstCar;
+	c_FirstCar secondCar;
 
 	c_MultiplayerLevel mLevelOne;
 
