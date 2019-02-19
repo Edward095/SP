@@ -13,10 +13,11 @@ c_FirstCar::c_FirstCar()
 	pos.y = 1;
 	pos.z = 0;
 
-	MaxSpeed = 0;
+	MaxSpeed = 1;
 	SteeringAngle = 0;
 	Duration = 0;
-
+	MaxAcceleration = 1;
+	Friction = 0.01;
 	once = false;
 }
 c_FirstCar::~c_FirstCar()

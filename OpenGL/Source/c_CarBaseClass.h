@@ -13,12 +13,17 @@ public:
 	virtual void Movement(double dt);
 	virtual void Ability(double dt) = 0;
 	virtual void PowerUp(bool check) = 0;
+	virtual float GetMaxAcceleration();
+	virtual float GetSpeed();
+	virtual float GetAcceleration();
 
 protected:
 	float VelocityZ;
 	float MaxSpeed;
 	float SteeringAngle;
 	float Acceleration;
+	float MaxAcceleration;
+	float Friction;
 	int Duration;
 
 	bool Driving = false;

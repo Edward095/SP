@@ -102,6 +102,11 @@ private:
 	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
+	bool GetLevel1();
+	bool GetLevel2();
+	bool GetLevel3();
+	bool GetSinglePlayer();
+	bool GetMultiPlayer();
 
 	//Variables
 
@@ -116,6 +121,9 @@ private:
 	bool LevelSelection;
 	bool Level1;
 	bool Level2;
+	bool Level3;
+	bool SinglePlayer;
+	bool MultiPlayer;
 };
 
 #endif
