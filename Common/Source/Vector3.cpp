@@ -140,7 +140,7 @@ operator- overload for vector subtraction
 /******************************************************************************/
 Vector3 Vector3::operator-( const Vector3& rhs ) const
 {
-	return Vector3(x - rhs.x, y - rhs.y, z - rhs.z);
+ 	return Vector3(x - rhs.x, y - rhs.y, z - rhs.z);
 }
 
 /******************************************************************************/

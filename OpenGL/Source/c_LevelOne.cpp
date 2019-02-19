@@ -33,6 +33,9 @@ void c_LevelOne::Init()
 	elapsedTime = 0;
 	FreezeTime = 0;
 	duration = 0;
+	Cooldown = 0;
+	Countdown = 3;
+	Timer = 0;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -136,19 +139,21 @@ void c_LevelOne::Init()
 	car.init("player1");
 	car.SetFriction(0.1);
 	car.SetSteering(5);
-	AI.init("Nitro","OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(6, 0, 6));
+	AI.init("Nitro","OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(0, 0, -2));
 	//RenderMesh(car.getMesh(), true);
 
 
 	//Initialization of Variables
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
+	finishLine.init("finishLine", "quad", "Image//Test.tga", Vector3(0, 0, -10));
 
 	
 }
 void c_LevelOne::Update(double dt)
 {
-	elapsedTime += dt;
+	Timer += dt;
+	Countdown -= Timer * dt;
 	FreezeTime  = (dt + (dt* 0));
 
 	if (Application::IsKeyPressed('F'))
@@ -163,7 +168,12 @@ void c_LevelOne::Update(double dt)
 			Freeze = false;
 	}
 
-	
+	if (Countdown <= 0)
+	{
+		elapsedTime += dt;
+		car.Movement(dt);
+		AI.Movement(dt);
+	}
 
 
 	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
@@ -176,11 +186,21 @@ void c_LevelOne::Update(double dt)
 	camera.Update(dt); 
   
 	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
-	car.Movement(dt);
-	AI.Movement(dt);
+
 	if (car.getPos().x == nitro.getPos().x && car.getPos().z == nitro.getPos().z)
 	{
 		car.PowerUp(true);
+	}
+
+	if (car.gotCollide("finishLine"))
+	{
+		Finish = true;
+	}
+
+	if (Finish)
+	{
+		if (elapsedTime >= 2)
+			elapsedTime = 100;
 	}
 
 }
@@ -199,6 +219,7 @@ void c_LevelOne::Render()
 	AI.getOBB()->defaultData();
 	boost.getOBB()->defaultData();
 	slow.getOBB()->defaultData();
+	finishLine.getOBB()->defaultData();
 
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -286,6 +307,7 @@ void c_LevelOne::Render()
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, 0);
+	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Scale(6, 1, 6);
 	RenderMesh(meshList[TRACK], false);
 	modelStack.PopMatrix();
@@ -306,7 +328,8 @@ void c_LevelOne::Render()
 	
 	modelStack.PushMatrix();
 	modelStack.Translate(AI.getPos().x, AI.getPos().y, AI.getPos().z);
-	modelStack.Rotate(AI.GetSteeringAngle(), 0, 1, 0);
+	//modelStack.Translate(0, 0, -2);
+	//modelStack.Rotate(AI.GetSteeringAngle(), 0, 1, 0);
 	//modelStack.Scale(0.8, 0.8, 0.8);
 	RenderMesh(AI.getMesh(), true);
 	modelStack.PopMatrix();
@@ -325,6 +348,18 @@ void c_LevelOne::Render()
 	boost.getOBB()->calcNewDimensions(3, 1, 3);
 
 	modelStack.PushMatrix();
+	modelStack.Translate(finishLine.getPos().x, finishLine.getPos().y, finishLine.getPos().z);
+	//modelStack.Rotate(90, -1, 0, 0);
+	modelStack.Scale(50, 15, 50);
+	//modelStack.Scale(20, 10, 20);
+	RenderMesh(finishLine.getMesh(), true);
+	modelStack.PopMatrix();
+
+	finishLine.updatePos(finishLine.getPos().x, finishLine.getPos().y, finishLine.getPos().z);
+	finishLine.getOBB()->calcNewDimensions(50, 15, 50);
+	//finishLine.getOBB()->calcNewDimensions(20, 10, 20);
+
+	modelStack.PushMatrix();
 	modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
 	modelStack.Scale(3, 1, 3);
 	RenderMesh(slow.getMesh(), true);
@@ -333,12 +368,34 @@ void c_LevelOne::Render()
 	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
 	slow.getOBB()->calcNewDimensions(3, 1, 3);
 
-	elapedTimeCut = std::to_string(elapsedTime);
-	elapedTimeCut.resize(5);
-	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
+	CountdownCut = std::to_string(Countdown);
+	CountdownCut.resize(1);
+
 	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+
+	if (Countdown >= 0)
+		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 10, 14);
+	else
+	{
+		Cooldown++;
+		elapedTimeCut = std::to_string(elapsedTime);
+		elapedTimeCut.resize(5);
+
+		if (Cooldown <= 50)
+			RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 10, 14);
+		else
+			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 10, 14);
+	}
+
+	if (car.getPos().z == -1 && car.getPos().x >= -5 && car.getPos().x <= 5)
+	{
+		if (elapsedTime <= 100)
+		{
+			elapsedTime = 100;
+		}
+	}
 }
 void c_LevelOne::Exit()
 {

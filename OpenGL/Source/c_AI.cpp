@@ -21,7 +21,7 @@ c_AI::~c_AI()
 
 void c_AI::Movement(double dt)
 {
-	if (pos.x == 0 && pos.z == 0 && Waypoint == 0)
+	/*if (pos.x == 0 && pos.z == 0 && Waypoint == 0)
 	{
 		Waypoint = 1;
 		ToTurn = 1;
@@ -67,7 +67,7 @@ void c_AI::Movement(double dt)
 		Waypoint = 1;
 
 	Move(dt, Waypoint);
-	Turn(dt, ToTurn);
+	Turn(dt, ToTurn);*/
 }
 
 void c_AI::Move(double dt, int Points)

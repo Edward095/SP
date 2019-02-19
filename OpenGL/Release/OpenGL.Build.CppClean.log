@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 c:\users\asus\desktop\sp2\sp\opengl\release\application.obj
 c:\users\asus\desktop\sp2\sp\opengl\release\camera.obj
 c:\users\asus\desktop\sp2\sp\opengl\release\c_carbaseclass.obj
@@ -20,3 +21,41 @@ c:\users\asus\desktop\sp2\sp\opengl\release\meshbuilder.obj
 c:\users\asus\desktop\sp2\sp\opengl\release\npccamera.obj
 c:\users\asus\desktop\sp2\sp\opengl\release\shader.obj
 c:\users\asus\desktop\sp2\sp\opengl\release\utility.obj
+=======
+c:\users\marc-\documents\github\sp\opengl\release\vc141.pdb
+c:\users\marc-\documents\github\sp\opengl\release\npccamera.obj
+c:\users\marc-\documents\github\sp\opengl\release\main.obj
+c:\users\marc-\documents\github\sp\opengl\release\application.obj
+c:\users\marc-\documents\github\sp\opengl\release\meshbuilder.obj
+c:\users\marc-\documents\github\sp\opengl\release\mesh.obj
+c:\users\marc-\documents\github\sp\opengl\release\loadtga.obj
+c:\users\marc-\documents\github\sp\opengl\release\camera.obj
+c:\users\marc-\documents\github\sp\opengl\release\loadobj.obj
+c:\users\marc-\documents\github\sp\opengl\release\firstpersoncamera.obj
+c:\users\marc-\documents\github\sp\opengl\release\c_mainmenu.obj
+c:\users\marc-\documents\github\sp\opengl\release\c_collision.obj
+c:\users\marc-\documents\github\sp\opengl\release\c_sound.obj
+c:\users\marc-\documents\github\sp\opengl\release\c_npc.obj
+c:\users\marc-\documents\github\sp\opengl\release\c_levelone.obj
+c:\users\marc-\documents\github\sp\opengl\release\c_firstcar.obj
+c:\users\marc-\documents\github\sp\opengl\release\c_carbaseclass.obj
+c:\users\marc-\documents\github\sp\opengl\release\c_garage.obj
+c:\users\marc-\documents\github\sp\opengl\release\c_entity.obj
+c:\users\marc-\documents\github\sp\opengl\release\c_objectmanager.obj
+c:\users\marc-\documents\github\sp\opengl\release\c_scenemanager.obj
+c:\users\marc-\documents\github\sp\opengl\release\utility.obj
+c:\users\marc-\documents\github\sp\opengl\release\shader.obj
+c:\users\marc-\documents\github\sp\opengl\release\c_boosterpad.obj
+c:\users\marc-\documents\github\sp\opengl\release\c_slowpad.obj
+c:\users\marc-\documents\github\sp\release\opengl.exe
+c:\users\marc-\documents\github\sp\release\opengl.pdb
+c:\users\marc-\documents\github\sp\release\opengl.ipdb
+c:\users\marc-\documents\github\sp\release\opengl.iobj
+c:\users\marc-\documents\github\sp\opengl\release\opengl.tlog\cl.command.1.tlog
+c:\users\marc-\documents\github\sp\opengl\release\opengl.tlog\cl.read.1.tlog
+c:\users\marc-\documents\github\sp\opengl\release\opengl.tlog\cl.write.1.tlog
+c:\users\marc-\documents\github\sp\opengl\release\opengl.tlog\link.command.1.tlog
+c:\users\marc-\documents\github\sp\opengl\release\opengl.tlog\link.read.1.tlog
+c:\users\marc-\documents\github\sp\opengl\release\opengl.tlog\link.write.1.tlog
+c:\users\marc-\documents\github\sp\opengl\release\opengl.tlog\opengl.write.1u.tlog
+>>>>>>> origin/NewTemp

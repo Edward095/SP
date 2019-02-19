@@ -93,6 +93,7 @@ private:
 
 	c_Entity boost;
 	c_Entity slow;
+	c_Entity finishLine;
 	//Variables
 
 	bool talk;
@@ -110,6 +111,11 @@ private:
 
 	int duration;
 	std::string elapedTimeCut;
+	std::string CountdownCut;
+	int Cooldown;
+	float Countdown;
+	float Timer;
+	bool Finish = false;
 };
 
 #endif
