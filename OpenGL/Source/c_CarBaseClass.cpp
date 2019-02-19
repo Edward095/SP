@@ -225,6 +225,7 @@ void c_CarBaseClass::SetFriction(float friction)
 void c_CarBaseClass::SetSteering(float Steering)
 {
 	this->Steering = Steering;
+}
 
 void c_CarBaseClass::PadEffect(double dt)
 {

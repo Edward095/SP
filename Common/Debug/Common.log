@@ -1,21 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Marc
 ﻿  MatrixStack.cpp
   Mtx44.cpp
-  timer.cpp
   Vector3.cpp
+  timer.cpp
   Generating Code...
-<<<<<<< HEAD
   Common.vcxproj -> C:\Users\irfan\Desktop\Sp2(Github)\SP\Debug\Common.lib
-=======
-﻿
->>>>>>> Marc
-=======
-  Common.vcxproj -> C:\Users\marc-\Documents\GitHub\SP\Debug\Common.lib
->>>>>>> Marc
-=======
-﻿
->>>>>>> Marc
