@@ -193,9 +193,6 @@ private:
 	float bLightEnabled;
 	std::string elapedTimeCut;
 
-	std::vector <float> rainX;
-	std::vector <float> rainY;
-	std::vector <float> rainZ;
 	c_Weather rain;
 	void renderRain();
 };

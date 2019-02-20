@@ -14,6 +14,15 @@ c_Weather::~c_Weather()
 {
 }
 
+void c_Weather::init()
+{
+	for (int i = 0; i < 4000; i++)
+	{
+		xPos.push_back(rand() % 500 - 250);
+		yPos.push_back(rand() % 401 - 200);
+		zPos.push_back(rand() % 500 - 250);
+	}
+}
 void c_Weather::update(double dt)
 {
 	translateX += 35 * 1.5 * dt;
@@ -35,4 +44,16 @@ float c_Weather::getTranslateY()
 float c_Weather::getTranslateZ()
 {
 	return translateZ;
+}
+std::vector<float> c_Weather::getX()
+{
+	return xPos;
+}
+std::vector<float> c_Weather::getY()
+{
+	return yPos;
+}
+std::vector<float> c_Weather::getZ()
+{
+	return zPos;
 }
