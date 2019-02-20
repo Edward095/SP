@@ -41,6 +41,7 @@ void c_CarBaseClass::Movement(double dt)
 {
 	Ability(dt);
 	PadEffect(dt);
+	isOffRoad();
 	if (Application::IsKeyPressed('W') && Backwards == false)
 	{
 		Acceleration += (MaxAcceleration - Friction);
@@ -53,20 +54,6 @@ void c_CarBaseClass::Movement(double dt)
 			BoostPad = true;
 		if (gotCollide("Slowpad"))
 			SlowPad = true;
-		if (!gotCollide("track"))//|| gotCollide("offRoad1") || gotCollide("offRoad2") || gotCollide("offRoad3") || gotCollide("offRoad4") || gotCollide("offRoad5") || gotCollide("offRoad6"))
-			offRoad = true;
-		else
-			offRoad = false;
-		if (offRoad)
-		{
-			SetFriction(0.5);
-			SetMaxSpeed(0.1);
-		}
-		else
-		{
-			SetFriction(0);
-			SetMaxSpeed(1.f);
-		}
 
 		if (!gotCollide(updateX, pos.y, updateZ))
 		{

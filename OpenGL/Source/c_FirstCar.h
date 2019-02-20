@@ -11,6 +11,7 @@ public:
 	~c_FirstCar();
 	virtual void Ability(double dt);
 	virtual void PowerUp(bool check);
+	virtual void isOffRoad();
 };
 
 

@@ -21,8 +21,8 @@ void c_Entity::init(std::string uniqueName, const char* meshPath, const char* TG
 	//Add Object to the List
 	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
 	objectManager->addOBJ(this);
-
 	this->pos = pos;
+	//updatePos(pos.x, pos.y, pos.z);
 	this->meshPath = meshPath;
 	this->TGApath = TGApath;
 	this->uniqueName = uniqueName;
@@ -145,5 +145,7 @@ bool c_Entity::ignoreEntity(std::string uniqueName)
 		uniqueName != "offRoad3"&&
 		uniqueName != "offRoad4"&&
 		uniqueName != "offRoad5"&&
-		uniqueName != "offRoad6");
+		uniqueName != "offRoad6"&&
+		uniqueName != "offRoad7"&&
+		uniqueName != "offRoad8");
 }

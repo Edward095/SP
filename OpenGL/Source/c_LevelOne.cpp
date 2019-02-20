@@ -121,10 +121,9 @@ void c_LevelOne::Init()
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
 
     meshList[RAIN] = MeshBuilder::GenerateSphere("Snow", Color(0,0,1), 18, 18, 2);
-	//meshList[RAIN]->textureID = LoadTGA("Image//Rain.tga");
 
 	//Init Entities
-
+	rain.init();
 	front.init("front", "quad", "Image//NpcFront.tga", (float)(0, 0, 0));
 	left.init("left", "quad", "Image//NpcLeft.tga", (float)(0, 0, 0));
 	right.init("right", "quad", "Image//NpcRight.tga", (float)(0, 0, 0));
@@ -137,7 +136,6 @@ void c_LevelOne::Init()
 	AI.init("AI","OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(6, 0, 6));
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
-	rain.init();
 
 	track.init("track", "OBJ//RaceTrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0));
 	offRoad1.init("offRoad1", "OBJ//OffroadTrack1//part1.obj", "Image//Test.tga", Vector3(0, 0, 0));
@@ -146,6 +144,8 @@ void c_LevelOne::Init()
 	offRoad4.init("offRoad4", "OBJ//OffroadTrack1//part4.obj", "Image//Test.tga", Vector3(0, 0, 0));
 	offRoad5.init("offRoad5", "OBJ//OffroadTrack1//part5.obj", "Image//Test.tga", Vector3(0, 0, 0));
 	offRoad6.init("offRoad6", "OBJ//OffroadTrack1//part6.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	offRoad5.init("offRoad7", "OBJ//OffroadTrack1//part7.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	offRoad6.init("offRoad8", "OBJ//OffroadTrack1//part8.obj", "Image//Test.tga", Vector3(0, 0, 0));
 
 	//Snowing = true;
 	//Raining = true;
@@ -164,12 +164,14 @@ void c_LevelOne::Init()
 		car.SetMaxSpeed(0.1);
 	}
 
-	
+	meshList[TEST] = MeshBuilder::GenerateSphere("test", Color(1, 0, 0), 16, 16, 5);
+	meshList[AXIS] = MeshBuilder::GenerateAxes("axis", 1000, 1000, 1000);
 }
 void c_LevelOne::Update(double dt)
 {
 	FPS = 1 / dt;
-	rain.update(dt);
+	elapsedTime += (float)dt;
+	FreezeTime  = (float)(dt + (dt* 0));
 	if (Application::IsKeyPressed('8'))
 	{
 		bLightEnabled = true;
@@ -179,8 +181,6 @@ void c_LevelOne::Update(double dt)
 		bLightEnabled = false;
 	}
 
-	elapsedTime += (float)dt;
-	FreezeTime  = (float)(dt + (dt* 0));
 
 	if (Application::IsKeyPressed('F'))
 		Freeze = true;
@@ -206,6 +206,7 @@ void c_LevelOne::Update(double dt)
 	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
 	car.Movement(dt);
 	AI.Movement(dt);
+	rain.update(dt);
 
 }
 
@@ -226,9 +227,9 @@ void c_LevelOne::Render()
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
 	renderLights();
+	//renderRain();
 	renderEnviroment();
 	updateEnviromentCollision();
-	renderRain();
 
 	/**************************************************************		CAR		***************************************************************/
 	modelStack.PushMatrix();
@@ -274,6 +275,9 @@ void c_LevelOne::Render()
 	slow.getOBB()->calcNewDimensions(3, 1, 3);
 
 	/********************************************************************************************************************************************/
+	RenderMesh(meshList[AXIS], false);
+
+
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
@@ -937,6 +941,13 @@ void c_LevelOne::updateEnviromentCollision()
 	boost.getOBB()->defaultData();
 	slow.getOBB()->defaultData();
 	track.getOBB()->defaultData();
+	offRoad1.getOBB()->defaultData();
+	offRoad2.getOBB()->defaultData();
+	offRoad3.getOBB()->defaultData();
+	offRoad4.getOBB()->defaultData();
+	offRoad5.getOBB()->defaultData();
+	offRoad6.getOBB()->defaultData();
+
 
 	//Front Skybox
 	front.updatePos(0, 0, translateLength);

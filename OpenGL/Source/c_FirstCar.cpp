@@ -6,7 +6,6 @@
 
 c_FirstCar::c_FirstCar()
 {
-	//Driving = false;
 	VelocityZ = 0;
 	Acceleration = 0;
 	pos.x = 0;
@@ -56,4 +55,21 @@ void c_FirstCar::PowerUp(bool check)
 		Nitro = true;
 	}
 
+}
+void c_FirstCar::isOffRoad()
+{
+	if (!gotCollide("track"))//|| gotCollide("offRoad1") || gotCollide("offRoad2") || gotCollide("offRoad3") || gotCollide("offRoad4") || gotCollide("offRoad5") || gotCollide("offRoad6"))
+		offRoad = true;
+	else
+		offRoad = false;
+	if (offRoad)
+	{
+		SetFriction(0.5f);
+		SetMaxSpeed(0.3f);
+	}
+	else
+	{
+		SetFriction(0.04);
+		SetMaxSpeed(0.8f);
+	}
 }

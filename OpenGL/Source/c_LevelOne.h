@@ -18,6 +18,7 @@ public:
 	enum GEOMETRY_TYPE
 	{
 		TEST,
+		AXIS,
 		TEXT,
 		TOP,
 		BOTTOM,
@@ -161,17 +162,20 @@ private:
 	c_FirstCar car;
 	c_AI AI;
 	
-	c_Entity track;
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
+
+	c_Entity track;
 	c_Entity offRoad1;
 	c_Entity offRoad2;
 	c_Entity offRoad3;
 	c_Entity offRoad4;
 	c_Entity offRoad5;
 	c_Entity offRoad6;
+	c_Entity offRoad7;
+	c_Entity offRoad8;
 
 	c_Entity boost;
 	c_Entity slow;
