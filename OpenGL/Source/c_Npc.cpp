@@ -302,7 +302,7 @@ void c_Npc::UpdateNpc(double dt)
 	}
 	if ((Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && StartGame == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Options == true && AbleToPress == true))
 	{
-		ArrowY = 7;
+		
 		BounceTime = ElapsedTime + 0.125;
 		if (LevelSelection == false && StartGame == true)
 		{
@@ -311,12 +311,14 @@ void c_Npc::UpdateNpc(double dt)
 				SinglePlayer = true;
 				MultiPlayer = false;
 				LevelSelection = true;
+				ArrowY = 7;
 			}
 			else if (ArrowY == 6)
 			{
 				MultiPlayer = true;
 				SinglePlayer = false;
 				LevelSelection = true;
+				ArrowY = 7;
 			}
 		}
 		else if (LevelSelection == true && StartGame == true)

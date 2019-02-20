@@ -15,6 +15,7 @@ public:
 	virtual float GetMaxAcceleration();
 	virtual float GetSpeed();
 	virtual float GetAcceleration();
+	virtual void SetSpeed(float speed);
 	virtual void SetFriction(float friction);
 	virtual void SetSteering(float Steering);
 	virtual void Ability(double dt) = 0;
