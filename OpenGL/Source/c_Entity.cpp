@@ -38,16 +38,16 @@ void c_Entity::init(std::string uniqueName)
 	{
 		if (objectManager->getObjects().at(i)->getUniqueName() == uniqueName)
 		{
-			c_Entity* other = objectManager->getObjects().at(i);
+		c_Entity* other = objectManager->getObjects().at(i);
 
-			this->pos = other->pos;
-			this->meshPath = other->meshPath;
-			this->TGApath = other->TGApath;
-			this->uniqueName = uniqueName;
-			this->mesh = other->mesh;
-			this->mesh->textureID = LoadTGA(TGApath);
-			this->OBB = other->OBB;
-			this->OBB->setHighLow(meshPath);
+		this->pos = other->pos;
+		this->meshPath = other->meshPath;
+		this->TGApath = other->TGApath;
+		this->uniqueName = uniqueName;
+		this->mesh = other->mesh;
+		this->mesh->textureID = LoadTGA(TGApath);
+		this->OBB = other->OBB;
+		this->OBB->setHighLow(meshPath);
 		}
 	}
 
@@ -81,22 +81,19 @@ c_Entity* c_Entity::getEntity(std::string uniqueName)
 bool c_Entity::gotCollide(float x, float y, float z)
 {
 	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
+	std::vector<c_Entity*> entity = objectManager->getObjects();
 
 	updatePos(pos.x + x, pos.y + y, pos.z + z);
 
 	for (int i = 0; i < objectManager->getObjects().size(); i++)
 	{
-		c_Collision* collide = objectManager->getObjects().at(i)->getOBB();
+		c_Collision* collide = entity[i]->getOBB();
 
-		if (objectManager->getObjects().at(i)->getUniqueName() != this->uniqueName &&
-			objectManager->getObjects().at(i)->getUniqueName() != "Nitro" &&
-			objectManager->getObjects().at(i)->getUniqueName() != "Boostpad" &&
-			objectManager->getObjects().at(i)->getUniqueName() != "Slowpad"&&
-			objectManager->getObjects().at(i)->getUniqueName() != "test")
+		if (ignoreEntity(entity[i]->uniqueName))
 		{
 			if (OBB->OBB(collide))
 			{
-				updatePos(pos.x - x, pos.y - y, pos.z -  z);
+				updatePos(pos.x - x, pos.y - y, pos.z - z);
 				return true;
 			}
 		}
@@ -135,4 +132,11 @@ void c_Entity::updatePos(float xPos, float yPos, float zPos)
 std::string c_Entity::getUniqueName()
 {
 	return uniqueName;
+}
+bool c_Entity::ignoreEntity(std::string uniqueName)
+{
+	return	(uniqueName != this->uniqueName &&
+		uniqueName != "Nitro" &&
+		uniqueName != "Boostpad" &&
+		uniqueName != "Slowpad");
 }

@@ -9,6 +9,7 @@
 #include "c_FirstCar.h"
 #include "c_Entity.h"
 #include "c_AI.h"
+#include "c_Weather.h"
 
 
 class c_LevelOne : public Scene
@@ -186,10 +187,17 @@ private:
 	bool Raining = false;
 	bool Snowing = false;
 	bool OffRoad = false;
+	float FPS;
 
 	int duration;
 	float bLightEnabled;
 	std::string elapedTimeCut;
+
+	std::vector <float> rainX;
+	std::vector <float> rainY;
+	std::vector <float> rainZ;
+	c_Weather rain;
+	void renderRain();
 };
 
 #endif
