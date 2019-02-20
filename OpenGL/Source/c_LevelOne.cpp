@@ -41,13 +41,6 @@ void c_LevelOne::Init()
 
 	bLightEnabled = true;
 
-	for (int i = 0; i < 4000; i++)
-	{
-		rainX.push_back(rand() % 500 - 250);
-		rainY.push_back(rand() % 401 - 200);
-		rainZ.push_back(rand() % 500 - 250);
-	}
-
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	//Enable depth buffer and depth testing
@@ -145,6 +138,7 @@ void c_LevelOne::Init()
 	AI.init("Nitro","OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(6, 0, 6));
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
+	rain.init();
 
 	
 }
@@ -937,10 +931,10 @@ void c_LevelOne::updateEnviromentCollision()
 
 void c_LevelOne::renderRain()
 {
-	for (int i = 0; i < rainX.size(); i++)
+	for (int i = 0; i < rain.getX().size(); i++)
 	{
 		modelStack.PushMatrix();
-		modelStack.Translate(rainX[i], rainY[i], rainZ[i]);
+		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
 		modelStack.Translate(rain.getTranslateX(), rain.getTranslateY(), rain.getTranslateZ());
 		modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
 		modelStack.Rotate(45, 0, 0, 1);
