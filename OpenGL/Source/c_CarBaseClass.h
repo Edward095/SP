@@ -9,8 +9,8 @@ public:
 	c_CarBaseClass();
 	~c_CarBaseClass();
 	void updateAppearance(const char* meshPath, const char* TGApath);
-	virtual float GetSteeringAngle();
 	virtual void Movement(double dt);
+	virtual float GetSteeringAngle();
 	virtual void PadEffect(double dt);
 	virtual float GetMaxAcceleration();
 	virtual float GetSpeed();
@@ -37,7 +37,6 @@ protected:
 	bool Nitro = false;
 	bool BoostPad = false;
 	bool SlowPad = false;
-
 	bool once;
 };
 

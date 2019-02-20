@@ -127,9 +127,6 @@ void c_LevelOne::Init()
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
 
-    meshList[RAIN] = MeshBuilder::GenerateOBJ("Raindrops", "OBJ//Raindrop.obj");
-	meshList[RAIN]->textureID = LoadTGA("Image//Rain.tga");
-
 	//Init Entities
 
 	front.init("front", "quad", "Image//NpcFront.tga", (float)(0, 0, 0));
