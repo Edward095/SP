@@ -113,23 +113,34 @@ void c_Sound::f_WeatherRain()
 	s_Weather_Rain->play2D("SFX//Weather_SFX_Rain.wav");
 }
 
-void c_Sound::f_Game_Nitro()
+void c_Sound::f_Game_Ability_Nitro()
 {
 	s_GP_SFX->play2D(s_Nitro);
 }
 
-void c_Sound::f_Game_Boost()
+void c_Sound::f_Game_Ability_Teleport()
+{
+	s_GP_SFX->play2D(s_Teleport);
+}
+
+void c_Sound::f_Game_Ability_Freezetime()
+{
+	s_GP_SFX->play2D(s_FreezeTime);
+}
+
+void c_Sound::f_Game_Fanfare_Boost()
 {
 	s_GP_SFX->play2D(s_BoostPad);
 }
 
-void c_Sound::f_Game_Slow()
+void c_Sound::f_Game_Fanfare_Slow()
 {
 	s_GP_SFX->play2D(s_SlowPad);
 }
-void c_Sound::f_Game_Teleport()
+
+void c_Sound::f_Game_Fanfare_Startline()
 {
-	s_GP_SFX->play2D(s_Teleport);
+	s_GP_SFX->play2D(s_StartingLine);
 }
 
 void c_Sound::f_InitSFX()
@@ -139,8 +150,12 @@ void c_Sound::f_InitSFX()
 	s_ConfirmSound = s_MM_SFX->addSoundSourceFromFile("SFX//MainMenu_SFX_ConfirmSelect.ogg");
 
 	// Gameplay
+
+	// - Fanfares
 	s_BoostPad = s_GP_SFX->addSoundSourceFromFile("SFX//Game_SFX_BoostPad.wav");
 	s_SlowPad = s_GP_SFX->addSoundSourceFromFile("SFX//Game_SFX_SlowPad.wav");
+	s_StartingLine = s_GP_SFX->addSoundSourceFromFile("SFX//Game_SFX_StartingLine.wav");
+
 	// - Abilities
 	s_Nitro = s_GP_SFX->addSoundSourceFromFile("SFX//Game_SFX_Ability_Nitro.mp3");
 	s_Teleport = s_GP_SFX->addSoundSourceFromFile("SFX//Game_SFX_Ability_Teleport.wav");
