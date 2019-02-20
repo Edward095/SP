@@ -11,7 +11,7 @@ c_SecondCar::c_SecondCar()
 	pos.y = 1;
 	pos.z = 0;
 
-	MaxSpeed = 0.6;
+	MaxSpeed = 0.6f;
 	SteeringAngle = 0;
 	Duration = 0;
 	MaxAcceleration = 0.8;
@@ -37,4 +37,21 @@ void c_SecondCar::Ability(double dt)
 void c_SecondCar::PowerUp(bool check)
 {
 
+}
+void c_SecondCar::isOffRoad()
+{
+	if (!gotCollide("track"))//|| gotCollide("offRoad1") || gotCollide("offRoad2") || gotCollide("offRoad3") || gotCollide("offRoad4") || gotCollide("offRoad5") || gotCollide("offRoad6"))
+		offRoad = true;
+	else
+		offRoad = false;
+	if (offRoad)
+	{
+		SetFriction(0.5f);
+		SetMaxSpeed(0.3f);
+	}
+	else
+	{
+		SetFriction(0.04f);
+		SetMaxSpeed(0.6f);
+	}
 }

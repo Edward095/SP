@@ -11,6 +11,7 @@ public:
 	virtual void LevelOne(double dt);
 	virtual void Ability(double dt);
 	virtual void PowerUp(bool check);
+	virtual void isOffRoad();
 
 	void Move(double dt, int Points);
 	void Turn(double dt, int dir);

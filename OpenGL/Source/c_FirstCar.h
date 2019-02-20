@@ -12,6 +12,7 @@ public:
 	virtual void Movement(double dt);
 	virtual void Ability(double dt);
 	virtual void PowerUp(bool check);
+	virtual void isOffRoad();
 };
 
 
