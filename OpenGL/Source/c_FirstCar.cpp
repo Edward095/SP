@@ -6,7 +6,7 @@
 
 c_FirstCar::c_FirstCar()
 {
-	Driving = false;
+	//Driving = false;
 	VelocityZ = 0;
 	Acceleration = 0;
 	pos.x = 0;
@@ -15,10 +15,14 @@ c_FirstCar::c_FirstCar()
 	MaxSpeed = 0.8;
 	SteeringAngle = 0;
 	Duration = 0;
-	MaxAcceleration = 1;
+	MaxAcceleration = 0.6;
 	Friction = 0.04;
 	Steering = 3;
 	once = false;
+}
+c_FirstCar::c_FirstCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos)
+{
+	init(uniqueName, meshPath, TGApath, pos);
 }
 c_FirstCar::~c_FirstCar()
 {
@@ -166,37 +170,18 @@ void c_FirstCar::Movement(double dt)
 
 void c_FirstCar::Ability(double dt)
 {
-	//if (Application::IsKeyPressed('Q'))
-	//{
-	//	if (Driving || Backwards)
-	//		PressQ = true;
-	//}
-
-	//if (PressQ)
-	//{
-	//	Duration++;
-	//	if (Duration >= 150) // 3 sec/dt
-	//	{
-	//		PressQ = false;
-	//		Duration = 0;
-	//	}
-	//}
-	if (Application::IsKeyPressed('Q') && !once)
+	if (Application::IsKeyPressed('Q'))
 	{
-		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
-		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
-
-		updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
-		PressQ = true;
-		once = true;
+		if (Driving || Backwards)
+			PressQ = true;
 	}
-	if (PressQ && once)
+
+	if (PressQ)
 	{
 		Duration++;
 		if (Duration >= 150) // 3 sec/dt
 		{
 			PressQ = false;
-			once = false;
 			Duration = 0;
 		}
 	}

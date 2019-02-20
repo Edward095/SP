@@ -5,6 +5,23 @@
 
 c_SecondCar::c_SecondCar()
 {
+	VelocityZ = 0;
+	Acceleration = 0;
+	pos.x = 0;
+	pos.y = 1;
+	pos.z = 0;
+
+	MaxSpeed = 0.6;
+	SteeringAngle = 0;
+	Duration = 0;
+	MaxAcceleration = 0.8;
+	Friction = 0.04;
+	Steering = 4;
+	once = false;
+}
+c_SecondCar::c_SecondCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos)
+{
+	init(uniqueName, meshPath, TGApath, pos);
 }
 
 

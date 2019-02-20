@@ -19,6 +19,8 @@ public:
 	virtual void SetSteering(float Steering);
 	virtual void Ability(double dt) = 0;
 	virtual void PowerUp(bool check) = 0;
+	virtual void SetMaxSpeed(float Speed);
+
 
 protected:
 	float VelocityZ;
