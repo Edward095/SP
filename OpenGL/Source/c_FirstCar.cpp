@@ -6,6 +6,7 @@
 
 c_FirstCar::c_FirstCar()
 {
+	//Driving = false;
 	VelocityZ = 0;
 	Acceleration = 0;
 	pos.x = 0;
@@ -30,7 +31,7 @@ c_FirstCar::~c_FirstCar()
 
 void c_FirstCar::Movement(double dt)
 {
-
+	
 	if (Application::IsKeyPressed('W') && Backwards == false)
 	{
 		Acceleration += 0.1;
@@ -55,7 +56,7 @@ void c_FirstCar::Movement(double dt)
 			Acceleration -= 0.1;
 			VelocityZ -= Acceleration * dt;
 		}
-
+		
 	}
 	if (Driving)
 	{
@@ -95,7 +96,7 @@ void c_FirstCar::Movement(double dt)
 			SteeringAngle -= 3;
 		if (Backwards)
 			SteeringAngle += 3;
-
+		
 	}
 
 
@@ -193,21 +194,4 @@ void c_FirstCar::PowerUp(bool check)
 		Nitro = true;
 	}
 
-}
-void c_FirstCar::isOffRoad()
-{
-	if (!gotCollide("track"))//|| gotCollide("offRoad1") || gotCollide("offRoad2") || gotCollide("offRoad3") || gotCollide("offRoad4") || gotCollide("offRoad5") || gotCollide("offRoad6"))
-		offRoad = true;
-	else
-		offRoad = false;
-	if (offRoad)
-	{
-		SetFriction(0.5f);
-		SetMaxSpeed(0.3f);
-	}
-	else
-	{
-		SetFriction(0.04);
-		SetMaxSpeed(0.8f);
-	}
 }

@@ -297,7 +297,3 @@ void c_AI::Ability(double dt)
 void c_AI::PowerUp(bool check)
 {
 }
-
-void c_AI::isOffRoad()
-{
-}

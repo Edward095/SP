@@ -35,12 +35,11 @@ void c_CarBaseClass::Movement(double dt)
 {
 	Ability(dt);
 	PadEffect(dt);
-	isOffRoad();
 	if (Application::IsKeyPressed('W') && Backwards == false)
 	{
 		Acceleration += (MaxAcceleration - Friction);
 		VelocityZ += Acceleration * (float)dt;
-
+		
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		//OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
@@ -62,14 +61,14 @@ void c_CarBaseClass::Movement(double dt)
 			if (Acceleration > MaxAcceleration - Friction)
 				Acceleration = MaxAcceleration - Friction;
 			if (VelocityZ > MaxSpeed && (PressQ))
-				VelocityZ = 1.5;
+				VelocityZ = 1.5; 
 			else if (VelocityZ > MaxSpeed && (!PressQ || !Nitro))
 				//VelocityZ -= 0.5;
 				VelocityZ = MaxSpeed;
 			if (BoostPad)
 				VelocityZ = 1.8f;
 			if (SlowPad)
-				VelocityZ = 0.5f;
+				VelocityZ = 0.5f; 
 
 		}
 		else
@@ -148,7 +147,7 @@ void c_CarBaseClass::Movement(double dt)
 		{
 			Backwards = true;
 			Driving = false;
-
+			
 			if (Acceleration < -(MaxAcceleration - Friction))
 				Acceleration = -(MaxAcceleration - Friction);
 			if (VelocityZ < -MaxSpeed && (PressQ))

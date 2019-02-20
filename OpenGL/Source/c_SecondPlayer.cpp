@@ -180,8 +180,3 @@ void c_SecondPlayer::PowerUp(bool check)
 {
 
 }
-
-void c_SecondPlayer::isOffRoad()
-{
-
-}

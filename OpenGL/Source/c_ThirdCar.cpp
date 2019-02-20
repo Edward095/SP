@@ -57,21 +57,3 @@ void c_ThirdCar::PowerUp(bool check)
 {
 
 }
-
-void c_ThirdCar::isOffRoad()
-{
-	if (!gotCollide("track"))//|| gotCollide("offRoad1") || gotCollide("offRoad2") || gotCollide("offRoad3") || gotCollide("offRoad4") || gotCollide("offRoad5") || gotCollide("offRoad6"))
-		offRoad = true;
-	else
-		offRoad = false;
-	if (offRoad)
-	{
-		SetFriction(0.5f);
-		SetMaxSpeed(0.3f);
-	}
-	else
-	{
-		SetFriction(0.04f);
-		SetMaxSpeed(1.f);
-	}
-}
