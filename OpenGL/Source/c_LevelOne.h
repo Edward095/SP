@@ -24,7 +24,6 @@ public:
 		CAR1,
 		LIGHT1,
 		LIGHT2,
-		TRACK,
 		RACEBANNER,
 		STREETLIGHT,
 		NITRO,
@@ -160,13 +159,19 @@ private:
 	void updateEnviromentCollision();
 
 	c_FirstCar car;
+	c_AI AI;
 	
+	c_Entity track;
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
-	c_Entity nitro;
-	c_AI AI;
+	c_Entity offRoad1;
+	c_Entity offRoad2;
+	c_Entity offRoad3;
+	c_Entity offRoad4;
+	c_Entity offRoad5;
+	c_Entity offRoad6;
 
 	c_Entity boost;
 	c_Entity slow;

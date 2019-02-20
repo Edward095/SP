@@ -41,6 +41,7 @@ protected:
 	bool SlowPad = false;
 
 	bool once;
+	bool offRoad;
 };
 
 
