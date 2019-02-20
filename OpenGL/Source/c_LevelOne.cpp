@@ -151,6 +151,7 @@ void c_LevelOne::Init()
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20));
 	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0));
+	rain.init();
 }
 
 void c_LevelOne::Update(double dt)
@@ -159,11 +160,6 @@ void c_LevelOne::Update(double dt)
 	Countdown -= (float)Timer * dt;
 	car.SetFriction(0.1f);
 	car.SetSteering(1.5f);
-
-	AI.init("Nitro", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(6, 0, 6));
-	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
-	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
-	rain.init();
 
 	//Snowing = true;
 	//Raining = true;
