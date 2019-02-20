@@ -203,9 +203,9 @@ bool c_Collision::OBB(c_Collision* other)
 }
 bool c_Collision::checkSurroundingOBJ(c_Collision* other)
 {
-	return (other->pos.x >= pos.x - dimensions.x && other->pos.x <= pos.x + dimensions.x
-		&& other->pos.y >= pos.y - dimensions.y && other->pos.y <= pos.y + dimensions.y
-		&& other->pos.z >= pos.z - dimensions.z && other->pos.z <= pos.z + dimensions.z);
+	return (other->pos.x >= pos.x - 3 * dimensions.x && other->pos.x <= pos.x + 3 * dimensions.x
+		&& other->pos.y >= pos.y - 3 * dimensions.y && other->pos.y <= pos.y + 3 * dimensions.y
+		&& other->pos.z >= pos.z - 3 * dimensions.z && other->pos.z <= pos.z + 3 * dimensions.z);
 }
 //void c_Collision::updateHighLow()
 //{

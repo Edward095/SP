@@ -12,6 +12,9 @@
 #include "LoadTGA.h"
 #include <iomanip>
 
+#include <Windows.h>
+#include <time.h>
+
 
 c_LevelOne::c_LevelOne()
 {
@@ -24,6 +27,7 @@ c_LevelOne::~c_LevelOne()
 
 void c_LevelOne::Init()
 {
+	srand(time(NULL));
 	CamPosX = car.getPos().x + 1;
 	CamPosY = car.getPos().y + 1;
 	CamPosZ = car.getPos().z + 1;
@@ -33,8 +37,16 @@ void c_LevelOne::Init()
 	elapsedTime = 0;
 	FreezeTime = 0;
 	duration = 0;
+	FPS = 0;
 
 	bLightEnabled = true;
+
+	for (int i = 0; i < 6000; i++)
+	{
+		rainX.push_back(rand() % 500 - 250);
+		rainY.push_back(rand() % 401 - 200);
+		rainZ.push_back(rand() % 500 - 250);
+	}
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -77,17 +89,12 @@ void c_LevelOne::Init()
 	m_parameters[U_COLOR_TEXTURE_ENABLED] = glGetUniformLocation(m_programID, "colorTextureEnabled");
 	m_parameters[U_COLOR_TEXTURE] = glGetUniformLocation(m_programID, "colorTexture");
 
-	// Use our shader
-	glUseProgram(m_programID);
-
 	glUniform1i(m_parameters[U_NUMLIGHTS], 6);
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 
 	//Text
-	m_parameters[U_TEXT_ENABLED] = glGetUniformLocation(m_programID,
-		"textEnabled");
-	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID,
-		"textColor");
+	m_parameters[U_TEXT_ENABLED] = glGetUniformLocation(m_programID, "textEnabled");
+	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID, "textColor");
 	//Initialize camera settings
 	camera.Init(Vector3(0, 8, 5), Vector3(0, 1, 0), Vector3(0, 1, 0));
 
@@ -122,8 +129,8 @@ void c_LevelOne::Init()
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
 
-    meshList[RAIN] = MeshBuilder::GenerateOBJ("Raindrops", "OBJ//Raindrop.obj");
-	meshList[RAIN]->textureID = LoadTGA("Image//Rain.tga");
+    meshList[RAIN] = MeshBuilder::GenerateSphere("Snow", Color(0,0,1), 18, 18, 2);
+	//meshList[RAIN]->textureID = LoadTGA("Image//Rain.tga");
 
 	//Init Entities
 
@@ -143,6 +150,8 @@ void c_LevelOne::Init()
 }
 void c_LevelOne::Update(double dt)
 {
+	FPS = 1 / dt;
+	rain.update(dt);
 	if (Application::IsKeyPressed('8'))
 	{
 		bLightEnabled = true;
@@ -186,9 +195,6 @@ void c_LevelOne::Update(double dt)
 
 }
 
-
-static const float SKYBOXSIZE = 1500.f;
-static const float translateLength = SKYBOXSIZE / 2;
 void c_LevelOne::Render()
 {
 	//clear depth and color buffer
@@ -206,87 +212,11 @@ void c_LevelOne::Render()
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
 	renderLights();
-
-	// environment light
-	modelStack.PushMatrix();
-	modelStack.Translate(1, -16, 25); // x: +backward, -forward , y: +up, -down , z: +right, -left
-	modelStack.Translate(lights[0].position.x, lights[0].position.y, lights[0].position.z);
-	modelStack.Scale(0.001f, 0.001f, 0.001f);
-	RenderMesh(meshList[LIGHT1], false);
-	modelStack.PopMatrix();
-
-	// street lights
-	modelStack.PushMatrix();
-	modelStack.Translate(1, 3.8f, -2.3f);
-	// x: -forward, +backward y: -down, +up z: - left, +right
-	modelStack.Translate(lights[1].position.x, lights[1].position.y, lights[1].position.z);
-	lights[1].position.x = 58;
-	lights[1].position.y = 27;
-	lights[1].position.z = -20;
-	modelStack.Scale(1.6f, 0.7f, 1.6f);
-	RenderMesh(meshList[LIGHT2], false);
-	modelStack.PopMatrix();
-
-
-	modelStack.PushMatrix();
-	modelStack.Translate(1, 3.8f, -2.3f);
-	// x: -forward, +backward y: -down, +up z: - left, +right
-	modelStack.Translate(lights[2].position.x, lights[2].position.y, lights[2].position.z);
-	lights[2].position.x = 397;
-	lights[2].position.y = 27;
-	lights[2].position.z = -167;
-	modelStack.Scale(1.6f, 0.7f, 1.6f);
-	RenderMesh(meshList[LIGHT2], false);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(1, 3.8f, -2.3f);
-	// x: -forward, +backward y: -down, +up z: - left, +right
-	modelStack.Translate(lights[3].position.x, lights[3].position.y, lights[3].position.z);
-	lights[3].position.x = 386;
-	lights[3].position.y = 27;
-	lights[3].position.z = -561;
-	modelStack.Scale(1.6f, 0.7f, 1.6f);
-	RenderMesh(meshList[LIGHT2], false);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(1, 3.8f, -2.3f);
-	// x: -forward, +backward y: -down, +up z: - left, +right
-	modelStack.Translate(lights[4].position.x, lights[4].position.y, lights[4].position.z);
-	lights[4].position.x = 91;
-	lights[4].position.y = 26;
-	lights[4].position.z = -213;
-	modelStack.Scale(1.6f, 0.7f, 1.6f);
-	RenderMesh(meshList[LIGHT2], false);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(1, 3.8f, -2.3f);
-	// x: -forward, +backward y: -down, +up z: - left, +right
-	modelStack.Translate(lights[5].position.x, lights[5].position.y, lights[5].position.z);
-	lights[5].position.x = -250;
-	lights[5].position.y = 27;
-	lights[5].position.z = -264;
-	modelStack.Scale(1.6f, 0.7f, 1.6f);
-	RenderMesh(meshList[LIGHT2], false);
-	modelStack.PopMatrix();
-
 	renderEnviroment();
 	updateEnviromentCollision();
+	renderRain();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(0, -3, 0);
-	modelStack.Scale(5, 5, 6);
-	RenderMesh(meshList[RACEBANNER], true);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, -3, 0);
-	modelStack.Scale(6, 5, 6);
-	RenderMesh(meshList[STREETLIGHT], true);
-	modelStack.PopMatrix();
-
+	/**************************************************************		CAR		***************************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
@@ -299,6 +229,7 @@ void c_LevelOne::Render()
 	car.getOBB()->calcNewAxis(90, 0, 1, 0);
 	car.getOBB()->calcNewAxis(car.GetSteeringAngle(), 0, 1, 0);
 	
+	/**************************************************************		AI		***************************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 	modelStack.Rotate(AI.GetSteeringAngle(), 0, 1, 0);
@@ -308,7 +239,7 @@ void c_LevelOne::Render()
 	AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 	AI.getOBB()->calcNewAxis(AI.GetSteeringAngle(), 0, 1, 0);
 
-
+	/**************************************************************		BoostPad		***************************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
 	modelStack.Scale(3, 1, 3);
@@ -318,6 +249,7 @@ void c_LevelOne::Render()
 	boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
 	boost.getOBB()->calcNewDimensions(3, 1, 3);
 
+	/**************************************************************		SlowPad		***************************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
 	modelStack.Scale(3, 1, 3);
@@ -327,12 +259,14 @@ void c_LevelOne::Render()
 	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
 	slow.getOBB()->calcNewDimensions(3, 1, 3);
 
+	/********************************************************************************************************************************************/
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
 }
 void c_LevelOne::Exit()
 {
@@ -480,9 +414,9 @@ void c_LevelOne::initLights()
 	m_parameters[U_LIGHT0_EXPONENT] = glGetUniformLocation(m_programID, "lights[0].exponent");
 
 	lights[0].type = Light::LIGHT_DIRECTIONAL;
-	lights[0].position.Set(0, 20, 0);
+	lights[0].position.Set(1.f, -16.f, 25.f);
 	lights[0].color.Set(1, 1, 1);
-	lights[0].power = 1;
+	lights[0].power = 1.f;
 	lights[0].kC = 1.f;
 	lights[0].kL = 0.01f;
 	lights[0].kQ = 0.001f;
@@ -515,7 +449,7 @@ void c_LevelOne::initLights()
 	m_parameters[U_LIGHT1_EXPONENT] = glGetUniformLocation(m_programID, "lights[1].exponent");
 	
 	lights[1].type = Light::LIGHT_POINT;
-	lights[1].position.Set(0, 20, 0);
+	lights[1].position.Set(59.f, 30.8f, -22.3f);
 	lights[1].color.Set(1, 1, 1);
 	lights[1].power = 2;
 	lights[1].kC = 1.f;
@@ -550,7 +484,7 @@ void c_LevelOne::initLights()
 	m_parameters[U_LIGHT2_EXPONENT] = glGetUniformLocation(m_programID, "lights[2].exponent");
 
 	lights[2].type = Light::LIGHT_POINT;
-	lights[2].position.Set(0, 20, 0);
+	lights[2].position.Set(398.f, 30.8, -169.3f);
 	lights[2].color.Set(1, 1, 1);
 	lights[2].power = 2;
 	lights[2].kC = 1.f;
@@ -585,7 +519,7 @@ void c_LevelOne::initLights()
 	m_parameters[U_LIGHT3_EXPONENT] = glGetUniformLocation(m_programID, "lights[3].exponent");
 
 	lights[3].type = Light::LIGHT_POINT;
-	lights[3].position.Set(0, 20, 0);
+	lights[3].position.Set(387.f, 30.8f, -563.3f);
 	lights[3].color.Set(1, 1, 1);
 	lights[3].power = 2;
 	lights[3].kC = 1.f;
@@ -620,7 +554,7 @@ void c_LevelOne::initLights()
 	m_parameters[U_LIGHT4_EXPONENT] = glGetUniformLocation(m_programID, "lights[4].exponent");
 
 	lights[4].type = Light::LIGHT_POINT;
-	lights[4].position.Set(0, 20, 0);
+	lights[4].position.Set(92.f, 29.8f, -215.3f);
 	lights[4].color.Set(1, 1, 1);
 	lights[4].power = 2;
 	lights[4].kC = 1.f;
@@ -655,7 +589,7 @@ void c_LevelOne::initLights()
 	m_parameters[U_LIGHT5_EXPONENT] = glGetUniformLocation(m_programID, "lights[5].exponent");
 
 	lights[5].type = Light::LIGHT_POINT;
-	lights[5].position.Set(0, 20, 0);
+	lights[5].position.Set(-249.f, 30.8f, -266.3f);
 	lights[5].color.Set(1, 1, 1);
 	lights[5].power = 2;
 	lights[5].kC = 1.f;
@@ -800,6 +734,22 @@ void c_LevelOne::renderLights()
 		glUniform3fv(m_parameters[U_LIGHT5_POSITION], 1, &lightPosition_cameraspace.x);
 	}
 	/******************************************************************************************************************************************/
+	//Enviroment Light
+	modelStack.PushMatrix();
+	modelStack.Translate(lights[0].position.x, lights[0].position.y, lights[0].position.z);
+	modelStack.Scale(0.001f, 0.001f, 0.001f);
+	RenderMesh(meshList[LIGHT1], false);
+	modelStack.PopMatrix();
+
+	//Street Lights
+	for (int i = 1; i < 6; i++)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(lights[i].position.x, lights[i].position.y, lights[i].position.z);
+		modelStack.Scale(1.6f, 0.7f, 1.6f);
+		RenderMesh(meshList[LIGHT2], false);
+		modelStack.PopMatrix();
+	}
 }
 void c_LevelOne::updateLights(int num)
 {
@@ -877,7 +827,8 @@ void c_LevelOne::updateLights(int num)
 	}
 }
 
-
+static const float SKYBOXSIZE = 1500.f;
+static const float translateLength = SKYBOXSIZE / 2;
 void c_LevelOne::renderEnviroment()
 {
 	/****************************************************Skybox*****************************************************/
@@ -937,6 +888,20 @@ void c_LevelOne::renderEnviroment()
 	modelStack.Scale(6, 1, 6);
 	RenderMesh(meshList[TRACK], false);
 	modelStack.PopMatrix();
+
+	//RaceBanner
+	modelStack.PushMatrix();
+	modelStack.Translate(0, -3, 0);
+	modelStack.Scale(5, 5, 6);
+	RenderMesh(meshList[RACEBANNER], true);
+	modelStack.PopMatrix();
+
+	//StreetLight
+	modelStack.PushMatrix();
+	modelStack.Translate(0, -3, 0);
+	modelStack.Scale(6, 5, 6);
+	RenderMesh(meshList[STREETLIGHT], true);
+	modelStack.PopMatrix();
 }
 void c_LevelOne::updateEnviromentCollision()
 {
@@ -968,5 +933,19 @@ void c_LevelOne::updateEnviromentCollision()
 	//Back Skybox
 	back.updatePos(0, 0, -translateLength);
 	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+}
 
+void c_LevelOne::renderRain()
+{
+	for (int i = 0; i < rainX.size(); i++)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(rainX[i], rainY[i], rainZ[i]);
+		modelStack.Translate(rain.getTranslateX(), rain.getTranslateY(), rain.getTranslateZ());
+		modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
+		modelStack.Rotate(45, 0, 0, 1);
+		modelStack.Scale(0.1f, 0.5f, 0.1f);
+		RenderMesh(meshList[RAIN], true);
+		modelStack.PopMatrix();
+	}
 }

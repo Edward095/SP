@@ -135,6 +135,9 @@ void c_List::f_ChangeCurrentCar(char input)
 			v_IndexCar = 0;
 		}
 		break;
+	case'R':
+		v_IndexCar = 0;
+		break;
 	default:
 		break;
 	}
@@ -143,7 +146,7 @@ void c_List::f_ChangeCurrentCar(char input)
 
 void c_List::f_ChangeCurrentColour(char input)
 {
-	switch (input)
+	switch (input)   
 	{
 	case 'K':
 		v_IndexColour--;
@@ -158,6 +161,9 @@ void c_List::f_ChangeCurrentColour(char input)
 		{
 			v_IndexColour = 0;
 		}
+		break;
+	case 'R':
+		v_IndexColour = 0;
 		break;
 	default:
 		break;
@@ -1273,8 +1279,13 @@ void c_Garage::f_UpdateGarage(double dt)
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
 		{
 			firstCar.updateAppearance(v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
-
 		}
+		if (v_Car1Changed && c_Npc::GetMultiPlayer())
+		{
+			v_CarList.f_ChangeCurrentCar('R');
+			v_ColourList.f_ChangeCurrentColour('R');
+		}
+		
 	}
 	if (Application::IsKeyPressed(VK_SPACE) && v_BTPause < v_ElapsedTime)
 	{

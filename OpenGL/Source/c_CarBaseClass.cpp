@@ -43,7 +43,7 @@ void c_CarBaseClass::Movement(double dt)
 	{
 		Acceleration += (MaxAcceleration - Friction);
 		VelocityZ += Acceleration * (float)dt;
-
+		
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		//OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
@@ -51,8 +51,6 @@ void c_CarBaseClass::Movement(double dt)
 			BoostPad = true;
 		if (gotCollide("Slowpad"))
 			SlowPad = true;
-		if (gotCollide("test"))
-			std::cout << "Collided with invissble box" << std::endl;
 
 		if (!gotCollide(updateX, pos.y, updateZ))
 		{
@@ -61,13 +59,13 @@ void c_CarBaseClass::Movement(double dt)
 			if (Acceleration > MaxAcceleration - Friction)
 				Acceleration = MaxAcceleration - Friction;
 			if (VelocityZ > MaxSpeed && (PressQ))
-				VelocityZ = 1.5;
+				VelocityZ = 1.5; 
 			else if (VelocityZ > MaxSpeed && (!PressQ || !Nitro))
 				VelocityZ = MaxSpeed;
 			if (BoostPad)
 				VelocityZ = 1.8f;
 			if (SlowPad)
-				VelocityZ = 0.5f;
+				VelocityZ = 0.5f; 
 
 		}
 		else

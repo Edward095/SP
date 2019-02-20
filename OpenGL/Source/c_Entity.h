@@ -13,6 +13,7 @@ public:
 	void init(std::string uniqueName,const char* meshPath, const char* TGApath, Vector3 pos);
 	void init(std::string uniqueName);
 	void updatePos(float xPos,float yPos,float zPos);
+	bool ignoreEntity(std::string uniqueName);
 	bool gotCollide(float x, float y, float z);
 	bool gotCollide(std::string uniqueName);
 	std::string getUniqueName();
