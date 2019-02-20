@@ -6,6 +6,7 @@
 
 c_Entity::c_Entity()
 {
+	OBB = nullptr;
 }
 
 

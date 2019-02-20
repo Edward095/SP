@@ -11,6 +11,7 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 
+#include "c_ObjectManager.h"
 
 c_MultiplayerLevel::c_MultiplayerLevel()
 {
