@@ -11,12 +11,12 @@ c_SecondPlayer::c_SecondPlayer()
 	pos.y = 1;
 	pos.z = 0;
 
-	MaxSpeed = 1;
+	MaxSpeed = 0.6;
 	SteeringAngle = 0;
 	Duration = 0;
-	MaxAcceleration = 1;
-	Friction = 0.04f;
-	Steering = 3;
+	MaxAcceleration = 0.8;
+	Friction = 0.04;
+	Steering = 4;
 	once = false;
 }
 

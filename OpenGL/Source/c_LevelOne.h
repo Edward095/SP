@@ -205,9 +205,6 @@ private:
 	bool Win = false;
 	bool Lose = false;
 
-	std::vector <float> rainX;
-	std::vector <float> rainY;
-	std::vector <float> rainZ;
 	c_Weather rain;
 	void renderRain();
 };
