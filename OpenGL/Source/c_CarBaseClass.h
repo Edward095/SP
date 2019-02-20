@@ -2,6 +2,7 @@
 #define C_CARBASECLASS_H
 
 #include "c_Entity.h"
+#include "Application.h"
 
 class c_CarBaseClass : public c_Entity
 {
