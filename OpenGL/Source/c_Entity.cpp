@@ -144,7 +144,13 @@ std::string c_Entity::getUniqueName()
 bool c_Entity::ignoreEntity(std::string uniqueName)
 {
 	return	(uniqueName != this->uniqueName &&
-		uniqueName != "Nitro" &&
+		uniqueName != "track" &&
 		uniqueName != "Boostpad" &&
-		uniqueName != "Slowpad");
+		uniqueName != "Slowpad"&&
+		uniqueName != "offRoad1"&&
+		uniqueName != "offRoad2"&&
+		uniqueName != "offRoad3"&&
+		uniqueName != "offRoad4"&&
+		uniqueName != "offRoad5"&&
+		uniqueName != "offRoad6");
 }

@@ -121,8 +121,6 @@ void c_LevelOne::Init()
 	meshList[LIGHT1] = MeshBuilder::GenerateSphere("environment light", Color(1, 1, 1), 18, 36, 1.f);
 	meshList[LIGHT2] = MeshBuilder::GenerateSphere("street light", Color(1, 1, 1), 18, 36, 1.f);
 
-	meshList[TRACK] = MeshBuilder::GenerateOBJ("racetrack", "OBJ//RaceTrack1.obj");
-	meshList[TRACK]->textureID = LoadTGA("Image//RaceTrack.tga");
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
@@ -138,15 +136,9 @@ void c_LevelOne::Init()
 	back.init("back", "quad", "Image//NpcBack.tga", (float)(0, 0, 0));
 
 	car.init("player1");
-	car.SetFriction(0.1);
-	car.SetSteering(5);
-	
-	//RenderMesh(car.getMesh(), true);
-
-
-	//Initialization of Variables
 	car.SetFriction(0.1f);
 	car.SetSteering(1.5f);
+
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20));
@@ -160,6 +152,14 @@ void c_LevelOne::Update(double dt)
 	Countdown -= (float)Timer * dt;
 	car.SetFriction(0.1f);
 	car.SetSteering(1.5f);
+
+	track.init("track", "OBJ//RaceTrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0));
+	offRoad1.init("offRoad1", "OBJ//OffroadTrack1//part1.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	offRoad2.init("offRoad2", "OBJ//OffroadTrack1//part2.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	offRoad3.init("offRoad3", "OBJ//OffroadTrack1//part3.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	offRoad4.init("offRoad4", "OBJ//OffroadTrack1//part4.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	offRoad5.init("offRoad5", "OBJ//OffroadTrack1//part5.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	offRoad6.init("offRoad6", "OBJ//OffroadTrack1//part6.obj", "Image//Test.tga", Vector3(0, 0, 0));
 
 	//Snowing = true;
 	//Raining = true;
@@ -224,12 +224,8 @@ void c_LevelOne::Update(double dt)
 	camera.Update(dt); 
   
 	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
-	//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
-
-	if (car.getPos().x == nitro.getPos().x && car.getPos().z == nitro.getPos().z)
-	{
-		car.PowerUp(true);
-	}
+	car.Movement(dt);
+	AI.Movement(dt);
 
 	if (car.gotCollide("FinishLine"))
 		Finish = true;
@@ -1006,14 +1002,23 @@ void c_LevelOne::renderEnviroment()
 	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 	RenderMesh(back.getMesh(), false);
 	modelStack.PopMatrix();
-	/***************************************************************************************************************/
+	/*********************************************		OffRoad		******************************************************************/
+	modelStack.PushMatrix();
+	modelStack.Scale(6, 1, 6);
+	RenderMesh(offRoad1.getMesh(), true);
+	RenderMesh(offRoad2.getMesh(), true);
+	RenderMesh(offRoad3.getMesh(), true);
+	RenderMesh(offRoad4.getMesh(), true);
+	RenderMesh(offRoad5.getMesh(), true);
+	RenderMesh(offRoad6.getMesh(), true);
+	modelStack.PopMatrix();
+	/*********************************************************************************************************************************/
 
 	//Track
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 0);
 	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Scale(6, 1, 6);
-	RenderMesh(meshList[TRACK], false);
+	RenderMesh(track.getMesh(), true);
 	modelStack.PopMatrix();
 
 	//RaceBanner
@@ -1040,6 +1045,7 @@ void c_LevelOne::updateEnviromentCollision()
 	AI.getOBB()->defaultData();
 	boost.getOBB()->defaultData();
 	slow.getOBB()->defaultData();
+	track.getOBB()->defaultData();
 
 	//Front Skybox
 	front.updatePos(0, 0, translateLength);
@@ -1060,6 +1066,16 @@ void c_LevelOne::updateEnviromentCollision()
 	//Back Skybox
 	back.updatePos(0, 0, -translateLength);
 	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+
+	//Track
+	track.getOBB()->calcNewDimensions(6, 1, 6);
+	//OffRoad
+	offRoad1.getOBB()->calcNewDimensions(6, 1, 6);
+	offRoad2.getOBB()->calcNewDimensions(6, 1, 6);
+	offRoad3.getOBB()->calcNewDimensions(6, 1, 6);
+	offRoad4.getOBB()->calcNewDimensions(6, 1, 6);
+	offRoad5.getOBB()->calcNewDimensions(6, 1, 6);
+	offRoad6.getOBB()->calcNewDimensions(6, 1, 6);
 }
 
 void c_LevelOne::renderRain()
