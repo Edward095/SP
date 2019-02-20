@@ -11,9 +11,11 @@
 #include "c_Sound.h"
 
 #include "c_LevelOne.h"
-#include "c_FirstCar.h"
-
 #include "c_MultiplayerLevel.h"
+
+#include "c_FirstCar.h"
+#include "c_SecondCar.h"
+#include "c_ThirdCar.h"
 
 class c_Car
 {
@@ -208,8 +210,13 @@ private:
 	const char* v_CarColourPath3[9];
 
 	c_LevelOne sLevelOne;
-	c_FirstCar firstCar;
-	c_FirstCar secondCar;
+	c_FirstCar car1Type1;
+	c_SecondCar car1Type2;
+	c_ThirdCar car1Type3;
+	c_FirstCar car2Type1;
+	c_SecondCar car2Type2;
+	c_ThirdCar car2Type3;
+
 
 	c_MultiplayerLevel mLevelOne;
 

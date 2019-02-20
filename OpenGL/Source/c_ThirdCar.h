@@ -6,6 +6,7 @@ class c_ThirdCar : public c_CarBaseClass
 {
 public:
 	c_ThirdCar();
+	c_ThirdCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos);
 	~c_ThirdCar();
 	virtual void Ability(double dt);
 	virtual void PowerUp(bool check);

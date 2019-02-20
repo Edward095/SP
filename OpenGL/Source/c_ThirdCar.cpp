@@ -6,22 +6,18 @@
 c_ThirdCar::c_ThirdCar()
 {
 }
-
+c_ThirdCar::c_ThirdCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos)
+{
+	init(uniqueName, meshPath, TGApath, pos);
+}
 
 c_ThirdCar::~c_ThirdCar()
 {
 }
 
+
 void c_ThirdCar::Ability(double dt)
 {
-	if (Application::IsKeyPressed('Q'))
-	{
-		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 5);
-		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 5);
-
-		pos.Set(pos.x + updateX, pos.y, pos.z + updateZ);
-	}
-
 	if (Application::IsKeyPressed('Q') && !once)
 	{
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);

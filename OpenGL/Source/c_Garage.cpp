@@ -12,6 +12,10 @@
 #include "LoadTGA.h"
 
 #include "c_Npc.h"
+#include "c_ObjectManager.h"
+
+c_ObjectManager* manager = c_ObjectManager::getInstance();
+
 // +++++++++++++++++++++++++ CAR CLASS +++++++++++++++++++++++++++
 
 c_Car::c_Car()
@@ -264,9 +268,9 @@ void c_Garage::Init()
 	v_CarColourPath3[8] = "Image//Car3Black.tga";
 
 
-	firstCar.init("player1", v_CarPaths[0], v_CarColourPath1[0], (0, 0, 0));
+	/*firstCar.init("player1", v_CarPaths[0], v_CarColourPath1[0], (0, 0, 0));
 	if(c_Npc::GetMultiPlayer())
-		secondCar.init("player2", v_CarPaths[0], v_CarColourPath1[0], (10, 0, 5));
+		secondCar.init("player2", v_CarPaths[0], v_CarColourPath1[0], (10, 0, 5));*/
 	e_GameState_Garage = GARAGE_;
 	v_MusicPause = false;
 
@@ -1270,15 +1274,15 @@ void c_Garage::f_UpdateGarage(double dt)
 		v_Car1Changed = true;
 		if (v_CarList.f_GetCurCar()->f_GetCarNum() == 0)
 		{
-			firstCar.updateAppearance(v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+			manager->addOBJ("player1", v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 1)
 		{
-			firstCar.updateAppearance(v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+			manager->addOBJ("player1", v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
 		{
-			firstCar.updateAppearance(v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
+			manager->addOBJ("player1", v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
 		}
 		if (v_Car1Changed && c_Npc::GetMultiPlayer())
 		{
@@ -1346,6 +1350,30 @@ void c_Garage::f_UpdateGarage2(double dt)
 		v_Car2Changed = true;
 		if (v_CarList.f_GetCurCar()->f_GetCarNum() == 0)
 		{
+			manager->addOBJ("player2", v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+		}
+		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 1)
+		{
+			manager->addOBJ("player2", v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+		}
+		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
+		{
+			manager->addOBJ("player2", v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+		}
+		/*if (v_CarList.f_GetCurCar()->f_GetCarNum() == 0)
+		{
+			car2Type1.init("player2", v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+		}
+		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 1)
+		{
+			car2Type2.init("player2", v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+		}
+		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
+		{
+			car2Type3.init("player2", v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+		}*/
+		/*if (v_CarList.f_GetCurCar()->f_GetCarNum() == 0)
+		{
 			secondCar.updateAppearance(v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 1)
@@ -1356,7 +1384,7 @@ void c_Garage::f_UpdateGarage2(double dt)
 		{
 			secondCar.updateAppearance(v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
 
-		}
+		}*/
 	}
 	if (Application::IsKeyPressed(VK_SPACE) && v_BTPause < v_ElapsedTime)
 	{

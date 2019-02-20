@@ -41,7 +41,7 @@ void c_LevelOne::Init()
 
 	bLightEnabled = true;
 
-	for (int i = 0; i < 6000; i++)
+	for (int i = 0; i < 4000; i++)
 	{
 		rainX.push_back(rand() % 500 - 250);
 		rainY.push_back(rand() % 401 - 200);

@@ -6,7 +6,10 @@
 c_SecondCar::c_SecondCar()
 {
 }
-
+c_SecondCar::c_SecondCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos)
+{
+	init(uniqueName, meshPath, TGApath, pos);
+}
 
 c_SecondCar::~c_SecondCar()
 {
