@@ -109,6 +109,7 @@ void c_MultiplayerLevel::Init()
 	playerOne.init("player1");
 	playerTwo.init("player2");
 	playerTwo.updatePos(10, 0, 5);
+
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
 }
 void c_MultiplayerLevel::Update(double dt)
@@ -135,6 +136,10 @@ void c_MultiplayerLevel::Update(double dt)
 
 	playerOne.Movement(dt);
 	playerTwo.Movement(dt);
+
+	
+
+	
 }
 void c_MultiplayerLevel::Render()
 {

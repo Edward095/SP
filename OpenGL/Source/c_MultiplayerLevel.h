@@ -10,6 +10,8 @@
 #include "c_FirstCar.h"
 #include "c_SecondPlayer.h"
 
+#include "c_Impulse.h"
+
 class c_MultiplayerLevel : public Scene
 {
 public:
@@ -105,6 +107,8 @@ private:
 
 	c_FirstCar playerOne;
 	c_SecondPlayer playerTwo;
+
+	c_Impulse Impulse;
 };
 
 #endif

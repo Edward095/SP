@@ -2,6 +2,9 @@
 #include "MeshBuilder.h"
 #include "LoadTGA.h"
 #include "Application.h"
+#include "c_ObjectManager.h"
+
+c_ObjectManager* OBJmanager = c_ObjectManager::getInstance();
 
 c_CarBaseClass::c_CarBaseClass()
 {
@@ -51,8 +54,11 @@ void c_CarBaseClass::Movement(double dt)
 			BoostPad = true;
 		if (gotCollide("Slowpad"))
 			SlowPad = true;
-		if (gotCollide("test"))
-			std::cout << "Collided with invissble box" << std::endl;
+		if (gotCollide("player2"))
+		{
+			//OBJmanager->getObjects()
+		}
+
 
 		if (!gotCollide(updateX, pos.y, updateZ))
 		{
@@ -252,4 +258,10 @@ void c_CarBaseClass::PadEffect(double dt)
 			Duration = 0;
 		}
 	}
+}
+
+
+void c_CarBaseClass::SetSpeed(float speed)
+{
+	this->VelocityZ = speed;
 }
