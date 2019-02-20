@@ -51,8 +51,6 @@ void c_CarBaseClass::Movement(double dt)
 			BoostPad = true;
 		if (gotCollide("Slowpad"))
 			SlowPad = true;
-		if (gotCollide("test"))
-			std::cout << "Collided with invissble box" << std::endl;
 
 		if (!gotCollide(updateX, pos.y, updateZ))
 		{

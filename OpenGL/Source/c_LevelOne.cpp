@@ -36,6 +36,8 @@ void c_LevelOne::Init()
 	Cooldown = 0;
 	Countdown = 3;
 	Timer = 0;
+	laps = 2;
+	AIlaps = 2;
 
 	bLightEnabled = true;
 
@@ -138,17 +140,17 @@ void c_LevelOne::Init()
 	car.init("player1");
 	car.SetFriction(0.1);
 	car.SetSteering(5);
-	AI.init("Nitro","OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(0, 0, -2));
+	
 	//RenderMesh(car.getMesh(), true);
 
 
 	//Initialization of Variables
 	car.SetFriction(0.1f);
 	car.SetSteering(1.5f);
-	AI.init("Nitro","OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(6, 0, 6));
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
-	finishLine.init("finishLine", "quad", "Image//Test.tga", Vector3(0, 0, -10));
+	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20));
+	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0));
 }
 void c_LevelOne::Update(double dt)
 {
@@ -175,14 +177,17 @@ void c_LevelOne::Update(double dt)
 		elapsedTime -= FreezeTime;
 
 		if (duration >= 150) // 3 sec/dt
+		{
 			Freeze = false;
+			duration = 0;
+		}
 	}
 
 	if (Countdown <= 0)
 	{
 		elapsedTime += (float)dt;
 		car.Movement(dt);
-		AI.Movement(dt);
+		AI.LevelOne(dt);
 	}
 
 	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
@@ -195,23 +200,49 @@ void c_LevelOne::Update(double dt)
 	camera.Update(dt); 
   
 	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
+	//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 
 	if (car.getPos().x == nitro.getPos().x && car.getPos().z == nitro.getPos().z)
 	{
 		car.PowerUp(true);
 	}
 
-	if (car.gotCollide("finishLine"))
-	{
+	if (car.gotCollide("FinishLine"))
 		Finish = true;
-	}
+	else
+		Finish = false;
 
 	if (Finish)
 	{
-		if (elapsedTime >= 2)
-			elapsedTime = 100;
+		if (elapsedTime <= 36)
+			elapsedTime += (dt + 2);
+
+		if (elapsedTime >= 37 && elapsedTime <= 80)
+			laps = 1;
+		if (elapsedTime >= 81 && elapsedTime <= 140)
+			laps = 0;
 	}
 
+	if (AI.gotCollide("FinishLine"))
+		AIFinish = true;
+	else
+		AIFinish = false;
+
+	if (AIFinish)
+	{
+		if (elapsedTime >= 59 && elapsedTime <= 65)
+			AIlaps = 1;
+		if (elapsedTime >= 119 && elapsedTime <= 1128)
+			AIlaps = 0;
+	}
+
+	if (laps == 0 || AIlaps == 0)
+	{
+		if (laps < AIlaps)
+			Win = true;
+		else
+			Lose = true;
+	}
 }
 
 
@@ -227,7 +258,7 @@ void c_LevelOne::Render()
 	AI.getOBB()->defaultData();
 	boost.getOBB()->defaultData();
 	slow.getOBB()->defaultData();
-	finishLine.getOBB()->defaultData();
+	FinishLine.getOBB()->defaultData();
 
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -314,22 +345,6 @@ void c_LevelOne::Render()
 	updateEnviromentCollision();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(0, -3, 0);
-	modelStack.Scale(5, 5, 6);
-	RenderMesh(meshList[RACEBANNER], true);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 0);
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Scale(6, 1, 6);
-	RenderMesh(meshList[TRACK], false);
-	modelStack.Translate(0, -3, 0);
-	modelStack.Scale(6, 5, 6);
-	RenderMesh(meshList[STREETLIGHT], true);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
 	modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Rotate(car.GetSteeringAngle(), 0, 1, 0);
@@ -343,16 +358,14 @@ void c_LevelOne::Render()
 	
 	modelStack.PushMatrix();
 	modelStack.Translate(AI.getPos().x, AI.getPos().y, AI.getPos().z);
-	//modelStack.Translate(0, 0, -2);
-	//modelStack.Rotate(AI.GetSteeringAngle(), 0, 1, 0);
-	//modelStack.Scale(0.8, 0.8, 0.8);
-	modelStack.Rotate(AI.GetSteeringAngle(), 0, 1, 0);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Rotate(AI.GetTurning(), 0, 1, 0);
+	modelStack.Scale(1, 1, 1);
 	RenderMesh(AI.getMesh(), true);
 	modelStack.PopMatrix();
 
 	AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 	AI.getOBB()->calcNewAxis(AI.GetSteeringAngle(), 0, 1, 0);
-
 
 	modelStack.PushMatrix();
 	modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
@@ -364,16 +377,14 @@ void c_LevelOne::Render()
 	boost.getOBB()->calcNewDimensions(3, 1, 3);
 
 	modelStack.PushMatrix();
-	modelStack.Translate(finishLine.getPos().x, finishLine.getPos().y, finishLine.getPos().z);
-	//modelStack.Rotate(90, -1, 0, 0);
+	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	modelStack.Rotate(90, 1, 0, 0);
 	modelStack.Scale(50, 15, 50);
-	//modelStack.Scale(20, 10, 20);
-	RenderMesh(finishLine.getMesh(), true);
+	RenderMesh(FinishLine.getMesh(), true);
 	modelStack.PopMatrix();
 
-	finishLine.updatePos(finishLine.getPos().x, finishLine.getPos().y, finishLine.getPos().z);
-	finishLine.getOBB()->calcNewDimensions(50, 15, 50);
-	//finishLine.getOBB()->calcNewDimensions(20, 10, 20);
+	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
@@ -405,13 +416,12 @@ void c_LevelOne::Render()
 			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 10, 14);
 	}
 
-	if (car.getPos().z == -1 && car.getPos().x >= -5 && car.getPos().x <= 5)
-	{
-		if (elapsedTime <= 100)
-		{
-			elapsedTime = 100;
-		}
-	}
+	RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 9, 1);
+
+	if (Win)
+		RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 10, 10);
+	if (Lose)
+		RenderTextOnScreen(meshList[TEXT], "YOU LOSE", Color(1, 0, 0), 4, 10, 10);
 }
 void c_LevelOne::Exit()
 {
@@ -1013,6 +1023,7 @@ void c_LevelOne::renderEnviroment()
 	//Track
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, 0);
+	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Scale(6, 1, 6);
 	RenderMesh(meshList[TRACK], false);
 	modelStack.PopMatrix();

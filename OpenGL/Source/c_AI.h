@@ -1,5 +1,6 @@
-#pragma once
-//#include "c_Entity.h"
+#ifndef C_AI_H
+#define C_AI_H
+
 #include "c_CarBaseClass.h"
 class c_AI : public c_CarBaseClass
 {
@@ -7,8 +8,7 @@ public:
 	c_AI();
 	~c_AI();
 
-	//void Points(double dt);
-	virtual void Movement(double dt);
+	virtual void LevelOne(double dt);
 	virtual void Ability(double dt);
 	virtual void PowerUp(bool check);
 
@@ -22,4 +22,4 @@ protected:
 	int Turning;
 	int ToTurn;
 };
-
+#endif

@@ -169,7 +169,7 @@ private:
 
 	c_Entity boost;
 	c_Entity slow;
-	c_Entity finishLine;
+	c_Entity FinishLine;
 	//Variables
 
 	bool talk;
@@ -193,6 +193,12 @@ private:
 	float Countdown;
 	float Timer;
 	bool Finish = false;
+	int laps;
+	int AIlaps;
+	bool AIFinish = false;
+	bool CheckEnd = false;
+	bool Win = false;
+	bool Lose = false;
 };
 
 #endif

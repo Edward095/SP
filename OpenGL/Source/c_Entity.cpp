@@ -92,7 +92,7 @@ bool c_Entity::gotCollide(float x, float y, float z)
 			objectManager->getObjects().at(i)->getUniqueName() != "Nitro" &&
 			objectManager->getObjects().at(i)->getUniqueName() != "Boostpad" &&
 			objectManager->getObjects().at(i)->getUniqueName() != "Slowpad" &&
-			objectManager->getObjects().at(i)->getUniqueName() != "finishLine")
+			objectManager->getObjects().at(i)->getUniqueName() != "FinishLine")
 		{
 			if (OBB->OBB(collide))
 			{
