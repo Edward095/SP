@@ -183,6 +183,9 @@ private:
 	float CamTargetY;
 	float CamTargetZ;
 	bool Freeze = false;
+	bool Raining = false;
+	bool Snowing = false;
+	bool OffRoad = false;
 
 	int duration;
 	float bLightEnabled;

@@ -5,7 +5,21 @@
 
 c_ThirdCar::c_ThirdCar()
 {
+	VelocityZ = 0;
+	Acceleration = 0;
+	pos.x = 0;
+	pos.y = 1;
+	pos.z = 0;
+
+	MaxSpeed = 1;
+	SteeringAngle = 0;
+	Duration = 0;
+	MaxAcceleration = 0.4;
+	Friction = 0.04;
+	Steering = 2;
+	once = false;
 }
+
 
 
 c_ThirdCar::~c_ThirdCar()

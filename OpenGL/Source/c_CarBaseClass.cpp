@@ -63,6 +63,7 @@ void c_CarBaseClass::Movement(double dt)
 			if (VelocityZ > MaxSpeed && (PressQ))
 				VelocityZ = 1.5;
 			else if (VelocityZ > MaxSpeed && (!PressQ || !Nitro))
+				//VelocityZ -= 0.5;
 				VelocityZ = MaxSpeed;
 			if (BoostPad)
 				VelocityZ = 1.8f;
@@ -227,6 +228,10 @@ void c_CarBaseClass::SetSteering(float Steering)
 	this->Steering = Steering;
 }
 
+void c_CarBaseClass::SetMaxSpeed(float Speed)
+{
+	this->MaxSpeed = Speed;
+}
 void c_CarBaseClass::PadEffect(double dt)
 {
 	if (BoostPad)
