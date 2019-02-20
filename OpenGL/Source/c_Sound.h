@@ -26,10 +26,12 @@ public:
 	void f_Menu_ConfirmSelect();
 
 	// Game SFX
-	void f_Game_Nitro();
-	void f_Game_Boost();
-	void f_Game_Slow();
-	void f_Game_Teleport();
+	void f_Game_Ability_Nitro();
+	void f_Game_Ability_Teleport();
+	void f_Game_Ability_Freezetime();
+	void f_Game_Fanfare_Boost();
+	void f_Game_Fanfare_Slow();
+	void f_Game_Fanfare_Startline();
 
 	// Level Music
 	void f_Level_1_music();
@@ -64,6 +66,7 @@ private:
 	irrklang::ISoundSource* s_Nitro;
 	irrklang::ISoundSource* s_Teleport;
 	irrklang::ISoundSource* s_FreezeTime;
+	irrklang::ISoundSource* s_StartingLine;
 
 	void f_InitSFX();
 };

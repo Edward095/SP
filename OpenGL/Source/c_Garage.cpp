@@ -713,7 +713,7 @@ void c_Garage::f_UpdateCurColour()
 {
 	if (v_ColourList.f_GetCurColour()->f_GetColourNum() == 0)
 	{
-		v_ScaleBlue = 1.5f;
+		v_ScaleBlue = 1.5f; // Scaling
 		v_ScaleRed = 1.f;
 		v_ScalePurple = 1.f;
 		v_ScaleGreen = 1.f;
@@ -723,7 +723,7 @@ void c_Garage::f_UpdateCurColour()
 		v_ScaleGrey = 1.f;
 		v_ScaleBlack = 1.f;
 
-		v_MoveBlue = 0.5f;
+		v_MoveBlue = 0.5f; // Z axis
 		v_MoveRed = 0;
 		v_MovePurple = 0;
 		v_MoveGreen = 0;
