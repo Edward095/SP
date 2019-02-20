@@ -119,7 +119,6 @@ void c_LevelOne::Init()
 
 	car.init("player1");
 	car.SetFriction(0.1);
-	car.SetSteering(5);
 	AI.init("Nitro","OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(6, 0, 6));
 	//RenderMesh(car.getMesh(), true);
 
@@ -127,6 +126,23 @@ void c_LevelOne::Init()
 	//Initialization of Variables
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
+
+	//Snowing = true;
+	//Raining = true;
+	//OffRoad = true;
+	if (Raining)
+	{
+		car.SetSteering(9);
+	}
+	if (Snowing)
+	{
+		car.SetFriction(0.5);
+	}
+	if (OffRoad)
+	{
+		car.SetFriction(0.5);
+		car.SetMaxSpeed(0.1);
+	}
 
 	
 }

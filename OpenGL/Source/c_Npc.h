@@ -121,12 +121,17 @@ private:
 
 	bool AbleToPress;
 	bool Talk;
+	bool Talk1;
 	bool LevelSelection;
 	static bool Level1;
 	static bool Level2;
 	static bool Level3;
 	static bool SinglePlayer;
 	static bool MultiPlayer;
+	bool StartGame;
+	bool Continue;
+	bool Options;
+	
 };
 
 #endif
