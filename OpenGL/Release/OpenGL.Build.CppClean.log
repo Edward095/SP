@@ -1,5 +1,4 @@
 c:\users\irfan\desktop\sp2(github)\sp\opengl\release\vc141.pdb
-c:\users\irfan\desktop\sp2(github)\sp\opengl\release\camera.obj
 c:\users\irfan\desktop\sp2(github)\sp\opengl\release\loadobj.obj
 c:\users\irfan\desktop\sp2(github)\sp\opengl\release\firstpersoncamera.obj
 c:\users\irfan\desktop\sp2(github)\sp\opengl\release\c_thirdcar.obj
@@ -18,6 +17,8 @@ c:\users\irfan\desktop\sp2(github)\sp\opengl\release\c_ai.obj
 c:\users\irfan\desktop\sp2(github)\sp\opengl\release\c_secondplayer.obj
 c:\users\irfan\desktop\sp2(github)\sp\opengl\release\c_multiplayerlevel.obj
 c:\users\irfan\desktop\sp2(github)\sp\opengl\release\c_secondcar.obj
+c:\users\irfan\desktop\sp2(github)\sp\opengl\release\c_weather.obj
+c:\users\irfan\desktop\sp2(github)\sp\opengl\release\c_impulse.obj
 c:\users\irfan\desktop\sp2(github)\sp\opengl\release\utility.obj
 c:\users\irfan\desktop\sp2(github)\sp\opengl\release\shader.obj
 c:\users\irfan\desktop\sp2(github)\sp\opengl\release\npccamera.obj
@@ -26,7 +27,7 @@ c:\users\irfan\desktop\sp2(github)\sp\opengl\release\application.obj
 c:\users\irfan\desktop\sp2(github)\sp\opengl\release\meshbuilder.obj
 c:\users\irfan\desktop\sp2(github)\sp\opengl\release\mesh.obj
 c:\users\irfan\desktop\sp2(github)\sp\opengl\release\loadtga.obj
-c:\users\irfan\desktop\sp2(github)\sp\opengl\release\c_impulse.obj
+c:\users\irfan\desktop\sp2(github)\sp\opengl\release\camera.obj
 c:\users\irfan\desktop\sp2(github)\sp\release\opengl.exe
 c:\users\irfan\desktop\sp2(github)\sp\release\opengl.pdb
 c:\users\irfan\desktop\sp2(github)\sp\release\opengl.ipdb

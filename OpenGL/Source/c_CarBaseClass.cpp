@@ -3,6 +3,11 @@
 #include "LoadTGA.h"
 #include "Application.h"
 #include "c_ObjectManager.h"
+#include "c_SecondPlayer.h"
+#include "c_Impulse.h"
+#include "c_FirstCar.h"
+#include "c_SecondCar.h"
+#include "c_ThirdCar.h"
 
 c_ObjectManager* OBJmanager = c_ObjectManager::getInstance();
 
@@ -42,6 +47,7 @@ void c_CarBaseClass::Movement(double dt)
 {
 	Ability(dt);
 	PadEffect(dt);
+	
 	if (Application::IsKeyPressed('W') && Backwards == false)
 	{
 		Acceleration += (MaxAcceleration - Friction);
@@ -54,11 +60,24 @@ void c_CarBaseClass::Movement(double dt)
 			BoostPad = true;
 		if (gotCollide("Slowpad"))
 			SlowPad = true;
-
 		if (gotCollide("player2"))
 		{
-			//OBJmanager->getObjects()
+			c_Impulse Impulse;
+			c_Entity* P = OBJmanager->getObjects("player2");
+			c_SecondPlayer* d = dynamic_cast <c_SecondPlayer*>(P);
+			if (d)
+				d->SetSpeed(Impulse.CalcSpeedAfterCollision(VelocityZ, d));
+			c_FirstCar* q = dynamic_cast <c_FirstCar*>(P);
+			if (q)
+				q->SetSpeed(Impulse.CalcSpeedAfterCollision(VelocityZ, q));
+			c_SecondCar* w = dynamic_cast <c_SecondCar*>(P);
+			if (w)
+				w->SetSpeed(Impulse.CalcSpeedAfterCollision(VelocityZ, w));
+			c_ThirdCar* e = dynamic_cast <c_ThirdCar*>(P);
+			if (e)
+				q->SetSpeed(Impulse.CalcSpeedAfterCollision(VelocityZ, e));
 		}
+
 
 
 		if (!gotCollide(updateX, pos.y, updateZ))
@@ -80,6 +99,7 @@ void c_CarBaseClass::Movement(double dt)
 		}
 		else
 		{
+
 			Driving = false;
 			Backwards = false;
 			Acceleration = 0;
@@ -265,4 +285,9 @@ void c_CarBaseClass::PadEffect(double dt)
 void c_CarBaseClass::SetSpeed(float speed)
 {
 	this->VelocityZ = speed;
+}
+
+void c_CarBaseClass::SetDriving(bool driving)
+{
+	this->Driving = driving;
 }
