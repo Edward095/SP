@@ -148,3 +148,7 @@ bool c_Entity::ignoreEntity(std::string uniqueName)
 		uniqueName != "Boostpad" &&
 		uniqueName != "Slowpad");
 }
+const char* c_Entity::getMeshPath()
+{
+	return meshPath;
+}

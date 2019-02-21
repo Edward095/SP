@@ -21,6 +21,7 @@ public:
 	Mesh* getMesh();
 	Vector3 getPos();
 	c_Collision* getOBB();
+	const char* getMeshPath();
 
 protected:
 	std::string uniqueName;

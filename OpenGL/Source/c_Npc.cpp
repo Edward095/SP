@@ -113,10 +113,13 @@ void c_Npc::Init()
 	meshList[BACK]->textureID = LoadTGA("Image//NpcBack.tga");
 
 	meshList[NPC] = MeshBuilder::GenerateOBJ("Npc", "OBJ//NpcHuman.obj");
-	//texutre for obj later
+	meshList[NPC]->textureID = LoadTGA("Image//NpcTex.tga");
 
 	meshList[TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
+	
+	meshList[HOUSE] = MeshBuilder::GenerateOBJ("House", "OBJ//House.obj");
+	meshList[HOUSE]->textureID = LoadTGA("Image//House.tga");
 
 
 
@@ -147,7 +150,7 @@ void c_Npc::Update(double dt)
 {
 	ElapsedTime += dt;
 	camera.Update(dt);
-	
+	camera.WBmove(dt, 280.f, -280.f, 220.f, -150.f);
 
 	switch (e_GameState_NPC)
 	{
@@ -396,51 +399,15 @@ void c_Npc::RenderNpc()
 	RenderMesh(meshList[NPC], false);
 	modelStack.PopMatrix();
 
-
-	//Skybox
+	//Npc House
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 250);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(180, 1, 0, 0);
-	modelStack.Rotate(180, 0, 0, 1);
-	RenderMesh(meshList[FRONT], false);
+	modelStack.Translate(45, -50, 40);
+	modelStack.Scale(14, 10, 18);
+	RenderMesh(meshList[HOUSE], false);
 	modelStack.PopMatrix();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 250, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(90, 1, 0, 0);
-	RenderMesh(meshList[TOP], false);
-	modelStack.PopMatrix();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(0, -250, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(-90, 1, 0, 0);
-	RenderMesh(meshList[BOTTOM], false);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(-250, 0, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(90, 0, 1, 0);
-	RenderMesh(meshList[LEFT], false);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(250, 0, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(-90, 0, 1, 0);
-	RenderMesh(meshList[RIGHT], false);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, -250);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	//modelStack.Rotate(-180, 0, 1, 0);
-	RenderMesh(meshList[BACK], false);
-	modelStack.PopMatrix();
-
+	
 	//Text for name of NPC
 	modelStack.PushMatrix();
 	modelStack.Translate(-180, 55, -75);

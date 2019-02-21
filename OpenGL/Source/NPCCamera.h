@@ -23,7 +23,7 @@ public:
 	void Invert();
 	float yaw = -90.0f;
 	float pitch = 0.0f;
-
+	void WBmove(double dt, float xUpper, float xLower, float zUpper, float zLower);//WB = with bounderies
 private:
 	bool firstMouse;
 	double lastX = 0.0;
@@ -35,8 +35,8 @@ private:
 	bool noFly = true;
 	bool offBound = false;
 	void UpdateMouse();
-	bool checkCollisions(float x, float zUpper,float zLower);
-	void WBmove(double dt, float x, float zUpper, float zLower);//WB = with bounderies
+	bool checkCollisions(float xUpper, float xLower, float zUpper,float zLower);
+	
 	void WOBmove(double dt);//WOB = without bounderies
 	void gunRoom(double dt);
 };
