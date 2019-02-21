@@ -7,16 +7,20 @@ class c_ObjectManager
 {
 public:
 	~c_ObjectManager();
-	void addOBJ(c_Entity* OBJ);
-	void addOBJ(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos);
 	static c_ObjectManager* getInstance();
-	std::vector <c_Entity*> getObjects();
-	c_Entity* getObjects(std::string uniqueName);
+	void addCannotCollide(c_Entity* OBJ);
+	void addCanCollide(c_Entity* OBJ);
+	void addCanCollide(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos);
+	std::vector <c_Entity*> getCannotCollide();
+	c_Entity* getCannotCollide(std::string uniqueName);
+	std::vector <c_Entity*> getCanCollide();
+	c_Entity* getCanCollide(std::string uniqueName);
 	void delInstance();
 	void delNullOBJ();
 private: 
 	c_ObjectManager();
-	std::vector <c_Entity*> objects;
+	std::vector <c_Entity*> cannotCollideOBJ;
+	std::vector <c_Entity*> canCollideOBJ;
 	static c_ObjectManager* instance;
 };
 #endif

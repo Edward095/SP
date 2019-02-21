@@ -58,7 +58,7 @@ void c_OffRoadManager::addOffRoad(std::string offRoadOBJtxt)
 		while (std::getline(file, line))
 		{
 			meshPath = line.c_str();
-			new c_Entity(offRoad + std::to_string(counter),	meshPath , "Image//Test.tga", (0, 0, 0));
+			new c_Entity(offRoad + std::to_string(counter), meshPath, "Image//Test.tga", (0, 0, 0), false);
 			counter++;
 		}
 	}
@@ -90,13 +90,13 @@ void c_OffRoadManager::updateCollision(std::string posLocation,std::string rotat
 			if (axisCounter == 0)
 			{
 				posX = std::stof(posLine);
-				OBJmanager->getObjects("offRoad" + std::to_string(counter))->updatePos(posX, 0, 0);
+				OBJmanager->getCannotCollide("offRoad" + std::to_string(counter))->updatePos(posX, 0, 0);
 				axisCounter++;
 			}
 			else if (axisCounter == 1)
 			{
 				posZ = std::stof(posLine);
-				OBJmanager->getObjects("offRoad" + std::to_string(counter))->updatePos(posX, 0, posZ);
+				OBJmanager->getCannotCollide("offRoad" + std::to_string(counter))->updatePos(posX, 0, posZ);
 				axisCounter = 0;
 				counter++;
 			}
@@ -110,7 +110,7 @@ void c_OffRoadManager::updateCollision(std::string posLocation,std::string rotat
 	{
 		while (std::getline(rotateFile, rotateLine))
 		{
-			OBJmanager->getObjects("offRoad" + std::to_string(counter))->getOBB()->calcNewAxis(std::stof(rotateLine), 0, 1, 0);
+			OBJmanager->getCannotCollide("offRoad" + std::to_string(counter))->getOBB()->calcNewAxis(std::stof(rotateLine), 0, 1, 0);
 			counter++;
 		}
 	}
@@ -121,4 +121,16 @@ void c_OffRoadManager::updateCollision(std::string posLocation,std::string rotat
 void c_OffRoadManager::addToList(std::string uniqueName)
 {
 	listToIgnore.push_back(uniqueName);
+}
+
+void c_OffRoadManager::defaultData()
+{
+	int counter = 0;
+	std::string offRoad = "offRoad";
+
+	for (int i = 0; i < listToIgnore.size(); i++)
+	{
+		OBJmanager->getCannotCollide(offRoad + std::to_string(counter))->getOBB()->defaultData();
+		counter++;
+	}
 }

@@ -50,9 +50,9 @@ void c_CarBaseClass::Movement(double dt)
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		//OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
-		if (gotCollide("Boostpad"))
+		if (gotCollide("Boostpad",false))
 			BoostPad = true;
-		if (gotCollide("Slowpad"))
+		if (gotCollide("Slowpad", false))
 			SlowPad = true;
 
 		if (!gotCollide(updateX, pos.y, updateZ))

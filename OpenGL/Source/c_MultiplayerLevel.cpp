@@ -112,10 +112,10 @@ void c_MultiplayerLevel::Init()
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
 
-	front.init("front", "quad", "Image//NpcFront.tga", (0, 0, 0));
-	left.init("left", "quad", "Image//NpcLeft.tga", (0, 0, 0));
-	right.init("right", "quad", "Image//NpcRight.tga", (0, 0, 0));
-	back.init("back", "quad", "Image//NpcBack.tga", (0, 0, 0));
+	front.init("front", "quad", "Image//NpcFront.tga", (0, 0, 0),true);
+	left.init("left", "quad", "Image//NpcLeft.tga", (0, 0, 0),true);
+	right.init("right", "quad", "Image//NpcRight.tga", (0, 0, 0),true);
+	back.init("back", "quad", "Image//NpcBack.tga", (0, 0, 0),true);
 
 	playerOne.init("player1");
 	playerTwo.init("player2");

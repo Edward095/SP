@@ -22,9 +22,9 @@ c_FirstCar::c_FirstCar()
 	Steering = 3;
 	once = false;
 }
-c_FirstCar::c_FirstCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos)
+c_FirstCar::c_FirstCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
 {
-	init(uniqueName, meshPath, TGApath, pos);
+	init(uniqueName, meshPath, TGApath, pos, canCollide);
 }
 c_FirstCar::~c_FirstCar()
 {
@@ -62,7 +62,7 @@ void c_FirstCar::isOffRoad()
 {
 	for (int i = 0; i < manager->getList().size(); i++)
 	{
-		if (gotCollide(manager->getList()[i]) || !gotCollide("track"))
+		if (gotCollide(manager->getList()[i],false) || !gotCollide("track", false))
 		{
 			offRoad = true;
 			break;

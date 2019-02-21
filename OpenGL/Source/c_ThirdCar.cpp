@@ -19,9 +19,9 @@ c_ThirdCar::c_ThirdCar()
 	Steering = 2;
 	once = false;
 }
-c_ThirdCar::c_ThirdCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos)
+c_ThirdCar::c_ThirdCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos,bool canCollide)
 {
-	init(uniqueName, meshPath, TGApath, pos);
+	init(uniqueName, meshPath, TGApath, pos, canCollide);
 }
 
 
@@ -60,7 +60,7 @@ void c_ThirdCar::PowerUp(bool check)
 
 void c_ThirdCar::isOffRoad()
 {
-	if (!gotCollide("track"))//|| gotCollide("offRoad1") || gotCollide("offRoad2") || gotCollide("offRoad3") || gotCollide("offRoad4") || gotCollide("offRoad5") || gotCollide("offRoad6"))
+	if (!gotCollide("track",false))//|| gotCollide("offRoad1") || gotCollide("offRoad2") || gotCollide("offRoad3") || gotCollide("offRoad4") || gotCollide("offRoad5") || gotCollide("offRoad6"))
 		offRoad = true;
 	else
 		offRoad = false;

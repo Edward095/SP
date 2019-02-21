@@ -1274,15 +1274,15 @@ void c_Garage::f_UpdateGarage(double dt)
 		v_Car1Changed = true;
 		if (v_CarList.f_GetCurCar()->f_GetCarNum() == 0)
 		{
-			manager->addOBJ("player1", v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+			manager->addCanCollide("player1", v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 1)
 		{
-			manager->addOBJ("player1", v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+			manager->addCanCollide("player1", v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
 		{
-			manager->addOBJ("player1", v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+			manager->addCanCollide("player1", v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
 		}
 		if (v_Car1Changed && c_Npc::GetMultiPlayer())
 		{
@@ -1350,15 +1350,15 @@ void c_Garage::f_UpdateGarage2(double dt)
 		v_Car2Changed = true;
 		if (v_CarList.f_GetCurCar()->f_GetCarNum() == 0)
 		{
-			manager->addOBJ("player2", v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+			manager->addCanCollide("player2", v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 1)
 		{
-			manager->addOBJ("player2", v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+			manager->addCanCollide("player2", v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
 		{
-			manager->addOBJ("player2", v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+			manager->addCanCollide("player2", v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
 		}
 		/*if (v_CarList.f_GetCurCar()->f_GetCarNum() == 0)
 		{
