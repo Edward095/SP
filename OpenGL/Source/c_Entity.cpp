@@ -2,11 +2,35 @@
 #include "MeshBuilder.h"
 #include "LoadTGA.h"
 #include "c_ObjectManager.h"
+#include "c_OffRoadManager.h"
 
+c_ObjectManager* objectManager = c_ObjectManager::getInstance();
+c_OffRoadManager* offRoadManager = c_OffRoadManager::getInstance();
 
 c_Entity::c_Entity()
 {
 	OBB = nullptr;
+}
+c_Entity::c_Entity(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos)
+{
+	//Add Object to the List
+	this->pos = pos;
+	//updatePos(pos.x, pos.y, pos.z);
+	this->meshPath = meshPath;
+	this->TGApath = TGApath;
+	this->uniqueName = uniqueName;
+	quadORobject();//if Quad generate Quad else generate Obj
+	mesh->textureID = LoadTGA(TGApath);
+	OBB = new c_Collision;
+	OBB->setHighLow(meshPath);
+
+
+	objectManager->addOBJ(this);
+
+	std::string temp = uniqueName;
+	temp.resize(7);
+	if (temp == "offRoad")
+		offRoadManager->addToList(uniqueName);
 }
 
 
@@ -19,8 +43,15 @@ c_Entity::~c_Entity()
 void c_Entity::init(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos)
 {
 	//Add Object to the List
-	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
 	objectManager->addOBJ(this);
+
+	std::string temp = uniqueName;
+	temp.resize(7);
+	if (temp == "offRoad")
+		offRoadManager->addToList(uniqueName);
+
+
+
 	this->pos = pos;
 	//updatePos(pos.x, pos.y, pos.z);
 	this->meshPath = meshPath;
@@ -33,8 +64,6 @@ void c_Entity::init(std::string uniqueName, const char* meshPath, const char* TG
 }
 void c_Entity::init(std::string uniqueName)
 {
-	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
-
 	for (int i = 0; i < objectManager->getObjects().size(); i++)
 	{
 		if (objectManager->getObjects().at(i)->getUniqueName() == uniqueName)
@@ -68,20 +97,17 @@ c_Collision* c_Entity::getOBB()
 }
 c_Entity* c_Entity::getEntity(std::string uniqueName)
 {
-	c_ObjectManager* OBJmanager = c_ObjectManager::getInstance();
-
-	for (int i = 0; i < OBJmanager->getObjects().size(); i++)
+	for (int i = 0; i < objectManager->getObjects().size(); i++)
 	{
-		if (OBJmanager->getObjects().at(i)->uniqueName == uniqueName)
+		if (objectManager->getObjects().at(i)->uniqueName == uniqueName)
 		{
-			return OBJmanager->getObjects().at(i);
+			return objectManager->getObjects().at(i);
 		}
 	}
 
 }
 bool c_Entity::gotCollide(float x, float y, float z)
 {
-	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
 	std::vector<c_Entity*> entity = objectManager->getObjects();
 
 	updatePos(pos.x + x, pos.y + y, pos.z + z);
@@ -90,7 +116,7 @@ bool c_Entity::gotCollide(float x, float y, float z)
 	{
 		c_Collision* collide = entity[i]->getOBB();
 
-		if (ignoreEntity(entity[i]->uniqueName))
+		if (!ignoreEntity(entity[i]->uniqueName) && ! offRoadManager->toIgnore(entity[i]->uniqueName))
 		{
 			if (OBB->OBB(collide))
 			{
@@ -103,7 +129,6 @@ bool c_Entity::gotCollide(float x, float y, float z)
 }
 bool c_Entity::gotCollide(std::string uniqueName)
 {
-	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
 	c_Collision* objectToCollide = nullptr;
 
 	for (int i = 0; i < objectManager->getObjects().size(); i++)
@@ -137,15 +162,7 @@ std::string c_Entity::getUniqueName()
 bool c_Entity::ignoreEntity(std::string uniqueName)
 {
 	return	(uniqueName != this->uniqueName &&
-		uniqueName != "track" &&
-		uniqueName != "Boostpad" &&
-		uniqueName != "Slowpad"&&
-		uniqueName != "offRoad1"&&
-		uniqueName != "offRoad2"&&
-		uniqueName != "offRoad3"&&
-		uniqueName != "offRoad4"&&
-		uniqueName != "offRoad5"&&
-		uniqueName != "offRoad6"&&
-		uniqueName != "offRoad7"&&
-		uniqueName != "offRoad8");
+		uniqueName != "track" ||
+		uniqueName != "Boostpad" ||
+		uniqueName != "Slowpad");
 }

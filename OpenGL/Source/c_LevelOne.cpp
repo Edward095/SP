@@ -27,6 +27,8 @@ c_LevelOne::~c_LevelOne()
 
 void c_LevelOne::Init()
 {
+	offRoadManager = c_OffRoadManager::getInstance();
+	OBJmanager = c_ObjectManager::getInstance();
 	srand(time(NULL));
 	CamPosX = car.getPos().x + 1;
 	CamPosY = car.getPos().y + 1;
@@ -137,15 +139,24 @@ void c_LevelOne::Init()
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
 
-	track.init("track", "OBJ//RaceTrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0));
-	offRoad1.init("offRoad1", "OBJ//OffroadTrack1//part1.obj", "Image//Test.tga", Vector3(0, 0, 0));
-	offRoad2.init("offRoad2", "OBJ//OffroadTrack1//part2.obj", "Image//Test.tga", Vector3(0, 0, 0));
-	offRoad3.init("offRoad3", "OBJ//OffroadTrack1//part3.obj", "Image//Test.tga", Vector3(0, 0, 0));
-	offRoad4.init("offRoad4", "OBJ//OffroadTrack1//part4.obj", "Image//Test.tga", Vector3(0, 0, 0));
-	offRoad5.init("offRoad5", "OBJ//OffroadTrack1//part5.obj", "Image//Test.tga", Vector3(0, 0, 0));
-	offRoad6.init("offRoad6", "OBJ//OffroadTrack1//part6.obj", "Image//Test.tga", Vector3(0, 0, 0));
-	offRoad5.init("offRoad7", "OBJ//OffroadTrack1//part7.obj", "Image//Test.tga", Vector3(0, 0, 0));
-	offRoad6.init("offRoad8", "OBJ//OffroadTrack1//part8.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	track.init("track", "OBJ//trackScaled.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0));
+	//offRoad.init("offRoad", "OBJ//OffroadTrack1//part1.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad1.init("offRoad1", "OBJ//OffroadTrack1//part2.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad2.init("offRoad2", "OBJ//OffroadTrack1//part3.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad3.init("offRoad3", "OBJ//OffroadTrack1//part4.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad4.init("offRoad4", "OBJ//OffroadTrack1//part5.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad5.init("offRoad5", "OBJ//OffroadTrack1//part6.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad6.init("offRoad6", "OBJ//OffroadTrack1//part7.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad7.init("offRoad7", "OBJ//OffroadTrack1//part8.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad8.init("offRoad8", "OBJ//OffroadTrack1//part9.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad9.init("offRoad9", "OBJ//OffroadTrack1//part10.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad10.init("offRoad10", "OBJ//OffroadTrack1//part11.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad11.init("offRoad11", "OBJ//OffroadTrack1//part12.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad12.init("offRoad12", "OBJ//OffroadTrack1//part13.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad13.init("offRoad13", "OBJ//OffroadTrack1//part14.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad14.init("offRoad14", "OBJ//OffroadTrack1//part15.obj", "Image//Test.tga", Vector3(0, 0, 0));
+	//offRoad15.init("offRoad15", "OBJ//OffroadTrack1//part16.obj","Image//Test.tga", Vector3(0, 0, 0));
+	offRoadManager->addOffRoad("OffRoad//offRoadOBJ1.txt");
 
 	//Snowing = true;
 	//Raining = true;
@@ -900,19 +911,101 @@ void c_LevelOne::renderEnviroment()
 	modelStack.PopMatrix();
 	/*********************************************		OffRoad		******************************************************************/
 	modelStack.PushMatrix();
-	modelStack.Scale(6, 1, 6);
-	RenderMesh(offRoad1.getMesh(), true);
-	RenderMesh(offRoad2.getMesh(), true);
-	RenderMesh(offRoad3.getMesh(), true);
-	RenderMesh(offRoad4.getMesh(), true);
-	RenderMesh(offRoad5.getMesh(), true);
-	RenderMesh(offRoad6.getMesh(), true);
+	//modelStack.Scale(6, 1, 6);
+		modelStack.PushMatrix();
+		modelStack.Translate(-347.132, 0, -4.178);
+		//RenderMesh(offRoad.getMesh(), false);
+		RenderMesh(OBJmanager->getObjects("offRoad0")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-221.721, 0, 185.416);
+		modelStack.Rotate(-0.567, 0, 1, 0);
+		//RenderMesh(offRoad1.getMesh(), false);
+		RenderMesh(OBJmanager->getObjects("offRoad1")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-303.772, 0, 105.494);
+		modelStack.Rotate(33.935, 0, 1, 0);
+		RenderMesh(OBJmanager->getObjects("offRoad2")->getMesh(), false);
+		//RenderMesh(offRoad2.getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-93.43, 0, -28.579);
+		RenderMesh(OBJmanager->getObjects("offRoad3")->getMesh(), false);
+		//RenderMesh(offRoad3.getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-80.24, 0, -167.074);
+		RenderMesh(OBJmanager->getObjects("offRoad4")->getMesh(), false);
+		//RenderMesh(offRoad4.getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(139.595, 0, 5.496);
+		RenderMesh(OBJmanager->getObjects("offRoad5")->getMesh(), false);
+		//RenderMesh(offRoad5.getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(255.008, 0, -169.273);
+		RenderMesh(OBJmanager->getObjects("offRoad6")->getMesh(), false);
+		//RenderMesh(offRoad6.getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(98.926, 0, 42.868);
+		modelStack.Rotate(47.323, 0, 1, 0);
+		RenderMesh(OBJmanager->getObjects("offRoad7")->getMesh(), false);
+		//RenderMesh(offRoad7.getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(38.471, 0, 184.661);
+		modelStack.Rotate(31.215, 0, 1, 0);
+		RenderMesh(OBJmanager->getObjects("offRoad8")->getMesh(), false);
+		//RenderMesh(offRoad8.getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(366.025, 0, 153.884);
+		RenderMesh(OBJmanager->getObjects("offRoad9")->getMesh(), false);
+		//RenderMesh(offRoad9.getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-350.637, 0, -253.909);
+		modelStack.Rotate(2.356, 0, 1, 0);
+		RenderMesh(OBJmanager->getObjects("offRoad10")->getMesh(), false);
+		//RenderMesh(offRoad10.getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(62.797, 0, 323.144);
+		modelStack.Rotate(-31.059, 0, 1, 0);
+		RenderMesh(OBJmanager->getObjects("offRoad11")->getMesh(), false);
+		//RenderMesh(offRoad11.getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(34.015, 0, 329.685);
+		modelStack.Rotate(39.759, 0, 1, 0);
+		RenderMesh(OBJmanager->getObjects("offRoad12")->getMesh(), false);
+		//RenderMesh(offRoad12.getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-264.271, 0, -150.451);
+		modelStack.Rotate(39.582, 0, 1, 0);
+		RenderMesh(OBJmanager->getObjects("offRoad13")->getMesh(), false);
+		//RenderMesh(offRoad13.getMesh(), false);
+		modelStack.PopMatrix();
+		//modelStack.PushMatrix();
+		//modelStack.Translate(-244.224, 0, 85.848);
+		//RenderMesh(OBJmanager->getObjects("offRoad14")->getMesh(), false);
+		////RenderMesh(offRoad14.getMesh(), false);
+		//modelStack.PopMatrix();
+		//modelStack.PushMatrix();
+		//modelStack.Translate(49.584, 0, 315.27);
+		//RenderMesh(OBJmanager->getObjects("offRoad15")->getMesh(), false);
+		////RenderMesh(offRoad15.getMesh(), false);
+		//modelStack.PopMatrix();
 	modelStack.PopMatrix();
 	/*********************************************************************************************************************************/
 
 	//Track
 	modelStack.PushMatrix();
-	modelStack.Scale(6, 1, 6);
+	//modelStack.Scale(6, 1, 6);
 	RenderMesh(track.getMesh(), true);
 	modelStack.PopMatrix();
 
@@ -929,9 +1022,56 @@ void c_LevelOne::renderEnviroment()
 	modelStack.Scale(6, 5, 6);
 	RenderMesh(meshList[STREETLIGHT], true);
 	modelStack.PopMatrix();
+
+	/*RenderMesh(OBJmanager->getObjects("offRoad0")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad1")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad2")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad3")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad4")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad5")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad6")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad7")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad8")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad9")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad10")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad11")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad12")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad13")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad14")->getMesh(), false);
+	RenderMesh(OBJmanager->getObjects("offRoad15")->getMesh(), false);*/
+
+	/*modelStack.PushMatrix();
+	modelStack.Translate(-349.536, 0, -23.73);
+	modelStack.Translate(offRoad2.getOBB()->getDimensions().x, offRoad2.getOBB()->getDimensions().y, offRoad2.getOBB()->getDimensions().z);
+	RenderMesh(meshList[TEST], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-349.536, 0, -23.73);
+	modelStack.Translate(-offRoad2.getOBB()->getDimensions().x, offRoad2.getOBB()->getDimensions().y, offRoad2.getOBB()->getDimensions().z);
+	RenderMesh(meshList[TEST], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-349.536, 0, -23.73);
+	modelStack.Translate(offRoad2.getOBB()->getDimensions().x, offRoad2.getOBB()->getDimensions().y, -offRoad2.getOBB()->getDimensions().z);
+	RenderMesh(meshList[TEST], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-349.536, 0, -23.73);
+	modelStack.Translate(-offRoad2.getOBB()->getDimensions().x, offRoad2.getOBB()->getDimensions().y, -offRoad2.getOBB()->getDimensions().z);
+	RenderMesh(meshList[TEST], false);
+	modelStack.PopMatrix();
+*/
+
 }
+
 void c_LevelOne::updateEnviromentCollision()
 {
+
+	float multiplierX = 6;
+	float multiplierZ = 6;
 	front.getOBB()->defaultData();
 	left.getOBB()->defaultData();
 	right.getOBB()->defaultData();
@@ -941,12 +1081,39 @@ void c_LevelOne::updateEnviromentCollision()
 	boost.getOBB()->defaultData();
 	slow.getOBB()->defaultData();
 	track.getOBB()->defaultData();
-	offRoad1.getOBB()->defaultData();
-	offRoad2.getOBB()->defaultData();
-	offRoad3.getOBB()->defaultData();
-	offRoad4.getOBB()->defaultData();
-	offRoad5.getOBB()->defaultData();
-	offRoad6.getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad0")->getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad1")->getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad2")->getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad3")->getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad4")->getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad5")->getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad6")->getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad7")->getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad8")->getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad9")->getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad10")->getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad11")->getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad12")->getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad13")->getOBB()->defaultData();
+	/*OBJmanager->getObjects("offRoad14")->getOBB()->defaultData();
+	OBJmanager->getObjects("offRoad15")->getOBB()->defaultData();*/
+	//offRoad.getOBB()->defaultData();
+	//offRoad1.getOBB()->defaultData();
+	//offRoad2.getOBB()->defaultData();
+	//offRoad3.getOBB()->defaultData();
+	//offRoad4.getOBB()->defaultData();
+	//offRoad5.getOBB()->defaultData();
+	//offRoad6.getOBB()->defaultData();
+	//offRoad7.getOBB()->defaultData();
+	//offRoad8.getOBB()->defaultData();
+	//offRoad9.getOBB()->defaultData();
+	//offRoad10.getOBB()->defaultData();
+	//offRoad11.getOBB()->defaultData();
+	//offRoad12.getOBB()->defaultData();
+	//offRoad13.getOBB()->defaultData();
+	//offRoad14.getOBB()->defaultData();
+	//offRoad15.getOBB()->defaultData();
+
 
 
 	//Front Skybox
@@ -970,14 +1137,98 @@ void c_LevelOne::updateEnviromentCollision()
 	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 
 	//Track
-	track.getOBB()->calcNewDimensions(6, 1, 6);
+	//track.getOBB()->calcNewDimensions(6, 1, 6);
+
+	offRoadManager->updateCollision("OffRoad//offRoadPos1.txt","OffRoad//offRoadRotate1.txt");
+
+
 	//OffRoad
+	/*OBJmanager->getObjects("offRoad0")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad1")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad2")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad3")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad4")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad5")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad6")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad7")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad8")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad9")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad10")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad11")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad12")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad13")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad14")->getOBB()->calcNewDimensions(6, 1, 6);
+	OBJmanager->getObjects("offRoad15")->getOBB()->calcNewDimensions(6, 1, 6);*/
+
+
+	/*OBJmanager->getObjects("offRoad0")->updatePos(-58.256, 0, -3.955);
+	OBJmanager->getObjects("offRoad1")->updatePos(-37.15, 0, 30.979);
+	OBJmanager->getObjects("offRoad2")->updatePos(2.251 ,0, 28.474);
+	OBJmanager->getObjects("offRoad3")->updatePos(23.316, 0, 1.918);
+	OBJmanager->getObjects("offRoad4")->updatePos(42.515, 0, -28.293);
+	OBJmanager->getObjects("offRoad5")->updatePos(26.277, 0, -25.395);
+	OBJmanager->getObjects("offRoad6")->updatePos(-41.416, 0, -23.57);
+	OBJmanager->getObjects("offRoad7")->updatePos(24.748, 0, 40.742);
+	OBJmanager->getObjects("offRoad8")->updatePos(-15.657, 0, -5.051);
+	OBJmanager->getObjects("offRoad9")->updatePos(-16.499, 0, -43.604);
+	OBJmanager->getObjects("offRoad10")->updatePos(-13.3, 0, -25.085);
+	OBJmanager->getObjects("offRoad11")->updatePos(-46.46, 0, -0.505);
+	OBJmanager->getObjects("offRoad12")->updatePos(61.955, 0, 22.728);
+	OBJmanager->getObjects("offRoad13")->updatePos(8.081, 0, 53.706);
+	OBJmanager->getObjects("offRoad14")->updatePos(-40.70, 0, 14.308);
+	OBJmanager->getObjects("offRoad15")->updatePos(8.264, 0, 52.545);*/
+
+	/*OBJmanager->getObjects("offRoad0")->updatePos(-58.256*multiplierX, 0, -3.955*multiplierZ);
+	OBJmanager->getObjects("offRoad1")->updatePos(-37.15*multiplierX, 0, 30.979*multiplierZ);
+	OBJmanager->getObjects("offRoad2")->updatePos(2.251*multiplierX, 0, 28.474*multiplierZ);
+	OBJmanager->getObjects("offRoad3")->updatePos(23.316*multiplierX, 0, 1.918*multiplierZ);
+	OBJmanager->getObjects("offRoad4")->updatePos(42.515*multiplierX, 0, -28.293*multiplierZ);
+	OBJmanager->getObjects("offRoad5")->updatePos(26.277*multiplierX, 0, -25.395*multiplierZ);
+	OBJmanager->getObjects("offRoad6")->updatePos(-41.416*multiplierX, 0, -23.57*multiplierZ);
+	OBJmanager->getObjects("offRoad7")->updatePos(24.748*multiplierX, 0, 40.742*multiplierZ);
+	OBJmanager->getObjects("offRoad8")->updatePos(-15.657*multiplierX, 0, -5.051*multiplierZ);
+	OBJmanager->getObjects("offRoad9")->updatePos(-16.499*multiplierX, 0, -43.604*multiplierZ);
+	OBJmanager->getObjects("offRoad10")->updatePos(-13.3*multiplierX, 0, -25.085*multiplierZ);
+	OBJmanager->getObjects("offRoad11")->updatePos(-46.467*multiplierX, 0, -0.505*multiplierZ);
+	OBJmanager->getObjects("offRoad12")->updatePos(61.955*multiplierX, 0, 22.728*multiplierZ);
+	OBJmanager->getObjects("offRoad13")->updatePos(8.081*multiplierX, 0, 53.706*multiplierZ);
+	OBJmanager->getObjects("offRoad14")->updatePos(-40.704*multiplierX, 0, 14.308*multiplierZ);
+	OBJmanager->getObjects("offRoad15")->updatePos(8.264*multiplierX, 0, 52.545*multiplierZ);*/
+
+
+	/*offRoad.updatePos(-349.536, 0, -23.73);
+	offRoad1.updatePos(-222.9, 0, 185.874);
+	offRoad2.updatePos(13.506, 0, 170.844);
+	offRoad3.updatePos(139.896, 0, 11.508);
+	offRoad4.updatePos(255.09, 0, -169.758);
+	offRoad5.updatePos(157.662, 0, -152.37);
+	offRoad6.updatePos(-248.496, 0, -141.42);
+	offRoad7.updatePos(148.488, 0, 244.452);
+	offRoad8.updatePos(-93.942, 0, -30.306);
+	offRoad9.updatePos(-98.994, 0, -261.624);
+	offRoad10.updatePos(-79.8, 0, -150.51);
+	offRoad11.updatePos(-278.802, 0, -3.03);
+	offRoad12.updatePos(371.73, 0, 136.368);
+	offRoad13.updatePos(48.486, 0, 322.236);
+	offRoad14.updatePos(-244.224, 0, 85.848);
+	offRoad15.updatePos(49.584, 0, 315.27);*/
+
+	/*offRoad.getOBB()->calcNewDimensions(6, 1, 6);
 	offRoad1.getOBB()->calcNewDimensions(6, 1, 6);
 	offRoad2.getOBB()->calcNewDimensions(6, 1, 6);
 	offRoad3.getOBB()->calcNewDimensions(6, 1, 6);
 	offRoad4.getOBB()->calcNewDimensions(6, 1, 6);
 	offRoad5.getOBB()->calcNewDimensions(6, 1, 6);
 	offRoad6.getOBB()->calcNewDimensions(6, 1, 6);
+	offRoad7.getOBB()->calcNewDimensions(6, 1, 6);
+	offRoad8.getOBB()->calcNewDimensions(6, 1, 6);
+	offRoad9.getOBB()->calcNewDimensions(6, 1, 6);
+	offRoad10.getOBB()->calcNewDimensions(6, 1, 6);
+	offRoad11.getOBB()->calcNewDimensions(6, 1, 6);
+	offRoad12.getOBB()->calcNewDimensions(6, 1, 6);
+	offRoad13.getOBB()->calcNewDimensions(6, 1, 6);
+	offRoad14.getOBB()->calcNewDimensions(6, 1, 6);
+	offRoad15.getOBB()->calcNewDimensions(6, 1, 6);*/
 }
 
 void c_LevelOne::renderRain()

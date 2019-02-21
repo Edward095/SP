@@ -9,8 +9,9 @@ class c_Entity
 {
 public:
 	c_Entity();
+	c_Entity(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos);
 	~c_Entity();
-	void init(std::string uniqueName,const char* meshPath, const char* TGApath, Vector3 pos);
+	virtual void init(std::string uniqueName,const char* meshPath, const char* TGApath, Vector3 pos);
 	void init(std::string uniqueName);
 	void updatePos(float xPos,float yPos,float zPos);
 	bool ignoreEntity(std::string uniqueName);

@@ -1,12 +1,9 @@
-﻿  c_FirstCar.cpp
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_firstcar.cpp(15): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_firstcar.cpp(18): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_firstcar.cpp(19): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_firstcar.cpp(72): warning C4305: 'argument': truncation from 'double' to 'float'
+﻿  c_OffRoadManager.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_offroadmanager.cpp(34): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_offroadmanager.cpp(61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Generating code
-  1 of 1262 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  2 of 1367 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    46 functions had inline decision re-evaluated but remain unchanged
+    2 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-NPCCamera.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'NPCCamera.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
-  OpenGL.vcxproj -> C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\OpenGL.exe
+  OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Release\OpenGL.exe

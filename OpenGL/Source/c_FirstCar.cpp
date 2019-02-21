@@ -2,8 +2,10 @@
 #include "Application.h"
 #include "MyMath.h"
 #include "c_ObjectManager.h"
+#include "c_OffRoadManager.h"
 #include "LoadTGA.h"
 
+c_OffRoadManager* manager = c_OffRoadManager::getInstance();
 c_FirstCar::c_FirstCar()
 {
 	VelocityZ = 0;
@@ -58,10 +60,15 @@ void c_FirstCar::PowerUp(bool check)
 }
 void c_FirstCar::isOffRoad()
 {
-	if (!gotCollide("track"))//|| gotCollide("offRoad1") || gotCollide("offRoad2") || gotCollide("offRoad3") || gotCollide("offRoad4") || gotCollide("offRoad5") || gotCollide("offRoad6"))
-		offRoad = true;
-	else
-		offRoad = false;
+	for (int i = 0; i < manager->getList().size(); i++)
+	{
+		if (gotCollide(manager->getList()[i]) || !gotCollide("track"))
+		{
+			offRoad = true;
+			break;
+		}
+		else offRoad = false;
+	}
 	if (offRoad)
 	{
 		SetFriction(0.5f);

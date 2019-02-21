@@ -10,7 +10,8 @@
 #include "c_Entity.h"
 #include "c_AI.h"
 #include "c_Weather.h"
-
+#include "c_OffRoadManager.h"
+#include "c_ObjectManager.h"
 
 class c_LevelOne : public Scene
 {
@@ -167,7 +168,11 @@ private:
 	c_Entity left;
 	c_Entity right;
 
+	c_Entity boost;
+	c_Entity slow;
+
 	c_Entity track;
+	/*c_Entity offRoad;
 	c_Entity offRoad1;
 	c_Entity offRoad2;
 	c_Entity offRoad3;
@@ -176,9 +181,16 @@ private:
 	c_Entity offRoad6;
 	c_Entity offRoad7;
 	c_Entity offRoad8;
+	c_Entity offRoad9;
+	c_Entity offRoad10;
+	c_Entity offRoad11;
+	c_Entity offRoad12;
+	c_Entity offRoad13;
+	c_Entity offRoad14;
+	c_Entity offRoad15;*/
 
-	c_Entity boost;
-	c_Entity slow;
+	c_OffRoadManager* offRoadManager;
+	c_ObjectManager* OBJmanager;
 	//Variables
 
 	bool talk;
