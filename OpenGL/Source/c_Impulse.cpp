@@ -18,15 +18,12 @@ c_Impulse::~c_Impulse()
 
 }
 
-float c_Impulse::CalcSpeedAfterCollision(float SpeedA, c_CarBaseClass* SpeedB)
+float c_Impulse::CalcSpeedAfterCollision(float SpeedA, float SpeedB)
 {
-	/*Initial_KE = (1 / 2)(SpeedA * SpeedA)(7 / 10) + (1 / 2)(SpeedB->GetSpeed() * SpeedB->GetSpeed())(13 / 10);
-	SpeedB->SetSpeed(sqrtf((Initial_KE - ((7.f / 20.f) * (SpeedA * SpeedA))) * (20.f / 13.f)));
-	SpeedB->SetDriving(true);
-*/
-	SpeedB->SetSpeed(100000.f);
-	SpeedB->SetDriving(true);
-	return SpeedB->GetSpeed();
+	Initial_KE = (1 / 2)(SpeedA * SpeedA)(7 / 10) + (1 / 2)(SpeedB * SpeedB)(13 / 10);
+	SpeedB = sqrtf((Initial_KE - ((7.f / 20.f) * (SpeedA * SpeedA))) * (20.f / 13.f));
+		
+	return SpeedB;
 }
 
 void c_Impulse::CalcInitialMomentum(float SpeedA, float SpeedB)

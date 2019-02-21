@@ -1,8 +1,6 @@
 #ifndef C_IMPULSE_H
 #define C_IMPULSE_H
 
-#include "c_CarBaseClass.h"
-#include "c_SecondCar.h"
 
 class c_Impulse
 {
@@ -15,7 +13,7 @@ public:
 	void CalcImpulse();
 	void CalcIniKineticEnergy(float SpeedA, float SpeedB);
 	void CalcFinKineticEnergy(float SpeedA, float SpeedB);
-	float CalcSpeedAfterCollision(float SpeedA, c_CarBaseClass* SpeedB);
+	float CalcSpeedAfterCollision(float SpeedA, float SpeedB);
 
 private:
 

@@ -16,11 +16,11 @@ c_Weather::~c_Weather()
 
 void c_Weather::init()
 {
-	for (int i = 0; i < 3000; i++)
+	for (int i = 0; i < 4000; i++)
 	{
-		xPos.push_back(rand() % 300 - 150);
+		xPos.push_back(rand() % 500 - 250);
 		yPos.push_back(rand() % 401 - 200);
-		zPos.push_back(rand() % 300 - 150);
+		zPos.push_back(rand() % 500 - 250);
 	}
 }
 void c_Weather::update(double dt)

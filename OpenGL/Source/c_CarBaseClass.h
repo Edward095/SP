@@ -22,7 +22,6 @@ public:
 	virtual void Ability(double dt) = 0;
 	virtual void PowerUp(bool check) = 0;
 	virtual void SetMaxSpeed(float Speed);
-	virtual void SetDriving(bool driving);
 
 
 protected:

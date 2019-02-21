@@ -62,13 +62,8 @@ void c_SecondPlayer::Movement(double dt)
 			Acceleration -= 0.1f;
 			VelocityZ += Acceleration * (float)dt;
 
-			float updateX = (sin(Math::DegreeToRadian(1)) * VelocityZ);
-			float updateZ = (cos(Math::DegreeToRadian(1)) * VelocityZ);
-			if (gotCollide("player1"))
-			{
-				pos.x = pos.x + updateX;
-				pos.z = pos.z + updateZ;
-			}
+			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			if (!gotCollide(updateX, pos.y, updateZ))
 			{
 				if (Acceleration < 0)
@@ -85,13 +80,10 @@ void c_SecondPlayer::Movement(double dt)
 			}
 			else
 			{
-				if (!gotCollide("player1"))
-				{
-					Driving = false;
-					Backwards = false;
-					Acceleration = 0;
-					VelocityZ = 0;
-				}
+				Driving = false;
+				Backwards = false;
+				Acceleration = 0;
+				VelocityZ = 0;
 			}
 		}
 	}
