@@ -41,14 +41,25 @@ c_FirstCar::~c_FirstCar()
 
 void c_FirstCar::Ability(double dt)
 {
-	if (Application::IsKeyPressed('1'))
+	if (uniqueName == "player2")
 	{
-		if (Driving || Backwards)
-			PressQ = true;
+		if (Application::IsKeyPressed('P'))
+		{
+			if (Driving || Backwards)
+				PressQ = true;
+		}
 	}
+	else
+	{
+		if (Application::IsKeyPressed('1'))
+		{
+			if (Driving || Backwards)
+				PressQ = true;
+		}
+	}
+	
 	if (VelocityZ > MaxSpeed && (PressQ))
-				VelocityZ = 1.5; 
-
+				VelocityZ = 1.5;
 	if (PressQ)
 	{
 		//VelocityZ += Acceleration * (float)dt;

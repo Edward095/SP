@@ -40,15 +40,31 @@ c_ThirdCar::~c_ThirdCar()
 
 void c_ThirdCar::Ability(double dt)
 {
-	if (Application::IsKeyPressed('3') && !once)
+	if (uniqueName == "player2")
 	{
-		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
-		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
+		if (Application::IsKeyPressed('P') && !once)
+		{
+			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
+			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
 
-		updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
-		//PressQ = true;
-		once = true;
+			updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
+			//PressQ = true;
+			once = true;
+		}
 	}
+	else
+	{
+		if (Application::IsKeyPressed('3') && !once)
+		{
+			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
+			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
+
+			updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
+			//PressQ = true;
+			once = true;
+		}
+	}
+	
 	if (once)
 	{
 		Duration++;

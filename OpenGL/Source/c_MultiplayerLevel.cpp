@@ -11,7 +11,9 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 
-#include "c_ObjectManager.h"
+#include "c_FirstCar.h"
+#include "c_SecondCar.h"
+#include "c_ThirdCar.h"
 
 c_MultiplayerLevel::c_MultiplayerLevel()
 {
@@ -24,24 +26,52 @@ c_MultiplayerLevel::~c_MultiplayerLevel()
 
 void c_MultiplayerLevel::Init()
 {
+	OBJmanager = c_ObjectManager::getInstance();
+	offRoadManager = c_OffRoadManager::getInstance();
+
 	//Seed Generation For rand() function
 	srand(time(NULL));
 
+	c_Entity* car = OBJmanager->getCanCollide("player1");
+
+	c_FirstCar* first = dynamic_cast <c_FirstCar*>(car);
+	if (first)
+		playerOne = first;
+	c_SecondCar* second = dynamic_cast <c_SecondCar*>(car);
+	if (second)
+		playerOne = second;
+	c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car);
+	if (third)
+		playerOne = third;
+
+	car = OBJmanager->getCanCollide("player2");
+
+	first = dynamic_cast <c_FirstCar*>(car);
+	if (first)
+		playerTwo = first;
+	second = dynamic_cast <c_SecondCar*>(car);
+	if (second)
+		playerTwo = second;
+	third = dynamic_cast <c_ThirdCar*>(car);
+	if (third)
+		playerTwo = third;
+	playerTwo->updatePos(-10, 0, 0);
+
 	Random =  2;
 
-	playerOneCamPosX = playerOne.getPos().x + 1;
-	playerOneCamPosY = playerOne.getPos().y + 1;
-	playerOneCamPosZ = playerOne.getPos().z + 1;
-	playerOneCamTargetX = playerOne.getPos().x;
-	playerOneCamTargetY = playerOne.getPos().y;
-	playerOneCamTargetZ = playerOne.getPos().z;
+	playerOneCamPosX = playerOne->getPos().x + 1;
+	playerOneCamPosY = playerOne->getPos().y + 1;
+	playerOneCamPosZ = playerOne->getPos().z + 1;
+	playerOneCamTargetX = playerOne->getPos().x;
+	playerOneCamTargetY = playerOne->getPos().y;
+	playerOneCamTargetZ = playerOne->getPos().z;
 
-	playerTwoCamPosX = playerTwo.getPos().x + 1;
-	playerTwoCamPosY = playerTwo.getPos().y + 1;
-	playerTwoCamPosZ = playerTwo.getPos().z + 1;
-	playerTwoCamTargetX = playerTwo.getPos().x;
-	playerTwoCamTargetY = playerTwo.getPos().y;
-	playerTwoCamTargetZ = playerTwo.getPos().z;
+	playerTwoCamPosX = playerTwo->getPos().x + 1;
+	playerTwoCamPosY = playerTwo->getPos().y + 1;
+	playerTwoCamPosZ = playerTwo->getPos().z + 1;
+	playerTwoCamTargetX = playerTwo->getPos().x;
+	playerTwoCamTargetY = playerTwo->getPos().y;
+	playerTwoCamTargetZ = playerTwo->getPos().z;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -145,8 +175,6 @@ void c_MultiplayerLevel::Init()
 	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
 	meshList[LIGHT1] = MeshBuilder::GenerateSphere("environment light", Color(1, 1, 1), 18, 36, 1.f);
 	meshList[LIGHT2] = MeshBuilder::GenerateSphere("street light", Color(1, 1, 1), 18, 36, 1.f);
-	meshList[TRACK] = MeshBuilder::GenerateOBJ("racetrack", "OBJ//RaceTrack1.obj");
-	meshList[TRACK]->textureID = LoadTGA("Image//RaceTrack.tga");
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
@@ -159,10 +187,8 @@ void c_MultiplayerLevel::Init()
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
 
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), false);
-
-	playerOne.init("player1");
-	playerTwo.init("player2");
-	playerTwo.updatePos(10, 0, 5);
+	track.init("track", "OBJ//RaceTrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
+	offRoadManager->addOffRoad("OffRoad//offRoadOBJ1.txt");
 
 	elapsedTime = 0;
 	Cooldown = 0;
@@ -178,44 +204,44 @@ void c_MultiplayerLevel::Init()
 }
 void c_MultiplayerLevel::Update(double dt)
 {
-	playerOneCamPosX = (playerOne.getPos().x - (sin(Math::DegreeToRadian(playerOne.GetSteeringAngle()))) * 10);
-	playerOneCamPosY = playerOne.getPos().y + 8;
-	playerOneCamPosZ = (playerOne.getPos().z - (cos(Math::DegreeToRadian(playerOne.GetSteeringAngle()))) * 10);
-	playerOneCamTargetX = playerOne.getPos().x;
-	playerOneCamTargetY = playerOne.getPos().y + 5;
-	playerOneCamTargetZ = playerOne.getPos().z;
+	playerOneCamPosX = (playerOne->getPos().x - (sin(Math::DegreeToRadian(playerOne->GetSteeringAngle()))) * 10);
+	playerOneCamPosY = playerOne->getPos().y + 8;
+	playerOneCamPosZ = (playerOne->getPos().z - (cos(Math::DegreeToRadian(playerOne->GetSteeringAngle()))) * 10);
+	playerOneCamTargetX = playerOne->getPos().x;
+	playerOneCamTargetY = playerOne->getPos().y + 5;
+	playerOneCamTargetZ = playerOne->getPos().z;
 
-	playerTwoCamPosX = (playerTwo.getPos().x - (sin(Math::DegreeToRadian(playerTwo.GetSteeringAngle()))) * 10);
-	playerTwoCamPosY = playerTwo.getPos().y + 8;
-	playerTwoCamPosZ = (playerTwo.getPos().z - (cos(Math::DegreeToRadian(playerTwo.GetSteeringAngle()))) * 10);
-	playerTwoCamTargetX = playerTwo.getPos().x;
-	playerTwoCamTargetY = playerTwo.getPos().y + 5;
-	playerTwoCamTargetZ = playerTwo.getPos().z;
+	playerTwoCamPosX = (playerTwo->getPos().x - (sin(Math::DegreeToRadian(playerTwo->GetSteeringAngle()))) * 10);
+	playerTwoCamPosY = playerTwo->getPos().y + 8;
+	playerTwoCamPosZ = (playerTwo->getPos().z - (cos(Math::DegreeToRadian(playerTwo->GetSteeringAngle()))) * 10);
+	playerTwoCamTargetX = playerTwo->getPos().x;
+	playerTwoCamTargetY = playerTwo->getPos().y + 5;
+	playerTwoCamTargetZ = playerTwo->getPos().z;
 
 	playerOneCam.Update(dt);
 	playerTwoCam.Update(dt);
 
-	playerOne.updatePos(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
-	playerTwo.updatePos(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
+	playerOne->updatePos(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
+	playerTwo->updatePos(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
 
-	playerOne.Movement(dt);
-	playerTwo.Movement(dt);
+	playerOne->Movement(dt);
+	playerTwo->Movement(dt);
 
 	//----Weather and Environment Effects-------//
 	if (Raining)
 	{
-		playerOne.SetSteering(9);
-		playerTwo.SetSteering(9);
+		playerOne->SetSteering(9);
+		playerTwo->SetSteering(9);
 	}
 	if (Snowing)
 	{
-		playerOne.SetFriction(0.01);
-		playerTwo.SetFriction(0.01);
+		playerOne->SetFriction(0.01);
+		playerTwo->SetFriction(0.01);
 	}
 	if (OffRoad)
 	{
-		playerOne.SetFriction(0.5);
-		playerTwo.SetFriction(0.5);
+		playerOne->SetFriction(0.5);
+		playerTwo->SetFriction(0.5);
 	}
 
 	rain.update(dt);
@@ -229,12 +255,12 @@ void c_MultiplayerLevel::Update(double dt)
 	if (Countdown <= 0)
 	{
 		elapsedTime += (float)dt;
-		playerOne.Movement(dt);
-		playerTwo.Movement(dt);
+		playerOne->Movement(dt);
+		playerTwo->Movement(dt);
 	}
 	
 
-	if (playerOne.gotCollide("FinishLine",false))
+	if (playerOne->gotCollide("FinishLine",false))
 		PoneFinish = true;
 	else
 		PoneFinish = false;
@@ -250,7 +276,7 @@ void c_MultiplayerLevel::Update(double dt)
 			Ponelaps = 0;
 	}
 
-	if (playerTwo.gotCollide("FinishLine", false))
+	if (playerTwo->gotCollide("FinishLine", false))
 		PTwoFinish = true;
 	else
 		PTwoFinish = false;
@@ -897,39 +923,39 @@ void c_MultiplayerLevel::renderPlayerOne()
 	updateEnviromentCollision();
 	/****************************************************	PlayerOne	*****************************************************/
 	modelStack.PushMatrix();
-	modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
+	modelStack.Translate(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Rotate(playerOne.GetSteeringAngle(), 0, 1, 0);
-	RenderMesh(playerOne.getMesh(), true);
+	modelStack.Rotate(playerOne->GetSteeringAngle(), 0, 1, 0);
+	RenderMesh(playerOne->getMesh(), true);
 	modelStack.PopMatrix();
 
 	//UpdateCollisions
-	playerOne.updatePos(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
-	playerOne.getOBB()->calcNewAxis(90, 0, 1, 0);
-	playerOne.getOBB()->calcNewAxis(playerOne.GetSteeringAngle(), 0, 1, 0);
+	playerOne->updatePos(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
+	playerOne->getOBB()->calcNewAxis(90, 0, 1, 0);
+	playerOne->getOBB()->calcNewAxis(playerOne->GetSteeringAngle(), 0, 1, 0);
 
 	modelStack.PushMatrix();
-	modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
-	modelStack.Rotate(playerOne.GetSteeringAngle(), 0, 1, 0);
+	modelStack.Translate(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
+	modelStack.Rotate(playerOne->GetSteeringAngle(), 0, 1, 0);
 	RenderMesh(meshList[CARAXIS], false);
 	modelStack.PopMatrix();
 
 	/****************************************************	PlayerTwo	*****************************************************/
 	modelStack.PushMatrix();
-	modelStack.Translate(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
+	modelStack.Translate(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Rotate(playerTwo.GetSteeringAngle(), 0, 1, 0);
-	RenderMesh(playerTwo.getMesh(), true);
+	modelStack.Rotate(playerTwo->GetSteeringAngle(), 0, 1, 0);
+	RenderMesh(playerTwo->getMesh(), true);
 	modelStack.PopMatrix();
 
 	//UpdateCollisions
-	playerTwo.updatePos(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
-	playerTwo.getOBB()->calcNewAxis(90, 0, 1, 0);
-	playerTwo.getOBB()->calcNewAxis(playerTwo.GetSteeringAngle(), 0, 1, 0);
+	playerTwo->updatePos(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
+	playerTwo->getOBB()->calcNewAxis(90, 0, 1, 0);
+	playerTwo->getOBB()->calcNewAxis(playerTwo->GetSteeringAngle(), 0, 1, 0);
 
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 }
 void c_MultiplayerLevel::renderPlayerTwo()
 {
@@ -952,33 +978,33 @@ void c_MultiplayerLevel::renderPlayerTwo()
 	updateEnviromentCollision();
 	/****************************************************	PlayerOne	*****************************************************/
 	modelStack.PushMatrix();
-	modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
+	modelStack.Translate(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Rotate(playerOne.GetSteeringAngle(), 0, 1, 0);
-	RenderMesh(playerOne.getMesh(), true);
+	modelStack.Rotate(playerOne->GetSteeringAngle(), 0, 1, 0);
+	RenderMesh(playerOne->getMesh(), true);
 	modelStack.PopMatrix();
 
 	//UpdateCollisions
-	playerOne.updatePos(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
-	playerOne.getOBB()->calcNewAxis(90, 0, 1, 0);
-	playerOne.getOBB()->calcNewAxis(playerOne.GetSteeringAngle(), 0, 1, 0);
+	playerOne->updatePos(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
+	playerOne->getOBB()->calcNewAxis(90, 0, 1, 0);
+	playerOne->getOBB()->calcNewAxis(playerOne->GetSteeringAngle(), 0, 1, 0);
 
 	/****************************************************	PlayerTwo	*****************************************************/
 	modelStack.PushMatrix();
-	modelStack.Translate(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
+	modelStack.Translate(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Rotate(playerTwo.GetSteeringAngle(), 0, 1, 0);
-	RenderMesh(playerTwo.getMesh(), true);
+	modelStack.Rotate(playerTwo->GetSteeringAngle(), 0, 1, 0);
+	RenderMesh(playerTwo->getMesh(), true);
 	modelStack.PopMatrix();
 
 	//UpdateCollisions
-	playerTwo.updatePos(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
-	playerTwo.getOBB()->calcNewAxis(90, 0, 1, 0);
-	playerTwo.getOBB()->calcNewAxis(playerTwo.GetSteeringAngle(), 0, 1, 0);
+	playerTwo->updatePos(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
+	playerTwo->getOBB()->calcNewAxis(90, 0, 1, 0);
+	playerTwo->getOBB()->calcNewAxis(playerTwo->GetSteeringAngle(), 0, 1, 0);
 
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 }
 
 static const float SKYBOXSIZE = 1500.f;
@@ -1038,10 +1064,9 @@ void c_MultiplayerLevel::renderEnviroment()
 
 	//Track
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 0);
+	modelStack.Translate(-320.f, 0, -130.f);
 	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Scale(6, 1, 6);
-	RenderMesh(meshList[TRACK], false);
+	RenderMesh(track.getMesh(), true);
 	modelStack.PopMatrix();
 
 	//RaceBanner
@@ -1066,7 +1091,7 @@ void c_MultiplayerLevel::renderRain()
 		modelStack.PushMatrix();
 		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
 		modelStack.Translate(rain.getTranslateX(), rain.getTranslateY(), rain.getTranslateZ());
-		modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
+		modelStack.Translate(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
 		modelStack.Rotate(45, 0, 0, 1);
 		modelStack.Scale(0.1f, 0.5f, 0.1f);
 		RenderMesh(meshList[RAIN], true);
@@ -1075,7 +1100,7 @@ void c_MultiplayerLevel::renderRain()
 		modelStack.PushMatrix();
 		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
 		modelStack.Translate(rain.getTranslateX(), rain.getTranslateY(), rain.getTranslateZ());
-		modelStack.Translate(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
+		modelStack.Translate(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
 		modelStack.Rotate(45, 0, 0, 1);
 		modelStack.Scale(0.1f, 0.5f, 0.1f);
 		RenderMesh(meshList[RAIN], true);
@@ -1092,7 +1117,7 @@ void c_MultiplayerLevel::RenderSnow()
 		modelStack.PushMatrix();
 		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
 		modelStack.Translate(snow.getTranslateX() / 3, snow.getTranslateY() / 3, snow.getTranslateZ() / 3);
-		modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
+		modelStack.Translate(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
 		modelStack.Rotate(45, 0, 0, 1);
 		modelStack.Scale(0.1f, 0.5f, 0.1f);
 		RenderMesh(meshList[SNOW], true);
@@ -1101,7 +1126,7 @@ void c_MultiplayerLevel::RenderSnow()
 		modelStack.PushMatrix();
 		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
 		modelStack.Translate(snow.getTranslateX() / 3, snow.getTranslateY() / 3, snow.getTranslateZ() / 3);
-		modelStack.Translate(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
+		modelStack.Translate(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
 		modelStack.Rotate(45, 0, 0, 1);
 		modelStack.Scale(0.1f, 0.5f, 0.1f);
 		RenderMesh(meshList[SNOW], true);
@@ -1117,8 +1142,10 @@ void c_MultiplayerLevel::updateEnviromentCollision()
 	left.getOBB()->defaultData();
 	right.getOBB()->defaultData();
 	back.getOBB()->defaultData();
-	playerOne.getOBB()->defaultData();
-	playerTwo.getOBB()->defaultData();
+	track.getOBB()->defaultData();
+	playerOne->getOBB()->defaultData();
+	playerTwo->getOBB()->defaultData();
+	offRoadManager->defaultData();
 	//AI.getOBB()->defaultData();
 	//boost.getOBB()->defaultData();
 	//slow.getOBB()->defaultData();
@@ -1142,4 +1169,11 @@ void c_MultiplayerLevel::updateEnviromentCollision()
 	//Back Skybox
 	back.updatePos(0, 0, -translateLength);
 	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+
+	//Track
+	track.updatePos(-320.f, 0, -130.f);
+	track.getOBB()->calcNewAxis(90, 0, 1, 0);
+
+	//OffRoad
+	offRoadManager->updateCollision("OffRoad//offRoadPos1.txt", "OffRoad//offRoadRotate1.txt");
 }
