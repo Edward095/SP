@@ -152,7 +152,7 @@ private:
 	void renderLights();
 	void updateLights(int num);
 
-	void RenderMesh(Mesh *mesh, bool enableLight);
+	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
@@ -204,6 +204,8 @@ private:
 	bool CheckEnd = false;
 	bool Win = false;
 	bool Lose = false;
+
+	float WheelRotation;
 
 	c_Weather rain;
 	void renderRain();

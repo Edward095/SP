@@ -44,6 +44,8 @@ void c_LevelOne::Init()
 	AIlaps = 2;
 	FPS = 0;
 
+	WheelRotation = 0;
+
 	bLightEnabled = true;
 
 	// Set background color to black
@@ -127,7 +129,8 @@ void c_LevelOne::Init()
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
 
-    	meshList[RAIN] = MeshBuilder::GenerateSphere("Snow", Color(0,0,1), 18, 18, 2);
+    meshList[RAIN] = MeshBuilder::GenerateSphere("Snow", Color(0,0,1), 18, 18, 2);
+
 	//meshList[RAIN]->textureID = LoadTGA("Image//Rain.tga");
 
 	//Init Entities
@@ -150,7 +153,7 @@ void c_LevelOne::Init()
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20));
-	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0));
+	AI.init("AI", "OBJ//Car1.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0));
 	rain.init();
 }
 

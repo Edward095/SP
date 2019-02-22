@@ -267,6 +267,11 @@ void c_Garage::Init()
 	v_CarColourPath3[7] = "Image//Car3Grey.tga";
 	v_CarColourPath3[8] = "Image//Car3Black.tga";
 
+	//v_CarFWheels[0] = "OBJ//Car1FWheels.obj";
+	//v_CarFWheels[1] = "OBJ//Car2FWheels.obj";
+
+	//v_CarBWheels[0] = "OBJ//Car1BWheels.obj";
+	//v_CarBWheels[1] = "OBJ//Car2BWheels.obj";
 
 	/*firstCar.init("player1", v_CarPaths[0], v_CarColourPath1[0], (0, 0, 0));
 	if(c_Npc::GetMultiPlayer())

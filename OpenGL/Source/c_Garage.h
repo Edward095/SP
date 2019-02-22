@@ -209,6 +209,9 @@ private:
 	const char* v_CarColourPath2[9];
 	const char* v_CarColourPath3[9];
 
+	//const char* v_CarFWheels[2];
+	//const char* v_CarBWheels[2];
+
 	c_LevelOne sLevelOne;
 	c_FirstCar car1Type1;
 	c_SecondCar car1Type2;
