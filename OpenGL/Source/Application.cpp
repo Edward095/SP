@@ -11,10 +11,7 @@
 #include "Application.h"
 
 #include "c_Npc.h"
-#include "c_LevelOne.h"
-#include "c_Garage.h"
-#include "c_ScreenPause.h"
-#include "c_MainMenu.h"
+
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
 const unsigned int frameTime = 1000 / FPS; // time for each frame
@@ -112,7 +109,6 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	/*Scene *scene = new c_Npc();*/
 	Scene *scene = new c_Npc();
 	//Scene *scene = new c_Garage();
 	scene->Init();

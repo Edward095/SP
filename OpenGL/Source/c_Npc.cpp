@@ -162,8 +162,6 @@ void c_Npc::Update(double dt)
 		break;
 	case LEVEL1:
 		LevelOne.Update(dt);
-	/*case LEVEL2:
-		LevelTwo.Update(dt);*/
 	}
 	
 }
@@ -201,10 +199,7 @@ void c_Npc::Render()
 	{
 		LevelOne.Render();
 	}
-	/*else if (e_GameState_NPC == LEVEL2)
-	{
-		LevelTwo.Render();
-	}*/
+
 
 
 	
