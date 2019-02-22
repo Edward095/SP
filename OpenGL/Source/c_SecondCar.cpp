@@ -18,7 +18,7 @@ c_SecondCar::c_SecondCar()
 	Friction = 0.04;
 	Steering = 4;
 	elapsedTime = 0;
-	FreezeTime = 0;
+	//FreezeTime = 0;
 	Driving = false;
 	Backwards = false;
 	PressQ = false;
@@ -42,7 +42,7 @@ c_SecondCar::~c_SecondCar()
 void c_SecondCar::Ability(double dt)
 {
 	elapsedTime += dt;
-	FreezeTime = (float)(dt + (dt * 0));
+	//FreezeTime = (float)(dt + (dt * 0));
 
 	if (Application::IsKeyPressed('Q'))
 	{
@@ -52,7 +52,7 @@ void c_SecondCar::Ability(double dt)
 	if (PressQ && Duration <= 150)
 	{
 		Duration++;
-		elapsedTime -= FreezeTime;
+		//elapsedTime -= FreezeTime;
 	}
 
 	if (Duration >= 150) // 3 sec/dt
