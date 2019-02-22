@@ -1,4 +1,4 @@
- #ifndef C_FIRSTCAR_H
+#ifndef C_FIRSTCAR_H
 #define C_FIRSTCAR_H
 
 #include "c_CarBaseClass.h"
@@ -11,7 +11,6 @@ public:
 	~c_FirstCar();
 	virtual void Ability(double dt);
 	virtual void PowerUp(bool check);
-	virtual void isOffRoad();
 };
 
 

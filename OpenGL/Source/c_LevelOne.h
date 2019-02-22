@@ -19,19 +19,20 @@ public:
 	enum GEOMETRY_TYPE
 	{
 		TEST,
-		AXIS,
 		TEXT,
 		TOP,
 		BOTTOM,
 		CAR1,
 		LIGHT1,
 		LIGHT2,
+		TRACK,
 		RACEBANNER,
 		STREETLIGHT,
 		NITRO,
 		BOOSTPAD,
 		SLOWPAD,
 		RAIN,
+		SNOW,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -161,36 +162,22 @@ private:
 	void updateEnviromentCollision();
 
 	c_FirstCar car;
-	c_AI AI;
 	
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
 
+	c_AI AI;
+
 	c_Entity boost;
 	c_Entity slow;
-
+	c_Entity FinishLine;
 	c_Entity track;
-	/*c_Entity offRoad;
-	c_Entity offRoad1;
-	c_Entity offRoad2;
-	c_Entity offRoad3;
-	c_Entity offRoad4;
-	c_Entity offRoad5;
-	c_Entity offRoad6;
-	c_Entity offRoad7;
-	c_Entity offRoad8;
-	c_Entity offRoad9;
-	c_Entity offRoad10;
-	c_Entity offRoad11;
-	c_Entity offRoad12;
-	c_Entity offRoad13;
-	c_Entity offRoad14;
-	c_Entity offRoad15;*/
 
 	c_OffRoadManager* offRoadManager;
 	c_ObjectManager* OBJmanager;
+
 	//Variables
 
 	bool talk;
@@ -211,11 +198,25 @@ private:
 	float FPS;
 
 	int duration;
+	int Random;
 	float bLightEnabled;
 	std::string elapedTimeCut;
+	std::string CountdownCut;
+	int Cooldown;
+	float Countdown;
+	float Timer;
+	bool Finish = false;
+	int laps;
+	int AIlaps;
+	bool AIFinish = false;
+	bool CheckEnd = false;
+	bool Win = false;
+	bool Lose = false;
 
 	c_Weather rain;
+	c_Weather snow;
 	void renderRain();
+	void RenderSnow();
 };
 
 #endif

@@ -21,8 +21,14 @@ c_MultiplayerLevel::c_MultiplayerLevel()
 c_MultiplayerLevel::~c_MultiplayerLevel()
 {
 }
+
 void c_MultiplayerLevel::Init()
 {
+	//Seed Generation For rand() function
+	srand(time(NULL));
+
+	Random =  2;
+
 	playerOneCamPosX = playerOne.getPos().x + 1;
 	playerOneCamPosY = playerOne.getPos().y + 1;
 	playerOneCamPosZ = playerOne.getPos().z + 1;
@@ -98,10 +104,43 @@ void c_MultiplayerLevel::Init()
 	projection.SetToPerspective(60.f, 4.f / 3.f, 0.1f, 10000.f);
 	projectionStack.LoadMatrix(projection);
 
-	meshList[TOP] = MeshBuilder::GenerateQuad("Top", Color(1, 1, 1), 1.f);
-	meshList[TOP]->textureID = LoadTGA("Image//NpcTop.tga");
-	meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
-	meshList[BOTTOM]->textureID = LoadTGA("Image//NpcBottom.tga");
+
+	//----Rendering Skybox For Different Weathers-------------------------------------//
+	if (Random == 1)
+	{
+		meshList[TOP] = MeshBuilder::GenerateQuad("Top", Color(1, 1, 1), 1.f);
+		meshList[TOP]->textureID = LoadTGA("Image//RainTop.tga");
+		meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
+		meshList[BOTTOM]->textureID = LoadTGA("Image//RainBottom.tga");
+		front.init("front", "quad", "Image//RainFront.tga", (float)(0, 0, 0));
+		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0));
+		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0));
+		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0));
+	}
+	if (Random == 2)
+	{
+		meshList[TOP] = MeshBuilder::GenerateQuad("Top", Color(1, 1, 1), 1.f);
+		meshList[TOP]->textureID = LoadTGA("Image//SnowTop.tga");
+		meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
+		meshList[BOTTOM]->textureID = LoadTGA("Image//SnowBottom.tga");
+		front.init("front", "quad", "Image//SnowFront.tga", (float)(0, 0, 0));
+		left.init("left", "quad", "Image//SnowLeft.tga", (float)(0, 0, 0));
+		right.init("right", "quad", "Image//SnowRight.tga", (float)(0, 0, 0));
+		back.init("back", "quad", "Image//SnowBack.tga", (float)(0, 0, 0));
+	}
+	if (Random == 3)
+	{
+		meshList[TOP] = MeshBuilder::GenerateQuad("Top", Color(1, 1, 1), 1.f);
+		meshList[TOP]->textureID = LoadTGA("Image//SunnyTop.tga");
+		meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
+		meshList[BOTTOM]->textureID = LoadTGA("Image//SunnyBottom.tga");
+		front.init("front", "quad", "Image//SunnyFront.tga", (float)(0, 0, 0));
+		left.init("left", "quad", "Image//SunnyLeft.tga", (float)(0, 0, 0));
+		right.init("right", "quad", "Image//SunnyRight.tga", (float)(0, 0, 0));
+		back.init("back", "quad", "Image//SunnyBack.tga", (float)(0, 0, 0));
+	}
+	//---------------------------------------------------------------------------------//
+
 	meshList[TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
 	meshList[LIGHT1] = MeshBuilder::GenerateSphere("environment light", Color(1, 1, 1), 18, 36, 1.f);
@@ -112,15 +151,29 @@ void c_MultiplayerLevel::Init()
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
 
-	front.init("front", "quad", "Image//NpcFront.tga", (0, 0, 0),true);
-	left.init("left", "quad", "Image//NpcLeft.tga", (0, 0, 0),true);
-	right.init("right", "quad", "Image//NpcRight.tga", (0, 0, 0),true);
-	back.init("back", "quad", "Image//NpcBack.tga", (0, 0, 0),true);
+
+	//----Rendering Weather Conditions--------------------------------------------------------//
+	meshList[RAIN] = MeshBuilder::GenerateSphere("Rain", Color(0, 0, 1), 18, 18, 2);
+	meshList[SNOW] = MeshBuilder::GenerateSphere("Snow", Color(1, 1, 1), 18, 18, 2);
+	//----------------------------------------------------------------------------------------//
+	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
+
 
 	playerOne.init("player1");
 	playerTwo.init("player2");
 	playerTwo.updatePos(10, 0, 5);
-	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
+
+	elapsedTime = 0;
+	Cooldown = 0;
+	Countdown = 3;
+	Timer = 0;
+	Ponelaps = 2;
+
+
+	//Initialization Of Weather Functions//
+	rain.init();
+	snow.init();
+
 }
 void c_MultiplayerLevel::Update(double dt)
 {
@@ -146,24 +199,150 @@ void c_MultiplayerLevel::Update(double dt)
 
 	playerOne.Movement(dt);
 	playerTwo.Movement(dt);
+
+	//----Weather and Environment Effects-------//
+	if (Raining)
+	{
+		playerOne.SetSteering(9);
+		playerTwo.SetSteering(9);
+	}
+	if (Snowing)
+	{
+		playerOne.SetFriction(0.01);
+		playerTwo.SetFriction(0.01);
+	}
+	if (OffRoad)
+	{
+		playerOne.SetFriction(0.5);
+		playerTwo.SetFriction(0.5);
+	}
+
+	rain.update(dt);
+	snow.update(dt);
+	//-------------------------------------------//
+
+
+	Timer += (float)dt;
+	Countdown -= (float)Timer * dt;
+
+	if (Countdown <= 0)
+	{
+		elapsedTime += (float)dt;
+		playerOne.Movement(dt);
+		playerTwo.Movement(dt);
+	}
+	
+
+	if (playerOne.gotCollide("FinishLine"))
+		PoneFinish = true;
+	else
+		PoneFinish = false;
+
+	if (PoneFinish)
+	{
+		if (elapsedTime <= 36)
+			elapsedTime += (dt + 2);
+
+		if (elapsedTime >= 37 && elapsedTime <= 80)
+			Ponelaps = 1;
+		if (elapsedTime >= 81 && elapsedTime <= 140)
+			Ponelaps = 0;
+	}
+
+	if (playerTwo.gotCollide("FinishLine"))
+		PTwoFinish = true;
+	else
+		PTwoFinish = false;
+
+	if (PTwoFinish)
+	{
+		if (elapsedTime >= 37 && elapsedTime <= 80)
+			Ponelaps = 1;
+		if (elapsedTime >= 81 && elapsedTime <= 140)
+			Ponelaps = 0;
+	}
+
+	if (Ponelaps == 0 || PTwolaps == 0)
+	{
+		if (Ponelaps < PTwolaps)
+			Win = true;
+		else
+			Lose = true;
+	}
 }
 void c_MultiplayerLevel::Render()
 {
+
+
 	glEnable(GL_SCISSOR_TEST);
 
 	glViewport(0, 0, 960, 1080);
 	glScissor(0, 0, 960, 1080);
 	renderPlayerOne();
+	if (Random == 1)
+	{
+		renderRain();
+	}
+	if (Random == 2)
+	{
+		RenderSnow();
+	}
 
 	glViewport(960, 0, 960, 1080);
 	glScissor(960, 0, 960, 1080);
 	renderPlayerTwo();
 
+	if (Random == 1)
+	{
+		renderRain();
+	}
+	if (Random == 2)
+	{
+		RenderSnow();
+	}
+
 	glDisable(GL_SCISSOR_TEST);
 
+	modelStack.PushMatrix();
+	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	modelStack.Rotate(90, 1, 0, 0);
+	modelStack.Scale(50, 15, 50);
+	RenderMesh(FinishLine.getMesh(), true);
+	modelStack.PopMatrix();
+
+	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
+
+	CountdownCut = std::to_string(Countdown);
+	CountdownCut.resize(1);
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
+
+
+	if (Countdown >= 0)
+		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 10, 14);
+	else
+	{
+		Cooldown++;
+		elapedTimeCut = std::to_string(elapsedTime);
+		elapedTimeCut.resize(5);
+
+		if (Cooldown <= 50)
+			RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 10, 14);
+		else
+			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 10, 14);
+	}
+
+	RenderTextOnScreen(meshList[TEXT], std::to_string(Ponelaps), Color(1, 0, 0), 3, 9, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(PTwolaps), Color(1, 0, 0), 3, 11, 3);
+
+	if (Win)
+		RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 10, 10);
+	if (Lose)
+		RenderTextOnScreen(meshList[TEXT], "YOU LOSE", Color(1, 0, 0), 4, 10, 10);
+
+
 	
 }
 void c_MultiplayerLevel::Exit()
@@ -859,6 +1038,7 @@ void c_MultiplayerLevel::renderEnviroment()
 	//Track
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, 0);
+	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Scale(6, 1, 6);
 	RenderMesh(meshList[TRACK], false);
 	modelStack.PopMatrix();
@@ -877,6 +1057,59 @@ void c_MultiplayerLevel::renderEnviroment()
 	RenderMesh(meshList[STREETLIGHT], true);
 	modelStack.PopMatrix();
 }
+
+void c_MultiplayerLevel::renderRain()
+{
+	for (int i = 0; i < rain.getX().size() - 3000; i++)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
+		modelStack.Translate(rain.getTranslateX(), rain.getTranslateY(), rain.getTranslateZ());
+		modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
+		modelStack.Rotate(45, 0, 0, 1);
+		modelStack.Scale(0.1f, 0.5f, 0.1f);
+		RenderMesh(meshList[RAIN], true);
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
+		modelStack.Translate(rain.getTranslateX(), rain.getTranslateY(), rain.getTranslateZ());
+		modelStack.Translate(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
+		modelStack.Rotate(45, 0, 0, 1);
+		modelStack.Scale(0.1f, 0.5f, 0.1f);
+		RenderMesh(meshList[RAIN], true);
+		modelStack.PopMatrix();
+	}
+
+	Raining = true;
+}
+
+void c_MultiplayerLevel::RenderSnow()
+{
+	for (int i = 0; i < snow.getX().size()- 3000; i++)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
+		modelStack.Translate(snow.getTranslateX() / 3, snow.getTranslateY() / 3, snow.getTranslateZ() / 3);
+		modelStack.Translate(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
+		modelStack.Rotate(45, 0, 0, 1);
+		modelStack.Scale(0.1f, 0.5f, 0.1f);
+		RenderMesh(meshList[SNOW], true);
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
+		modelStack.Translate(snow.getTranslateX() / 3, snow.getTranslateY() / 3, snow.getTranslateZ() / 3);
+		modelStack.Translate(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
+		modelStack.Rotate(45, 0, 0, 1);
+		modelStack.Scale(0.1f, 0.5f, 0.1f);
+		RenderMesh(meshList[SNOW], true);
+		modelStack.PopMatrix();
+	}
+
+	Snowing = true;
+}
+
 void c_MultiplayerLevel::updateEnviromentCollision()
 {
 	front.getOBB()->defaultData();

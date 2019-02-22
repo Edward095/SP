@@ -2,27 +2,21 @@
 #include "MeshBuilder.h"
 #include "LoadTGA.h"
 #include "Application.h"
+#include "c_ObjectManager.h"
+
+c_ObjectManager* OBJmanager = c_ObjectManager::getInstance();
 
 c_CarBaseClass::c_CarBaseClass()
 {
 }
 c_CarBaseClass::~c_CarBaseClass()
 {
-	Driving = false;
-	VelocityZ = 0;
-	Acceleration = 0;
-	pos.x = 0;
-	pos.y = 1;
-	pos.z = 0;
-
 	MaxSpeed = 1;
 	SteeringAngle = 0;
 	Steering = 2;
 	Duration = 0;
 	MaxAcceleration = 1;
 	Friction = 0.5;
-
-	offRoad = false;
 }
 
 float c_CarBaseClass::GetSteeringAngle()
@@ -41,7 +35,6 @@ void c_CarBaseClass::Movement(double dt)
 {
 	Ability(dt);
 	PadEffect(dt);
-	isOffRoad();
 	if (Application::IsKeyPressed('W') && Backwards == false)
 	{
 		Acceleration += (MaxAcceleration - Friction);
@@ -54,6 +47,12 @@ void c_CarBaseClass::Movement(double dt)
 			BoostPad = true;
 		if (gotCollide("Slowpad", false))
 			SlowPad = true;
+
+		if (gotCollide("player2"))
+		{
+			//OBJmanager->getObjects()
+		}
+
 
 		if (!gotCollide(updateX, pos.y, updateZ))
 		{
@@ -96,11 +95,12 @@ void c_CarBaseClass::Movement(double dt)
 				if (Acceleration < 0)
 				{
 					Acceleration = 0;
-					VelocityZ -= 0.05f;
+					VelocityZ -= Friction;
 				}
 				if (VelocityZ < 0)
 				{
 					VelocityZ = 0;
+					//Acceleration = 0;
 					Driving = false;
 					Backwards = false;
 				}
@@ -181,7 +181,7 @@ void c_CarBaseClass::Movement(double dt)
 				if (Acceleration > 0)
 				{
 					Acceleration = 0;
-					VelocityZ += 0.05f;
+					VelocityZ += Friction;
 				}
 				if (VelocityZ > 0)
 				{
@@ -253,4 +253,10 @@ void c_CarBaseClass::PadEffect(double dt)
 			Duration = 0;
 		}
 	}
+}
+
+
+void c_CarBaseClass::SetSpeed(float speed)
+{
+	this->VelocityZ = speed;
 }
