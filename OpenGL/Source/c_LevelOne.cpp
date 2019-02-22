@@ -31,19 +31,6 @@ void c_LevelOne::Init()
 	srand(time(NULL));
 	//Initialization Of Variables//
 
-        //----Setting Car Variables------//
-	car.SetFriction(0.1);
-	car.SetSteering(5);
-	//-------------------------------//
-
-	//----Setting Up Camera Coordinates--------//
-	CamPosX = car.getPos().x + 1;
-	CamPosY = car.getPos().y + 1;
-	CamPosZ = car.getPos().z + 1;
-	CamTargetX = car.getPos().x;
-	CamTargetY = car.getPos().y;
-	CamTargetZ = car.getPos().z;
-	//-----------------------------------------//
 
 	//----Time Related Variables-----//
 	elapsedTime = 0;
@@ -196,6 +183,20 @@ void c_LevelOne::Init()
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20));
 	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0));
+
+	    //----Setting Car Variables------//
+	car.SetFriction(0.1);
+	car.SetSteering(5);
+	//-------------------------------//
+
+	//----Setting Up Camera Coordinates--------//
+	CamPosX = car.getPos().x + 1;
+	CamPosY = car.getPos().y + 1;
+	CamPosZ = car.getPos().z + 1;
+	CamTargetX = car.getPos().x;
+	CamTargetY = car.getPos().y;
+	CamTargetZ = car.getPos().z;
+	//-----------------------------------------//
 
 
 

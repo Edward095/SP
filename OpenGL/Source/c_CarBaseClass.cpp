@@ -11,12 +11,6 @@ c_CarBaseClass::c_CarBaseClass()
 }
 c_CarBaseClass::~c_CarBaseClass()
 {
-	MaxSpeed = 1;
-	SteeringAngle = 0;
-	Steering = 2;
-	Duration = 0;
-	MaxAcceleration = 1;
-	Friction = 0.5;
 }
 
 float c_CarBaseClass::GetSteeringAngle()
@@ -58,6 +52,7 @@ void c_CarBaseClass::Movement(double dt)
 		{
 			Driving = true;
 			Backwards = false;
+			//Collided = false;
 			if (Acceleration > MaxAcceleration - Friction)
 				Acceleration = MaxAcceleration - Friction;
 			if (VelocityZ > MaxSpeed && (PressQ))
@@ -70,13 +65,19 @@ void c_CarBaseClass::Movement(double dt)
 			if (SlowPad)
 				VelocityZ = 0.5f; 
 
+
+
 		}
 		else
 		{
 			Driving = false;
 			Backwards = false;
-			Acceleration = 0;
-			VelocityZ = 0;
+			Collided = true;
+			if (Collided == true)
+			{
+				Acceleration = 0;
+				VelocityZ = -VelocityZ / 2;
+			}
 		}
 
 	}
@@ -92,25 +93,27 @@ void c_CarBaseClass::Movement(double dt)
 			OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
 			if (!gotCollide(updateX, pos.y, updateZ))
 			{
+				Collided = false;
 				if (Acceleration < 0)
 				{
 					Acceleration = 0;
 					VelocityZ -= Friction;
 				}
-				if (VelocityZ < 0)
+				if (VelocityZ < 0 && Collided == false)
 				{
 					VelocityZ = 0;
 					//Acceleration = 0;
 					Driving = false;
 					Backwards = false;
 				}
+			
 			}
 			else
 			{
 				Driving = false;
 				Backwards = false;
-				Acceleration = 0;
-				VelocityZ = 0;
+	         
+				//Collided = true;
 			}
 		}
 	}
@@ -146,6 +149,7 @@ void c_CarBaseClass::Movement(double dt)
 
 		if (!gotCollide(updateX, pos.y, updateZ))
 		{
+			
 			Backwards = true;
 			Driving = false;
 			
