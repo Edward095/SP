@@ -133,10 +133,10 @@ void c_LevelThree::Init()
 		meshList[TOP]->textureID = LoadTGA("Image//RainTop.tga");
 		meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
 		meshList[BOTTOM]->textureID = LoadTGA("Image//RainBottom.tga");
-		front.init("front", "quad", "Image//RainFront.tga", (float)(0, 0, 0));
-		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0));
-		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0));
-		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0));
+		front.init("front", "quad", "Image//RainFront.tga", (float)(0, 0, 0), true);
+		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0), true);
+		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0), true);
+		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0), true);
 	}
 	if (Random == 2)
 	{
@@ -144,10 +144,10 @@ void c_LevelThree::Init()
 		meshList[TOP]->textureID = LoadTGA("Image//SnowTop.tga");
 		meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
 		meshList[BOTTOM]->textureID = LoadTGA("Image//SnowBottom.tga");
-		front.init("front", "quad", "Image//SnowFront.tga", (float)(0, 0, 0));
-		left.init("left", "quad", "Image//SnowLeft.tga", (float)(0, 0, 0));
-		right.init("right", "quad", "Image//SnowRight.tga", (float)(0, 0, 0));
-		back.init("back", "quad", "Image//SnowBack.tga", (float)(0, 0, 0));
+		front.init("front", "quad", "Image//SnowFront.tga", (float)(0, 0, 0), true);
+		left.init("left", "quad", "Image//SnowLeft.tga", (float)(0, 0, 0), true);
+		right.init("right", "quad", "Image//SnowRight.tga", (float)(0, 0, 0), true);
+		back.init("back", "quad", "Image//SnowBack.tga", (float)(0, 0, 0), true);
 	}
 	if (Random == 3)
 	{
@@ -155,10 +155,10 @@ void c_LevelThree::Init()
 		meshList[TOP]->textureID = LoadTGA("Image//SunnyTop.tga");
 		meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
 		meshList[BOTTOM]->textureID = LoadTGA("Image//SunnyBottom.tga");
-		front.init("front", "quad", "Image//SunnyFront.tga", (float)(0, 0, 0));
-		left.init("left", "quad", "Image//SunnyLeft.tga", (float)(0, 0, 0));
-		right.init("right", "quad", "Image//SunnyRight.tga", (float)(0, 0, 0));
-		back.init("back", "quad", "Image//SunnyBack.tga", (float)(0, 0, 0));
+		front.init("front", "quad", "Image//SunnyFront.tga", (float)(0, 0, 0), true);
+		left.init("left", "quad", "Image//SunnyLeft.tga", (float)(0, 0, 0), true);
+		right.init("right", "quad", "Image//SunnyRight.tga", (float)(0, 0, 0), true);
+		back.init("back", "quad", "Image//SunnyBack.tga", (float)(0, 0, 0), true);
 	}
 	//---------------------------------------------------------------------------------//
 
@@ -187,10 +187,10 @@ void c_LevelThree::Init()
 
 	//Init Entities//
 	car.init("player1");
-	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
-	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
-	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20));
-	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0));
+	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0), true);
+	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0), true);
+	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), true);
+	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0), true);
 
 
 
@@ -258,7 +258,7 @@ void c_LevelThree::Update(double dt)
 	//-------------------------------------------------//
 
 	//----Collision For Finishing Line---------------------------//
-	if (car.gotCollide("FinishLine"))
+	if (car.gotCollide("FinishLine",false))
 	{
 		Finish = true;
 	}
@@ -278,7 +278,7 @@ void c_LevelThree::Update(double dt)
 			laps = 0;
 	}
 
-	if (AI.gotCollide("FinishLine"))
+	if (AI.gotCollide("FinishLine", false))
 	{
 		AIFinish = true;
 	}

@@ -4,7 +4,7 @@
 #include "Application.h"
 #include "c_ObjectManager.h"
 
-c_ObjectManager* OBJmanager = c_ObjectManager::getInstance();
+
 
 c_CarBaseClass::c_CarBaseClass()
 {
@@ -51,6 +51,170 @@ void c_CarBaseClass::Movement(double dt)
 {
 	//Ability(dt);
 	PadEffect(dt);
+	isOffRoad();
+	if (uniqueName == "player2")
+	{
+		if (Application::IsKeyPressed(VK_UP) && Backwards == false)
+		{
+			Acceleration += (MaxAcceleration - Friction);
+			VelocityZ += Acceleration * (float)dt;
+
+			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+			//OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
+			if (gotCollide("Boostpad", false))
+				BoostPad = true;
+			if (gotCollide("Slowpad", false))
+				SlowPad = true;
+
+
+			if (!gotCollide(updateX, pos.y, updateZ))
+			{
+				Driving = true;
+				Backwards = false;
+				if (Acceleration > MaxAcceleration - Friction)
+					Acceleration = MaxAcceleration - Friction;
+				if (VelocityZ > MaxSpeed && (PressQ))
+					VelocityZ = 1.5;
+				else if (VelocityZ > MaxSpeed && (!PressQ || !Nitro))
+					//VelocityZ -= 0.5;
+					VelocityZ = MaxSpeed;
+				if (BoostPad)
+					VelocityZ = 1.8f;
+				if (SlowPad)
+					VelocityZ = 0.5f;
+
+			}
+			else
+			{
+				Driving = false;
+				Backwards = false;
+				Acceleration = 0;
+				VelocityZ = 0;
+			}
+
+		}
+		if (Driving)
+		{
+			if (!Application::IsKeyPressed(VK_UP))
+			{
+				Acceleration += -Friction;
+				VelocityZ -= Acceleration * (float)dt;
+
+				float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+				float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+				OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
+				if (!gotCollide(updateX, pos.y, updateZ))
+				{
+					if (Acceleration < 0)
+					{
+						Acceleration = 0;
+						VelocityZ -= Friction;
+					}
+					if (VelocityZ < 0)
+					{
+						VelocityZ = 0;
+						//Acceleration = 0;
+						Driving = false;
+						Backwards = false;
+					}
+				}
+				else
+				{
+					Driving = false;
+					Backwards = false;
+					Acceleration = 0;
+					VelocityZ = 0;
+				}
+			}
+		}
+
+
+		if (Application::IsKeyPressed(VK_RIGHT))
+		{
+			if (Driving)
+				SteeringAngle -= Steering;
+			if (Backwards)
+				SteeringAngle += Steering;
+
+		}
+
+
+		if (Application::IsKeyPressed(VK_LEFT))
+		{
+			if (Driving)
+				SteeringAngle += Steering;
+			if (Backwards)
+				SteeringAngle -= Steering;
+		}
+
+
+		if (Application::IsKeyPressed(VK_DOWN) && Driving == false)
+		{
+			Acceleration -= (MaxAcceleration - Friction);
+			VelocityZ += Acceleration * (float)dt;
+
+			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+			OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
+
+			if (!gotCollide(updateX, pos.y, updateZ))
+			{
+				Backwards = true;
+				Driving = false;
+
+				if (Acceleration < -(MaxAcceleration - Friction))
+					Acceleration = -(MaxAcceleration - Friction);
+				if (VelocityZ < -MaxSpeed && (PressQ))
+					VelocityZ = -2;
+				else if (VelocityZ < -MaxSpeed && (!PressQ))
+					VelocityZ = -MaxSpeed;
+			}
+			else
+			{
+				Driving = false;
+				Backwards = false;
+				Acceleration = 0;
+				VelocityZ = 0;
+			}
+		}
+
+		if (Backwards)
+		{
+			if (!Application::IsKeyPressed(VK_DOWN))
+			{
+				Acceleration += Friction;
+				VelocityZ -= Acceleration * (float)dt;
+
+				float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+				float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
+				//OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
+
+				if (!gotCollide(updateX, pos.y, updateZ))
+				{
+					if (Acceleration > 0)
+					{
+						Acceleration = 0;
+						VelocityZ += Friction;
+					}
+					if (VelocityZ > 0)
+					{
+						VelocityZ = 0;
+						Driving = false;
+						Backwards = false;
+					}
+				}
+				else
+				{
+					Driving = false;
+					Backwards = false;
+					Acceleration = 0;
+					VelocityZ = 0;
+				}
+			}
+		}
+	}
+	else
 	if (Application::IsKeyPressed('W') && Backwards == false)
 	{
 		//Ability(dt);
@@ -60,15 +224,11 @@ void c_CarBaseClass::Movement(double dt)
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 		//OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
-		if (gotCollide("Boostpad") || gotCollide("Boostpad2"))
-			BoostPad = true;
-		if (gotCollide("Slowpad"))
-			SlowPad = true;
 
-		if (gotCollide("player2"))
-		{
-			//OBJmanager->getObjects()
-		}
+		if (gotCollide("Boostpad",false))
+			BoostPad = true;
+		if (gotCollide("Slowpad", false))
+			SlowPad = true;
 
 
 		if (!gotCollide(updateX, pos.y, updateZ))

@@ -10,6 +10,8 @@
 #include "Mesh.h"
 #include "c_Sound.h"
 
+#include "c_ObjectManager.h"
+
 #include "c_LevelOne.h"
 #include "c_LevelTwo.h"
 #include "c_LevelThree.h"
@@ -231,6 +233,8 @@ private:
 	c_MultiplayerLevel mLevelOne;
 	c_MultiplayerLevelTwo mLevelTwo;
 	c_MultiplayerLevelThree mLevelThree;
+
+	c_ObjectManager* manager;
 
 };
 

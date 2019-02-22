@@ -147,15 +147,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\c_AI.cpp" />
     <ClCompile Include="Source\c_Impulse.cpp" />
     <ClCompile Include="Source\c_LevelThree.cpp" />
     <ClCompile Include="Source\c_LevelTwo.cpp" />
     <ClCompile Include="Source\c_MultiplayerLevelThree.cpp" />
     <ClCompile Include="Source\c_MultiplayerLevelTwo.cpp" />
+    <ClCompile Include="Source\c_OffRoadManager.cpp" />
+    <ClCompile Include="Source\c_SecondPlayer.cpp" />
+    <ClCompile Include="Source\c_Weather.cpp" />
     <ClCompile Include="Source\c_SecondCar.cpp" />
     <ClCompile Include="Source\c_MultiplayerLevel.cpp" />
-    <ClCompile Include="Source\c_SecondPlayer.cpp" />
+    <ClCompile Include="Source\c_AI.cpp" />
     <ClCompile Include="Source\c_SceneManager.cpp" />
     <ClCompile Include="Source\c_ObjectManager.cpp" />
     <ClCompile Include="Source\c_Entity.cpp" />
@@ -168,7 +170,6 @@
     <ClCompile Include="Source\c_Collision.cpp" />
     <ClCompile Include="Source\c_MainMenu.cpp" />
     <ClCompile Include="Source\c_ThirdCar.cpp" />
-    <ClCompile Include="Source\c_Weather.cpp" />
     <ClCompile Include="Source\FirstPersonCamera.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
@@ -182,15 +183,17 @@
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\c_AI.h" />
     <ClInclude Include="Source\c_Impulse.h" />
     <ClInclude Include="Source\c_LevelThree.h" />
     <ClInclude Include="Source\c_LevelTwo.h" />
     <ClInclude Include="Source\c_MultiplayerLevelThree.h" />
     <ClInclude Include="Source\c_MultiplayerLevelTwo.h" />
+    <ClInclude Include="Source\c_OffRoadManager.h" />
+    <ClInclude Include="Source\c_SecondPlayer.h" />
+    <ClInclude Include="Source\c_Weather.h" />
     <ClInclude Include="Source\c_SecondCar.h" />
     <ClInclude Include="Source\c_MultiplayerLevel.h" />
-    <ClInclude Include="Source\c_SecondPlayer.h" />
+    <ClInclude Include="Source\c_AI.h" />
     <ClInclude Include="Source\c_MainMenu.h" />
     <ClInclude Include="Source\c_SceneManager.h" />
     <ClInclude Include="Source\c_ObjectManager.h" />
@@ -203,7 +206,6 @@
     <ClInclude Include="Source\c_Sound.h" />
     <ClInclude Include="Source\c_Collision.h" />
     <ClInclude Include="Source\c_ThirdCar.h" />
-    <ClInclude Include="Source\c_Weather.h" />
     <ClInclude Include="Source\FirstPersonCamera.h" />
     <ClInclude Include="Source\LoadOBJ.h" />
     <ClInclude Include="Source\LoadTGA.h" />

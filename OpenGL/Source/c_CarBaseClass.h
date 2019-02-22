@@ -19,9 +19,10 @@ public:
 	virtual void SetSpeed(float speed);
 	virtual void SetFriction(float friction);
 	virtual void SetSteering(float Steering);
+	virtual void SetMaxSpeed(float Speed);
 	virtual void Ability(double dt) = 0;
 	virtual void PowerUp(bool check) = 0;
-	virtual void SetMaxSpeed(float Speed);
+	virtual void isOffRoad() = 0;
 
 
 protected:
@@ -42,6 +43,8 @@ protected:
 	bool BoostPad = false;
 	bool SlowPad = false;
 	bool once;
+
+	bool offRoad;
 	bool Collided = false;
 
 };
