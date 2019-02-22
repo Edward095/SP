@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  c_LevelOne.cpp
 c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(32): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(175): warning C4305: 'argument': truncation from 'double' to 'float'
@@ -54,3 +55,6 @@ Common.lib(Mtx44.obj) : warning LNK4099: PDB 'Common.pdb' was not found with 'Co
 Common.lib(MatrixStack.obj) : warning LNK4099: PDB 'Common.pdb' was not found with 'Common.lib(MatrixStack.obj)' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\Common.pdb'; linking object as if no debug info
 Common.lib(timer.obj) : warning LNK4099: PDB 'Common.pdb' was not found with 'Common.lib(timer.obj)' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\Common.pdb'; linking object as if no debug info
   OpenGL.vcxproj -> C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\OpenGL.exe
+=======
+﻿
+>>>>>>> NewTemp
