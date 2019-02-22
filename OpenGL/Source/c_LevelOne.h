@@ -207,6 +207,12 @@ private:
 	bool Win = false;
 	bool Lose = false;
 
+	float ArrowP;
+	bool ExitGame;
+	bool AbleToPress;
+	bool OptionSelection;
+	bool VehicleMove;
+
 	c_Weather rain;
 	c_Weather snow;
 	void renderRain();
