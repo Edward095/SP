@@ -131,6 +131,11 @@ void c_Npc::Init()
 	ArrowY = 7;
 	BounceTime = 0;
 	
+	Audio = c_Sound::getInstance();
+
+	Audio->f_Init_Sound();
+	Audio->f_Start_Menu_music();
+
 	//booleans
 	AbleToPress = false;
 	Talk = false;
@@ -253,6 +258,7 @@ void c_Npc::UpdateNpc(double dt)
 	
 	if ((Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Options == true))
 	{
+		Audio->f_Menu_MoveSelect();
 		ArrowY--;
 		if (LevelSelection == false && StartGame == true)
 		{
@@ -280,6 +286,7 @@ void c_Npc::UpdateNpc(double dt)
 	if ((Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Options == true))
 	{
 		ArrowY++;
+		Audio->f_Menu_MoveSelect();
 		if (LevelSelection == false && StartGame == true)
 		{
 			if (ArrowY > 7)
@@ -307,6 +314,7 @@ void c_Npc::UpdateNpc(double dt)
 	{
 		
 		BounceTime = ElapsedTime + 0.125;
+		Audio->f_Menu_ConfirmSelect();
 		if (LevelSelection == false && StartGame == true)
 		{
 			if (ArrowY == 7)
@@ -359,18 +367,23 @@ void c_Npc::UpdateNpc(double dt)
 			if (ArrowY == 7)
 			{
 				//put music here 
+				Audio->f_AdjustMusicVolume(1.0f);
+				Audio->f_AdjustSFXVolume(1.0f);
 			}
 			else if (ArrowY == 6)
 			{
-				
+				Audio->f_AdjustMusicVolume(0.75f);
+				Audio->f_AdjustSFXVolume(0.75f);
 			}
 			else if (ArrowY == 5)
 			{
-				
+				Audio->f_AdjustMusicVolume(0.5f);
+				Audio->f_AdjustSFXVolume(0.5f);
 			}
 			else if (ArrowY == 4)
 			{
-
+				Audio->f_AdjustMusicVolume(0.0f);
+				Audio->f_AdjustSFXVolume(0.0f);
 			}
 		}
 	}

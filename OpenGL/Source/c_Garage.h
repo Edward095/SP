@@ -206,7 +206,7 @@ private:
 
 	c_List v_CarList;
 	c_List v_ColourList;
-	c_Sound v_Garage_SFX;
+	c_Sound* v_Garage_SFX;
 
 	const char* v_CarPaths[3];
 	const char* v_CarColourPath1[9];

@@ -9,6 +9,7 @@
 #include "Light.h"
 #include "c_Garage.h"
 #include "c_LevelOne.h"
+#include "c_Sound.h"
 
 class c_Npc :
 	public Scene
@@ -99,6 +100,8 @@ private:
 	//Class
 	c_Garage Garage;
 	c_LevelOne LevelOne;
+
+	c_Sound* Audio;
 
 
 	//Function
