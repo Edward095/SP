@@ -24,7 +24,6 @@ public:
 		RIGHT,
 		BOTTOM,
 		NPC,
-		HOUSE,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE

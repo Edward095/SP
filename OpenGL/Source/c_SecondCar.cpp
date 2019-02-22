@@ -11,7 +11,7 @@ c_SecondCar::c_SecondCar()
 	pos.y = 1;
 	pos.z = 0;
 
-	MaxSpeed = 0.6;
+	MaxSpeed = 0.6f;
 	SteeringAngle = 0;
 	Duration = 0;
 	MaxAcceleration = 0.8;
