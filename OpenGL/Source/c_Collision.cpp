@@ -71,14 +71,14 @@ void c_Collision::setHighLow(const char *file_path)
 		}
 
 		type = "OBJ";
-		dimensions.Set((highestX - lowestX) / 1.7, (highestY - lowestY) / 1.7, (highestZ - lowestZ) / 1.7);
+		dimensions.Set((highestX - lowestX) / 2, (highestY - lowestY) / 2, (highestZ - lowestZ) / 2);
 	}
 
 }
 
 void c_Collision::calcNewAxis(float rotateAmt, float xAxis, float yAxis, float zAxis)
 {
-	float angle = Math::DegreeToRadian(rotateAmt);
+	float angle = Math::DegreeToRadian(-rotateAmt);
 
 	if (xAxis == 1)
 	{
@@ -128,7 +128,7 @@ void c_Collision::defaultData()
 	if (type == "quad")
 		dimensions.Set(0.5, 0.5, 0);
 	else
-		dimensions.Set((highestX - lowestX) / 1.7, (highestY - lowestY) / 1.7, (highestZ - lowestZ) / 1.7);
+		dimensions.Set((highestX - lowestX) / 2, (highestY - lowestY) / 2, (highestZ - lowestZ) / 2);
 	pos = (0, 0, 0);
 	localX.Set(1, 0, 0);
 	localY.Set(0, 1, 0);

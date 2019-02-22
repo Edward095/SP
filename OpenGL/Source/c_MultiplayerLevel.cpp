@@ -112,10 +112,10 @@ void c_MultiplayerLevel::Init()
 		meshList[TOP]->textureID = LoadTGA("Image//RainTop.tga");
 		meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
 		meshList[BOTTOM]->textureID = LoadTGA("Image//RainBottom.tga");
-		front.init("front", "quad", "Image//RainFront.tga", (float)(0, 0, 0));
-		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0));
-		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0));
-		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0));
+		front.init("front", "quad", "Image//RainFront.tga", (float)(0, 0, 0),true);
+		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0), true);
+		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0), true);
+		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0), true);
 	}
 	if (Random == 2)
 	{
@@ -123,10 +123,10 @@ void c_MultiplayerLevel::Init()
 		meshList[TOP]->textureID = LoadTGA("Image//SnowTop.tga");
 		meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
 		meshList[BOTTOM]->textureID = LoadTGA("Image//SnowBottom.tga");
-		front.init("front", "quad", "Image//SnowFront.tga", (float)(0, 0, 0));
-		left.init("left", "quad", "Image//SnowLeft.tga", (float)(0, 0, 0));
-		right.init("right", "quad", "Image//SnowRight.tga", (float)(0, 0, 0));
-		back.init("back", "quad", "Image//SnowBack.tga", (float)(0, 0, 0));
+		front.init("front", "quad", "Image//SnowFront.tga", (float)(0, 0, 0), true);
+		left.init("left", "quad", "Image//SnowLeft.tga", (float)(0, 0, 0), true);
+		right.init("right", "quad", "Image//SnowRight.tga", (float)(0, 0, 0), true);
+		back.init("back", "quad", "Image//SnowBack.tga", (float)(0, 0, 0), true);
 	}
 	if (Random == 3)
 	{
@@ -134,10 +134,10 @@ void c_MultiplayerLevel::Init()
 		meshList[TOP]->textureID = LoadTGA("Image//SunnyTop.tga");
 		meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
 		meshList[BOTTOM]->textureID = LoadTGA("Image//SunnyBottom.tga");
-		front.init("front", "quad", "Image//SunnyFront.tga", (float)(0, 0, 0));
-		left.init("left", "quad", "Image//SunnyLeft.tga", (float)(0, 0, 0));
-		right.init("right", "quad", "Image//SunnyRight.tga", (float)(0, 0, 0));
-		back.init("back", "quad", "Image//SunnyBack.tga", (float)(0, 0, 0));
+		front.init("front", "quad", "Image//SunnyFront.tga", (float)(0, 0, 0), true);
+		left.init("left", "quad", "Image//SunnyLeft.tga", (float)(0, 0, 0), true);
+		right.init("right", "quad", "Image//SunnyRight.tga", (float)(0, 0, 0), true);
+		back.init("back", "quad", "Image//SunnyBack.tga", (float)(0, 0, 0), true);
 	}
 	//---------------------------------------------------------------------------------//
 
@@ -158,6 +158,7 @@ void c_MultiplayerLevel::Init()
 	//----------------------------------------------------------------------------------------//
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
 
+	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), false);
 
 	playerOne.init("player1");
 	playerTwo.init("player2");
@@ -233,7 +234,7 @@ void c_MultiplayerLevel::Update(double dt)
 	}
 	
 
-	if (playerOne.gotCollide("FinishLine"))
+	if (playerOne.gotCollide("FinishLine",false))
 		PoneFinish = true;
 	else
 		PoneFinish = false;
@@ -249,7 +250,7 @@ void c_MultiplayerLevel::Update(double dt)
 			Ponelaps = 0;
 	}
 
-	if (playerTwo.gotCollide("FinishLine"))
+	if (playerTwo.gotCollide("FinishLine", false))
 		PTwoFinish = true;
 	else
 		PTwoFinish = false;
@@ -281,11 +282,11 @@ void c_MultiplayerLevel::Render()
 	renderPlayerOne();
 	if (Random == 1)
 	{
-		renderRain();
+		//renderRain();
 	}
 	if (Random == 2)
 	{
-		RenderSnow();
+		//RenderSnow();
 	}
 
 	glViewport(960, 0, 960, 1080);
@@ -294,11 +295,11 @@ void c_MultiplayerLevel::Render()
 
 	if (Random == 1)
 	{
-		renderRain();
+		//renderRain();
 	}
 	if (Random == 2)
 	{
-		RenderSnow();
+		//RenderSnow();
 	}
 
 	glDisable(GL_SCISSOR_TEST);

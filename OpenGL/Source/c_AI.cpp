@@ -12,6 +12,8 @@ c_AI::c_AI()
 	pos.z = 0;
 	VelocityZ = 0;
 	Acceleration = 0;
+
+	offRoad = false;
 }
 
 c_AI::~c_AI()
@@ -777,4 +779,9 @@ void c_AI::Ability(double dt)
 
 void c_AI::PowerUp(bool check)
 {
+}
+
+void c_AI::isOffRoad()
+{
+
 }

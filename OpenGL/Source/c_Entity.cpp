@@ -2,11 +2,37 @@
 #include "MeshBuilder.h"
 #include "LoadTGA.h"
 #include "c_ObjectManager.h"
+#include "c_OffRoadManager.h"
 
+c_ObjectManager* objectManager = c_ObjectManager::getInstance();
+c_OffRoadManager* offRoadManager = c_OffRoadManager::getInstance();
 
 c_Entity::c_Entity()
 {
 	OBB = nullptr;
+}
+c_Entity::c_Entity(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos,bool canCollide)
+{
+	//Add Object to the List
+	this->pos = pos;
+	//updatePos(pos.x, pos.y, pos.z);
+	this->meshPath = meshPath;
+	this->TGApath = TGApath;
+	this->uniqueName = uniqueName;
+	quadORobject();//if Quad generate Quad else generate Obj
+	mesh->textureID = LoadTGA(TGApath);
+	OBB = new c_Collision;
+	OBB->setHighLow(meshPath);
+
+	if (canCollide)
+		objectManager->addCanCollide(this);
+	else 
+		objectManager->addCannotCollide(this);
+
+	std::string temp = uniqueName;
+	temp.resize(7);
+	if (temp == "offRoad")
+		offRoadManager->addToList(uniqueName);
 }
 
 
@@ -16,12 +42,8 @@ c_Entity::~c_Entity()
 }
 
 
-void c_Entity::init(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos)
+void c_Entity::init(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
 {
-	//Add Object to the List
-	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
-	objectManager->addOBJ(this);
-
 	this->pos = pos;
 	this->meshPath = meshPath;
 	this->TGApath = TGApath;
@@ -30,16 +52,25 @@ void c_Entity::init(std::string uniqueName, const char* meshPath, const char* TG
 	mesh->textureID = LoadTGA(TGApath);
 	OBB = new c_Collision;
 	OBB->setHighLow(meshPath);
+
+	//Add Object to the List
+	if (canCollide)
+		objectManager->addCanCollide(this);
+	else
+		objectManager->addCannotCollide(this);
+
+	std::string temp = uniqueName;
+	temp.resize(7);
+	if (temp == "offRoad")
+		offRoadManager->addToList(uniqueName);
 }
 void c_Entity::init(std::string uniqueName)
 {
-	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
-
-	for (int i = 0; i < objectManager->getObjects().size(); i++)
+	for (int i = 0; i < objectManager->getCanCollide().size(); i++)
 	{
-		if (objectManager->getObjects().at(i)->getUniqueName() == uniqueName)
+		if (objectManager->getCanCollide().at(i)->getUniqueName() == uniqueName)
 		{
-		c_Entity* other = objectManager->getObjects().at(i);
+		c_Entity* other = objectManager->getCanCollide().at(i);
 
 		this->pos = other->pos;
 		this->meshPath = other->meshPath;
@@ -66,57 +97,67 @@ c_Collision* c_Entity::getOBB()
 {
 	return OBB;
 }
-c_Entity* c_Entity::getEntity(std::string uniqueName)
+c_Entity* c_Entity::getEntity(std::string uniqueName, bool canCollide)
 {
-	c_ObjectManager* OBJmanager = c_ObjectManager::getInstance();
-
-	for (int i = 0; i < OBJmanager->getObjects().size(); i++)
+	if (canCollide)
 	{
-		if (OBJmanager->getObjects().at(i)->uniqueName == uniqueName)
+		for (int i = 0; i < objectManager->getCanCollide().size(); i++)
 		{
-			return OBJmanager->getObjects().at(i);
+			if (objectManager->getCanCollide().at(i)->uniqueName == uniqueName)
+			{
+				return objectManager->getCanCollide().at(i);
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < objectManager->getCannotCollide().size(); i++)
+		{
+			if (objectManager->getCannotCollide().at(i)->uniqueName == uniqueName)
+			{
+				return objectManager->getCannotCollide().at(i);
+			}
 		}
 	}
 
 }
 bool c_Entity::gotCollide(float x, float y, float z)
 {
-	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
-	std::vector<c_Entity*> entity = objectManager->getObjects();
+	std::vector<c_Entity*> entity = objectManager->getCanCollide();
 
 	updatePos(pos.x + x, pos.y + y, pos.z + z);
 
-	for (int i = 0; i < objectManager->getObjects().size(); i++)
+	for (int i = 0; i < objectManager->getCanCollide().size(); i++)
 	{
 		c_Collision* collide = entity[i]->getOBB();
 
-		if (objectManager->getObjects().at(i)->getUniqueName() != this->uniqueName &&
-			objectManager->getObjects().at(i)->getUniqueName() != "Nitro" &&
-			objectManager->getObjects().at(i)->getUniqueName() != "Boostpad" &&
-			objectManager->getObjects().at(i)->getUniqueName() != "Slowpad" &&
-			objectManager->getObjects().at(i)->getUniqueName() != "FinishLine")
-
-		if (ignoreEntity(entity[i]->uniqueName))
-
+		if (collide != OBB && OBB->OBB(collide))
 		{
-			if (OBB->OBB(collide))
-			{
-				updatePos(pos.x - x, pos.y - y, pos.z - z);
-				return true;
-			}
+			updatePos(pos.x - x, pos.y - y, pos.z - z);
+			return true;
 		}
 	}
 	return false;
 }
-bool c_Entity::gotCollide(std::string uniqueName)
+bool c_Entity::gotCollide(std::string uniqueName, bool canCollide)
 {
-	c_ObjectManager* objectManager = c_ObjectManager::getInstance();
 	c_Collision* objectToCollide = nullptr;
 
-	for (int i = 0; i < objectManager->getObjects().size(); i++)
+	if (canCollide)
 	{
-		if (objectManager->getObjects().at(i)->getUniqueName() == uniqueName)
-			objectToCollide = objectManager->getObjects().at(i)->getOBB();
+		for (int i = 0; i < objectManager->getCanCollide().size(); i++)
+		{
+			if (objectManager->getCanCollide().at(i)->getUniqueName() == uniqueName)
+				objectToCollide = objectManager->getCanCollide().at(i)->getOBB();
+		}
+	}
+	else
+	{
+		for (int i = 0; i < objectManager->getCannotCollide().size(); i++)
+		{
+			if (objectManager->getCannotCollide().at(i)->getUniqueName() == uniqueName)
+				objectToCollide = objectManager->getCannotCollide().at(i)->getOBB();
+		}
 	}
 	if (objectToCollide != nullptr && this->OBB->OBB(objectToCollide))
 		return true;
@@ -144,8 +185,8 @@ std::string c_Entity::getUniqueName()
 bool c_Entity::ignoreEntity(std::string uniqueName)
 {
 	return	(uniqueName != this->uniqueName &&
-		uniqueName != "Nitro" &&
-		uniqueName != "Boostpad" &&
+		uniqueName != "track" ||
+		uniqueName != "Boostpad" ||
 		uniqueName != "Slowpad");
 }
 const char* c_Entity::getMeshPath()

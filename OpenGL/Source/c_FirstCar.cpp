@@ -2,8 +2,10 @@
 #include "Application.h"
 #include "MyMath.h"
 #include "c_ObjectManager.h"
+#include "c_OffRoadManager.h"
 #include "LoadTGA.h"
 
+c_OffRoadManager* manager = c_OffRoadManager::getInstance();
 c_FirstCar::c_FirstCar()
 {
 	VelocityZ = 0;
@@ -24,10 +26,12 @@ c_FirstCar::c_FirstCar()
 	BoostPad = false;
 	SlowPad = false;
 	once = false;
+
+	offRoad = false;
 }
-c_FirstCar::c_FirstCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos)
+c_FirstCar::c_FirstCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
 {
-	init(uniqueName, meshPath, TGApath, pos);
+	init(uniqueName, meshPath, TGApath, pos, canCollide);
 }
 c_FirstCar::~c_FirstCar()
 {
@@ -67,4 +71,26 @@ void c_FirstCar::PowerUp(bool check)
 		Nitro = true;
 	}
 
+}
+void c_FirstCar::isOffRoad()
+{
+	for (int i = 0; i < manager->getList().size(); i++)
+	{
+		if (gotCollide(manager->getList()[i],false) || !gotCollide("track", false))
+		{
+			offRoad = true;
+			break;
+		}
+		else offRoad = false;
+	}
+	if (offRoad)
+	{
+		SetFriction(0.5f);
+		SetMaxSpeed(0.3f);
+	}
+	else
+	{
+		SetFriction(0.04);
+		SetMaxSpeed(0.8f);
+	}
 }

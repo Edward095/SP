@@ -20,6 +20,7 @@ public:
 	float GetTurning();
 	virtual void Ability(double dt);
 	virtual void PowerUp(bool check);
+	virtual void isOffRoad();
 
 protected:
 	int Waypoint;
