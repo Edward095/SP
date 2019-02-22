@@ -116,12 +116,20 @@ void c_MultiplayerLevel::Init()
 	left.init("left", "quad", "Image//NpcLeft.tga", (0, 0, 0));
 	right.init("right", "quad", "Image//NpcRight.tga", (0, 0, 0));
 	back.init("back", "quad", "Image//NpcBack.tga", (0, 0, 0));
+	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20));
 
 	playerOne.init("player1");
 	playerTwo.init("player2");
 	playerTwo.updatePos(10, 0, 5);
 
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
+
+	elapsedTime = 0;
+	Cooldown = 0;
+	Countdown = 3;
+	Timer = 0;
+	Ponelaps = 2;
+	PTwolaps = 2;
 }
 void c_MultiplayerLevel::Update(double dt)
 {
@@ -145,12 +153,55 @@ void c_MultiplayerLevel::Update(double dt)
 	playerOne.updatePos(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
 	playerTwo.updatePos(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
 
-	playerOne.Movement(dt);
-	playerTwo.Movement(dt);
-
 	
 
+	Timer += (float)dt;
+	Countdown -= (float)Timer * dt;
+
+	if (Countdown <= 0)
+	{
+		elapsedTime += (float)dt;
+		playerOne.Movement(dt);
+		playerTwo.Movement(dt);
+	}
 	
+
+	if (playerOne.gotCollide("FinishLine"))
+		PoneFinish = true;
+	else
+		PoneFinish = false;
+
+	if (PoneFinish)
+	{
+		if (elapsedTime <= 36)
+			elapsedTime += (dt + 2);
+
+		if (elapsedTime >= 37 && elapsedTime <= 80)
+			Ponelaps = 1;
+		if (elapsedTime >= 81 && elapsedTime <= 140)
+			Ponelaps = 0;
+	}
+
+	if (playerTwo.gotCollide("FinishLine"))
+		PTwoFinish = true;
+	else
+		PTwoFinish = false;
+
+	if (PTwoFinish)
+	{
+		if (elapsedTime >= 37 && elapsedTime <= 80)
+			Ponelaps = 1;
+		if (elapsedTime >= 81 && elapsedTime <= 140)
+			Ponelaps = 0;
+	}
+
+	if (Ponelaps == 0 || PTwolaps == 0)
+	{
+		if (Ponelaps < PTwolaps)
+			Win = true;
+		else
+			Lose = true;
+	}
 }
 void c_MultiplayerLevel::Render()
 {
@@ -166,9 +217,43 @@ void c_MultiplayerLevel::Render()
 
 	glDisable(GL_SCISSOR_TEST);
 
+	modelStack.PushMatrix();
+	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	modelStack.Rotate(90, 1, 0, 0);
+	modelStack.Scale(50, 15, 50);
+	RenderMesh(FinishLine.getMesh(), true);
+	modelStack.PopMatrix();
+
+	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
+
+	CountdownCut = std::to_string(Countdown);
+	CountdownCut.resize(1);
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
+
+	if (Countdown >= 0)
+		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 10, 14);
+	else
+	{
+		Cooldown++;
+		elapedTimeCut = std::to_string(elapsedTime);
+		elapedTimeCut.resize(5);
+
+		if (Cooldown <= 50)
+			RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 10, 14);
+		else
+			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 10, 14);
+	}
+
+	RenderTextOnScreen(meshList[TEXT], std::to_string(Ponelaps), Color(1, 0, 0), 3, 9, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(PTwolaps), Color(1, 0, 0), 3, 11, 3);
+
+	if (Win)
+		RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 10, 10);
+	if (Lose)
+		RenderTextOnScreen(meshList[TEXT], "YOU LOSE", Color(1, 0, 0), 4, 10, 10);
 	
 }
 void c_MultiplayerLevel::Exit()
@@ -864,6 +949,7 @@ void c_MultiplayerLevel::renderEnviroment()
 	//Track
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, 0);
+	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Scale(6, 1, 6);
 	RenderMesh(meshList[TRACK], false);
 	modelStack.PopMatrix();

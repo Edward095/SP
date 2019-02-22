@@ -180,11 +180,24 @@ private:
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
+	c_Entity FinishLine;
 
 	c_FirstCar playerOne;
 	c_SecondPlayer playerTwo;
 
 	c_Impulse Impulse;
+
+	std::string CountdownCut;
+	int Cooldown;
+	float Countdown;
+	float Timer;
+	bool PoneFinish = false;
+	int Ponelaps;
+	int PTwolaps;
+	bool PTwoFinish = false;
+	bool CheckEnd = false;
+	bool Win = false;
+	bool Lose = false;
 };
 
 #endif
