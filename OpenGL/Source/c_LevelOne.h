@@ -10,7 +10,6 @@
 #include "c_Entity.h"
 #include "c_AI.h"
 
-
 class c_LevelOne : public Scene
 {
 public:
@@ -21,8 +20,11 @@ public:
 		TOP,
 		BOTTOM,
 		CAR1,
+		QUAD,
+		ARROW,
 		LIGHT1,
 		LIGHT2,
+		HEADLIGHT,
 		TRACK,
 		RACEBANNER,
 		STREETLIGHT,
@@ -120,14 +122,33 @@ public:
 		U_LIGHT5_COSCUTOFF,
 		U_LIGHT5_COSINNER,
 		U_LIGHT5_EXPONENT,
+
+		U_LIGHT6_POSITION,
+		U_LIGHT6_COLOR,
+		U_LIGHT6_POWER,
+		U_LIGHT6_KC,
+		U_LIGHT6_KL,
+		U_LIGHT6_KQ,
+
+		U_LIGHT6_TYPE,
+		U_LIGHT6_SPOTDIRECTION,
+		U_LIGHT6_COSCUTOFF,
+		U_LIGHT6_COSINNER,
+		U_LIGHT6_EXPONENT,
 		//***********************
 		U_LIGHTENABLED,
+		U_LIGHTENABLED2,
 		U_COLOR_TEXTURE_ENABLED,
 		U_COLOR_TEXTURE,
 		U_NUMLIGHTS,
 		U_TEXT_ENABLED,
 		U_TEXT_COLOR,
 		U_TOTAL,
+	};
+	enum GAME_STATE_LEVELONE
+	{
+		_LEVELONE,
+		NPC,
 	};
 
 	c_LevelOne();
@@ -145,16 +166,19 @@ private:
 	FirstPersonCamera camera;
 	MS modelStack, viewStack, projectionStack;
 
-	Light lights[6];
+	Light lights[7];
 
-	/*void initLights();
+	//void initLights();
 	void renderLights();
-	void updateLights(int num);*/
+	/*void updateLights();*/
 
 	void RenderMesh(Mesh *mesh, bool enableLight);
+	//void RenderMesh2(Mesh *mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
+	GAME_STATE_LEVELONE e_GameState_LEVELONE;
+	
 	c_FirstCar car;
 	
 	c_Entity front;
@@ -180,9 +204,16 @@ private:
 	float CamTargetY;
 	float CamTargetZ;
 	bool Freeze = false;
+	
+	bool ExitGame;
+	bool AbleToPress;
+	bool OptionSelection;
+	bool VehicleMove;
 
+	float translateX, translateZ, rotateX, rotateZ;
+	float ArrowX, ArrowY, ArrowP;
 	int duration;
-	float bLightEnabled;
+	float bLightEnabled, cLightEnabled;
 	std::string elapedTimeCut;
 };
 

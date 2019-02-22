@@ -1,14 +1,47 @@
-﻿  c_LevelOne.cpp
-c:\users\pc\documents\github\sp\opengl\source\c_levelone.cpp(325): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\pc\documents\github\sp\opengl\source\c_levelone.cpp(328): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\pc\documents\github\sp\opengl\source\c_levelone.cpp(329): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\pc\documents\github\sp\opengl\source\c_levelone.cpp(330): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\pc\documents\github\sp\opengl\source\c_levelone.cpp(350): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\users\pc\documents\github\sp\opengl\source\c_levelone.cpp(351): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\pc\documents\github\sp\opengl\source\c_levelone.cpp(823): warning C4305: 'argument': truncation from 'double' to 'float'
-  Generating code
-  46 of 1130 functions ( 4.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    71 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  OpenGL.vcxproj -> C:\Users\PC\Documents\GitHub\SP\Release\OpenGL.exe
+﻿  c_SecondCar.cpp
+  c_MultiplayerLevel.cpp
+c:\users\pc\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\pc\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(105): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\pc\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\pc\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(107): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\pc\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  c_SecondPlayer.cpp
+c:\users\pc\documents\github\sp\opengl\source\c_secondplayer.cpp(18): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\pc\documents\github\sp\opengl\source\c_secondplayer.cpp(33): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\pc\documents\github\sp\opengl\source\c_secondplayer.cpp(34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\pc\documents\github\sp\opengl\source\c_secondplayer.cpp(62): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\pc\documents\github\sp\opengl\source\c_secondplayer.cpp(63): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\pc\documents\github\sp\opengl\source\c_secondplayer.cpp(72): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\pc\documents\github\sp\opengl\source\c_secondplayer.cpp(113): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\pc\documents\github\sp\opengl\source\c_secondplayer.cpp(114): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\pc\documents\github\sp\opengl\source\c_secondplayer.cpp(144): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\pc\documents\github\sp\opengl\source\c_secondplayer.cpp(145): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\pc\documents\github\sp\opengl\source\c_secondplayer.cpp(154): warning C4305: '+=': truncation from 'double' to 'float'
+  c_AI.cpp
+c:\users\pc\documents\github\sp\opengl\source\c_ai.cpp(75): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\pc\documents\github\sp\opengl\source\c_ai.cpp(228): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+  c_Garage.cpp
+c:\users\pc\documents\github\sp\opengl\source\c_garage.cpp(261): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\pc\documents\github\sp\opengl\source\c_garage.cpp(342): warning C4305: 'argument': truncation from 'double' to 'float'
+  c_LevelOne.cpp
+c:\users\pc\documents\github\sp\opengl\source\c_levelone.cpp(314): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\pc\documents\github\sp\opengl\source\c_levelone.cpp(317): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\pc\documents\github\sp\opengl\source\c_levelone.cpp(318): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\pc\documents\github\sp\opengl\source\c_levelone.cpp(319): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\pc\documents\github\sp\opengl\source\c_levelone.cpp(322): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\pc\documents\github\sp\opengl\source\c_levelone.cpp(347): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\pc\documents\github\sp\opengl\source\c_levelone.cpp(348): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  c_Npc.cpp
+  c_MainMenu.cpp
+  c_ThirdCar.cpp
+  Application.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  c:\users\pc\documents\github\sp\glfw\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+c_SecondCar.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall c_CarBaseClass::SetSteering(float)" (?SetSteering@c_CarBaseClass@@UAEXM@Z)
+c_SecondCar.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall c_CarBaseClass::SetFriction(float)" (?SetFriction@c_CarBaseClass@@UAEXM@Z)
+c_SecondCar.obj : error LNK2001: unresolved external symbol "public: virtual float __thiscall c_CarBaseClass::GetAcceleration(void)" (?GetAcceleration@c_CarBaseClass@@UAEMXZ)
+c_SecondCar.obj : error LNK2001: unresolved external symbol "public: virtual float __thiscall c_CarBaseClass::GetSpeed(void)" (?GetSpeed@c_CarBaseClass@@UAEMXZ)
+c_SecondCar.obj : error LNK2001: unresolved external symbol "public: virtual float __thiscall c_CarBaseClass::GetMaxAcceleration(void)" (?GetMaxAcceleration@c_CarBaseClass@@UAEMXZ)
+c_SecondCar.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall c_CarBaseClass::PadEffect(double)" (?PadEffect@c_CarBaseClass@@UAEXN@Z)
+c_SecondCar.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall c_CarBaseClass::Movement(double)" (?Movement@c_CarBaseClass@@UAEXN@Z)
+C:\Users\PC\Documents\GitHub\SP\Release\OpenGL.exe : fatal error LNK1120: 7 unresolved externals
