@@ -40,7 +40,7 @@ protected:
 	bool PressQ = false;
 	bool Nitro = false;
 	bool BoostPad = false;
-	bool SlowPad = false;s
+	bool SlowPad = false;
 	bool once;
 	bool Collided = false;
 

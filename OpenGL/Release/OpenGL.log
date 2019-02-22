@@ -1,17 +1,1 @@
-﻿  c_LevelOne.cpp
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(34): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(204): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(227): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(228): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(292): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(333): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(338): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(533): warning C4018: '<': signed/unsigned mismatch
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(549): warning C4018: '<': signed/unsigned mismatch
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(846): warning C4305: 'argument': truncation from 'double' to 'float'
-  Generating code
-  1 of 1342 functions (<0.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  OpenGL.vcxproj -> C:\Users\ASUS\Desktop\SP2\SP\Release\OpenGL.exe
+﻿

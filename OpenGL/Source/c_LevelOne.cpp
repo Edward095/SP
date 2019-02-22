@@ -530,7 +530,7 @@ void c_LevelOne::Render()
 
 void c_LevelOne::renderRain()
 {
-	for (int i = 0; i < rain.getX().size(); i++)
+	for (int i = 0; i < rain.getX().size() - 2000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
@@ -546,7 +546,7 @@ void c_LevelOne::renderRain()
 
 void c_LevelOne::RenderSnow()
 {
-	for (int i = 0; i < snow.getX().size(); i++)
+	for (int i = 0; i < snow.getX().size() - 2000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
