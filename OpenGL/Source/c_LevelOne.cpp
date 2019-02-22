@@ -175,7 +175,7 @@ void c_LevelOne::Init()
 
 
 	//----Rendering Weather Conditions--------------------------------------------------------//
-        meshList[RAIN] = MeshBuilder::GenerateSphere("Rain", Color(0,0,1), 18, 18, 2);
+    meshList[RAIN] = MeshBuilder::GenerateSphere("Rain", Color(0,0,1), 18, 18, 2);
 	meshList[SNOW] = MeshBuilder::GenerateSphere("Snow", Color(1, 1, 1), 18, 18, 2);
     //----------------------------------------------------------------------------------------//
 
@@ -194,7 +194,7 @@ void c_LevelOne::Init()
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0), false);
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), false);
 	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0), true);
-	track.init("track", "OBJ//trackScaled.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0),false);
+	track.init("track", "OBJ//RaceTrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0),false);
 	offRoadManager->addOffRoad("OffRoad//offRoadOBJ1.txt");
 	 //----Setting Car Variables------//
 	car->SetFriction(0.1);
@@ -389,11 +389,11 @@ void c_LevelOne::Render()
 	updateEnviromentCollision();
 	if (Random == 1)
 	{
-		//renderRain();
+		renderRain();
 	}
 	if (Random == 2)
 	{
-		//RenderSnow();
+		RenderSnow();
 	}
 	//------------------------------------------------------//
 	/**************************************************************		CAR		***************************************************************/

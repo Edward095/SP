@@ -44,10 +44,21 @@ void c_SecondCar::Ability(double dt)
 	elapsedTime += dt;
 	//FreezeTime = (float)(dt + (dt * 0));
 
-	if (Application::IsKeyPressed('Q'))
+	if (uniqueName == "player2")
 	{
+		if (Application::IsKeyPressed('P'))
+		{
 			PressQ = true;
+		}
 	}
+	else
+	{
+		if (Application::IsKeyPressed('2'))
+		{
+			PressQ = true;
+		}
+	}
+
 
 	if (PressQ && Duration <= 150)
 	{

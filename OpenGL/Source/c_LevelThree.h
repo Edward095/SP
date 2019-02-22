@@ -168,6 +168,7 @@ private:
 	c_Entity right;
 	c_Entity nitro;
 	c_AI AI;
+	c_Entity track;
 
 	c_Entity boost;
 	c_Entity slow;
