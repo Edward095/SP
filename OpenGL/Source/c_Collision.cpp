@@ -78,7 +78,7 @@ void c_Collision::setHighLow(const char *file_path)
 
 void c_Collision::calcNewAxis(float rotateAmt, float xAxis, float yAxis, float zAxis)
 {
-	float angle = Math::DegreeToRadian(-rotateAmt);
+	float angle = Math::DegreeToRadian(rotateAmt);
 
 	if (xAxis == 1)
 	{

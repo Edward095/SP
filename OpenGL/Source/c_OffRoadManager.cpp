@@ -115,7 +115,7 @@ void c_OffRoadManager::updateCollision(std::string posLocation,std::string rotat
 		}
 	}
 	else
-		std::cout << "rotateFile cannot be Open. Wrong Directory? or no .txt" << std::endl;
+		std::cout << "rotateFile cannot be Open. Wrong Directory?or no .txt" << std::endl;
 }
 
 void c_OffRoadManager::addToList(std::string uniqueName)
