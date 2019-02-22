@@ -31,6 +31,7 @@ public:
 		BOOSTPAD,
 		SLOWPAD,
 		RAIN,
+		SNOW,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -191,6 +192,7 @@ private:
 	float FPS;
 
 	int duration;
+	int Random;
 	float bLightEnabled;
 	std::string elapedTimeCut;
 	std::string CountdownCut;
@@ -206,7 +208,9 @@ private:
 	bool Lose = false;
 
 	c_Weather rain;
+	c_Weather snow;
 	void renderRain();
+	void RenderSnow();
 };
 
 #endif

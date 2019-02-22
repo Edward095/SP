@@ -99,9 +99,9 @@ void c_MultiplayerLevel::Init()
 	projectionStack.LoadMatrix(projection);
 
 	meshList[TOP] = MeshBuilder::GenerateQuad("Top", Color(1, 1, 1), 1.f);
-	meshList[TOP]->textureID = LoadTGA("Image//NpcTop.tga");
+	meshList[TOP]->textureID = LoadTGA("Image//SunnyTop.tga");
 	meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
-	meshList[BOTTOM]->textureID = LoadTGA("Image//NpcBottom.tga");
+	meshList[BOTTOM]->textureID = LoadTGA("Image//SunnyBottom.tga");
 	meshList[TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
 	meshList[LIGHT1] = MeshBuilder::GenerateSphere("environment light", Color(1, 1, 1), 18, 36, 1.f);
@@ -112,11 +112,11 @@ void c_MultiplayerLevel::Init()
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
 
-	front.init("front", "quad", "Image//NpcFront.tga", (0, 0, 0));
-	left.init("left", "quad", "Image//NpcLeft.tga", (0, 0, 0));
-	right.init("right", "quad", "Image//NpcRight.tga", (0, 0, 0));
-	back.init("back", "quad", "Image//NpcBack.tga", (0, 0, 0));
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20));
+	front.init("front", "quad", "Image//SunnyFront.tga", (0, 0, 0));
+	left.init("left", "quad", "Image//SunnyLeft.tga", (0, 0, 0));
+	right.init("right", "quad", "Image//SunnyRight.tga", (0, 0, 0));
+	back.init("back", "quad", "Image/SunnyBack.tga", (0, 0, 0));
 
 	playerOne.init("player1");
 	playerTwo.init("player2");

@@ -11,7 +11,11 @@
 #include "c_Sound.h"
 
 #include "c_LevelOne.h"
+#include "c_LevelTwo.h"
+#include "c_LevelThree.h"
 #include "c_MultiplayerLevel.h"
+#include "c_MultiplayerLevelTwo.h"
+#include "c_MultiplayerLevelThree.h"
 
 #include "c_FirstCar.h"
 #include "c_SecondCar.h"
@@ -210,6 +214,9 @@ private:
 	const char* v_CarColourPath3[9];
 
 	c_LevelOne sLevelOne;
+	c_LevelTwo sLevelTwo;
+	c_LevelThree sLevelThree;
+
 	c_FirstCar car1Type1;
 	c_SecondCar car1Type2;
 	c_ThirdCar car1Type3;
@@ -219,6 +226,8 @@ private:
 
 
 	c_MultiplayerLevel mLevelOne;
+	c_MultiplayerLevelTwo mLevelTwo;
+	c_MultiplayerLevelThree mLevelThree;
 
 };
 
