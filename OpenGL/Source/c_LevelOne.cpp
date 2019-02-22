@@ -31,7 +31,7 @@ void c_LevelOne::Init()
 	srand(time(NULL));
 	//Initialization Of Variables//
 
-    //----Setting Car Variables------//
+        //----Setting Car Variables------//
 	car.SetFriction(0.1);
 	car.SetSteering(5);
 	//-------------------------------//
@@ -180,10 +180,14 @@ void c_LevelOne::Init()
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
 	//----------------------------------------------------------------------------------------//
 
+
 	//----Rendering Weather Conditions--------------------------------------------------------//
-    meshList[RAIN] = MeshBuilder::GenerateSphere("Rain", Color(0,0,1), 18, 18, 2);
+        meshList[RAIN] = MeshBuilder::GenerateSphere("Rain", Color(0,0,1), 18, 18, 2);
 	meshList[SNOW] = MeshBuilder::GenerateSphere("Snow", Color(1, 1, 1), 18, 18, 2);
     //----------------------------------------------------------------------------------------//
+
+
+
 
 	//Init Entities//
 	car.init("player1");
@@ -204,7 +208,7 @@ void c_LevelOne::Init()
 }
 
 void c_LevelOne::Update(double dt)
-{
+{s
 	//----Setting Of Time And FPS-------//
 	Timer += (float)dt;
 	Countdown -= (float)Timer * dt;
