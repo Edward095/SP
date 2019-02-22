@@ -209,7 +209,7 @@ void c_LevelOne::Init()
 }
 
 void c_LevelOne::Update(double dt)
-{s
+{
 	//----Setting Of Time And FPS-------//
 	Timer += (float)dt;
 	Countdown -= (float)Timer * dt;
