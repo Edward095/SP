@@ -472,7 +472,7 @@ void c_LevelOne::Render()
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
 	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-//	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
 	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
 	//----------------------------------------------------------------------------------------------------------//
@@ -1132,6 +1132,108 @@ void c_LevelOne::renderEnviroment()
 	modelStack.Scale(6, 5, 6);
 	RenderMesh(meshList[STREETLIGHT], true);
 	modelStack.PopMatrix();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/*modelStack.PushMatrix();
+	modelStack.Translate(-320.f, 0, -130.f);
+		modelStack.PushMatrix();
+		modelStack.Translate(-348.743, 0, -16.255);
+		modelStack.Rotate(90, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad0")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-224.482, 0, 185.388);
+		modelStack.Rotate(89.56, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad1")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-305.76, 0, 170.883);
+		modelStack.Rotate(112.319, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad2")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-175.68, 0, -127.621);
+		modelStack.Rotate(90.655, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad3")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(253.75, 0, -174.453);
+		modelStack.Rotate(91.37, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad4")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-245.028, 0, -142.735);
+		modelStack.Rotate(90, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad5")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-256.129, 0, -57.047);
+		modelStack.Rotate(131.356, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad6")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-260.887, 0, -171.281);
+		modelStack.Rotate(125.601, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad7")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-260.094, 0, -103.879);
+		modelStack.Rotate(63.135, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad8")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(422.513, 0, 140.392);
+		modelStack.Rotate(90, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad9")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-93.595, 0, -24.067);
+		modelStack.Rotate(90, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad10")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-80.224, 0, -125.684);
+		modelStack.Rotate(90, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad11")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-96.269, 0, -264.739);
+		modelStack.Rotate(90, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad12")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-253.147, 0, 332.929);
+		modelStack.Rotate(61.068, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad13")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-287.318, 0, 350.844);
+		modelStack.Rotate(127.916, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad14")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-164.87, 0, 236.286);
+		modelStack.Rotate(94.855, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad15")->getMesh(), false);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-125.37, 0, -61.765);
+		modelStack.Rotate(50.073, 0, 1, 0);
+		RenderMesh(OBJmanager->getCannotCollide("offRoad16")->getMesh(), false);
+		modelStack.PopMatrix();
+	modelStack.PopMatrix();*/
 }
 
 void c_LevelOne::updateEnviromentCollision()
