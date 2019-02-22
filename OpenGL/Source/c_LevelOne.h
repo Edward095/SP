@@ -168,17 +168,28 @@ private:
 
 	Light lights[7];
 
+
 	//void initLights();
 	void renderLights();
 	/*void updateLights();*/
+
+	void initLights();
+	void renderLights();
+	void updateLights(int num);
+
 
 	void RenderMesh(Mesh *mesh, bool enableLight);
 	//void RenderMesh2(Mesh *mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
+
 	GAME_STATE_LEVELONE e_GameState_LEVELONE;
 	
+
+	void renderEnviroment();
+	void updateEnviromentCollision();
+
 	c_FirstCar car;
 	
 	c_Entity front;
