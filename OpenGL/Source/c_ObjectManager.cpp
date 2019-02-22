@@ -43,11 +43,42 @@ std::vector <c_Entity*> c_ObjectManager::getObjects()
 }
 c_Entity* c_ObjectManager::getObjects(std::string uniqueName)
 {
+	c_Entity* entity;
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->getUniqueName() == uniqueName)
-			return objects[i];
+			entity = objects[i];
 	}
+
+	c_FirstCar* first = dynamic_cast <c_FirstCar*>(entity);
+	if (first)
+		return first;
+	c_SecondCar* second = dynamic_cast <c_SecondCar*>(entity);
+	if (second)
+		return second;
+	c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(entity);
+	if (third)
+		return third;
+	
+}
+void c_ObjectManager::getObjects(std::string uniqueName,c_Entity* entity)
+{
+	c_Entity* entity1;
+	for (int i = 0; i < objects.size(); i++)
+	{
+		if (objects[i]->getUniqueName() == uniqueName)
+			entity1= objects[i];
+	}
+
+	c_FirstCar* first = dynamic_cast <c_FirstCar*>(entity1);
+	if (first)
+		entity = first;
+	c_SecondCar* second = dynamic_cast <c_SecondCar*>(entity1);
+	if (second)
+		entity = second;
+	c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(entity1);
+	if (third)
+		entity = third;
 }
 void c_ObjectManager::delInstance()
 {

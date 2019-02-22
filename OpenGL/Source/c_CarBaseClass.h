@@ -41,7 +41,7 @@ protected:
 	bool Nitro = false;
 	bool BoostPad = false;
 	bool SlowPad = false;
-	bool once;
+	bool once = false;
 };
 
 
