@@ -121,7 +121,7 @@ void c_AI::MoveOne(double dt, int Points)
 	VelocityZ += Acceleration;
 
 	if (Acceleration > 1)
-		Acceleration = 1;
+		Acceleration = 3;
 
 	if (VelocityZ > 1)
 		VelocityZ = 1;

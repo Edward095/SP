@@ -39,9 +39,10 @@ c_SecondCar::~c_SecondCar()
 
 void c_SecondCar::Ability(double dt)
 {
+	elapsedTime += dt;
 	FreezeTime = (float)(dt + (dt * 0));
 
-	if (Application::IsKeyPressed('2'))
+	if (Application::IsKeyPressed('Q'))
 	{
 			PressQ = true;
 	}
@@ -50,11 +51,12 @@ void c_SecondCar::Ability(double dt)
 	{
 		Duration++;
 		elapsedTime -= FreezeTime;
-		if (Duration >= 150) // 3 sec/dt
-		{
-			PressQ = false;
-			Duration = 0;
-		}
+	}
+
+	if (Duration >= 150) // 3 sec/dt
+	{
+		PressQ = false;
+		Duration = 0;
 	}
 }
 

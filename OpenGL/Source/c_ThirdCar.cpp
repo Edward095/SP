@@ -38,7 +38,7 @@ c_ThirdCar::~c_ThirdCar()
 
 void c_ThirdCar::Ability(double dt)
 {
-	if (Application::IsKeyPressed('3') && !once)
+	if (Application::IsKeyPressed('Q') && !once)
 	{
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
 		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);

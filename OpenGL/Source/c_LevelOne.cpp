@@ -170,7 +170,7 @@ void c_LevelOne::Init()
 	//------------------------------------------------------------------------------------------------//
 
 	//----Rendering Race Track And Stuff On Race Track----------------------------------------//
-	meshList[TRACK] = MeshBuilder::GenerateOBJ("racetrack", "OBJ//RaceTrack1.obj");
+	meshList[TRACK] = MeshBuilder::GenerateOBJ("racetrack", "OBJ//RaceTrack2.obj");
 	meshList[TRACK]->textureID = LoadTGA("Image//RaceTrack.tga");
 
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");

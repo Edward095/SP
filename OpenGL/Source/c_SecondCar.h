@@ -13,7 +13,7 @@ public:
 
 private:
 	float elapsedTime;
-	float FreezeTime;
+	/*float FreezeTime;*/
 };
 
 #endif

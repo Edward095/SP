@@ -49,6 +49,7 @@ void c_CarBaseClass::Movement(double dt)
 {
 	//Ability(dt);
 	PadEffect(dt);
+	
 	if (Application::IsKeyPressed('W') && Backwards == false)
 	{
 		//Ability(dt);

@@ -42,6 +42,7 @@ protected:
 	bool BoostPad = false;
 	bool SlowPad = false;
 	bool once = false;
+	float FreezeTime;
 };
 
 

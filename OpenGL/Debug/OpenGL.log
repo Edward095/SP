@@ -1,1 +1,6 @@
-﻿
+﻿  c_AI.cpp
+c:\users\asus\desktop\sp2\sp\opengl\source\c_ai.cpp(120): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\asus\desktop\sp2\sp\opengl\source\c_ai.cpp(394): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\asus\desktop\sp2\sp\opengl\source\c_ai.cpp(646): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\asus\desktop\sp2\sp\opengl\source\c_ai.cpp(771): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+  OpenGL.vcxproj -> C:\Users\ASUS\Desktop\SP2\SP\Debug\OpenGL.exe
