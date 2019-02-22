@@ -51,7 +51,7 @@ void c_CarBaseClass::Movement(double dt)
 {
 	//Ability(dt);
 	PadEffect(dt);
-	//isOffRoad();
+	isOffRoad();
 	if (uniqueName == "player2")
 	{
 		if (Application::IsKeyPressed(VK_UP) && Backwards == false)

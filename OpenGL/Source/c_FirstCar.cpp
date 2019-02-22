@@ -76,7 +76,7 @@ void c_FirstCar::isOffRoad()
 {
 	for (int i = 0; i < manager->getList().size(); i++)
 	{
-		if (gotCollide(manager->getList()[i],false) )//|| !gotCollide("track", false))
+		if (gotCollide(manager->getList()[i],false) || !gotCollide("track", false))
 		{
 			offRoad = true;
 			break;

@@ -222,8 +222,6 @@ private:
 	c_Weather snow;
 	void renderRain();
 	void RenderSnow();
-
-	c_ObjectManager* OBJmanager;
 };
 
 #endif
