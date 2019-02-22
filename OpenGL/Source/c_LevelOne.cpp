@@ -34,13 +34,6 @@ void c_LevelOne::Init()
 	srand(time(NULL));
 	//Initialization Of Variables//
 
-        //----Setting Car Variables------//
-	
-	//-------------------------------//
-
-	//----Setting Up Camera Coordinates--------//
-	
-	//-----------------------------------------//
 
 	//----Time Related Variables-----//
 	elapsedTime = 0;
@@ -195,30 +188,28 @@ void c_LevelOne::Init()
 	if (third)
 		car = third;
 
-	//Init Entities//
-	//carTwo.init("player1");
-	//carThree.init("player1");
-	//car[0] = new c_FirstCar;
-	//car[1] = new c_SecondCar;
-	//car[3] = new c_ThirdCar;
-	//car[0]->init("player1");
-	//car[1]->init("player1");
-	//car[2]->init("player1");
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20));
 	AI.init("AI", "OBJ//Car3.obj", "Image//Car1Blue.tga", Vector3(-5, 2, 0));
 
-
+	 //----Setting Car Variables------//
 	car->SetFriction(0.1);
 	car->SetSteering(5);
+	//-------------------------------//
 
+	//----Setting Up Camera Coordinates--------//
 	CamPosX = car->getPos().x + 1;
 	CamPosY = car->getPos().y + 1;
 	CamPosZ = car->getPos().z + 1;
 	CamTargetX = car->getPos().x;
 	CamTargetY = car->getPos().y;
 	CamTargetZ = car->getPos().z;
+	//-----------------------------------------//
+
+
+
+
 
 	//---- Enabling Light------------//
 	bLightEnabled = true;
