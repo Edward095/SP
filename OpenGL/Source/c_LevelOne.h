@@ -170,6 +170,7 @@ private:
 	c_AI AI;
 
 	c_Entity boost;
+	c_Entity boost2;
 	c_Entity slow;
 	c_Entity FinishLine;
 	//Variables

@@ -196,6 +196,7 @@ void c_LevelOne::Init()
 	//Init Entities//
 	car.init("player1");
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
+	boost2.init("Boostpad2", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(40, 1.f, 0));
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20));
 	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0));
@@ -360,6 +361,7 @@ void c_LevelOne::updateEnviromentCollision()
 	car.getOBB()->defaultData();
 	AI.getOBB()->defaultData();
 	boost.getOBB()->defaultData();
+	boost2.getOBB()->defaultData();
 	slow.getOBB()->defaultData();
 
 	//Front Skybox
@@ -457,6 +459,15 @@ void c_LevelOne::Render()
 
 	boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
 	boost.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost2.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost2.updatePos(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);
+	boost2.getOBB()->calcNewDimensions(3, 1, 3);
 
 	/**************************************************************		SlowPad		***************************************************************/
 	modelStack.PushMatrix();
