@@ -1,29 +1,25 @@
-﻿  c_LevelOne.cpp
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(32): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(176): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(184): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(517): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(917): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(922): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(923): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(928): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(929): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(934): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(939): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(944): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(949): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(954): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(955): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(960): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(961): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(966): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(971): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(972): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(977): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(978): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(983): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(984): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(989): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(990): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1234): warning C4018: '<': signed/unsigned mismatch
-  OpenGL.vcxproj -> C:\Users\incre\OneDrive\Desktop\Edward\SP\Debug\OpenGL.exe
+﻿  c_MultiplayerLevel.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(28): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(212): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(213): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(227): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(245): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(536): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(1064): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevel.cpp(1090): warning C4018: '<': signed/unsigned mismatch
+  c_Garage.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(356): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1290): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1294): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1298): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1366): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1370): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1374): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  c_Npc.cpp
+  c_MainMenu.cpp
+  Application.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  d:\users\539\desktop\sp2\sp\glfw\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\OpenGL.exe

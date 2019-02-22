@@ -18,6 +18,8 @@ c_ThirdCar::c_ThirdCar()
 	Friction = 0.04;
 	Steering = 2;
 	once = false;
+
+	offRoad = false;
 }
 c_ThirdCar::c_ThirdCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos,bool canCollide)
 {

@@ -11,13 +11,15 @@ c_SecondCar::c_SecondCar()
 	pos.y = 1;
 	pos.z = 0;
 
-	MaxSpeed = 0.6f;
+	MaxSpeed = 0.6;
 	SteeringAngle = 0;
 	Duration = 0;
 	MaxAcceleration = 0.8;
 	Friction = 0.04;
 	Steering = 4;
 	once = false;
+
+	offRoad = false;
 }
 c_SecondCar::c_SecondCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
 {

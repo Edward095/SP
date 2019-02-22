@@ -10,6 +10,9 @@
 #include "c_FirstCar.h"
 #include "c_SecondPlayer.h"
 
+#include "c_Impulse.h"
+#include "c_Weather.h"
+
 class c_MultiplayerLevel : public Scene
 {
 public:
@@ -24,6 +27,8 @@ public:
 		LIGHT1,
 		LIGHT2,
 		TRACK,
+		RAIN,
+		SNOW,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -172,15 +177,42 @@ private:
 
 	float elapsedTime;
 	std::string elapedTimeCut;
+	int Random;
 
 
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
+	c_Entity FinishLine;
 
 	c_FirstCar playerOne;
 	c_SecondPlayer playerTwo;
+
+	c_Impulse Impulse;
+
+
+	std::string CountdownCut;
+	int Cooldown;
+	float Countdown;
+	float Timer;
+	bool PoneFinish = false;
+	int Ponelaps;
+	int PTwolaps;
+	bool PTwoFinish = false;
+	bool CheckEnd = false;
+	bool Win = false;
+	bool Lose = false;
+
+	c_Weather rain;
+	c_Weather snow;
+	void renderRain();
+	void RenderSnow();
+
+	bool Raining = false;
+	bool OffRoad = false;
+	bool Snowing = false;
+
 };
 
 #endif

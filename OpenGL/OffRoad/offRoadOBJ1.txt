@@ -12,3 +12,6 @@ OBJ//OffroadTrack1//part11.obj
 OBJ//OffroadTrack1//part12.obj
 OBJ//OffroadTrack1//part13.obj
 OBJ//OffroadTrack1//part14.obj
+OBJ//OffroadTrack1//part15.obj
+OBJ//OffroadTrack1//part16.obj
+OBJ//OffroadTrack1//part17.obj

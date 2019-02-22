@@ -45,7 +45,6 @@ c_Entity::~c_Entity()
 void c_Entity::init(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
 {
 	this->pos = pos;
-	//updatePos(pos.x, pos.y, pos.z);
 	this->meshPath = meshPath;
 	this->TGApath = TGApath;
 	this->uniqueName = uniqueName;
@@ -189,4 +188,8 @@ bool c_Entity::ignoreEntity(std::string uniqueName)
 		uniqueName != "track" ||
 		uniqueName != "Boostpad" ||
 		uniqueName != "Slowpad");
+}
+const char* c_Entity::getMeshPath()
+{
+	return meshPath;
 }

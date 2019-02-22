@@ -14,7 +14,7 @@
 #include "c_Npc.h"
 #include "c_ObjectManager.h"
 
-c_ObjectManager* manager = c_ObjectManager::getInstance();
+
 
 // +++++++++++++++++++++++++ CAR CLASS +++++++++++++++++++++++++++
 
@@ -284,6 +284,7 @@ void c_Garage::Init()
 	v_ScalePreview1 = v_ScalePreview2 = v_ScalePreview3 = 1;
 	v_Car1Changed = v_Car2Changed = false;
 
+	manager = c_ObjectManager::getInstance();
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
@@ -427,10 +428,12 @@ void c_Garage::Update(double dt)
 				else if (c_Npc::GetLevel2())
 				{
 					e_GameState_Garage = SLEVELTWO_;
+					sLevelTwo.Init();
 				}
 				else if (c_Npc::GetLevel3())
 				{
 					e_GameState_Garage = SLEVELTHREE_;
+					sLevelThree.Init();
 				}
 			}
 			else if (c_Npc::GetMultiPlayer())
@@ -443,10 +446,12 @@ void c_Garage::Update(double dt)
 				else if (c_Npc::GetLevel2())
 				{
 					e_GameState_Garage = MLEVELTWO_;
+					mLevelTwo.Init();
 				}
 				else if (c_Npc::GetLevel3())
 				{
 					e_GameState_Garage = MLEVELTHREE_;
+					mLevelThree.Init();
 				}
 			}
 		}
@@ -456,21 +461,25 @@ void c_Garage::Update(double dt)
 	{
 		sLevelOne.Update(dt);
 	}
-	else if (e_GameState_Garage == SLEVELONE_)
+	else if (e_GameState_Garage == SLEVELTWO_)
 	{
+		sLevelTwo.Update(dt);
 	}
-	else if (e_GameState_Garage == SLEVELONE_)
+	else if (e_GameState_Garage == SLEVELTHREE_)
 	{
+		sLevelThree.Update(dt);
 	}
 	else if (e_GameState_Garage == MLEVELONE_)
 	{
 		mLevelOne.Update(dt);
 	}
-	else if (e_GameState_Garage == MLEVELONE_)
+	else if (e_GameState_Garage == MLEVELTWO_)
 	{
+		mLevelTwo.Update(dt);
 	}
-	else if (e_GameState_Garage == MLEVELONE_)
+	else if (e_GameState_Garage == MLEVELTHREE_)
 	{
+		mLevelThree.Update(dt);
 	}
 }
 
@@ -626,24 +635,28 @@ void c_Garage::Render()
 		f_RenderFinal();
 	}
 	else if (e_GameState_Garage == SLEVELONE_)
+	{
 		sLevelOne.Render();
+	}
 	else if (e_GameState_Garage == SLEVELTWO_)
 	{
-
+		sLevelTwo.Render();
 	}
 	else if (e_GameState_Garage == SLEVELTHREE_)
 	{
-
+		sLevelThree.Render();
 	}
 	else if (e_GameState_Garage == MLEVELONE_)
+	{
 		mLevelOne.Render();
+	}
 	else if (e_GameState_Garage == MLEVELTWO_)
 	{
-
+		mLevelTwo.Render();
 	}
 	else if (e_GameState_Garage == MLEVELTHREE_)
 	{
-
+		mLevelThree.Render();
 	}
 }
 

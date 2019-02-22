@@ -8,12 +8,12 @@
 c_OffRoadManager* manager = c_OffRoadManager::getInstance();
 c_FirstCar::c_FirstCar()
 {
+	//Driving = false;
 	VelocityZ = 0;
 	Acceleration = 0;
 	pos.x = 0;
 	pos.y = 1;
 	pos.z = 0;
-
 	MaxSpeed = 0.8;
 	SteeringAngle = 0;
 	Duration = 0;
@@ -21,6 +21,8 @@ c_FirstCar::c_FirstCar()
 	Friction = 0.04;
 	Steering = 3;
 	once = false;
+
+	offRoad = false;
 }
 c_FirstCar::c_FirstCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
 {
@@ -30,6 +32,7 @@ c_FirstCar::~c_FirstCar()
 {
 
 }
+
 
 void c_FirstCar::Ability(double dt)
 {
