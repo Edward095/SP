@@ -66,7 +66,26 @@ c_Entity* c_ObjectManager::getCanCollide(std::string uniqueName)
 	{
 		if (canCollideOBJ[i]->getUniqueName() == uniqueName)
 			return canCollideOBJ[i];
+	}	
+}
+void c_ObjectManager::getCanCollide(std::string uniqueName,c_Entity* entity)
+{
+	c_Entity* entity1;
+	for (int i = 0; i < canCollideOBJ.size(); i++)
+	{
+		if (canCollideOBJ[i]->getUniqueName() == uniqueName)
+			entity1= canCollideOBJ[i];
 	}
+
+	c_FirstCar* first = dynamic_cast <c_FirstCar*>(entity1);
+	if (first)
+		entity = first;
+	c_SecondCar* second = dynamic_cast <c_SecondCar*>(entity1);
+	if (second)
+		entity = second;
+	c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(entity1);
+	if (third)
+		entity = third;
 }
 void c_ObjectManager::delInstance()
 {

@@ -45,6 +45,8 @@ protected:
 	bool once;
 
 	bool offRoad;
+	bool Collided = false;
+
 };
 
 

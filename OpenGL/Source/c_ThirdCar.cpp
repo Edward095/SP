@@ -17,6 +17,12 @@ c_ThirdCar::c_ThirdCar()
 	MaxAcceleration = 0.4;
 	Friction = 0.04;
 	Steering = 2;
+	Driving = false;
+	Backwards = false;
+	PressQ = false;
+	Nitro = false;
+	BoostPad = false;
+	SlowPad = false;
 	once = false;
 
 	offRoad = false;
@@ -34,24 +40,25 @@ c_ThirdCar::~c_ThirdCar()
 
 void c_ThirdCar::Ability(double dt)
 {
-	if (Application::IsKeyPressed('Q') && !once)
+	if (Application::IsKeyPressed('3') && !once)
 	{
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
 		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
 
 		updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
-		PressQ = true;
+		//PressQ = true;
 		once = true;
 	}
-	if (PressQ && once)
+	if (once)
 	{
 		Duration++;
-		if (Duration >= 150) // 3 sec/dt
-		{
-			PressQ = false;
-			once = false;
-			Duration = 0;
-		}
+		
+	}
+	if (Duration >= 150) // 3 sec/dt
+	{
+		PressQ = false;
+		once = false;
+		Duration = 0;
 	}
 }
 

@@ -8,7 +8,7 @@ public:
 	c_ThirdCar();
 	c_ThirdCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos,bool canCollide);
 	~c_ThirdCar();
-	virtual void Ability(double dt);
+	void Ability(double dt);
 	virtual void PowerUp(bool check);
 	virtual void isOffRoad();
 private:

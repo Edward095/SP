@@ -15,6 +15,7 @@ public:
 	c_Entity* getCannotCollide(std::string uniqueName);
 	std::vector <c_Entity*> getCanCollide();
 	c_Entity* getCanCollide(std::string uniqueName);
+	void getCanCollide(std::string uniqueName,c_Entity* entity);
 	void delInstance();
 	void delNullOBJ();
 private: 
