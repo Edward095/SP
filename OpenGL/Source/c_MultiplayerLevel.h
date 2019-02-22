@@ -11,6 +11,7 @@
 #include "c_SecondPlayer.h"
 
 #include "c_Impulse.h"
+#include "c_Weather.h"
 
 class c_MultiplayerLevel : public Scene
 {
@@ -26,6 +27,8 @@ public:
 		LIGHT1,
 		LIGHT2,
 		TRACK,
+		RAIN,
+		SNOW,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -174,6 +177,7 @@ private:
 
 	float elapsedTime;
 	std::string elapedTimeCut;
+	int Random;
 
 
 	c_Entity front;
@@ -187,6 +191,7 @@ private:
 
 	c_Impulse Impulse;
 
+
 	std::string CountdownCut;
 	int Cooldown;
 	float Countdown;
@@ -198,6 +203,16 @@ private:
 	bool CheckEnd = false;
 	bool Win = false;
 	bool Lose = false;
+
+	c_Weather rain;
+	c_Weather snow;
+	void renderRain();
+	void RenderSnow();
+
+	bool Raining = false;
+	bool OffRoad = false;
+	bool Snowing = false;
+
 };
 
 #endif

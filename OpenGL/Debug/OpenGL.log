@@ -1,1 +1,13 @@
-﻿
+﻿  c_LevelOne.cpp
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_levelone.cpp(34): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_levelone.cpp(197): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_levelone.cpp(227): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_levelone.cpp(228): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_levelone.cpp(292): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_levelone.cpp(333): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_levelone.cpp(338): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_levelone.cpp(454): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_levelone.cpp(533): warning C4018: '<': signed/unsigned mismatch
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_levelone.cpp(549): warning C4018: '<': signed/unsigned mismatch
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_levelone.cpp(846): warning C4305: 'argument': truncation from 'double' to 'float'
+  OpenGL.vcxproj -> C:\Users\irfan\Desktop\Sp2(Github)\SP\Debug\OpenGL.exe

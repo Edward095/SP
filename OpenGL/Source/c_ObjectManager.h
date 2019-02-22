@@ -11,6 +11,7 @@ public:
 	void addOBJ(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos);
 	static c_ObjectManager* getInstance();
 	std::vector <c_Entity*> getObjects();
+	void getObjects(std::string uniqueName,c_Entity* enitty);
 	c_Entity* getObjects(std::string uniqueName);
 	void delInstance();
 	void delNullOBJ();

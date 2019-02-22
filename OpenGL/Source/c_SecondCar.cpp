@@ -17,6 +17,14 @@ c_SecondCar::c_SecondCar()
 	MaxAcceleration = 0.8;
 	Friction = 0.04;
 	Steering = 4;
+	elapsedTime = 0;
+	FreezeTime = 0;
+	Driving = false;
+	Backwards = false;
+	PressQ = false;
+	Nitro = false;
+	BoostPad = false;
+	SlowPad = false;
 	once = false;
 }
 c_SecondCar::c_SecondCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos)
@@ -31,7 +39,23 @@ c_SecondCar::~c_SecondCar()
 
 void c_SecondCar::Ability(double dt)
 {
+	FreezeTime = (float)(dt + (dt * 0));
 
+	if (Application::IsKeyPressed('2'))
+	{
+			PressQ = true;
+	}
+
+	if (PressQ && Duration <= 150)
+	{
+		Duration++;
+		elapsedTime -= FreezeTime;
+		if (Duration >= 150) // 3 sec/dt
+		{
+			PressQ = false;
+			Duration = 0;
+		}
+	}
 }
 
 void c_SecondCar::PowerUp(bool check)

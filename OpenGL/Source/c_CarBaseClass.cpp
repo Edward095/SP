@@ -8,16 +8,32 @@ c_ObjectManager* OBJmanager = c_ObjectManager::getInstance();
 
 c_CarBaseClass::c_CarBaseClass()
 {
-}
-c_CarBaseClass::~c_CarBaseClass()
-{
+
 	MaxSpeed = 1;
 	SteeringAngle = 0;
 	Steering = 2;
 	Duration = 0;
 	MaxAcceleration = 1;
 	Friction = 0.5;
+
+	VelocityZ = 0;
+	Acceleration = 0;
+	pos.x = 0;
+	pos.y = 1;
+	pos.z = 0;
+	Driving = false;
+	Backwards = false;
+	PressQ = false;
+	Nitro = false;
+	BoostPad = false;
+	SlowPad = false;
+	once = false;
 }
+c_CarBaseClass::~c_CarBaseClass()
+{
+
+}
+
 
 float c_CarBaseClass::GetSteeringAngle()
 {
@@ -33,10 +49,11 @@ void c_CarBaseClass::updateAppearance(const char* meshPath, const char* TGApath)
 
 void c_CarBaseClass::Movement(double dt)
 {
-	Ability(dt);
+	//Ability(dt);
 	PadEffect(dt);
 	if (Application::IsKeyPressed('W') && Backwards == false)
 	{
+		//Ability(dt);
 		Acceleration += (MaxAcceleration - Friction);
 		VelocityZ += Acceleration * (float)dt;
 		
@@ -58,11 +75,12 @@ void c_CarBaseClass::Movement(double dt)
 		{
 			Driving = true;
 			Backwards = false;
+			//Collided = false;
 			if (Acceleration > MaxAcceleration - Friction)
 				Acceleration = MaxAcceleration - Friction;
-			if (VelocityZ > MaxSpeed && (PressQ))
-				VelocityZ = 1.5; 
-			else if (VelocityZ > MaxSpeed && (!PressQ || !Nitro))
+			//if (VelocityZ > MaxSpeed && (PressQ))
+				//VelocityZ = 1.5; 
+			if (VelocityZ > MaxSpeed && (!PressQ))
 				//VelocityZ -= 0.5;
 				VelocityZ = MaxSpeed;
 			if (BoostPad)
@@ -75,8 +93,12 @@ void c_CarBaseClass::Movement(double dt)
 		{
 			Driving = false;
 			Backwards = false;
-			Acceleration = 0;
-			VelocityZ = 0;
+			Collided = true;
+			if (Collided == true)
+			{
+				Acceleration = 0;
+				VelocityZ = -VelocityZ / 2;
+			}
 		}
 
 	}
@@ -92,24 +114,27 @@ void c_CarBaseClass::Movement(double dt)
 			OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
 			if (!gotCollide(updateX, pos.y, updateZ))
 			{
+				Collided = false;
 				if (Acceleration < 0)
 				{
 					Acceleration = 0;
-					VelocityZ -= 0.05f;
+					VelocityZ -= Friction;
 				}
-				if (VelocityZ < 0)
+				if (VelocityZ < 0 && Collided == false)
 				{
 					VelocityZ = 0;
+					//Acceleration = 0;
 					Driving = false;
 					Backwards = false;
 				}
+			
 			}
 			else
 			{
 				Driving = false;
 				Backwards = false;
-				Acceleration = 0;
-				VelocityZ = 0;
+	         
+				//Collided = true;
 			}
 		}
 	}
@@ -145,6 +170,7 @@ void c_CarBaseClass::Movement(double dt)
 
 		if (!gotCollide(updateX, pos.y, updateZ))
 		{
+			
 			Backwards = true;
 			Driving = false;
 			
@@ -180,7 +206,7 @@ void c_CarBaseClass::Movement(double dt)
 				if (Acceleration > 0)
 				{
 					Acceleration = 0;
-					VelocityZ += 0.05f;
+					VelocityZ += Friction;
 				}
 				if (VelocityZ > 0)
 				{

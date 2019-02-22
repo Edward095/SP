@@ -42,6 +42,8 @@ protected:
 	bool BoostPad = false;
 	bool SlowPad = false;
 	bool once;
+	bool Collided = false;
+
 };
 
 

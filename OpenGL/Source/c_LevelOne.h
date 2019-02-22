@@ -10,6 +10,9 @@
 #include "c_Entity.h"
 #include "c_AI.h"
 #include "c_Weather.h"
+#include "c_ThirdCar.h"
+#include "c_SecondCar.h"
+#include "c_ObjectManager.h"
 
 
 class c_LevelOne : public Scene
@@ -160,8 +163,13 @@ private:
 	void renderEnviroment();
 	void updateEnviromentCollision();
 
-	c_FirstCar car;
-	
+
+	//c_CarBaseClass* car;
+	/*c_FirstCar car;
+	c_SecondCar carTwo;
+	c_ThirdCar carThree;*/
+	c_CarBaseClass* car;
+	c_Entity* car1;
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
@@ -177,7 +185,7 @@ private:
 
 	bool talk;
 	float elapsedTime;
-	float FreezeTime;
+//	float FreezeTime;
 	float TimePassed;
 	bool AbletoPress;
 	float CamPosX;
@@ -186,7 +194,7 @@ private:
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
-	bool Freeze = false;
+	//bool Freeze = false;
 	bool Raining = false;
 	bool Snowing = false;
 	bool OffRoad = false;
@@ -214,6 +222,8 @@ private:
 	c_Weather snow;
 	void renderRain();
 	void RenderSnow();
+
+	c_ObjectManager* OBJmanager;
 };
 
 #endif
