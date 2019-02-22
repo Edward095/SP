@@ -109,11 +109,12 @@ void c_CarBaseClass::Movement(double dt)
 				if (Acceleration < 0)
 				{
 					Acceleration = 0;
-					VelocityZ -= 0.05f;
+					VelocityZ -= Friction;
 				}
 				if (VelocityZ < 0)
 				{
 					VelocityZ = 0;
+					//Acceleration = 0;
 					Driving = false;
 					Backwards = false;
 				}
@@ -194,7 +195,7 @@ void c_CarBaseClass::Movement(double dt)
 				if (Acceleration > 0)
 				{
 					Acceleration = 0;
-					VelocityZ += 0.05f;
+					VelocityZ += Friction;
 				}
 				if (VelocityZ > 0)
 				{

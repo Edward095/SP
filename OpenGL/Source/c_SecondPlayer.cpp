@@ -30,7 +30,7 @@ void c_SecondPlayer::Movement(double dt)
 	Ability(dt);
 	if (Application::IsKeyPressed(VK_UP) && Backwards == false)
 	{
-		Acceleration += 0.1f;
+		Acceleration += (MaxAcceleration - Friction);
 		VelocityZ += Acceleration * (float)dt;
 
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -39,12 +39,12 @@ void c_SecondPlayer::Movement(double dt)
 		{
 			Driving = true;
 			Backwards = false;
-			if (Acceleration > 1)
-				Acceleration = 1;
-			if (VelocityZ > 1 && (PressQ || Nitro))
+			if (Acceleration > MaxAcceleration - Friction)
+				Acceleration = MaxAcceleration - Friction;
+			if (VelocityZ > MaxSpeed && (PressQ || Nitro))
 				VelocityZ = 1.5;
-			else if (VelocityZ > 1 && (!PressQ || !Nitro))
-				VelocityZ = 1;
+			else if (VelocityZ > MaxSpeed && (!PressQ || !Nitro))
+				VelocityZ = MaxSpeed;
 		}
 		else
 		{
@@ -59,8 +59,8 @@ void c_SecondPlayer::Movement(double dt)
 	{
 		if (!Application::IsKeyPressed(VK_UP))
 		{
-			Acceleration -= 0.1f;
-			VelocityZ += Acceleration * (float)dt;
+			Acceleration += -Friction;
+			VelocityZ -= Acceleration * (float)dt;
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -110,7 +110,7 @@ void c_SecondPlayer::Movement(double dt)
 
 	if (Application::IsKeyPressed(VK_DOWN) && Driving == false)
 	{
-		Acceleration -= 0.1f;
+		Acceleration -= (MaxAcceleration - Friction);
 		VelocityZ += Acceleration * (float)dt;
 
 		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -121,12 +121,12 @@ void c_SecondPlayer::Movement(double dt)
 			Backwards = true;
 			Driving = false;
 
-			if (Acceleration < -1)
-				Acceleration = -1;
-			if (VelocityZ < -1 && (PressQ || Nitro))
+			if (Acceleration < -(MaxAcceleration - Friction))
+				Acceleration = -(MaxAcceleration - Friction);
+			if (VelocityZ < -MaxSpeed && (PressQ || Nitro))
 				VelocityZ = -2;
-			else if (VelocityZ < -1 && (!PressQ || !Nitro))
-				VelocityZ = -1;
+			else if (VelocityZ < -MaxSpeed && (!PressQ || !Nitro))
+				VelocityZ = -MaxSpeed;
 		}
 		else
 		{
@@ -141,8 +141,8 @@ void c_SecondPlayer::Movement(double dt)
 	{
 		if (!Application::IsKeyPressed(VK_DOWN))
 		{
-			Acceleration += 0.1f;
-			VelocityZ += Acceleration * (float)dt;
+			Acceleration += Friction;
+			VelocityZ -= Acceleration * (float)dt;
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
