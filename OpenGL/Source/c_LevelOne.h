@@ -11,7 +11,6 @@
 #include "c_AI.h"
 #include "c_Weather.h"
 
-
 class c_LevelOne : public Scene
 {
 public:
@@ -22,8 +21,11 @@ public:
 		TOP,
 		BOTTOM,
 		CAR1,
+		QUAD,
+		ARROW,
 		LIGHT1,
 		LIGHT2,
+		HEADLIGHT,
 		TRACK,
 		RACEBANNER,
 		STREETLIGHT,
@@ -122,14 +124,33 @@ public:
 		U_LIGHT5_COSCUTOFF,
 		U_LIGHT5_COSINNER,
 		U_LIGHT5_EXPONENT,
+
+		U_LIGHT6_POSITION,
+		U_LIGHT6_COLOR,
+		U_LIGHT6_POWER,
+		U_LIGHT6_KC,
+		U_LIGHT6_KL,
+		U_LIGHT6_KQ,
+
+		U_LIGHT6_TYPE,
+		U_LIGHT6_SPOTDIRECTION,
+		U_LIGHT6_COSCUTOFF,
+		U_LIGHT6_COSINNER,
+		U_LIGHT6_EXPONENT,
 		//***********************
 		U_LIGHTENABLED,
+		U_LIGHTENABLED2,
 		U_COLOR_TEXTURE_ENABLED,
 		U_COLOR_TEXTURE,
 		U_NUMLIGHTS,
 		U_TEXT_ENABLED,
 		U_TEXT_COLOR,
 		U_TOTAL,
+	};
+	enum GAME_STATE_LEVELONE
+	{
+		_LEVELONE,
+		NPC,
 	};
 
 	c_LevelOne();
@@ -147,15 +168,26 @@ private:
 	FirstPersonCamera camera;
 	MS modelStack, viewStack, projectionStack;
 
-	Light lights[6];
+	Light lights[7];
+
+
+	//void initLights();
+	void renderLights();
+	/*void updateLights();*/
 
 	void initLights();
 	void renderLights();
 	void updateLights(int num);
 
+
 	void RenderMesh(Mesh *mesh, bool enableLight);
+	//void RenderMesh2(Mesh *mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
+
+
+	GAME_STATE_LEVELONE e_GameState_LEVELONE;
+	
 
 	void renderEnviroment();
 	void updateEnviromentCollision();
@@ -186,14 +218,28 @@ private:
 	float CamTargetY;
 	float CamTargetZ;
 	bool Freeze = false;
+<<<<<<< HEAD
 	bool Raining = false;
 	bool Snowing = false;
 	bool OffRoad = false;
 	float FPS;
+=======
+	
+	bool ExitGame;
+	bool AbleToPress;
+	bool OptionSelection;
+	bool VehicleMove;
+>>>>>>> HuiLing
 
+	float translateX, translateZ, rotateX, rotateZ;
+	float ArrowX, ArrowY, ArrowP;
 	int duration;
+<<<<<<< HEAD
 	int Random;
 	float bLightEnabled;
+=======
+	float bLightEnabled, cLightEnabled;
+>>>>>>> HuiLing
 	std::string elapedTimeCut;
 	std::string CountdownCut;
 	int Cooldown;
