@@ -27,13 +27,25 @@ c_LevelOne::~c_LevelOne()
 
 void c_LevelOne::Init()
 {
+	//Seed Generation For rand() function
 	srand(time(NULL));
+	//Initialization Of Variables//
+
+        //----Setting Car Variables------//
+	car.SetFriction(0.1);
+	car.SetSteering(5);
+	//-------------------------------//
+
+	//----Setting Up Camera Coordinates--------//
 	CamPosX = car.getPos().x + 1;
 	CamPosY = car.getPos().y + 1;
 	CamPosZ = car.getPos().z + 1;
 	CamTargetX = car.getPos().x;
 	CamTargetY = car.getPos().y;
 	CamTargetZ = car.getPos().z;
+	//-----------------------------------------//
+
+	//----Time Related Variables-----//
 	elapsedTime = 0;
 	FreezeTime = 0;
 	duration = 0;
@@ -43,10 +55,12 @@ void c_LevelOne::Init()
 	laps = 2;
 	AIlaps = 2;
 	FPS = 0;
+	//-------------------------------//
 
-	WheelRotation = 0;
+	//----Random Number Gen----------//
+	Random = rand() % 3 + 1;
+	//-------------------------------//
 
-	bLightEnabled = true;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -110,80 +124,115 @@ void c_LevelOne::Init()
 	projectionStack.LoadMatrix(projection);
 	
 
-	//initialization of the Enums
-	meshList[TOP] = MeshBuilder::GenerateQuad("Top", Color(1, 1, 1), 1.f);
-	meshList[TOP]->textureID = LoadTGA("Image//NpcTop.tga");
-	meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
-	meshList[BOTTOM]->textureID = LoadTGA("Image//NpcBottom.tga");
+	//initialization of the Enums & Entity for skybox//
 
-	//texutre for obj later
+	//----Rendering Skybox For Different Weathers-------------------------------------//
+	if (Random == 1)
+	{
+		meshList[TOP] = MeshBuilder::GenerateQuad("Top", Color(1, 1, 1), 1.f);
+		meshList[TOP]->textureID = LoadTGA("Image//RainTop.tga");
+		meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
+		meshList[BOTTOM]->textureID = LoadTGA("Image//RainBottom.tga");
+		front.init("front", "quad", "Image//RainFront.tga", (float)(0, 0, 0));
+		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0));
+		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0));
+		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0));
+	}
+	if (Random == 2)
+	{
+		meshList[TOP] = MeshBuilder::GenerateQuad("Top", Color(1, 1, 1), 1.f);
+		meshList[TOP]->textureID = LoadTGA("Image//SnowTop.tga");
+		meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
+		meshList[BOTTOM]->textureID = LoadTGA("Image//SnowBottom.tga");
+		front.init("front", "quad", "Image//SnowFront.tga", (float)(0, 0, 0));
+		left.init("left", "quad", "Image//SnowLeft.tga", (float)(0, 0, 0));
+		right.init("right", "quad", "Image//SnowRight.tga", (float)(0, 0, 0));
+		back.init("back", "quad", "Image//SnowBack.tga", (float)(0, 0, 0));
+	}
+	if (Random == 3)
+	{
+		meshList[TOP] = MeshBuilder::GenerateQuad("Top", Color(1, 1, 1), 1.f);
+		meshList[TOP]->textureID = LoadTGA("Image//SunnyTop.tga");
+		meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
+		meshList[BOTTOM]->textureID = LoadTGA("Image//SunnyBottom.tga");
+		front.init("front", "quad", "Image//SunnyFront.tga", (float)(0, 0, 0));
+		left.init("left", "quad", "Image//SunnyLeft.tga", (float)(0, 0, 0));
+		right.init("right", "quad", "Image//SunnyRight.tga", (float)(0, 0, 0));
+		back.init("back", "quad", "Image//SunnyBack.tga", (float)(0, 0, 0));
+	}
+	//---------------------------------------------------------------------------------//
+
+	//----Rendering Text-----------------------------------------//
 	meshList[TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
+	//-----------------------------------------------------------//
 
+	//----Rendering Light Orbs------------------------------------------------------------------------//
 	meshList[LIGHT1] = MeshBuilder::GenerateSphere("environment light", Color(1, 1, 1), 18, 36, 1.f);
 	meshList[LIGHT2] = MeshBuilder::GenerateSphere("street light", Color(1, 1, 1), 18, 36, 1.f);
+	//------------------------------------------------------------------------------------------------//
 
+	//----Rendering Race Track And Stuff On Race Track----------------------------------------//
 	meshList[TRACK] = MeshBuilder::GenerateOBJ("racetrack", "OBJ//RaceTrack1.obj");
 	meshList[TRACK]->textureID = LoadTGA("Image//RaceTrack.tga");
+
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
+	//----------------------------------------------------------------------------------------//
 
     meshList[RAIN] = MeshBuilder::GenerateSphere("Snow", Color(0,0,1), 18, 18, 2);
 
 	//meshList[RAIN]->textureID = LoadTGA("Image//Rain.tga");
 
-	//Init Entities
+	//----Rendering Weather Conditions--------------------------------------------------------//
+        meshList[RAIN] = MeshBuilder::GenerateSphere("Rain", Color(0,0,1), 18, 18, 2);
+	meshList[SNOW] = MeshBuilder::GenerateSphere("Snow", Color(1, 1, 1), 18, 18, 2);
+    //----------------------------------------------------------------------------------------//
 
-	front.init("front", "quad", "Image//NpcFront.tga", (float)(0, 0, 0));
-	left.init("left", "quad", "Image//NpcLeft.tga", (float)(0, 0, 0));
-	right.init("right", "quad", "Image//NpcRight.tga", (float)(0, 0, 0));
-	back.init("back", "quad", "Image//NpcBack.tga", (float)(0, 0, 0));
 
+
+
+	//Init Entities//
 	car.init("player1");
-	car.SetFriction(0.1);
-	car.SetSteering(5);
-	
-	//RenderMesh(car.getMesh(), true);
-
-
-	//Initialization of Variables
-	car.SetFriction(0.1f);
-	car.SetSteering(1.5f);
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0));
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0));
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20));
-	AI.init("AI", "OBJ//Car1.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0));
+	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0));
+
+
+
+	//---- Enabling Light------------//
+	bLightEnabled = true;
+	//-------------------------------//
+
+	//Initialization Of Weather Functions//
 	rain.init();
+	snow.init();
 }
 
 void c_LevelOne::Update(double dt)
 {
+	//----Setting Of Time And FPS-------//
 	Timer += (float)dt;
 	Countdown -= (float)Timer * dt;
-	car.SetFriction(0.1f);
-	car.SetSteering(1.5f);
-
-	//Snowing = true;
-	//Raining = true;
-	//OffRoad = true;
-	if (Raining)
-	{
-		car.SetSteering(9);
-	}
-	if (Snowing)
-	{
-		car.SetFriction(0.5);
-	}
-	if (OffRoad)
-	{
-		car.SetFriction(0.5);
-		car.SetMaxSpeed(0.1);
-	}
-
 	FPS = 1 / dt;
-	rain.update(dt);
+	//----------------------------------//
 
+	//----Power Up Timer------------------// 
+	FreezeTime = (float)(dt + (dt * 0));
+	//------------------------------------//
+
+	//----Updating Camera Position---------------------------------------------------------------//
+	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
+	CamPosY = car.getPos().y + 8;
+	CamPosZ = (car.getPos().z - (cos(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
+	CamTargetX = car.getPos().x;
+	CamTargetY = car.getPos().y + 5;
+	CamTargetZ = car.getPos().z;
+	//-------------------------------------------------------------------------------------------//
+
+	//----KeyPress to Enable and Disable Light-------//
 	if (Application::IsKeyPressed('8'))
 	{
 		bLightEnabled = true;
@@ -192,12 +241,13 @@ void c_LevelOne::Update(double dt)
 	{
 		bLightEnabled = false;
 	}
+	//-----------------------------------------------//
 
-	FreezeTime  = (float)(dt + (dt* 0));
-
+	//----KeyPress to enable PowerUps----------------//
 	if (Application::IsKeyPressed('F'))
+	{
 		Freeze = true;
-
+	}
 	if (Freeze && duration <= 150)
 	{
 		duration++;
@@ -210,34 +260,21 @@ void c_LevelOne::Update(double dt)
 		}
 	}
 
-	if (Countdown <= 0)
-	{
-		elapsedTime += (float)dt;
-		car.Movement(dt);
-		AI.LevelOne(dt);
-	}
-
-	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
-	CamPosY = car.getPos().y + 8;
-	CamPosZ = (car.getPos().z - (cos(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
-	CamTargetX = car.getPos().x;
-	CamTargetY = car.getPos().y + 5;
-	CamTargetZ = car.getPos().z;
-
-	camera.Update(dt); 
-  
-	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
-	//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
-
 	if (car.getPos().x == nitro.getPos().x && car.getPos().z == nitro.getPos().z)
 	{
 		car.PowerUp(true);
 	}
-
+	//-------------------------------------------------//
+	
+	//----Collision For Finishing Line---------------------------//
 	if (car.gotCollide("FinishLine"))
+	{
 		Finish = true;
+	}
 	else
+	{
 		Finish = false;
+	}
 
 	if (Finish)
 	{
@@ -251,9 +288,13 @@ void c_LevelOne::Update(double dt)
 	}
 
 	if (AI.gotCollide("FinishLine"))
+	{
 		AIFinish = true;
+	}
 	else
+	{
 		AIFinish = false;
+	}
 
 	if (AIFinish)
 	{
@@ -270,6 +311,76 @@ void c_LevelOne::Update(double dt)
 		else
 			Lose = true;
 	}
+	//-----------------------------------------------------------//
+
+	//----Weather and Environment Effects-------//
+	if (Raining)
+	{
+		car.SetSteering(9);
+	}
+	if (Snowing)
+	{
+		car.SetFriction(0.01);
+	}
+	if (OffRoad)
+	{
+		car.SetFriction(0.5);
+		car.SetMaxSpeed(0.1);
+	}
+
+	rain.update(dt);
+	snow.update(dt);
+	//-------------------------------------------//
+
+	//----Countdown to Start Of the Game---------//
+	if (Countdown <= 0)
+	{
+		elapsedTime += (float)dt;
+		car.Movement(dt);
+		AI.LevelOne(dt);
+	}
+	//-------------------------------------------//
+
+    //Updating Car Position for Player and AI
+	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
+	//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
+
+	//Update Camera
+	camera.Update(dt);
+}
+
+static const float SKYBOXSIZE = 1500.f;
+static const float translateLength = SKYBOXSIZE / 2;
+void c_LevelOne::updateEnviromentCollision()
+{
+	front.getOBB()->defaultData();
+	left.getOBB()->defaultData();
+	right.getOBB()->defaultData();
+	back.getOBB()->defaultData();
+	car.getOBB()->defaultData();
+	AI.getOBB()->defaultData();
+	boost.getOBB()->defaultData();
+	slow.getOBB()->defaultData();
+
+	//Front Skybox
+	front.updatePos(0, 0, translateLength);
+	front.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	front.getOBB()->calcNewAxis(180.f, 1, 0, 0);
+	front.getOBB()->calcNewAxis(180.f, 0, 0, 1);
+
+	//Left Skybox
+	left.updatePos(-translateLength, 0, 0);
+	left.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	left.getOBB()->calcNewAxis(90.f, 0, 1, 0);
+
+	//Right Skybox
+	right.updatePos(translateLength, 0, 0);
+	right.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	right.getOBB()->calcNewAxis(-90.f, 0, 1, 0);
+
+	//Back Skybox
+	back.updatePos(0, 0, -translateLength);
+	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
 }
 
 void c_LevelOne::Render()
@@ -298,11 +409,19 @@ void c_LevelOne::Render()
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
+	//----Render Functions----------------------------------//
 	renderLights();
 	renderEnviroment();
 	updateEnviromentCollision();
-	renderRain();
-
+	if (Random == 1)
+	{
+		renderRain();
+	}
+	if (Random == 2)
+	{
+		RenderSnow();
+	}
+	//------------------------------------------------------//
 	/**************************************************************		CAR		***************************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
@@ -358,10 +477,11 @@ void c_LevelOne::Render()
 
 	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
 	slow.getOBB()->calcNewDimensions(3, 1, 3);
-
+    
 	CountdownCut = std::to_string(Countdown);
 	CountdownCut.resize(1);
 
+	//----Render Text On Screen-----------------------------------------------------------------------------------//
 	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
@@ -380,34 +500,133 @@ void c_LevelOne::Render()
 			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 10, 14);
 	}
 
-	RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 9, 1);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 9, 3);
 
 	if (Win)
 		RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 10, 10);
 	if (Lose)
 		RenderTextOnScreen(meshList[TEXT], "YOU LOSE", Color(1, 0, 0), 4, 10, 10);
 
-	/********************************************************************************************************************************************/
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+//	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
+	//----------------------------------------------------------------------------------------------------------//
+}
 
-}
-void c_LevelOne::Exit()
+void c_LevelOne::renderRain()
 {
-	// Cleanup here
-	for (int i = 0; i < NUM_GEOMETRY; ++i)
+	for (int i = 0; i < rain.getX().size(); i++)
 	{
-		if (meshList[i] != NULL)
-			delete meshList[i];
+		modelStack.PushMatrix();
+		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
+		modelStack.Translate(rain.getTranslateX(), rain.getTranslateY(), rain.getTranslateZ());
+		modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
+		modelStack.Rotate(45, 0, 0, 1);
+		modelStack.Scale(0.1f, 0.5f, 0.1f);
+		RenderMesh(meshList[RAIN], true);
+		modelStack.PopMatrix();
 	}
-	glDeleteVertexArrays(1, &m_vertexArrayID);
-	glDeleteProgram(m_programID);
+	Raining = true;
 }
+
+void c_LevelOne::RenderSnow()
+{
+	for (int i = 0; i < snow.getX().size(); i++)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
+		modelStack.Translate(snow.getTranslateX() / 3, snow.getTranslateY() / 3, snow.getTranslateZ() / 3);
+		modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
+		modelStack.Rotate(45, 0, 0, 1);
+		modelStack.Scale(0.1f, 0.5f, 0.1f);
+		RenderMesh(meshList[SNOW], true);
+		modelStack.PopMatrix();
+	}
+	Snowing = true;
+}
+
+
+void c_LevelOne::renderEnviroment()
+{
+	/****************************************************Skybox*****************************************************/
+
+	//Front Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, translateLength);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(180, 1, 0, 0);
+	modelStack.Rotate(180, 0, 0, 1);
+	RenderMesh(front.getMesh(), false);
+	modelStack.PopMatrix();
+
+	//Top Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(0, translateLength, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(90, 1, 0, 0);
+	RenderMesh(meshList[TOP], false);
+	modelStack.PopMatrix();
+
+	//Bottom Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(0, -translateLength, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(-90, 1, 0, 0);
+	RenderMesh(meshList[BOTTOM], false);
+	modelStack.PopMatrix();
+
+	//Left Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(-translateLength, 0, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(90, 0, 1, 0);
+	RenderMesh(left.getMesh(), false);
+	modelStack.PopMatrix();
+
+	//Right Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(translateLength, 0, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(-90, 0, 1, 0);
+	RenderMesh(right.getMesh(), false);
+	modelStack.PopMatrix();
+
+	//Back Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, -translateLength);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	RenderMesh(back.getMesh(), false);
+	modelStack.PopMatrix();
+	/***************************************************************************************************************/
+
+	//Track
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, 0);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(6, 1, 6);
+	RenderMesh(meshList[TRACK], false);
+	modelStack.PopMatrix();
+
+	//RaceBanner
+	modelStack.PushMatrix();
+	modelStack.Translate(0, -3, 0);
+	modelStack.Scale(5, 5, 6);
+	RenderMesh(meshList[RACEBANNER], true);
+	modelStack.PopMatrix();
+
+	//StreetLight
+	modelStack.PushMatrix();
+	modelStack.Translate(0, -3, 0);
+	modelStack.Scale(6, 5, 6);
+	RenderMesh(meshList[STREETLIGHT], true);
+	modelStack.PopMatrix();
+}
+
+
 
 void c_LevelOne::RenderMesh(Mesh *mesh, bool enableLight)
 {
@@ -956,126 +1175,14 @@ void c_LevelOne::updateLights(int num)
 	}
 }
 
-static const float SKYBOXSIZE = 1500.f;
-static const float translateLength = SKYBOXSIZE / 2;
-void c_LevelOne::renderEnviroment()
+void c_LevelOne::Exit()
 {
-	/****************************************************Skybox*****************************************************/
-
-	//Front Skybox
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, translateLength);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(180, 1, 0, 0);
-	modelStack.Rotate(180, 0, 0, 1);
-	RenderMesh(front.getMesh(), false);
-	modelStack.PopMatrix();
-
-	//Top Skybox
-	modelStack.PushMatrix();
-	modelStack.Translate(0, translateLength, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(90, 1, 0, 0);
-	RenderMesh(meshList[TOP], false);
-	modelStack.PopMatrix();
-
-	//Bottom Skybox
-	modelStack.PushMatrix();
-	modelStack.Translate(0, -translateLength, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(-90, 1, 0, 0);
-	RenderMesh(meshList[BOTTOM], false);
-	modelStack.PopMatrix();
-
-	//Left Skybox
-	modelStack.PushMatrix();
-	modelStack.Translate(-translateLength, 0, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(90, 0, 1, 0);
-	RenderMesh(left.getMesh(), false);
-	modelStack.PopMatrix();
-
-	//Right Skybox
-	modelStack.PushMatrix();
-	modelStack.Translate(translateLength, 0, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(-90, 0, 1, 0);
-	RenderMesh(right.getMesh(), false);
-	modelStack.PopMatrix();
-
-	//Back Skybox
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, -translateLength);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	RenderMesh(back.getMesh(), false);
-	modelStack.PopMatrix();
-	/***************************************************************************************************************/
-
-	//Track
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 0);
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Scale(6, 1, 6);
-	RenderMesh(meshList[TRACK], false);
-	modelStack.PopMatrix();
-
-	//RaceBanner
-	modelStack.PushMatrix();
-	modelStack.Translate(0, -3, 0);
-	modelStack.Scale(5, 5, 6);
-	RenderMesh(meshList[RACEBANNER], true);
-	modelStack.PopMatrix();
-
-	//StreetLight
-	modelStack.PushMatrix();
-	modelStack.Translate(0, -3, 0);
-	modelStack.Scale(6, 5, 6);
-	RenderMesh(meshList[STREETLIGHT], true);
-	modelStack.PopMatrix();
-}
-void c_LevelOne::updateEnviromentCollision()
-{
-	front.getOBB()->defaultData();
-	left.getOBB()->defaultData();
-	right.getOBB()->defaultData();
-	back.getOBB()->defaultData();
-	car.getOBB()->defaultData();
-	AI.getOBB()->defaultData();
-	boost.getOBB()->defaultData();
-	slow.getOBB()->defaultData();
-
-	//Front Skybox
-	front.updatePos(0, 0, translateLength);
-	front.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	front.getOBB()->calcNewAxis(180.f, 1, 0, 0);
-	front.getOBB()->calcNewAxis(180.f, 0, 0, 1);
-
-	//Left Skybox
-	left.updatePos(-translateLength, 0, 0);
-	left.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	left.getOBB()->calcNewAxis(90.f, 0, 1, 0);
-
-	//Right Skybox
-	right.updatePos(translateLength, 0, 0);
-	right.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	right.getOBB()->calcNewAxis(-90.f, 0, 1, 0);
-
-	//Back Skybox
-	back.updatePos(0, 0, -translateLength);
-	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-}
-
-void c_LevelOne::renderRain()
-{
-	for (int i = 0; i < rain.getX().size(); i++)
+	// Cleanup here
+	for (int i = 0; i < NUM_GEOMETRY; ++i)
 	{
-		modelStack.PushMatrix();
-		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
-		modelStack.Translate(rain.getTranslateX(), rain.getTranslateY(), rain.getTranslateZ());
-		modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
-		modelStack.Rotate(45, 0, 0, 1);
-		modelStack.Scale(0.1f, 0.5f, 0.1f);
-		RenderMesh(meshList[RAIN], true);
-		modelStack.PopMatrix();
+		if (meshList[i] != NULL)
+			delete meshList[i];
 	}
+	glDeleteVertexArrays(1, &m_vertexArrayID);
+	glDeleteProgram(m_programID);
 }

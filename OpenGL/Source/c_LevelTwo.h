@@ -1,5 +1,5 @@
-#ifndef C_LEVELONE_H
-#define C_LEVELONE_H
+#ifndef C_LEVELTWO_H
+#define C_LEVELTWO_H
 
 #include "Scene.h"
 #include "Mesh.h"
@@ -12,7 +12,7 @@
 #include "c_Weather.h"
 
 
-class c_LevelOne : public Scene
+class c_LevelTwo : public Scene
 {
 public:
 	enum GEOMETRY_TYPE
@@ -43,7 +43,7 @@ public:
 		U_MATERIAL_DIFFUSE,
 		U_MATERIAL_SPECULAR,
 		U_MATERIAL_SHININESS,
-		
+
 		// Lights
 		U_LIGHT0_POSITION,
 		U_LIGHT0_COLOR,
@@ -132,8 +132,9 @@ public:
 		U_TOTAL,
 	};
 
-	c_LevelOne();
-	~c_LevelOne();
+
+	c_LevelTwo();
+	~c_LevelTwo();
 	void Init();
 	void Update(double dt);
 	void Render();
@@ -153,7 +154,7 @@ private:
 	void renderLights();
 	void updateLights(int num);
 
-	void RenderMesh(Mesh* mesh, bool enableLight);
+	void RenderMesh(Mesh *mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
@@ -161,7 +162,7 @@ private:
 	void updateEnviromentCollision();
 
 	c_FirstCar car;
-	
+
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
@@ -207,12 +208,14 @@ private:
 	bool Win = false;
 	bool Lose = false;
 
-	float WheelRotation;
-
 	c_Weather rain;
 	c_Weather snow;
 	void renderRain();
 	void RenderSnow();
+
+
 };
+
+
 
 #endif

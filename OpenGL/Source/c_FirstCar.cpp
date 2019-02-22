@@ -29,6 +29,7 @@ c_FirstCar::~c_FirstCar()
 
 }
 
+
 void c_FirstCar::Ability(double dt)
 {
 	if (Application::IsKeyPressed('Q'))

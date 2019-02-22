@@ -8,13 +8,18 @@ public:
 	c_AI();
 	~c_AI();
 
-	virtual void LevelOne(double dt);
+	void LevelOne(double dt);
+	void LevelTwo(double dt);
+	void LevelThree(double dt);
+	void MoveOne(double dt, int Points);
+	void MoveTwo(double dt, int Points);
+	void MoveThree(double dt, int Points);
+	void TurnOne(double dt, int dir);
+	void TurnTwo(double dt, int dir);
+	void TurnThree(double dt, int dir);
+	float GetTurning();
 	virtual void Ability(double dt);
 	virtual void PowerUp(bool check);
-
-	void Move(double dt, int Points);
-	void Turn(double dt, int dir);
-	float GetTurning();
 
 protected:
 	int Waypoint;

@@ -1,37 +1,32 @@
-#ifndef C_LEVELONE_H
-#define C_LEVELONE_H
+#ifndef C_MULTIPLAYERLEVELTWO_H
+#define C_MULTIPLAYERLEVELTWO_H
 
 #include "Scene.h"
 #include "Mesh.h"
 #include "FirstPersonCamera.h"
 #include "MatrixStack.h"
 #include "Light.h"
+
 #include "c_FirstCar.h"
-#include "c_Entity.h"
-#include "c_AI.h"
-#include "c_Weather.h"
+#include "c_SecondPlayer.h"
+
+#include "c_Impulse.h"
 
 
-class c_LevelOne : public Scene
+class c_MultiplayerLevelTwo : public Scene
 {
 public:
 	enum GEOMETRY_TYPE
 	{
-		TEST,
 		TEXT,
+		CARAXIS,
 		TOP,
 		BOTTOM,
-		CAR1,
+		RACEBANNER,
+		STREETLIGHT,
 		LIGHT1,
 		LIGHT2,
 		TRACK,
-		RACEBANNER,
-		STREETLIGHT,
-		NITRO,
-		BOOSTPAD,
-		SLOWPAD,
-		RAIN,
-		SNOW,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -43,7 +38,7 @@ public:
 		U_MATERIAL_DIFFUSE,
 		U_MATERIAL_SPECULAR,
 		U_MATERIAL_SHININESS,
-		
+
 		// Lights
 		U_LIGHT0_POSITION,
 		U_LIGHT0_COLOR,
@@ -132,8 +127,8 @@ public:
 		U_TOTAL,
 	};
 
-	c_LevelOne();
-	~c_LevelOne();
+	c_MultiplayerLevelTwo();
+	~c_MultiplayerLevelTwo();
 	void Init();
 	void Update(double dt);
 	void Render();
@@ -144,7 +139,6 @@ private:
 	Mesh* meshList[NUM_GEOMETRY];
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
-	FirstPersonCamera camera;
 	MS modelStack, viewStack, projectionStack;
 
 	Light lights[6];
@@ -152,67 +146,48 @@ private:
 	void initLights();
 	void renderLights();
 	void updateLights(int num);
-
-	void RenderMesh(Mesh* mesh, bool enableLight);
-	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
+	void RenderMesh(Mesh *mesh, bool enableLight);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
 	void renderEnviroment();
-	void updateEnviromentCollision();
+	void renderPlayerOne();
+	void renderPlayerTwo();
 
-	c_FirstCar car;
-	
+	void updateEnviromentCollision();
+	void updatePlayerOneCollision();
+	void updatePlayerTwoCollision();
+
+	FirstPersonCamera playerOneCam;
+	float playerOneCamPosX;
+	float playerOneCamPosY;
+	float playerOneCamPosZ;
+	float playerOneCamTargetX;
+	float playerOneCamTargetY;
+	float playerOneCamTargetZ;
+
+	FirstPersonCamera playerTwoCam;
+	float playerTwoCamPosX;
+	float playerTwoCamPosY;
+	float playerTwoCamPosZ;
+	float playerTwoCamTargetX;
+	float playerTwoCamTargetY;
+	float playerTwoCamTargetZ;
+
+	float elapsedTime;
+	std::string elapedTimeCut;
+
+
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
-	c_Entity nitro;
-	c_AI AI;
 
-	c_Entity boost;
-	c_Entity slow;
-	c_Entity FinishLine;
-	//Variables
+	c_FirstCar playerOne;
+	c_SecondPlayer playerTwo;
 
-	bool talk;
-	float elapsedTime;
-	float FreezeTime;
-	float TimePassed;
-	bool AbletoPress;
-	float CamPosX;
-	float CamPosY;
-	float CamPosZ;
-	float CamTargetX;
-	float CamTargetY;
-	float CamTargetZ;
-	bool Freeze = false;
-	bool Raining = false;
-	bool Snowing = false;
-	bool OffRoad = false;
-	float FPS;
+	c_Impulse Impulse;
+		
 
-	int duration;
-	int Random;
-	float bLightEnabled;
-	std::string elapedTimeCut;
-	std::string CountdownCut;
-	int Cooldown;
-	float Countdown;
-	float Timer;
-	bool Finish = false;
-	int laps;
-	int AIlaps;
-	bool AIFinish = false;
-	bool CheckEnd = false;
-	bool Win = false;
-	bool Lose = false;
-
-	float WheelRotation;
-
-	c_Weather rain;
-	c_Weather snow;
-	void renderRain();
-	void RenderSnow();
 };
 
 #endif

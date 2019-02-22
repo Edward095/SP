@@ -1,4 +1,4 @@
-#include "c_MultiplayerLevel.h"
+#include "c_MultiplayerLevelTwo.h"
 #include "GL\glew.h"
 
 #include "shader.hpp"
@@ -13,15 +13,15 @@
 
 #include "c_ObjectManager.h"
 
-c_MultiplayerLevel::c_MultiplayerLevel()
+c_MultiplayerLevelTwo::c_MultiplayerLevelTwo()
 {
 }
 
 
-c_MultiplayerLevel::~c_MultiplayerLevel()
+c_MultiplayerLevelTwo::~c_MultiplayerLevelTwo()
 {
 }
-void c_MultiplayerLevel::Init()
+void c_MultiplayerLevelTwo::Init()
 {
 	playerOneCamPosX = playerOne.getPos().x + 1;
 	playerOneCamPosY = playerOne.getPos().y + 1;
@@ -112,7 +112,6 @@ void c_MultiplayerLevel::Init()
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
 
-	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20));
 	front.init("front", "quad", "Image//SunnyFront.tga", (0, 0, 0));
 	left.init("left", "quad", "Image//SunnyLeft.tga", (0, 0, 0));
 	right.init("right", "quad", "Image//SunnyRight.tga", (0, 0, 0));
@@ -123,15 +122,8 @@ void c_MultiplayerLevel::Init()
 	playerTwo.updatePos(10, 0, 5);
 
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
-
-	elapsedTime = 0;
-	Cooldown = 0;
-	Countdown = 3;
-	Timer = 0;
-	Ponelaps = 2;
-	PTwolaps = 2;
 }
-void c_MultiplayerLevel::Update(double dt)
+void c_MultiplayerLevelTwo::Update(double dt)
 {
 	playerOneCamPosX = (playerOne.getPos().x - (sin(Math::DegreeToRadian(playerOne.GetSteeringAngle()))) * 10);
 	playerOneCamPosY = playerOne.getPos().y + 8;
@@ -153,57 +145,14 @@ void c_MultiplayerLevel::Update(double dt)
 	playerOne.updatePos(playerOne.getPos().x, playerOne.getPos().y, playerOne.getPos().z);
 	playerTwo.updatePos(playerTwo.getPos().x, playerTwo.getPos().y, playerTwo.getPos().z);
 
-	
+	playerOne.Movement(dt);
+	playerTwo.Movement(dt);
 
-	Timer += (float)dt;
-	Countdown -= (float)Timer * dt;
 
-	if (Countdown <= 0)
-	{
-		elapsedTime += (float)dt;
-		playerOne.Movement(dt);
-		playerTwo.Movement(dt);
-	}
-	
 
-	if (playerOne.gotCollide("FinishLine"))
-		PoneFinish = true;
-	else
-		PoneFinish = false;
 
-	if (PoneFinish)
-	{
-		if (elapsedTime <= 36)
-			elapsedTime += (dt + 2);
-
-		if (elapsedTime >= 37 && elapsedTime <= 80)
-			Ponelaps = 1;
-		if (elapsedTime >= 81 && elapsedTime <= 140)
-			Ponelaps = 0;
-	}
-
-	if (playerTwo.gotCollide("FinishLine"))
-		PTwoFinish = true;
-	else
-		PTwoFinish = false;
-
-	if (PTwoFinish)
-	{
-		if (elapsedTime >= 37 && elapsedTime <= 80)
-			Ponelaps = 1;
-		if (elapsedTime >= 81 && elapsedTime <= 140)
-			Ponelaps = 0;
-	}
-
-	if (Ponelaps == 0 || PTwolaps == 0)
-	{
-		if (Ponelaps < PTwolaps)
-			Win = true;
-		else
-			Lose = true;
-	}
 }
-void c_MultiplayerLevel::Render()
+void c_MultiplayerLevelTwo::Render()
 {
 	glEnable(GL_SCISSOR_TEST);
 
@@ -217,46 +166,12 @@ void c_MultiplayerLevel::Render()
 
 	glDisable(GL_SCISSOR_TEST);
 
-	modelStack.PushMatrix();
-	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Scale(50, 15, 50);
-	RenderMesh(FinishLine.getMesh(), true);
-	modelStack.PopMatrix();
-
-	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
-
-	CountdownCut = std::to_string(Countdown);
-	CountdownCut.resize(1);
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
 
-	if (Countdown >= 0)
-		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 10, 14);
-	else
-	{
-		Cooldown++;
-		elapedTimeCut = std::to_string(elapsedTime);
-		elapedTimeCut.resize(5);
-
-		if (Cooldown <= 50)
-			RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 10, 14);
-		else
-			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 10, 14);
-	}
-
-	RenderTextOnScreen(meshList[TEXT], std::to_string(Ponelaps), Color(1, 0, 0), 3, 9, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(PTwolaps), Color(1, 0, 0), 3, 11, 3);
-
-	if (Win)
-		RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 10, 10);
-	if (Lose)
-		RenderTextOnScreen(meshList[TEXT], "YOU LOSE", Color(1, 0, 0), 4, 10, 10);
-	
 }
-void c_MultiplayerLevel::Exit()
+void c_MultiplayerLevelTwo::Exit()
 {
 	// Cleanup here
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -267,7 +182,7 @@ void c_MultiplayerLevel::Exit()
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
 }
-void c_MultiplayerLevel::RenderMesh(Mesh *mesh, bool enableLight)
+void c_MultiplayerLevelTwo::RenderMesh(Mesh *mesh, bool enableLight)
 {
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
 	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
@@ -310,7 +225,7 @@ void c_MultiplayerLevel::RenderMesh(Mesh *mesh, bool enableLight)
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
-void c_MultiplayerLevel::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y)
+void c_MultiplayerLevelTwo::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y)
 {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 	{
@@ -357,7 +272,7 @@ void c_MultiplayerLevel::RenderTextOnScreen(Mesh* mesh, std::string text, Color 
 
 	glEnable(GL_DEPTH_TEST);
 }
-void c_MultiplayerLevel::initLights()
+void c_MultiplayerLevelTwo::initLights()
 {
 	/***********************************************	Light 1		***************************************************************************/
 	m_parameters[U_LIGHT0_TYPE] = glGetUniformLocation(m_programID, "lights[0].type");
@@ -571,7 +486,7 @@ void c_MultiplayerLevel::initLights()
 
 	/*******************************************************************************************************************************************/
 }
-void c_MultiplayerLevel::renderLights()
+void c_MultiplayerLevelTwo::renderLights()
 {
 	/***********************************************	Light 1		***************************************************************************/
 	if (lights[0].type == Light::LIGHT_DIRECTIONAL)
@@ -710,7 +625,7 @@ void c_MultiplayerLevel::renderLights()
 		modelStack.PopMatrix();
 	}
 }
-void c_MultiplayerLevel::updateLights(int num)
+void c_MultiplayerLevelTwo::updateLights(int num)
 {
 	if (num == 0)
 	{
@@ -786,7 +701,7 @@ void c_MultiplayerLevel::updateLights(int num)
 	}
 }
 
-void c_MultiplayerLevel::renderPlayerOne()
+void c_MultiplayerLevelTwo::renderPlayerOne()
 {
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -841,7 +756,7 @@ void c_MultiplayerLevel::renderPlayerOne()
 	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 }
-void c_MultiplayerLevel::renderPlayerTwo()
+void c_MultiplayerLevelTwo::renderPlayerTwo()
 {
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -893,7 +808,7 @@ void c_MultiplayerLevel::renderPlayerTwo()
 
 static const float SKYBOXSIZE = 1500.f;
 static const float translateLength = SKYBOXSIZE / 2;
-void c_MultiplayerLevel::renderEnviroment()
+void c_MultiplayerLevelTwo::renderEnviroment()
 {
 	/****************************************************Skybox*****************************************************/
 
@@ -949,7 +864,6 @@ void c_MultiplayerLevel::renderEnviroment()
 	//Track
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, 0);
-	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Scale(6, 1, 6);
 	RenderMesh(meshList[TRACK], false);
 	modelStack.PopMatrix();
@@ -968,7 +882,7 @@ void c_MultiplayerLevel::renderEnviroment()
 	RenderMesh(meshList[STREETLIGHT], true);
 	modelStack.PopMatrix();
 }
-void c_MultiplayerLevel::updateEnviromentCollision()
+void c_MultiplayerLevelTwo::updateEnviromentCollision()
 {
 	front.getOBB()->defaultData();
 	left.getOBB()->defaultData();
