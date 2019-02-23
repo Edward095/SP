@@ -1,65 +1,8 @@
-﻿  c_LevelOne.cpp
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(38): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(202): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(232): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(233): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(291): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(332): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(337): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(419): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(498): warning C4018: '<': signed/unsigned mismatch
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(514): warning C4018: '<': signed/unsigned mismatch
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(731): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1167): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1171): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1175): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1179): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1180): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1184): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1188): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1189): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1193): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1197): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1198): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1202): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1206): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1210): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1211): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelone.cpp(1215): warning C4305: 'argument': truncation from 'double' to 'float'
-  c_LevelThree.cpp
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelthree.cpp(31): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelthree.cpp(36): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelthree.cpp(211): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelthree.cpp(212): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelthree.cpp(274): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelthree.cpp(315): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelthree.cpp(320): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelthree.cpp(378): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelthree.cpp(519): warning C4018: '<': signed/unsigned mismatch
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelthree.cpp(535): warning C4018: '<': signed/unsigned mismatch
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelthree.cpp(605): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_levelthree.cpp(831): warning C4305: 'argument': truncation from 'double' to 'float'
-  c_LevelTwo.cpp
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_leveltwo.cpp(31): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_leveltwo.cpp(36): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_leveltwo.cpp(210): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_leveltwo.cpp(211): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_leveltwo.cpp(273): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_leveltwo.cpp(314): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_leveltwo.cpp(319): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_leveltwo.cpp(518): warning C4018: '<': signed/unsigned mismatch
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_leveltwo.cpp(534): warning C4018: '<': signed/unsigned mismatch
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_leveltwo.cpp(830): warning C4305: 'argument': truncation from 'double' to 'float'
-  c_MultiplayerLevelThree.cpp
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevelthree.cpp(144): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevelthree.cpp(145): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevelthree.cpp(146): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevelthree.cpp(147): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevelthree.cpp(387): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevelthree.cpp(892): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_multiplayerlevelthree.cpp(944): warning C4305: 'argument': truncation from 'double' to 'float'
+﻿  c_Npc.cpp
+c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_npc.cpp(39): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_npc.cpp(41): warning C4305: 'argument': truncation from 'double' to 'float'
   Generating code
-  9 of 1445 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+  2 of 1463 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

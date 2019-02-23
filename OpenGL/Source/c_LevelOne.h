@@ -10,6 +10,7 @@
 #include "c_Entity.h"
 #include "c_AI.h"
 #include "c_Weather.h"
+
 #include "c_OffRoadManager.h"
 #include "c_ObjectManager.h"
 
@@ -162,18 +163,14 @@ private:
 	void updateEnviromentCollision();
 
 
-	//c_CarBaseClass* car;
-	/*c_FirstCar car;
-	c_SecondCar carTwo;
-	c_ThirdCar carThree;*/
-	c_CarBaseClass* car;
-	c_Entity* car1;
+	
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
 
 	c_AI AI;
+	c_CarBaseClass* car;
 
 	c_Entity boost;
 	c_Entity slow;

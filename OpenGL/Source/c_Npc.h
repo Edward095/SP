@@ -63,7 +63,6 @@ public:
 		_NPC,
 		GARAGE,
 		LEVEL1,
-
 	};
 
 	c_Npc();

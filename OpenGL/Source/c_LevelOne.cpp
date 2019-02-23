@@ -181,6 +181,7 @@ void c_LevelOne::Init()
 	meshList[SNOW] = MeshBuilder::GenerateSphere("Snow", Color(1, 1, 1), 18, 18, 2);
     //----------------------------------------------------------------------------------------//
 
+	c_Entity* car1;
 	car1 = OBJmanager->getCanCollide("player1");
 	c_FirstCar* first = dynamic_cast <c_FirstCar*>(car1);
 	if (first)

@@ -2,39 +2,35 @@
 #define C_SCENEMANAGER_H
 
 #include "Scene.h"
+#include <string>
 
 class c_SceneManager
 {
-private:
+private://Functions and Enums
 	c_SceneManager();
 	enum GAMESTATE
 {
-	//MainMenu
-	MENU = 0,
-	NEWGAME,
-	CONTINUE,
-	OPTIONS,
-	EXIT,
-	//NPC(Choose level)
-	NPC,
-	//Garage(Choose Car)
-	GARAGE
+		NPC,
+		GARAGE,
+		CHANGED,
+		SLEVELONE,
+		SLEVELTWO,
+		SLEVELTHREE,
+		MLEVELONE,
+		MLEVELTWO,
+		MLEVELTHREE,
 };
 
 public:
 	~c_SceneManager();
 	c_SceneManager* getInstance();
-	Scene* selectScene(Scene* scene);
+	void updateState(std::string state);
+
 
 private:
-	
-
 	//Variables
 	static c_SceneManager* instance;
-	
-
 	GAMESTATE gameState;
-	Scene* scene;
 };
 
 #endif

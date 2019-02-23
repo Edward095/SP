@@ -146,6 +146,7 @@ void c_MultiplayerLevelTwo::Init()
 	right.init("right", "quad", "Image//SunnyRight.tga", (0, 0, 0), true);
 	back.init("back", "quad", "Image/SunnyBack.tga", (0, 0, 0), true);
 	track.init("track", "OBJ//RaceTrack2.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
+	offRoadManager->addOffRoad("OffRoad//offRoadOBJ2.txt");
 
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
 }
@@ -917,6 +918,7 @@ void c_MultiplayerLevelTwo::updateEnviromentCollision()
 	track.getOBB()->defaultData();
 	playerOne->getOBB()->defaultData();
 	playerTwo->getOBB()->defaultData();
+	offRoadManager->defaultData();
 	//AI.getOBB()->defaultData();
 	//boost.getOBB()->defaultData();
 	//slow.getOBB()->defaultData();
@@ -944,4 +946,6 @@ void c_MultiplayerLevelTwo::updateEnviromentCollision()
 	//track
 	track.updatePos(-310.951f, 0, -135.453f);
 	track.getOBB()->calcNewAxis(90, 0, 1, 0);
+
+	offRoadManager->updateCollision("OffRoad//offRoadPos2.txt", "OffRoad//offRoadRotate2.txt");
 }

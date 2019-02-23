@@ -4,7 +4,7 @@ c_SceneManager* c_SceneManager::instance = 0;
 
 c_SceneManager::c_SceneManager()
 {
-	gameState = MENU;
+	gameState = NPC;
 }
 
 
@@ -22,8 +22,25 @@ c_SceneManager* c_SceneManager::getInstance()
 	else
 		return instance;
 }
-Scene* c_SceneManager::selectScene(Scene* scene)
+
+void c_SceneManager::updateState(std::string state)
 {
-	scene->Init();
-	return scene;
+	if (state == "NPC")
+		gameState = NPC;
+	else if (state == "GARAGE")
+		gameState = GARAGE;
+	else if (state == "CHANGED")
+		gameState = CHANGED;
+	else if (state == "SLEVELONE")
+		gameState = SLEVELONE;
+	else if (state == "SLEVELTWO")
+		gameState = SLEVELTWO;
+	else if (state == "SLEVELTHREE")
+		gameState = SLEVELTHREE;
+	else if (state == "MLEVELONE")
+		gameState = MLEVELONE;
+	else if (state == "MLEVELTWO")
+		gameState = MLEVELTWO;
+	else if (state == "MLEVELTHREE")
+		gameState = MLEVELTHREE;
 }

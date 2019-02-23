@@ -11,6 +11,8 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 
+#include "c_DataManager.h"
+
 
 bool c_Npc::MultiPlayer = false;
 bool c_Npc::SinglePlayer = false;
@@ -30,6 +32,10 @@ c_Npc::~c_Npc()
 
 void c_Npc::Init()
 {
+	c_DataManager* data = c_DataManager::getInstance();
+
+	data->selectFile(1);
+
 	Garage.Init();
 	//LevelOne.Init();
 	e_GameState_NPC = _NPC;
