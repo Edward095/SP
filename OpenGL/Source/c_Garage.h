@@ -11,6 +11,7 @@
 #include "c_Sound.h"
 
 #include "c_ObjectManager.h"
+#include "c_SceneManager.h"
 
 #include "c_LevelOne.h"
 #include "c_LevelTwo.h"
@@ -144,17 +145,6 @@ public:
 		U_TEXT_COLOR,
 		U_TOTAL,
 	};
-	enum  GAME_STATE_GARAGE
-	{
-		GARAGE_,
-		CHANGED_,
-		SLEVELONE_,
-		SLEVELTWO_,
-		SLEVELTHREE_,
-		MLEVELONE_,
-		MLEVELTWO_,
-		MLEVELTHREE_,
-	};
 
 	void Init();
 	void Update(double dt);
@@ -180,7 +170,7 @@ private:
 	unsigned v_Car2Blue, v_Car2Red, v_Car2Purple, v_Car2Green, v_Car2Pink, v_Car2Yellow, v_Car2White, v_Car2Grey, v_Car2Black;			 // Colour Textures
 	unsigned v_Car3Blue, v_Car3Red, v_Car3Purple, v_Car3Green, v_Car3Pink, v_Car3Yellow, v_Car3White, v_Car3Grey, v_Car3Black;			 // Colour Textures
 	unsigned v_Car1Stats, v_Car2Stats, v_Car3Stats;
-	GAME_STATE_GARAGE e_GameState_Garage;
+
 	bool v_MusicPause;
 	bool v_Car1Changed;
 	bool v_Car2Changed;
@@ -232,6 +222,7 @@ private:
 	c_MultiplayerLevelThree mLevelThree;
 
 	c_ObjectManager* manager;
+	c_SceneManager* scene;
 
 };
 

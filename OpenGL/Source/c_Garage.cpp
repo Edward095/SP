@@ -11,10 +11,6 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 
-#include "c_Npc.h"
-#include "c_ObjectManager.h"
-
-
 
 // +++++++++++++++++++++++++ CAR CLASS +++++++++++++++++++++++++++
 
@@ -271,7 +267,7 @@ void c_Garage::Init()
 	/*firstCar.init("player1", v_CarPaths[0], v_CarColourPath1[0], (0, 0, 0));
 	if(c_Npc::GetMultiPlayer())
 		secondCar.init("player2", v_CarPaths[0], v_CarColourPath1[0], (10, 0, 5));*/
-	e_GameState_Garage = GARAGE_;
+	//e_GameState_Garage = GARAGE_;
 	v_MusicPause = false;
 
 	v_RotateCar = 0;
@@ -285,6 +281,7 @@ void c_Garage::Init()
 	v_Car1Changed = v_Car2Changed = false;
 
 	manager = c_ObjectManager::getInstance();
+	scene = c_SceneManager::getInstance();
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
@@ -392,23 +389,23 @@ void c_Garage::Init()
 void c_Garage::Update(double dt)
 {
 	v_ElapsedTime += dt;
-	if (e_GameState_Garage == GARAGE_ && c_Npc::GetSinglePlayer())
+	if (scene->checkState("GARAGE") && scene->singleOrMulti('S'))
 	{
 		f_UpdateGarage(dt);
 
-		if(v_Car1Changed)
-			e_GameState_Garage = CHANGED_;
+		if (v_Car1Changed)
+			scene->updateState("CHANGED");
 	}
-	else if (e_GameState_Garage == GARAGE_ && c_Npc::GetMultiPlayer())
+	else if (scene->checkState("GARAGE") && scene->singleOrMulti('M'))
 	{
-		if(!v_Car1Changed)
+		if (!v_Car1Changed)
 			f_UpdateGarage(dt);
-		else 
+		else
 			f_UpdateGarage2(dt);
-		if(v_Car1Changed && v_Car2Changed)
-			e_GameState_Garage = CHANGED_;
+		if (v_Car1Changed && v_Car2Changed)
+			scene->updateState("CHANGED");
 	}
-	else if (e_GameState_Garage == CHANGED_)
+	else if (scene->checkState("CHANGED"))
 	{
 		v_RotateCar += (float)(v_ConfirmRotation * dt);
 
@@ -418,69 +415,34 @@ void c_Garage::Update(double dt)
 		}
 		else
 		{
-			if (c_Npc::GetSinglePlayer())
-			{
-				if(c_Npc::GetLevel1())
-				{
-					e_GameState_Garage = SLEVELONE_;
-					sLevelOne.Init();
-				}
-				else if (c_Npc::GetLevel2())
-				{
-					e_GameState_Garage = SLEVELTWO_;
-					sLevelTwo.Init();
-				}
-				else if (c_Npc::GetLevel3())
-				{
-					e_GameState_Garage = SLEVELTHREE_;
-					sLevelThree.Init();
-				}
-			}
-			else if (c_Npc::GetMultiPlayer())
-			{
-				if (c_Npc::GetLevel1())
-				{
-					e_GameState_Garage = MLEVELONE_;
-					mLevelOne.Init();
-				}
-				else if (c_Npc::GetLevel2())
-				{
-					e_GameState_Garage = MLEVELTWO_;
-					mLevelTwo.Init();
-				}
-				else if (c_Npc::GetLevel3())
-				{
-					e_GameState_Garage = MLEVELTHREE_;
-					mLevelThree.Init();
-				}
-			}
+			if (scene->checkLevel("SLEVELONE"))
+			sLevelOne.Init();
+			else if (scene->checkLevel("SLEVELTWO"))
+				sLevelTwo.Init();
+			else if (scene->checkLevel("SLEVELTHREE"))
+				sLevelThree.Init();
+			else if (scene->checkLevel("MLEVELONE"))
+				mLevelOne.Init();
+			else if (scene->checkLevel("MLEVELTWO"))
+				mLevelTwo.Init();
+			else if (scene->checkLevel("MLEVELTHREE"))
+				mLevelThree.Init();
+			scene->updateState(scene->getLevel());
 		}
-		
+
 	}
-	else if (e_GameState_Garage == SLEVELONE_)
-	{
+	else if (scene->checkState("SLEVELONE"))
 		sLevelOne.Update(dt);
-	}
-	else if (e_GameState_Garage == SLEVELTWO_)
-	{
+	else if (scene->checkState("SLEVELTWO"))
 		sLevelTwo.Update(dt);
-	}
-	else if (e_GameState_Garage == SLEVELTHREE_)
-	{
+	else if (scene->checkState("SLEVELTHREE"))
 		sLevelThree.Update(dt);
-	}
-	else if (e_GameState_Garage == MLEVELONE_)
-	{
+	else if(scene->checkState("MLEVELONE"))
 		mLevelOne.Update(dt);
-	}
-	else if (e_GameState_Garage == MLEVELTWO_)
-	{
+	else if (scene->checkState("MLEVELTWO"))
 		mLevelTwo.Update(dt);
-	}
-	else if (e_GameState_Garage == MLEVELTHREE_)
-	{
+	else if (scene->checkState("MLEVELTHREE"))
 		mLevelThree.Update(dt);
-	}
 }
 
 void c_Garage::RenderMesh(Mesh *mesh, bool enableLight)
@@ -618,13 +580,13 @@ void c_Garage::Render()
 
 	renderLights();
 
-	if (e_GameState_Garage == GARAGE_ && c_Npc::GetSinglePlayer())
+	if (scene->checkState("GARAGE"))
 		f_RenderGarage();
-	else if (e_GameState_Garage == GARAGE_ && c_Npc::GetMultiPlayer())
-	{
-		f_RenderGarage();
-	}
-	else if (e_GameState_Garage == CHANGED_)
+	//else if (scene->checkState("GARAGE") && c_Npc::GetMultiPlayer())//(e_GameState_Garage == GARAGE_ && c_Npc::GetMultiPlayer())
+	//{
+	//	f_RenderGarage();
+	//}
+	else if (scene->checkState("CHANGED"))
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(0, 0.5f, -10);
@@ -634,30 +596,18 @@ void c_Garage::Render()
 
 		f_RenderFinal();
 	}
-	else if (e_GameState_Garage == SLEVELONE_)
-	{
+	else if (scene->checkState("SLEVELONE"))
 		sLevelOne.Render();
-	}
-	else if (e_GameState_Garage == SLEVELTWO_)
-	{
+	else if (scene->checkState("SLEVELTWO"))
 		sLevelTwo.Render();
-	}
-	else if (e_GameState_Garage == SLEVELTHREE_)
-	{
+	else if (scene->checkState("SLEVELTHREE"))
 		sLevelThree.Render();
-	}
-	else if (e_GameState_Garage == MLEVELONE_)
-	{
+	else if (scene->checkState("MLEVELONE"))
 		mLevelOne.Render();
-	}
-	else if (e_GameState_Garage == MLEVELTWO_)
-	{
+	else if (scene->checkState("MLEVELTWO"))
 		mLevelTwo.Render();
-	}
-	else if (e_GameState_Garage == MLEVELTHREE_)
-	{
+	else if (scene->checkState("MLEVELTHREE"))
 		mLevelThree.Render();
-	}
 }
 
 void c_Garage::initLights()
@@ -1297,7 +1247,7 @@ void c_Garage::f_UpdateGarage(double dt)
 		{
 			manager->addCanCollide("player1", v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
 		}
-		if (v_Car1Changed && c_Npc::GetMultiPlayer())
+		if (v_Car1Changed && scene->singleOrMulti('M'))
 		{
 			v_CarList.f_ChangeCurrentCar('R');
 			v_ColourList.f_ChangeCurrentColour('R');

@@ -7,6 +7,9 @@
 #include "NPCCamera.h"
 #include "MatrixStack.h"
 #include "Light.h"
+
+#include "c_SceneManager.h"
+
 #include "c_Garage.h"
 #include "c_LevelOne.h"
 
@@ -58,13 +61,6 @@ public:
 		U_TOTAL,
 	};
 
-	enum GAME_STATE_NPC
-	{
-		_NPC,
-		GARAGE,
-		LEVEL1,
-	};
-
 	c_Npc();
 	~c_Npc();
 	void Init();
@@ -74,13 +70,6 @@ public:
 	void UpdateNpc(double dt);
 	void RenderNpc();
 
-	static bool GetSinglePlayer();
-	static bool GetMultiPlayer();
-
-	static bool GetLevel1();
-	static bool GetLevel2();
-	static bool GetLevel3();
-
 private:
 
 	unsigned m_vertexArrayID;
@@ -89,8 +78,6 @@ private:
 	unsigned m_parameters[U_TOTAL];
 	NPCCamera camera;
 	MS modelStack, viewStack, projectionStack;
-	//Gamestate
-	GAME_STATE_NPC e_GameState_NPC;
 
 	//Light
 	Light light[1];
@@ -98,6 +85,8 @@ private:
 	//Class
 	c_Garage Garage;
 	c_LevelOne LevelOne;
+
+	c_SceneManager* scene;
 
 
 	//Function
@@ -112,8 +101,6 @@ private:
 
 
 	//Variables
-
-	
 	double ElapsedTime;
 	double TimePassed;
 	float ArrowY;
@@ -123,11 +110,8 @@ private:
 	bool Talk;
 	bool Talk1;
 	bool LevelSelection;
-	static bool Level1;
-	static bool Level2;
-	static bool Level3;
-	static bool SinglePlayer;
-	static bool MultiPlayer;
+	bool SinglePlayer;
+	bool MultiPlayer;
 	bool StartGame;
 	bool Continue;
 	bool Options;

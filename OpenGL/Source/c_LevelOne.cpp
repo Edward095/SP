@@ -411,7 +411,7 @@ void c_LevelOne::Render()
 	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
 	car->getOBB()->calcNewAxis(90, 0, 1, 0);
 	car->getOBB()->calcNewAxis(car->GetSteeringAngle(), 0, 1, 0);
-	
+
 	/**************************************************************		AI		***************************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(AI.getPos().x, AI.getPos().y, AI.getPos().z);
@@ -454,7 +454,7 @@ void c_LevelOne::Render()
 
 	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
 	slow.getOBB()->calcNewDimensions(3, 1, 3);
-    
+
 	CountdownCut = std::to_string(Countdown);
 	CountdownCut.resize(1);
 
@@ -492,6 +492,7 @@ void c_LevelOne::Render()
 	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
 	//----------------------------------------------------------------------------------------------------------//
+	
 }
 
 void c_LevelOne::renderRain()

@@ -3,10 +3,14 @@
 #include <iostream>
 #include <vector>
 
+
+
 c_DataManager* c_DataManager::instance = 0;
 
 c_DataManager::c_DataManager()
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	leaderBoardsFile = "Data//LeaderBoards.txt";
 	saveFile1 = "Data//SaveFile1.txt";
 	saveFile2 = "Data//SaveFile2.txt";
@@ -83,8 +87,8 @@ void c_DataManager::saveLapTime(float lapTime)
 	else
 		std::cout << "File cannot be open.Is it in the correct directory and did u add the file extension?" << std::endl;
 	/************************************************************************************************************************************/
-	if(lines.size()>=3)
-		lines[2] = "Lap Timing:" + std::to_string(lapTime);
+	if(lines.size()>=3 && getTiming(lines[2]) < lapTime)//Update Timing
+		lines[2] = "Best Timing: " + std::to_string(lapTime);
 
 	std::ofstream writeFile(currentFile);
 	if (writeFile.is_open())
@@ -92,9 +96,9 @@ void c_DataManager::saveLapTime(float lapTime)
 		for (int i = 0; i < lines.size(); i++)
 		{
 			writeFile << lines[i] << "\n";
-			if (i == 1 && lines.size() < 3)
+			if (i == 1 && lines.size() < 3)//New Save File
 			{
-				writeFile << "Lap Timing:" + std::to_string(lapTime);
+				writeFile << "Best Timing: " + std::to_string(lapTime);
 			}
 		}
 		writeFile.close();
@@ -121,7 +125,7 @@ void c_DataManager::saveCurrentLevel(int levelNum)
 		std::cout << "File cannot be open.Is it in the correct directory and did u add the file extension?" << std::endl;
 	/************************************************************************************************************************************/
 	if (lines.size() >= 4)
-		lines[3] = "Level:" + std::to_string(levelNum);
+		lines[3] = "Level: " + std::to_string(levelNum);
 
 	std::ofstream writeFile(currentFile);
 	if (writeFile.is_open())
@@ -131,11 +135,63 @@ void c_DataManager::saveCurrentLevel(int levelNum)
 			writeFile << lines[i] << "\n";
 			if (i == 2 && lines.size() < 4)
 			{
-				writeFile << "Level:" + std::to_string(levelNum);
+				writeFile << "Level: " + std::to_string(levelNum);
 			}
 		}
 		writeFile.close();
 	}
 	else
 		std::cout << "File cannot be open.Is it in the correct directory and did u add the file extension?" << std::endl;
+}
+
+void c_DataManager::readFromFile()
+{
+	std::string line;
+	int counter = 1;
+
+	std::ifstream file(currentFile);
+	if (file.is_open())
+	{
+		while (!file.eof())
+		{
+			std::getline(file, line);
+			if (counter == 1)
+			{
+
+			}
+			else if (counter == 2)
+			{
+
+			}
+			else if (counter == 3)
+			{
+
+			}
+			else if (counter == 4)
+				setLevel(line);
+			counter++;
+		}
+	}
+	else
+		std::cout << "File cannot be open.Is it in the correct directory and did u add the file extension?" << std::endl;
+}
+
+
+
+void c_DataManager::setLevel(std::string line)
+{
+	if (line[7] == '1')
+		scene->updateLevel("SLEVELONE");
+	else if (line[7] == '2')
+		scene->updateLevel("SLEVELTWO");
+}
+float c_DataManager::getTiming(std::string line)
+{
+	std::string timeString;
+	
+	for (int i = 13; i < line.size(); i++)
+	{
+		timeString.push_back(line[i]);
+	}
+	return std::stof(timeString);
 }

@@ -2,6 +2,7 @@
 #define C_DATAMANAGER
 
 #include <string>
+#include "c_SceneManager.h"
 
 class c_DataManager
 {
@@ -19,6 +20,7 @@ public:
 
 private://Variables
 	static c_DataManager* instance;
+	c_SceneManager* scene;
 
 	std::string leaderBoardsFile;
 	std::string saveFile1;
@@ -28,6 +30,8 @@ private://Variables
 	std::string currentFile;
 
 private://Functions
+	void setLevel(std::string line);
+	float getTiming(std::string line);
 	c_DataManager();
 };
 

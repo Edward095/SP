@@ -1,13 +1,10 @@
-﻿  c_Npc.cpp
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_npc.cpp(39): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_npc.cpp(41): warning C4305: 'argument': truncation from 'double' to 'float'
+﻿  c_GameEnd.cpp
   Generating code
-  2 of 1463 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+  1 of 779 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 c_Weather.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'c_Weather.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
-c_SceneManager.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'c_SceneManager.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
 c_Sound.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'c_Sound.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
 FirstPersonCamera.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'FirstPersonCamera.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
 LoadOBJ.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'LoadOBJ.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
