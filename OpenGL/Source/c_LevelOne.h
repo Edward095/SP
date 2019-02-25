@@ -14,8 +14,6 @@
 #include "c_OffRoadManager.h"
 #include "c_ObjectManager.h"
 
-#include "c_GameEnd.h"
-
 class c_LevelOne : public Scene
 {
 public:
@@ -30,6 +28,10 @@ public:
 		LIGHT2,
 		TRACK,
 		RACEBANNER,
+		TRAFFICRED,
+		TRAFFICNULL,
+		TRAFFICNULL2,
+		TRAFFICGREEN,
 		STREETLIGHT,
 		NITRO,
 		BOOSTPAD,
@@ -163,7 +165,7 @@ private:
 
 	void renderEnviroment();
 	void updateEnviromentCollision();
-	void resetVar();
+
 
 	
 	c_Entity front;
@@ -186,7 +188,7 @@ private:
 
 	bool talk;
 	float elapsedTime;
-//	float FreezeTime;
+	float FreezeTime; //
 	float TimePassed;
 	bool AbletoPress;
 	float CamPosX;
@@ -195,7 +197,7 @@ private:
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
-	//bool Freeze = false;
+	bool Freeze = false; //
 	bool Raining = false;
 	bool Snowing = false;
 	bool OffRoad = false;
@@ -209,20 +211,28 @@ private:
 	int Cooldown;
 	float Countdown;
 	float Timer;
-	bool Finish;
+	bool Finish = false;
 	int laps;
 	int AIlaps;
-	bool AIFinish;
-	bool CheckEnd;
-	bool Win;
-	bool Lose;
+	bool AIFinish = false;
+	bool CheckEnd = false;
+	bool Win = false;
+	bool Lose = false;
+
+	float ArrowP;
+	bool ExitGame;
+	bool AbleToPress;
+	bool OptionSelection;
+	bool VehicleMove;
+
+	//Traffic Lights
+	float red1, red2, red3, green1, green2, green3;
+	bool RedLight, GreenLight;
 
 	c_Weather rain;
 	c_Weather snow;
 	void renderRain();
 	void RenderSnow();
-
-	//c_GameEnd gameEnd;
 };
 
 #endif

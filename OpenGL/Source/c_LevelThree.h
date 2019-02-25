@@ -28,6 +28,10 @@ public:
 		LIGHT2,
 		TRACK,
 		RACEBANNER,
+		TRAFFICRED,
+		TRAFFICNULL,
+		TRAFFICNULL2,
+		TRAFFICGREEN,
 		STREETLIGHT,
 		NITRO,
 		BOOSTPAD,
@@ -214,6 +218,16 @@ private:
 	bool CheckEnd = false;
 	bool Win = false;
 	bool Lose = false;
+
+	float ArrowP;
+	bool ExitGame;
+	bool AbleToPress;
+	bool OptionSelection;
+	bool VehicleMove;
+
+	//Traffic Lights
+	float red1, red2, red3, green1, green2, green3;
+	bool RedLight, GreenLight;
 
 	c_Weather rain;
 	c_Weather snow;
