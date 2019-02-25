@@ -105,13 +105,17 @@ private:
 	bool AbleToPress;
 	bool Talk;
 	bool Talk1;
+	bool Talk2;
+	bool Talk3;
+	bool Talk4;
 	bool LevelSelection;
 	bool SinglePlayer;
 	bool MultiPlayer;
 	bool StartGame;
 	bool Continue;
 	bool Options;
-	
+
+	bool LeaderBoard;
 };
 
 #endif
