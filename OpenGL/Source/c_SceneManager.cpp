@@ -24,6 +24,9 @@ c_SceneManager::c_SceneManager()
 	mLevelOne = new c_MultiplayerLevel();
 	mLevelTwo = new c_MultiplayerLevelTwo();
 	mLevelThree = new c_MultiplayerLevelThree();
+
+	continueGame = new c_Continue();
+	gameEnd = new c_GameEnd();
 }
 
 
@@ -43,7 +46,28 @@ c_SceneManager* c_SceneManager::getInstance()
 }
 void c_SceneManager::cleanUp()
 {
+	garage->Exit();
+	sLevelOne->Exit();
+	sLevelTwo->Exit();
+	sLevelThree->Exit();
+	mLevelOne->Exit();
+	mLevelTwo->Exit();
+	mLevelThree->Exit();
+	continueGame->Exit();
+	gameEnd->Exit();
 
+
+	delete npc;
+	delete garage;
+	delete sLevelOne;
+	delete sLevelTwo;
+	delete sLevelThree;
+	delete mLevelOne;
+	delete mLevelTwo;
+	delete mLevelThree;
+
+	delete continueGame;
+	delete gameEnd;
 }
 
 void c_SceneManager::updateState(std::string state)
@@ -92,4 +116,8 @@ Scene* c_SceneManager::getScene(std::string sceneName)
 		return mLevelTwo;
 	else if (sceneName == "MLEVELTHREE")
 		return mLevelThree;
+	else if (sceneName == "CONTINUE")
+		return continueGame;
+	else if (sceneName == "GAMEEND")
+		return gameEnd;
 }

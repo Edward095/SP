@@ -13,13 +13,15 @@
 #include "c_MultiplayerLevelTwo.h"
 #include "c_MultiplayerLevelThree.h"
 
+#include "c_Continue.h"
+#include "c_GameEnd.h"
+
 class c_SceneManager
 {
 private://Functions and Enums
 	c_SceneManager();
 	enum GAMESTATE
 {
-		CONTINUE,
 		NPC,
 		GARAGE,
 		CHANGED,
@@ -29,7 +31,10 @@ private://Functions and Enums
 		MLEVELONE,
 		MLEVELTWO,
 		MLEVELTHREE,
+		CONTINUE,
 		FINISHED,
+		LEADERBOARDS,
+
 };
 
 public:
@@ -60,6 +65,9 @@ private:
 	c_MultiplayerLevel* mLevelOne;
 	c_MultiplayerLevelTwo* mLevelTwo;
 	c_MultiplayerLevelThree* mLevelThree;
+
+	c_GameEnd* gameEnd;
+	c_Continue* continueGame;
 };
 
 #endif

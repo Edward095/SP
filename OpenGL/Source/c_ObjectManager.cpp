@@ -33,6 +33,10 @@ void c_ObjectManager::addCanCollide(std::string uniqueName, const char* meshPath
 		canCollideOBJ.push_back(new c_SecondCar(uniqueName, meshPath, TGApath, pos, true));
 	else if (meshPath == "OBJ//Car3.obj")
 		canCollideOBJ.push_back(new c_ThirdCar(uniqueName, meshPath, TGApath, pos, true));
+	else
+	{
+		canCollideOBJ.push_back(new c_FirstCar(uniqueName, meshPath, TGApath, pos, true));
+	}
 }
 c_ObjectManager* c_ObjectManager::getInstance()
 {

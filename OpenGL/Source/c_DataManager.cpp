@@ -1,7 +1,8 @@
 #include "c_DataManager.h"
 #include <fstream>
 #include <iostream>
-#include <vector>
+
+#include "c_SceneManager.h"
 
 
 
@@ -9,8 +10,6 @@ c_DataManager* c_DataManager::instance = 0;
 
 c_DataManager::c_DataManager()
 {
-	c_SceneManager* scene = c_SceneManager::getInstance();
-
 	leaderBoardsFile = "Data//LeaderBoards.txt";
 	saveFile1 = "Data//SaveFile1.txt";
 	saveFile2 = "Data//SaveFile2.txt";
@@ -68,44 +67,6 @@ void c_DataManager::updateLeaderBoards(float lapTime, std::string name)
 		std::cout << "File cannot be open.Is it in the correct directory and did u add the file extension?" << std::endl;
 }
 
-
-void c_DataManager::saveLapTime(float lapTime)
-{
-	std::vector <std::string> lines;
-	std::string line;
-
-	std::ifstream readFile(currentFile);
-	if (readFile.is_open())
-	{
-		while (!readFile.eof())
-		{
-			std::getline(readFile, line);
-			lines.push_back(line);
-		}
-		readFile.close();
-	}
-	else
-		std::cout << "File cannot be open.Is it in the correct directory and did u add the file extension?" << std::endl;
-	/************************************************************************************************************************************/
-	if(lines.size()>=3 && getTiming(lines[2]) < lapTime)//Update Timing
-		lines[2] = "Best Timing: " + std::to_string(lapTime);
-
-	std::ofstream writeFile(currentFile);
-	if (writeFile.is_open())
-	{
-		for (int i = 0; i < lines.size(); i++)
-		{
-			writeFile << lines[i] << "\n";
-			if (i == 1 && lines.size() < 3)//New Save File
-			{
-				writeFile << "Best Timing: " + std::to_string(lapTime);
-			}
-		}
-		writeFile.close();
-	}
-	else
-		std::cout << "File cannot be open.Is it in the correct directory and did u add the file extension?" << std::endl;
-}
 void c_DataManager::saveCurrentLevel(int levelNum)
 {
 	std::vector <std::string> lines;
@@ -124,8 +85,8 @@ void c_DataManager::saveCurrentLevel(int levelNum)
 	else
 		std::cout << "File cannot be open.Is it in the correct directory and did u add the file extension?" << std::endl;
 	/************************************************************************************************************************************/
-	if (lines.size() >= 4)
-		lines[3] = "Level: " + std::to_string(levelNum);
+	if (lines.size() >= 3)
+		lines[2] = "Level: " + std::to_string(levelNum);
 
 	std::ofstream writeFile(currentFile);
 	if (writeFile.is_open())
@@ -133,7 +94,7 @@ void c_DataManager::saveCurrentLevel(int levelNum)
 		for (int i = 0; i < lines.size(); i++)
 		{
 			writeFile << lines[i] << "\n";
-			if (i == 2 && lines.size() < 4)
+			if (i == 1 && lines.size() < 3)
 			{
 				writeFile << "Level: " + std::to_string(levelNum);
 			}
@@ -144,7 +105,7 @@ void c_DataManager::saveCurrentLevel(int levelNum)
 		std::cout << "File cannot be open.Is it in the correct directory and did u add the file extension?" << std::endl;
 }
 
-void c_DataManager::readFromFile()
+void c_DataManager::readFromFile(std::string& OBJpath,std::string& TGApath)
 {
 	std::string line;
 	int counter = 1;
@@ -156,42 +117,101 @@ void c_DataManager::readFromFile()
 		{
 			std::getline(file, line);
 			if (counter == 1)
-			{
-
-			}
+				setPath(line, OBJpath);
 			else if (counter == 2)
-			{
-
-			}
+				setPath(line, TGApath);
 			else if (counter == 3)
-			{
-
-			}
-			else if (counter == 4)
 				setLevel(line);
 			counter++;
 		}
+		file.close();
 	}
 	else
 		std::cout << "File cannot be open.Is it in the correct directory and did u add the file extension?" << std::endl;
 }
+void c_DataManager::getLeaderBoards(std::vector <float>& data, std::vector <std::string>& name)
+{
+	std::string line;
+	int counter = 1;
 
+	std::ifstream file(leaderBoardsFile);
+	if (file.is_open())
+	{
+		while (!file.eof())
+		{
+			std::getline(file, line);
+			if (line[0] == 'P')
+				name.push_back(getName(line));
+			if (line[0] == 'l')
+				data.push_back(getTiming(line));
+			counter++;
+		}
+		file.close();
+	}
+	else
+		std::cout << "File cannot be open.Is it in the correct directory and did u add the file extension?" << std::endl;
+}
+bool c_DataManager::isEmpty(int fileNum)
+{
+	std::vector < std::string> lines;
+	std::string line;
+	std::ifstream readFile;
+	if (fileNum == 1)
+		readFile.open(saveFile1);
+	else if (fileNum == 2)
+		readFile.open(saveFile2);
+	else if (fileNum == 3)
+		readFile.open(saveFile3);
+
+	if (readFile.is_open())
+	{
+		while (!readFile.eof())
+		{
+			std::getline(readFile, line);
+			lines.push_back(line);
+		}
+		readFile.close();
+	}
+
+	return lines.empty();
+}
 
 
 void c_DataManager::setLevel(std::string line)
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
 	if (line[7] == '1')
 		scene->updateLevel("SLEVELONE");
 	else if (line[7] == '2')
 		scene->updateLevel("SLEVELTWO");
 }
+void c_DataManager::setPath(std::string line, std::string& path)
+{
+	std::string filePath;
+	for (int i = 9; i < line.size(); i++)
+	{
+		filePath.push_back(line[i]);
+	}
+	path = filePath.c_str();
+}
+
 float c_DataManager::getTiming(std::string line)
 {
 	std::string timeString;
 	
-	for (int i = 13; i < line.size(); i++)
+	for (int i = 9; i < line.size(); i++)
 	{
 		timeString.push_back(line[i]);
 	}
 	return std::stof(timeString);
+}
+std::string c_DataManager::getName(std::string line)
+{
+	std::string name;
+
+	for (int i = 15; i < line.size(); i++)
+	{
+		name.push_back(line[i]);
+	}
+	return name;
 }

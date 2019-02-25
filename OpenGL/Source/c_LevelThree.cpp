@@ -12,6 +12,8 @@
 #include "LoadTGA.h"
 #include <iomanip>
 
+#include "c_DataManager.h"
+
 #include "c_Firstcar.h"
 #include "c_Secondcar.h";
 #include "c_Thirdcar.h"
@@ -33,6 +35,9 @@ void c_LevelThree::Init()
 {
 	offRoadManager = c_OffRoadManager::getInstance();
 	OBJmanager = c_ObjectManager::getInstance();
+	c_DataManager* dataManager = c_DataManager::getInstance();
+
+	dataManager->saveCurrentLevel(3);
 
 	c_Entity* car1;
 	car1 = OBJmanager->getCanCollide("player1");

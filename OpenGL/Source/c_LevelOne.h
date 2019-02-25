@@ -14,8 +14,6 @@
 #include "c_OffRoadManager.h"
 #include "c_ObjectManager.h"
 
-#include "c_GameEnd.h"
-
 class c_LevelOne : public Scene
 {
 public:
@@ -142,6 +140,7 @@ public:
 	void Update(double dt);
 	void Render();
 	void Exit();
+	void resetVar();
 
 private:
 	unsigned m_vertexArrayID;
@@ -163,7 +162,10 @@ private:
 
 	void renderEnviroment();
 	void updateEnviromentCollision();
-	void resetVar();
+	void renderEntity();
+	void renderLevel();
+
+	void updateLevel(double dt);
 
 	
 	c_Entity front;
@@ -194,35 +196,29 @@ private:
 	c_ObjectManager* OBJmanager;
 
 	//Variables
-
-	bool talk;
 	float elapsedTime;
-//	float FreezeTime;
 	float TimePassed;
-	bool AbletoPress;
 	float CamPosX;
 	float CamPosY;
 	float CamPosZ;
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
-	//bool Freeze = false;
-	bool Raining = false;
-	bool Snowing = false;
-	bool OffRoad = false;
 	float FPS;
-
-	int duration;
-	int Random;
-	float bLightEnabled;
-	std::string elapedTimeCut;
-	std::string CountdownCut;
-	int Cooldown;
 	float Countdown;
 	float Timer;
-	bool Finish;
+	float bLightEnabled;
+
+	std::string elapedTimeCut;
+	std::string CountdownCut;
+	int duration;
+	int Random;
+	int Cooldown;
 	int laps;
 	int AIlaps;
+	bool Finish;
+	bool Raining;
+	bool Snowing;
 	bool AIFinish;
 	bool CheckEnd;
 	bool Win;
@@ -234,8 +230,6 @@ private:
 	c_Weather snow;
 	void renderRain();
 	void RenderSnow();
-
-	//c_GameEnd gameEnd;
 };
 
 #endif
