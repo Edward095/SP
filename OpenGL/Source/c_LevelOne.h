@@ -193,6 +193,7 @@ private:
 	float FreezeTime; //
 	float TimePassed;
 	bool AbletoPress;
+
 	float CamPosX;
 	float CamPosY;
 	float CamPosZ;
@@ -200,6 +201,11 @@ private:
 	float CamTargetY;
 	float CamTargetZ;
 	bool Freeze = false; //
+
+	float elapsedTime;
+	float TimePassed;
+	bool AbletoPress;
+
 	bool Raining = false;
 	bool Snowing = false;
 	bool OffRoad = false;

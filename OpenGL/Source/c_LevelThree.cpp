@@ -1334,3 +1334,8 @@ void c_LevelThree::Exit()
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
 }
+
+void c_LevelThree::resetVar()
+{
+
+}
