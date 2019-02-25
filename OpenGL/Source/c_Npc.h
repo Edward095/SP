@@ -26,6 +26,7 @@ public:
 		BOTTOM,
 		NPC,
 		HOUSE,
+		INSTRUCTIONS,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -108,12 +109,14 @@ private:
 	bool Talk2;
 	bool Talk3;
 	bool Talk4;
+	bool Talk5;
 	bool LevelSelection;
 	bool SinglePlayer;
 	bool MultiPlayer;
 	bool StartGame;
 	bool Continue;
 	bool Options;
+	bool Instructions;
 
 	bool LeaderBoard;
 };
