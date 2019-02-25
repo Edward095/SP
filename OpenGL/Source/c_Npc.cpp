@@ -11,12 +11,8 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 
-
-bool c_Npc::MultiPlayer = false;
-bool c_Npc::SinglePlayer = false;
-bool c_Npc::Level1 = false;
-bool c_Npc::Level2 = false;
-bool c_Npc::Level3 = false;
+#include "c_DataManager.h"
+#include "c_SceneManager.h"
 
 
 c_Npc::c_Npc()
@@ -30,9 +26,11 @@ c_Npc::~c_Npc()
 
 void c_Npc::Init()
 {
-	Garage.Init();
-	//LevelOne.Init();
-	e_GameState_NPC = _NPC;
+	c_SceneManager* scene = c_SceneManager::getInstance();
+	c_DataManager* data = c_DataManager::getInstance();
+	data->selectFile(1);
+
+	scene->updateState("NPC");
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -141,9 +139,6 @@ void c_Npc::Init()
 	Talk = false;
 	Talk1 = false;
 	LevelSelection = false;
-	Level1 = false;
-	Level2 = false;
-	Level3 = false;
 	SinglePlayer = false;
 	MultiPlayer = false;
 	StartGame = false;
@@ -153,21 +148,18 @@ void c_Npc::Init()
 }
 void c_Npc::Update(double dt)
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	ElapsedTime += dt;
 	camera.Update(dt);
 	camera.WBmove(dt, 280.f, -280.f, 220.f, -150.f);
 
-	switch (e_GameState_NPC)
-	{
-	case _NPC:
+	if (scene->checkState("NPC"))
 		UpdateNpc(dt);
-		break;
-	case GARAGE:
-		Garage.Update(dt);
-		break;
-	case LEVEL1:
-		LevelOne.Update(dt);
-	}
+	else
+		scene->getScene("GARAGE")->Update(dt);
+		//Garage.Update(dt);
+
 	
 }
 
@@ -176,6 +168,8 @@ static const float SKYBOXSIZE = 500.f;
 
 void c_Npc::Render()
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -192,28 +186,17 @@ void c_Npc::Render()
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
 	
-	if (e_GameState_NPC == _NPC)
-	{
+	if (scene->checkState("NPC"))
 		RenderNpc();
-	}
-	else if (e_GameState_NPC == GARAGE)
-	{
-		Garage.Render();
-	}
-	else if (e_GameState_NPC == LEVEL1)
-	{
-		LevelOne.Render();
-	}
-
-
-
-	
-
-
+	else
+		scene->getScene("GARAGE")->Render();
+		//Garage.Render();
 }
 
 void c_Npc::UpdateNpc(double dt)
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168)
 	{
 		StartGame = true;
@@ -336,30 +319,42 @@ void c_Npc::UpdateNpc(double dt)
 		{
 			if (ArrowY == 7)
 			{
-				Level1 = true;
-				Level2 = false;
-				Level3 = false;
-				e_GameState_NPC = GARAGE;
-				Garage.Init();
-				Garage.Update(dt);
+				if (SinglePlayer)
+					scene->updateLevel("SLEVELONE");
+				else if (MultiPlayer)
+					scene->updateLevel("MLEVELONE");
+				scene->updateState("GARAGE");
+
+				scene->getScene("GARAGE")->Init();
+				scene->getScene("GARAGE")->Update(dt);
+				/*Garage.Init();
+				Garage.Update(dt);*/
 			}
 			else if (ArrowY == 6)
 			{
-				Level1 = false;
-				Level2 = true;
-				Level3 = false;
-				e_GameState_NPC = GARAGE;
-				Garage.Init();
-				Garage.Update(dt);
+				if (SinglePlayer)
+					scene->updateLevel("SLEVELTWO");
+				else if (MultiPlayer)
+					scene->updateLevel("MLEVELTWO");
+				scene->updateState("GARAGE");
+
+				scene->getScene("GARAGE")->Init();
+				scene->getScene("GARAGE")->Update(dt);
+				/*Garage.Init();
+				Garage.Update(dt);*/
 			}
 			else if (ArrowY == 5)
 			{
-				Level1 = false;
-				Level2 = false;
-				Level3 = true;
-				e_GameState_NPC = GARAGE;
-				Garage.Init();
-				Garage.Update(dt);
+				if (SinglePlayer)
+					scene->updateLevel("SLEVELTHREE");
+				else if (MultiPlayer)
+					scene->updateLevel("MLEVELTHREE");
+				scene->updateState("GARAGE");
+
+				scene->getScene("GARAGE")->Init();
+				scene->getScene("GARAGE")->Update(dt);
+				/*Garage.Init();
+				Garage.Update(dt);*/
 			}
 		}
 		if (Options)
@@ -747,39 +742,3 @@ void c_Npc::RenderText(Mesh* mesh, std::string text, Color color, float spacing)
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 	glEnable(GL_DEPTH_TEST);
 }
-
-
-
-
-
-bool c_Npc::GetLevel1()
-{
-	return Level1;
-}
-
-
-bool c_Npc::GetLevel2()
-{
-	return Level2;
-}
-
-
-
-bool c_Npc::GetLevel3()
-{
-	return Level3;
-}
-
-
-
-bool c_Npc::GetSinglePlayer()
-{
-	return SinglePlayer;
-}
-
-
-bool c_Npc::GetMultiPlayer()
-{
-	return MultiPlayer;
-}
-

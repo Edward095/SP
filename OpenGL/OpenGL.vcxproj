@@ -147,6 +147,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\c_DataManager.cpp" />
+    <ClCompile Include="Source\c_GameEnd.cpp" />
     <ClCompile Include="Source\c_Impulse.cpp" />
     <ClCompile Include="Source\c_LevelThree.cpp" />
     <ClCompile Include="Source\c_LevelTwo.cpp" />
@@ -168,7 +170,7 @@
     <ClCompile Include="Source\c_Npc.cpp" />
     <ClCompile Include="Source\c_Sound.cpp" />
     <ClCompile Include="Source\c_Collision.cpp" />
-    <ClCompile Include="Source\c_MainMenu.cpp" />
+    <ClCompile Include="Source\c_Continue.cpp" />
     <ClCompile Include="Source\c_ThirdCar.cpp" />
     <ClCompile Include="Source\FirstPersonCamera.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
@@ -183,6 +185,8 @@
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\c_DataManager.h" />
+    <ClInclude Include="Source\c_GameEnd.h" />
     <ClInclude Include="Source\c_Impulse.h" />
     <ClInclude Include="Source\c_LevelThree.h" />
     <ClInclude Include="Source\c_LevelTwo.h" />
@@ -194,7 +198,7 @@
     <ClInclude Include="Source\c_SecondCar.h" />
     <ClInclude Include="Source\c_MultiplayerLevel.h" />
     <ClInclude Include="Source\c_AI.h" />
-    <ClInclude Include="Source\c_MainMenu.h" />
+    <ClInclude Include="Source\c_Continue.h" />
     <ClInclude Include="Source\c_SceneManager.h" />
     <ClInclude Include="Source\c_ObjectManager.h" />
     <ClInclude Include="Source\c_Entity.h" />

@@ -7,8 +7,10 @@
 #include "MatrixStack.h"
 #include "Light.h"
 
-#include "c_FirstCar.h"
-#include "c_SecondPlayer.h"
+#include "c_OffRoadManager.h"
+#include "c_ObjectManager.h"
+
+#include "c_CarBaseClass.h"
 
 #include "c_Impulse.h"
 
@@ -181,13 +183,15 @@ private:
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
+	c_Entity track;
 
-	c_FirstCar playerOne;
-	c_SecondPlayer playerTwo;
+	c_CarBaseClass* playerOne;
+	c_CarBaseClass* playerTwo;
 
 	c_Impulse Impulse;
 		
-
+	c_ObjectManager* OBJmanager;
+	c_OffRoadManager* offRoadManager;
 };
 
 #endif

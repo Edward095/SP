@@ -10,8 +10,11 @@
 #include "c_Entity.h"
 #include "c_AI.h"
 #include "c_Weather.h"
+
 #include "c_OffRoadManager.h"
 #include "c_ObjectManager.h"
+
+#include "c_GameEnd.h"
 
 class c_LevelOne : public Scene
 {
@@ -160,20 +163,16 @@ private:
 
 	void renderEnviroment();
 	void updateEnviromentCollision();
+	void resetVar();
 
-
-	//c_CarBaseClass* car;
-	/*c_FirstCar car;
-	c_SecondCar carTwo;
-	c_ThirdCar carThree;*/
-	c_CarBaseClass* car;
-	c_Entity* car1;
+	
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
 
 	c_AI AI;
+	c_CarBaseClass* car;
 
 	c_Entity boost;
 	c_Entity boost2;
@@ -221,13 +220,13 @@ private:
 	int Cooldown;
 	float Countdown;
 	float Timer;
-	bool Finish = false;
+	bool Finish;
 	int laps;
 	int AIlaps;
-	bool AIFinish = false;
-	bool CheckEnd = false;
-	bool Win = false;
-	bool Lose = false;
+	bool AIFinish;
+	bool CheckEnd;
+	bool Win;
+	bool Lose;
 
 	float WheelRotation;
 
@@ -235,6 +234,8 @@ private:
 	c_Weather snow;
 	void renderRain();
 	void RenderSnow();
+
+	//c_GameEnd gameEnd;
 };
 
 #endif

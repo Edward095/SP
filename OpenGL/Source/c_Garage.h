@@ -144,17 +144,6 @@ public:
 		U_TEXT_COLOR,
 		U_TOTAL,
 	};
-	enum  GAME_STATE_GARAGE
-	{
-		GARAGE_,
-		CHANGED_,
-		SLEVELONE_,
-		SLEVELTWO_,
-		SLEVELTHREE_,
-		MLEVELONE_,
-		MLEVELTWO_,
-		MLEVELTHREE_,
-	};
 
 	void Init();
 	void Update(double dt);
@@ -180,7 +169,7 @@ private:
 	unsigned v_Car2Blue, v_Car2Red, v_Car2Purple, v_Car2Green, v_Car2Pink, v_Car2Yellow, v_Car2White, v_Car2Grey, v_Car2Black;			 // Colour Textures
 	unsigned v_Car3Blue, v_Car3Red, v_Car3Purple, v_Car3Green, v_Car3Pink, v_Car3Yellow, v_Car3White, v_Car3Grey, v_Car3Black;			 // Colour Textures
 	unsigned v_Car1Stats, v_Car2Stats, v_Car3Stats;
-	GAME_STATE_GARAGE e_GameState_Garage;
+
 	bool v_MusicPause;
 	bool v_Car1Changed;
 	bool v_Car2Changed;
@@ -204,7 +193,6 @@ private:
 	void f_UpdateGarage(double dt);
 	void f_UpdateGarage2(double dt);
 	void f_RenderGarage();
-	void f_RenderGarage2();
 
 	c_List v_CarList;
 	c_List v_ColourList;
@@ -214,25 +202,6 @@ private:
 	const char* v_CarColourPath1[9];
 	const char* v_CarColourPath2[9];
 	const char* v_CarColourPath3[9];
-
-	//const char* v_CarFWheels[2];
-	//const char* v_CarBWheels[2];
-
-	c_LevelOne sLevelOne;
-	c_LevelTwo sLevelTwo;
-	c_LevelThree sLevelThree;
-
-	c_FirstCar car1Type1;
-	c_SecondCar car1Type2;
-	c_ThirdCar car1Type3;
-	c_FirstCar car2Type1;
-	c_SecondCar car2Type2;
-	c_ThirdCar car2Type3;
-
-
-	c_MultiplayerLevel mLevelOne;
-	c_MultiplayerLevelTwo mLevelTwo;
-	c_MultiplayerLevelThree mLevelThree;
 
 	c_ObjectManager* manager;
 

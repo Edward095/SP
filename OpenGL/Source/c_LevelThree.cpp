@@ -12,6 +12,10 @@
 #include "LoadTGA.h"
 #include <iomanip>
 
+#include "c_Firstcar.h"
+#include "c_Secondcar.h";
+#include "c_Thirdcar.h"
+
 #include <Windows.h>
 #include <time.h>
 
@@ -27,23 +31,38 @@ c_LevelThree::~c_LevelThree()
 
 void c_LevelThree::Init()
 {
+	offRoadManager = c_OffRoadManager::getInstance();
+	OBJmanager = c_ObjectManager::getInstance();
+
+	c_Entity* car1;
+	car1 = OBJmanager->getCanCollide("player1");
+	c_FirstCar* first = dynamic_cast <c_FirstCar*>(car1);
+	if (first)
+		car = first;
+	c_SecondCar* second = dynamic_cast <c_SecondCar*>(car1);
+	if (second)
+		car = second;
+	c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car1);
+	if (third)
+		car = third;
+
 	//Seed Generation For rand() function
 	srand(time(NULL));
 
 	//Initialization Of Variables//
 
     //----Setting Car Variables------//
-	car.SetFriction(0.1);
-	car.SetSteering(5);
+	car->SetFriction(0.1);
+	car->SetSteering(5);
 	//-------------------------------//
 
 	//----Setting Up Camera Coordinates--------//
-	CamPosX = car.getPos().x + 1;
-	CamPosY = car.getPos().y + 1;
-	CamPosZ = car.getPos().z + 1;
-	CamTargetX = car.getPos().x;
-	CamTargetY = car.getPos().y;
-	CamTargetZ = car.getPos().z;
+	CamPosX = car->getPos().x + 1;
+	CamPosY = car->getPos().y + 1;
+	CamPosZ = car->getPos().z + 1;
+	CamTargetX = car->getPos().x;
+	CamTargetY = car->getPos().y;
+	CamTargetZ = car->getPos().z;
 	//-----------------------------------------//
 
 	//----Time Related Variables-----//
@@ -173,8 +192,8 @@ void c_LevelThree::Init()
 	//------------------------------------------------------------------------------------------------//
 
 	//----Rendering Race Track And Stuff On Race Track----------------------------------------//
-	meshList[TRACK] = MeshBuilder::GenerateOBJ("racetrack", "OBJ//RaceTrack1.obj");
-	meshList[TRACK]->textureID = LoadTGA("Image//RaceTrack.tga");
+	/*meshList[TRACK] = MeshBuilder::GenerateOBJ("racetrack", "OBJ//RaceTrack1.obj");
+	meshList[TRACK]->textureID = LoadTGA("Image//RaceTrack.tga");*/
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
@@ -186,12 +205,12 @@ void c_LevelThree::Init()
 	//----------------------------------------------------------------------------------------//
 
 	//Init Entities//
-	car.init("player1");
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0), true);
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0), true);
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), true);
 	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0), true);
-
+	track.init("track", "OBJ//RaceTrack3.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
+	offRoadManager->addOffRoad("OffRoad//offRoadOBJ3.txt");
 
 
 	//---- Enabling Light------------//
@@ -216,12 +235,12 @@ void c_LevelThree::Update(double dt)
 	//------------------------------------//
 
 	//----Updating Camera Position---------------------------------------------------------------//
-	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
-	CamPosY = car.getPos().y + 8;
-	CamPosZ = (car.getPos().z - (cos(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
-	CamTargetX = car.getPos().x;
-	CamTargetY = car.getPos().y + 5;
-	CamTargetZ = car.getPos().z;
+	CamPosX = (car->getPos().x - (sin(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
+	CamPosY = car->getPos().y + 8;
+	CamPosZ = (car->getPos().z - (cos(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
+	CamTargetX = car->getPos().x;
+	CamTargetY = car->getPos().y + 5;
+	CamTargetZ = car->getPos().z;
 	//-------------------------------------------------------------------------------------------//
 
 	//----KeyPress to Enable and Disable Light-------//
@@ -251,14 +270,14 @@ void c_LevelThree::Update(double dt)
 			duration = 0;
 		}
 	}
-	if (car.getPos().x == nitro.getPos().x && car.getPos().z == nitro.getPos().z)
+	if (car->getPos().x == nitro.getPos().x && car->getPos().z == nitro.getPos().z)
 	{
-		car.PowerUp(true);
+		car->PowerUp(true);
 	}
 	//-------------------------------------------------//
 
 	//----Collision For Finishing Line---------------------------//
-	if (car.gotCollide("FinishLine",false))
+	if (car->gotCollide("FinishLine",false))
 	{
 		Finish = true;
 	}
@@ -307,16 +326,16 @@ void c_LevelThree::Update(double dt)
 	//----Weather and Environment Effects-------//
 	if (Raining)
 	{
-		car.SetSteering(9);
+		car->SetSteering(9);
 	}
 	if (Snowing)
 	{
-		car.SetFriction(0.01);
+		car->SetFriction(0.01);
 	}
 	if (OffRoad)
 	{
-		car.SetFriction(0.5);
-		car.SetMaxSpeed(0.1);
+		car->SetFriction(0.5);
+		car->SetMaxSpeed(0.1);
 	}
 
 	rain.update(dt);
@@ -327,13 +346,13 @@ void c_LevelThree::Update(double dt)
 	if (Countdown <= 0)
 	{
 		elapsedTime += (float)dt;
-		car.Movement(dt);
+		car->Movement(dt);
 		AI.LevelOne(dt);
 	}
 	//-------------------------------------------//
 
 	//Updating Car Position for Player and AI
-	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
+	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
 	//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 
 	//Update Camera
@@ -348,10 +367,11 @@ void c_LevelThree::updateEnviromentCollision()
 	left.getOBB()->defaultData();
 	right.getOBB()->defaultData();
 	back.getOBB()->defaultData();
-	car.getOBB()->defaultData();
+	car->getOBB()->defaultData();
 	AI.getOBB()->defaultData();
 	boost.getOBB()->defaultData();
 	slow.getOBB()->defaultData();
+	offRoadManager->defaultData();
 
 	//Front Skybox
 	front.updatePos(0, 0, translateLength);
@@ -372,6 +392,12 @@ void c_LevelThree::updateEnviromentCollision()
 	//Back Skybox
 	back.updatePos(0, 0, -translateLength);
 	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+
+	//Track
+	track.updatePos(-313.97, 0, -137.378);
+	track.getOBB()->calcNewAxis(90, 0, 1, 0);
+
+	offRoadManager->updateCollision("OffRoad//offRoadPos3.txt", "OffRoad//offRoadRotate3.txt");
 }
 
 void c_LevelThree::Render()
@@ -380,11 +406,12 @@ void c_LevelThree::Render()
 	left.getOBB()->defaultData();
 	right.getOBB()->defaultData();
 	back.getOBB()->defaultData();
-	car.getOBB()->defaultData();
+	car->getOBB()->defaultData();
 	AI.getOBB()->defaultData();
 	boost.getOBB()->defaultData();
 	slow.getOBB()->defaultData();
 	FinishLine.getOBB()->defaultData();
+	track.getOBB()->defaultData();
 
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -415,16 +442,16 @@ void c_LevelThree::Render()
 	//------------------------------------------------------//
 	/**************************************************************		CAR		***************************************************************/
 	modelStack.PushMatrix();
-	modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
+	modelStack.Translate(car->getPos().x, car->getPos().y, car->getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Rotate(car.GetSteeringAngle(), 0, 1, 0);
-	RenderMesh(car.getMesh(), true);
+	modelStack.Rotate(car->GetSteeringAngle(), 0, 1, 0);
+	RenderMesh(car->getMesh(), true);
 	modelStack.PopMatrix();
 
 	//UpdateCollisions
-	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
-	car.getOBB()->calcNewAxis(90, 0, 1, 0);
-	car.getOBB()->calcNewAxis(car.GetSteeringAngle(), 0, 1, 0);
+	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
+	car->getOBB()->calcNewAxis(90, 0, 1, 0);
+	car->getOBB()->calcNewAxis(car->GetSteeringAngle(), 0, 1, 0);
 
 	/**************************************************************		AI		***************************************************************/
 	modelStack.PushMatrix();
@@ -473,9 +500,9 @@ void c_LevelThree::Render()
 	CountdownCut.resize(1);
 
 	//----Render Text On Screen-----------------------------------------------------------------------------------//
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 
 	if (Countdown >= 0)
 		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 10, 14);
@@ -501,21 +528,21 @@ void c_LevelThree::Render()
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
 	//----------------------------------------------------------------------------------------------------------//
 }
 
 void c_LevelThree::renderRain()
 {
-	for (int i = 0; i < rain.getX().size(); i++)
+	for (int i = 0; i < rain.getX().size() - 2000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
 		modelStack.Translate(rain.getTranslateX(), rain.getTranslateY(), rain.getTranslateZ());
-		modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
+		modelStack.Translate(car->getPos().x, car->getPos().y, car->getPos().z);
 		modelStack.Rotate(45, 0, 0, 1);
 		modelStack.Scale(0.1f, 0.5f, 0.1f);
 		RenderMesh(meshList[RAIN], true);
@@ -526,12 +553,12 @@ void c_LevelThree::renderRain()
 
 void c_LevelThree::RenderSnow()
 {
-	for (int i = 0; i < snow.getX().size(); i++)
+	for (int i = 0; i < snow.getX().size() - 2000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
 		modelStack.Translate(snow.getTranslateX() / 3, snow.getTranslateY() / 3, snow.getTranslateZ() / 3);
-		modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
+		modelStack.Translate(car->getPos().x, car->getPos().y, car->getPos().z);
 		modelStack.Rotate(45, 0, 0, 1);
 		modelStack.Scale(0.1f, 0.5f, 0.1f);
 		RenderMesh(meshList[SNOW], true);
@@ -596,10 +623,9 @@ void c_LevelThree::renderEnviroment()
 
 	//Track
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 0);
+	modelStack.Translate(-313.97, 0, -137.378);
 	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Scale(6, 1, 6);
-	RenderMesh(meshList[TRACK], false);
+	RenderMesh(track.getMesh(), false);
 	modelStack.PopMatrix();
 
 	//RaceBanner

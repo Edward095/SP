@@ -1,5 +1,6 @@
 #include "c_SecondCar.h"
 #include "c_ObjectManager.h"
+#include "c_OffRoadManager.h"
 #include "LoadTGA.h"
 
 
@@ -43,10 +44,21 @@ void c_SecondCar::Ability(double dt)
 {
 	FreezeTime = (float)(dt + (dt * 0));
 
-	if (Application::IsKeyPressed('2'))
+	if (uniqueName == "player2")
 	{
+		if (Application::IsKeyPressed('P'))
+		{
 			PressQ = true;
+		}
 	}
+	else
+	{
+		if (Application::IsKeyPressed('2'))
+		{
+			PressQ = true;
+		}
+	}
+
 
 	if (PressQ && Duration <= 150)
 	{
@@ -66,10 +78,17 @@ void c_SecondCar::PowerUp(bool check)
 }
 void c_SecondCar::isOffRoad()
 {
-	if (!gotCollide("track",false))//|| gotCollide("offRoad1") || gotCollide("offRoad2") || gotCollide("offRoad3") || gotCollide("offRoad4") || gotCollide("offRoad5") || gotCollide("offRoad6"))
-		offRoad = true;
-	else
-		offRoad = false;
+	c_OffRoadManager* manager = c_OffRoadManager::getInstance();
+
+	for (int i = 0; i < manager->getList().size(); i++)
+	{
+		if (gotCollide(manager->getList()[i], false) || !gotCollide("track", false))
+		{
+			offRoad = true;
+			break;
+		}
+		else offRoad = false;
+	}
 	if (offRoad)
 	{
 		SetFriction(0.5f);

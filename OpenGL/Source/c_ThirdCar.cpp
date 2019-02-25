@@ -1,6 +1,7 @@
 #include "c_ThirdCar.h"
 #include "Application.h"
 #include "c_ObjectManager.h"
+#include "c_OffRoadManager.h"
 #include "LoadTGA.h"
 
 c_ThirdCar::c_ThirdCar()
@@ -40,21 +41,42 @@ c_ThirdCar::~c_ThirdCar()
 
 void c_ThirdCar::Ability(double dt)
 {
-	if (Application::IsKeyPressed('3') && !once)
+	if (uniqueName == "player2")
 	{
-		float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
-		float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
+		if (Application::IsKeyPressed('P') && !once)
+		{
+			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
+			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
 
-		updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
-		//PressQ = true;
-		once = true;
+			if (pos.x + updateX < 700 && pos.z + updateZ < 700 && pos.x + updateX > -700 && pos.z + updateZ > -700)
+			{
+				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
+			}
+			//PressQ = true;
+			once = true;
+		}
 	}
+	else
+	{
+		if (Application::IsKeyPressed('3') && !once)
+		{
+			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
+			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
+			if (pos.x + updateX < 700 && pos.z + updateZ < 700 && pos.x + updateX > -700 && pos.z + updateZ > -700)
+			{
+				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
+			}
+			//PressQ = true;
+			once = true;
+		}
+	}
+	
 	if (once)
 	{
 		Duration++;
 		
 	}
-	if (Duration >= 150) // 3 sec/dt
+	if (Duration >= 50) // 3 sec/dt
 	{
 		PressQ = false;
 		once = false;
@@ -69,10 +91,17 @@ void c_ThirdCar::PowerUp(bool check)
 
 void c_ThirdCar::isOffRoad()
 {
-	if (!gotCollide("track",false))//|| gotCollide("offRoad1") || gotCollide("offRoad2") || gotCollide("offRoad3") || gotCollide("offRoad4") || gotCollide("offRoad5") || gotCollide("offRoad6"))
-		offRoad = true;
-	else
-		offRoad = false;
+	c_OffRoadManager* manager = c_OffRoadManager::getInstance();
+
+	for (int i = 0; i < manager->getList().size(); i++)
+	{
+		if (gotCollide(manager->getList()[i], false) || !gotCollide("track", false))
+		{
+			offRoad = true;
+			break;
+		}
+		else offRoad = false;
+	}
 	if (offRoad)
 	{
 		SetFriction(0.5f);
