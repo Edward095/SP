@@ -232,10 +232,7 @@ void c_LevelOne::Update(double dt)
 	//----Power Up Timer------------------// 
 	//FreezeTime = (float)(dt + (dt * 0));
 	//------------------------------------//
-	if (Lose)
-		gameEnd.Update(dt);
-	else
-	{
+	
 		//----Updating Camera Position---------------------------------------------------------------//
 		CamPosX = (car->getPos().x - (sin(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
 		CamPosY = car->getPos().y + 8;
@@ -319,7 +316,6 @@ void c_LevelOne::Update(double dt)
 			else
 			{
 				Lose = true;
-				gameEnd.Init();
 			}
 		}
 		//-----------------------------------------------------------//
@@ -361,7 +357,7 @@ void c_LevelOne::Update(double dt)
 		camera.Update(dt);
 
 			Lose = true;
-	}
+	
 }
 
 void c_LevelOne::Render()
@@ -390,10 +386,6 @@ void c_LevelOne::Render()
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
-	if (Lose)
-		gameEnd.Render();
-	else
-	{
 
 		//----Render Functions----------------------------------//
 		renderLights();
@@ -501,7 +493,7 @@ void c_LevelOne::Render()
 		//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 		RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
 		//----------------------------------------------------------------------------------------------------------//
-	}
+	
 }
 
 void c_LevelOne::renderRain()

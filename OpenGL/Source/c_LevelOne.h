@@ -220,7 +220,7 @@ private:
 	void renderRain();
 	void RenderSnow();
 
-	c_GameEnd gameEnd;
+	//c_GameEnd gameEnd;
 };
 
 #endif

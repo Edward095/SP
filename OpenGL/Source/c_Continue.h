@@ -9,6 +9,9 @@
 #include "c_Sound.h"
 
 #include "c_DataManager.h"
+#include "c_FirstCar.h"
+#include "c_SecondCar.h"
+#include "c_ThirdCar.h"
 
 class c_Continue : public Scene
 {
@@ -77,10 +80,14 @@ private:
 	void updateSelection(double dt);
 	void loadFile();
 
+	//Variables
 	float ArrowX, ArrowY;
 	double elapsedTime;
 	double bounceTime;
 
+	const char* OBJpath;
+	const char* TGApath;
+	int levelNum;
 };
 
 #endif C_MAINMENU_H
