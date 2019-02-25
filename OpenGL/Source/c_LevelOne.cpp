@@ -456,6 +456,15 @@ void c_LevelOne::Render()
 		/**************************************************************		BoostPad		***************************************************************/
 
 	modelStack.PushMatrix();
+	modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+	boost.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
 	modelStack.Translate(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);
 	modelStack.Scale(3, 1, 3);
 	RenderMesh(boost2.getMesh(), true);
@@ -501,16 +510,11 @@ void c_LevelOne::Render()
 	boost6.getOBB()->calcNewDimensions(3, 1, 3);
 
 	/**************************************************************		SlowPad		***************************************************************/
-		modelStack.PushMatrix();
-		modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
-		modelStack.Scale(3, 1, 3);
-		RenderMesh(boost.getMesh(), true);
-		modelStack.PopMatrix();
-
-		boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
-		boost.getOBB()->calcNewDimensions(3, 1, 3);
-
-
+	modelStack.PushMatrix();
+	modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow.getMesh(), true);
+	modelStack.PopMatrix();
 
 	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
 	slow.getOBB()->calcNewDimensions(3, 1, 3);
@@ -575,14 +579,6 @@ void c_LevelOne::Render()
 	CountdownCut.resize(1);
 
 
-		modelStack.PushMatrix();
-		modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
-		modelStack.Scale(3, 1, 3);
-		RenderMesh(slow.getMesh(), true);
-		modelStack.PopMatrix();
-
-		slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
-		slow.getOBB()->calcNewDimensions(3, 1, 3);
 
 		CountdownCut = std::to_string(Countdown);
 		CountdownCut.resize(1);
