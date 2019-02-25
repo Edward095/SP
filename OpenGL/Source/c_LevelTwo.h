@@ -13,6 +13,7 @@
 #include "c_ObjectManager.h"
 #include "c_OffRoadManager.h"
 
+
 class c_LevelTwo : public Scene
 {
 public:
@@ -28,10 +29,6 @@ public:
 		TRACK,
 		RACEBANNER,
 		STREETLIGHT,
-		TRAFFICRED,
-		TRAFFICNULL,
-		TRAFFICNULL2,
-		TRAFFICGREEN,
 		NITRO,
 		BOOSTPAD,
 		SLOWPAD,
@@ -183,7 +180,6 @@ private:
 
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
-
 	//Variables
 
 	bool talk;
@@ -218,16 +214,6 @@ private:
 	bool CheckEnd = false;
 	bool Win = false;
 	bool Lose = false;
-
-	float ArrowP;
-	bool ExitGame;
-	bool AbleToPress;
-	bool OptionSelection;
-	bool VehicleMove;
-
-	//Traffic Lights
-	float red1, red2, red3, green1, green2, green3;
-	bool RedLight, GreenLight;
 
 	c_Weather rain;
 	c_Weather snow;

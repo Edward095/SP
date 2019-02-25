@@ -138,7 +138,7 @@ void c_MultiplayerLevelTwo::Init()
 	meshList[LIGHT1] = MeshBuilder::GenerateSphere("environment light", Color(1, 1, 1), 18, 36, 1.f);
 	meshList[LIGHT2] = MeshBuilder::GenerateSphere("street light", Color(1, 1, 1), 18, 36, 1.f);
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
-	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp2.obj");
+	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
 
 	front.init("front", "quad", "Image//SunnyFront.tga", (0, 0, 0), true);

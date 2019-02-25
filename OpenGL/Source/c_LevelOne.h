@@ -15,7 +15,6 @@
 #include "c_ObjectManager.h"
 
 #include "c_GameEnd.h"
-#include "c_ObjectManager.h"
 
 class c_LevelOne : public Scene
 {
@@ -31,10 +30,6 @@ public:
 		LIGHT2,
 		TRACK,
 		RACEBANNER,
-		TRAFFICRED,
-		TRAFFICNULL,
-		TRAFFICNULL2,
-		TRAFFICGREEN,
 		STREETLIGHT,
 		NITRO,
 		BOOSTPAD,
@@ -52,7 +47,7 @@ public:
 		U_MATERIAL_DIFFUSE,
 		U_MATERIAL_SPECULAR,
 		U_MATERIAL_SHININESS,
-
+		
 		// Lights
 		U_LIGHT0_POSITION,
 		U_LIGHT0_COLOR,
@@ -170,6 +165,7 @@ private:
 	void updateEnviromentCollision();
 	void resetVar();
 
+	
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
@@ -190,7 +186,7 @@ private:
 
 	bool talk;
 	float elapsedTime;
-	float FreezeTime; //
+//	float FreezeTime;
 	float TimePassed;
 	bool AbletoPress;
 	float CamPosX;
@@ -199,7 +195,7 @@ private:
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
-	bool Freeze = false; //
+	//bool Freeze = false;
 	bool Raining = false;
 	bool Snowing = false;
 	bool OffRoad = false;
@@ -220,16 +216,6 @@ private:
 	bool CheckEnd;
 	bool Win;
 	bool Lose;
-
-	float ArrowP;
-	bool ExitGame;
-	bool AbleToPress;
-	bool OptionSelection;
-	bool VehicleMove;
-
-	//Traffic Lights
-	float red1, red2, red3, green1, green2, green3;
-	bool RedLight, GreenLight;
 
 	c_Weather rain;
 	c_Weather snow;
