@@ -363,6 +363,8 @@ void c_LevelOne::Update(double dt)
 
 		//Update Camera
 		camera.Update(dt);
+
+			Lose = true;
 	}
 }
 
