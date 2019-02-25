@@ -47,7 +47,10 @@ void c_ThirdCar::Ability(double dt)
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
 
-			updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
+			if (pos.x + updateX < 700 && pos.z + updateZ < 700 && pos.x + updateX > -700 && pos.z + updateZ > -700)
+			{
+				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
+			}
 			//PressQ = true;
 			once = true;
 		}
@@ -58,8 +61,10 @@ void c_ThirdCar::Ability(double dt)
 		{
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
-
-			updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
+			if (pos.x + updateX < 700 && pos.z + updateZ < 700 && pos.x + updateX > -700 && pos.z + updateZ > -700)
+			{
+				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
+			}
 			//PressQ = true;
 			once = true;
 		}
@@ -70,7 +75,7 @@ void c_ThirdCar::Ability(double dt)
 		Duration++;
 		
 	}
-	if (Duration >= 150) // 3 sec/dt
+	if (Duration >= 50) // 3 sec/dt
 	{
 		PressQ = false;
 		once = false;

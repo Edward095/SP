@@ -334,7 +334,7 @@ void c_LevelOne::Update(double dt)
 	if (OffRoad)
 	{
 		car->SetFriction(0.5);
-		car->SetMaxSpeed(0.1);
+		//car->SetMaxSpeed(0.1);
 	}
 
 	rain.update(dt);
