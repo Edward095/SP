@@ -37,7 +37,10 @@ void c_LevelOne::Init()
 	//Seed Generation For rand() function
 	srand(time(NULL));
 	//Initialization Of Variables//
-
+	AIFinish = false;
+	CheckEnd = false;
+	Win = false;
+	Lose = false;
 
 	//----Time Related Variables-----//
 	elapsedTime = 0;
@@ -213,10 +216,6 @@ void c_LevelOne::Init()
 	CamTargetZ = car->getPos().z;
 	//-----------------------------------------//
 
-
-
-
-
 	//---- Enabling Light------------//
 	bLightEnabled = true;
 	//-------------------------------//
@@ -237,127 +236,134 @@ void c_LevelOne::Update(double dt)
 	//----Power Up Timer------------------// 
 	//FreezeTime = (float)(dt + (dt * 0));
 	//------------------------------------//
-
-	//----Updating Camera Position---------------------------------------------------------------//
-	CamPosX = (car->getPos().x - (sin(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
-	CamPosY = car->getPos().y + 8;
-	CamPosZ = (car->getPos().z - (cos(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
-	CamTargetX = car->getPos().x;
-	CamTargetY = car->getPos().y + 5;
-	CamTargetZ = car->getPos().z;
-	//-------------------------------------------------------------------------------------------//
-
-	//----KeyPress to Enable and Disable Light-------//
-	if (Application::IsKeyPressed('8'))
-	{
-		bLightEnabled = true;
-	}
-	else if (Application::IsKeyPressed('9'))
-	{
-		bLightEnabled = false;
-	}
-	//-----------------------------------------------//
-
-	//----KeyPress to enable PowerUps----------------//
-	//if (Application::IsKeyPressed('F'))
-	//{
-	//	Freeze = true;
-	//}
-	//if (Freeze && duration <= 150)
-	//{
-	//	duration++;
-	//	elapsedTime -= FreezeTime;
-
-	//	if (duration >= 150) // 3 sec/dt
-	//	{
-	//		Freeze = false;
-	//		duration = 0;
-	//	}
-	//}
-	//-------------------------------------------------//
-	
-	//----Collision For Finishing Line---------------------------//
-	if (car->gotCollide("FinishLine",false))
-	{
-		Finish = true;
-	}
+	if (Lose)
+		gameEnd.Update(dt);
 	else
 	{
-		Finish = false;
-	}
+		//----Updating Camera Position---------------------------------------------------------------//
+		CamPosX = (car->getPos().x - (sin(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
+		CamPosY = car->getPos().y + 8;
+		CamPosZ = (car->getPos().z - (cos(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
+		CamTargetX = car->getPos().x;
+		CamTargetY = car->getPos().y + 5;
+		CamTargetZ = car->getPos().z;
+		//-------------------------------------------------------------------------------------------//
 
-	if (Finish)
-	{
-		if (elapsedTime <= 36)
-			elapsedTime += (dt + 2);
+		//----KeyPress to Enable and Disable Light-------//
+		if (Application::IsKeyPressed('8'))
+		{
+			bLightEnabled = true;
+		}
+		else if (Application::IsKeyPressed('9'))
+		{
+			bLightEnabled = false;
+		}
+		//-----------------------------------------------//
 
-		if (elapsedTime >= 37 && elapsedTime <= 80)
-			laps = 1;
-		if (elapsedTime >= 81 && elapsedTime <= 140)
-			laps = 0;
-	}
+		//----KeyPress to enable PowerUps----------------//
+		//if (Application::IsKeyPressed('F'))
+		//{
+		//	Freeze = true;
+		//}
+		//if (Freeze && duration <= 150)
+		//{
+		//	duration++;
+		//	elapsedTime -= FreezeTime;
 
-	if (AI.gotCollide("FinishLine",false))
-	{
-		AIFinish = true;
-	}
-	else
-	{
-		AIFinish = false;
-	}
+		//	if (duration >= 150) // 3 sec/dt
+		//	{
+		//		Freeze = false;
+		//		duration = 0;
+		//	}
+		//}
+		//-------------------------------------------------//
 
-	if (AIFinish)
-	{
-		if (elapsedTime >= 59 && elapsedTime <= 65)
-			AIlaps = 1;
-		if (elapsedTime >= 119 && elapsedTime <= 1128)
-			AIlaps = 0;
-	}
-
-	if (laps == 0 || AIlaps == 0)
-	{
-		if (laps < AIlaps)
-			Win = true;
+		//----Collision For Finishing Line---------------------------//
+		if (car->gotCollide("FinishLine", false))
+		{
+			Finish = true;
+		}
 		else
-			Lose = true;
-	}
-	//-----------------------------------------------------------//
+		{
+			Finish = false;
+		}
 
-	//----Weather and Environment Effects-------//
-	if (Raining)
-	{
-		car->SetSteering(9);
-	}
-	if (Snowing)
-	{
-		car->SetFriction(0.01);
-	}
-	if (OffRoad)
-	{
-		car->SetFriction(0.5);
-		car->SetMaxSpeed(0.1);
-	}
+		if (Finish)
+		{
+			if (elapsedTime <= 36)
+				elapsedTime += (dt + 2);
 
-	rain.update(dt);
-	snow.update(dt);
-	//-------------------------------------------//
+			if (elapsedTime >= 37 && elapsedTime <= 80)
+				laps = 1;
+			if (elapsedTime >= 81 && elapsedTime <= 140)
+				laps = 0;
+		}
 
-	//----Countdown to Start Of the Game---------//
-	if (Countdown <= 0)
-	{
-		elapsedTime += (float)dt;
-		car->Movement(dt);
-		car->Ability(dt);
-		AI.LevelOne(dt);
+		if (AI.gotCollide("FinishLine", false))
+		{
+			AIFinish = true;
+		}
+		else
+		{
+			AIFinish = false;
+		}
+
+		if (AIFinish)
+		{
+			if (elapsedTime >= 59 && elapsedTime <= 65)
+				AIlaps = 1;
+			if (elapsedTime >= 119 && elapsedTime <= 1128)//119
+				AIlaps = 0;
+		}
+
+		if (laps == 0 || AIlaps == 0)
+		{
+			if (laps < AIlaps)
+				Win = true;
+			else
+			{
+				Lose = true;
+				gameEnd.Init();
+			}
+		}
+		//-----------------------------------------------------------//
+
+		//----Weather and Environment Effects-------//
+		if (Raining)
+		{
+			car->SetSteering(9);
+		}
+		if (Snowing)
+		{
+			car->SetFriction(0.01);
+		}
+		if (OffRoad)
+		{
+			car->SetFriction(0.5);
+			car->SetMaxSpeed(0.1);
+		}
+
+		rain.update(dt);
+		snow.update(dt);
+		//-------------------------------------------//
+
+		//----Countdown to Start Of the Game---------//
+		if (Countdown <= 0)
+		{
+			elapsedTime += (float)dt;
+			car->Movement(dt);
+			car->Ability(dt);
+			AI.LevelOne(dt);
+		}
+		//-------------------------------------------//
+
+		//Updating Car Position for Player and AI
+		car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
+		//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
+
+		//Update Camera
+		camera.Update(dt);
 	}
-	//-------------------------------------------//
-
-    //Updating Car Position for Player and AI
-	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
-	//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
-
-	//Update Camera
-	camera.Update(dt);
 }
 
 void c_LevelOne::Render()
@@ -386,113 +392,118 @@ void c_LevelOne::Render()
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
-	//----Render Functions----------------------------------//
-	renderLights();
-	renderEnviroment();
-	updateEnviromentCollision();
-	if (Random == 1)
-	{
-		renderRain();
-	}
-	if (Random == 2)
-	{
-		RenderSnow();
-	}
-	//------------------------------------------------------//
-	/**************************************************************		CAR		***************************************************************/
-	modelStack.PushMatrix();
-	modelStack.Translate(car->getPos().x, car->getPos().y, car->getPos().z);
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Rotate(car->GetSteeringAngle(), 0, 1, 0);
-	RenderMesh(car->getMesh(), true);
-	modelStack.PopMatrix();
-
-	//UpdateCollisions
-	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
-	car->getOBB()->calcNewAxis(90, 0, 1, 0);
-	car->getOBB()->calcNewAxis(car->GetSteeringAngle(), 0, 1, 0);
-
-	/**************************************************************		AI		***************************************************************/
-	modelStack.PushMatrix();
-	modelStack.Translate(AI.getPos().x, AI.getPos().y, AI.getPos().z);
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Rotate(AI.GetTurning(), 0, 1, 0);
-	modelStack.Scale(0.7, 0.7, 0.7);
-	RenderMesh(AI.getMesh(), true);
-	modelStack.PopMatrix();
-
-	AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
-	AI.getOBB()->calcNewAxis(AI.GetSteeringAngle(), 0, 1, 0);
-
-	/**************************************************************		BoostPad		***************************************************************/
-
-	modelStack.PushMatrix();
-	modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
-	modelStack.Scale(3, 1, 3);
-	RenderMesh(boost.getMesh(), true);
-	modelStack.PopMatrix();
-
-	boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
-	boost.getOBB()->calcNewDimensions(3, 1, 3);
-
-	/**************************************************************		SlowPad		***************************************************************/
-	modelStack.PushMatrix();
-	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Scale(50, 15, 50);
-	RenderMesh(FinishLine.getMesh(), true);
-	modelStack.PopMatrix();
-
-	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
-
-	modelStack.PushMatrix();
-	modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
-	modelStack.Scale(3, 1, 3);
-	RenderMesh(slow.getMesh(), true);
-	modelStack.PopMatrix();
-
-	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
-	slow.getOBB()->calcNewDimensions(3, 1, 3);
-
-	CountdownCut = std::to_string(Countdown);
-	CountdownCut.resize(1);
-
-	//----Render Text On Screen-----------------------------------------------------------------------------------//
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
-
-	if (Countdown >= 0)
-		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 10, 14);
+	if (Lose)
+		gameEnd.Render();
 	else
 	{
-		Cooldown++;
+
+		//----Render Functions----------------------------------//
+		renderLights();
+		renderEnviroment();
+		updateEnviromentCollision();
+		if (Random == 1)
+		{
+			renderRain();
+		}
+		if (Random == 2)
+		{
+			RenderSnow();
+		}
+		//------------------------------------------------------//
+		/**************************************************************		CAR		***************************************************************/
+		modelStack.PushMatrix();
+		modelStack.Translate(car->getPos().x, car->getPos().y, car->getPos().z);
+		modelStack.Rotate(90, 0, 1, 0);
+		modelStack.Rotate(car->GetSteeringAngle(), 0, 1, 0);
+		RenderMesh(car->getMesh(), true);
+		modelStack.PopMatrix();
+
+		//UpdateCollisions
+		car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
+		car->getOBB()->calcNewAxis(90, 0, 1, 0);
+		car->getOBB()->calcNewAxis(car->GetSteeringAngle(), 0, 1, 0);
+
+		/**************************************************************		AI		***************************************************************/
+		modelStack.PushMatrix();
+		modelStack.Translate(AI.getPos().x, AI.getPos().y, AI.getPos().z);
+		modelStack.Rotate(90, 0, 1, 0);
+		modelStack.Rotate(AI.GetTurning(), 0, 1, 0);
+		modelStack.Scale(0.7, 0.7, 0.7);
+		RenderMesh(AI.getMesh(), true);
+		modelStack.PopMatrix();
+
+		AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
+		AI.getOBB()->calcNewAxis(AI.GetSteeringAngle(), 0, 1, 0);
+
+		/**************************************************************		BoostPad		***************************************************************/
+
+		modelStack.PushMatrix();
+		modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+		modelStack.Scale(3, 1, 3);
+		RenderMesh(boost.getMesh(), true);
+		modelStack.PopMatrix();
+
+		boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+		boost.getOBB()->calcNewDimensions(3, 1, 3);
+
+		/**************************************************************		SlowPad		***************************************************************/
+		modelStack.PushMatrix();
+		modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+		modelStack.Rotate(90, 1, 0, 0);
+		modelStack.Scale(50, 15, 50);
+		RenderMesh(FinishLine.getMesh(), true);
+		modelStack.PopMatrix();
+
+		FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+		FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
+
+		modelStack.PushMatrix();
+		modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
+		modelStack.Scale(3, 1, 3);
+		RenderMesh(slow.getMesh(), true);
+		modelStack.PopMatrix();
+
+		slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
+		slow.getOBB()->calcNewDimensions(3, 1, 3);
+
+		CountdownCut = std::to_string(Countdown);
+		CountdownCut.resize(1);
+
+		//----Render Text On Screen-----------------------------------------------------------------------------------//
+		RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+		RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+		RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+
+		if (Countdown >= 0)
+			RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 10, 14);
+		else
+		{
+			Cooldown++;
+			elapedTimeCut = std::to_string(elapsedTime);
+			elapedTimeCut.resize(5);
+
+			if (Cooldown <= 50)
+				RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 10, 14);
+			else
+				RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 10, 14);
+		}
+
+		RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 9, 3);
+
+		if (Win)
+			RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 10, 10);
+		if (Lose)
+			RenderTextOnScreen(meshList[TEXT], "YOU LOSE", Color(1, 0, 0), 4, 10, 10);
+
 		elapedTimeCut = std::to_string(elapsedTime);
 		elapedTimeCut.resize(5);
-
-		if (Cooldown <= 50)
-			RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 10, 14);
-		else
-			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 10, 14);
+		RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
+		//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+		//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+		//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+		RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
+		//----------------------------------------------------------------------------------------------------------//
 	}
-
-	RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 9, 3);
-
-	if (Win)
-		RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 10, 10);
-	if (Lose)
-		RenderTextOnScreen(meshList[TEXT], "YOU LOSE", Color(1, 0, 0), 4, 10, 10);
-
-	elapedTimeCut = std::to_string(elapsedTime);
-	elapedTimeCut.resize(5);
-	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
-	//----------------------------------------------------------------------------------------------------------//
-	
 }
 
 void c_LevelOne::renderRain()

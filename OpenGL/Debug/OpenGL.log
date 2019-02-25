@@ -1,9 +1,50 @@
-﻿  c_Garage.cpp
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_garage.cpp(357): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_garage.cpp(1330): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_garage.cpp(1334): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_garage.cpp(1338): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_garage.cpp(1406): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_garage.cpp(1410): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\incre\onedrive\desktop\edward\sp\opengl\source\c_garage.cpp(1414): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  OpenGL.vcxproj -> C:\Users\incre\OneDrive\Desktop\Edward\SP\Debug\OpenGL.exe
+﻿  Application.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  d:\users\539\desktop\sp2\sp\glfw\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+  c_Continue.cpp
+  c_DataManager.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_datamanager.cpp(96): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_datamanager.cpp(133): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_datamanager.cpp(192): warning C4018: '<': signed/unsigned mismatch
+  c_GameEnd.cpp
+  c_Garage.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(353): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1264): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1268): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1272): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1340): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1344): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1348): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  c_LevelOne.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(38): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(206): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(232): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(233): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(294): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(338): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(343): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(431): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(511): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(527): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(744): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1180): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1184): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1188): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1192): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1193): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1197): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1201): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1202): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1206): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1210): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1211): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1215): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1219): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1223): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1224): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1228): warning C4305: 'argument': truncation from 'double' to 'float'
+  c_Npc.cpp
+  c_SceneManager.cpp
+  Generating Code...
+d:\users\539\desktop\sp2\sp\opengl\source\c_scenemanager.cpp(95): warning C4715: 'c_SceneManager::getScene': not all control paths return a value
+  OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\OpenGL.exe

@@ -11,6 +11,7 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 
+#include "c_SceneManager.h"
 
 // +++++++++++++++++++++++++ CAR CLASS +++++++++++++++++++++++++++
 
@@ -281,7 +282,6 @@ void c_Garage::Init()
 	v_Car1Changed = v_Car2Changed = false;
 
 	manager = c_ObjectManager::getInstance();
-	scene = c_SceneManager::getInstance();
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
@@ -388,6 +388,8 @@ void c_Garage::Init()
 
 void c_Garage::Update(double dt)
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	v_ElapsedTime += dt;
 	if (scene->checkState("GARAGE") && scene->singleOrMulti('S'))
 	{
@@ -416,33 +418,45 @@ void c_Garage::Update(double dt)
 		else
 		{
 			if (scene->checkLevel("SLEVELONE"))
-			sLevelOne.Init();
+				scene->getScene("SLEVELONE")->Init();
+				//sLevelOne.Init();
 			else if (scene->checkLevel("SLEVELTWO"))
-				sLevelTwo.Init();
+				scene->getScene("SLEVELTWO")->Init();
+				//sLevelTwo.Init();
 			else if (scene->checkLevel("SLEVELTHREE"))
-				sLevelThree.Init();
+				scene->getScene("SLEVELTHREE")->Init();
+				//sLevelThree.Init();
 			else if (scene->checkLevel("MLEVELONE"))
-				mLevelOne.Init();
+				scene->getScene("MLEVELONE")->Init();
+				//mLevelOne.Init();
 			else if (scene->checkLevel("MLEVELTWO"))
-				mLevelTwo.Init();
+				scene->getScene("MLEVELTWO")->Init();
+				//mLevelTwo.Init();
 			else if (scene->checkLevel("MLEVELTHREE"))
-				mLevelThree.Init();
+				scene->getScene("MLEVELTHREE")->Init();
+				//mLevelThree.Init();
 			scene->updateState(scene->getLevel());
 		}
 
 	}
 	else if (scene->checkState("SLEVELONE"))
-		sLevelOne.Update(dt);
+		scene->getScene("SLEVELONE")->Update(dt);
+		//sLevelOne.Update(dt);
 	else if (scene->checkState("SLEVELTWO"))
-		sLevelTwo.Update(dt);
+		scene->getScene("SLEVELTWO")->Update(dt);
+		//sLevelTwo.Update(dt);
 	else if (scene->checkState("SLEVELTHREE"))
-		sLevelThree.Update(dt);
+		scene->getScene("SLEVELTHREE")->Update(dt);
+		//sLevelThree.Update(dt);
 	else if(scene->checkState("MLEVELONE"))
-		mLevelOne.Update(dt);
+		scene->getScene("MLEVELONE")->Update(dt);
+		//mLevelOne.Update(dt);
 	else if (scene->checkState("MLEVELTWO"))
-		mLevelTwo.Update(dt);
+		scene->getScene("MLEVELTWO")->Update(dt);
+		//mLevelTwo.Update(dt);
 	else if (scene->checkState("MLEVELTHREE"))
-		mLevelThree.Update(dt);
+		scene->getScene("MLEVELTHREE")->Update(dt);
+		//mLevelThree.Update(dt);
 }
 
 void c_Garage::RenderMesh(Mesh *mesh, bool enableLight)
@@ -564,6 +578,8 @@ void c_Garage::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, flo
 
 void c_Garage::Render()
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -597,17 +613,23 @@ void c_Garage::Render()
 		f_RenderFinal();
 	}
 	else if (scene->checkState("SLEVELONE"))
-		sLevelOne.Render();
+		scene->getScene("SLEVELONE")->Render();
+		//sLevelOne.Render();
 	else if (scene->checkState("SLEVELTWO"))
-		sLevelTwo.Render();
+		scene->getScene("SLEVELTWO")->Render();
+		//sLevelTwo.Render();
 	else if (scene->checkState("SLEVELTHREE"))
-		sLevelThree.Render();
+		scene->getScene("SLEVELTHREE")->Render();
+		//sLevelThree.Render();
 	else if (scene->checkState("MLEVELONE"))
-		mLevelOne.Render();
+		scene->getScene("MLEVELONE")->Render();
+		//mLevelOne.Render();
 	else if (scene->checkState("MLEVELTWO"))
-		mLevelTwo.Render();
+		scene->getScene("MLEVELTWO")->Render();
+		//mLevelTwo.Render();
 	else if (scene->checkState("MLEVELTHREE"))
-		mLevelThree.Render();
+		scene->getScene("MLEVELTHREE")->Render();
+		//mLevelThree.Render();
 }
 
 void c_Garage::initLights()
@@ -1205,6 +1227,8 @@ void c_Garage::Exit()
 
 void c_Garage::f_UpdateGarage(double dt)
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	if (Application::IsKeyPressed('W') && v_BounceTime < v_ElapsedTime)
 	{
 		v_CarList.f_ChangeCurrentCar('O');

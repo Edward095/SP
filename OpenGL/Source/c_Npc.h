@@ -8,8 +8,6 @@
 #include "MatrixStack.h"
 #include "Light.h"
 
-#include "c_SceneManager.h"
-
 #include "c_Garage.h"
 #include "c_LevelOne.h"
 
@@ -83,10 +81,8 @@ private:
 	Light light[1];
 	
 	//Class
-	c_Garage Garage;
-	c_LevelOne LevelOne;
-
-	c_SceneManager* scene;
+	//c_Garage Garage;
+	//c_LevelOne LevelOne;
 
 
 	//Function

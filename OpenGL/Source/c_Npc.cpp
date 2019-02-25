@@ -15,7 +15,6 @@
 #include "c_SceneManager.h"
 
 
-
 c_Npc::c_Npc()
 {
 }
@@ -27,10 +26,9 @@ c_Npc::~c_Npc()
 
 void c_Npc::Init()
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
 	c_DataManager* data = c_DataManager::getInstance();
 	data->selectFile(1);
-	
-	scene = c_SceneManager::getInstance();
 
 	scene->updateState("NPC");
 
@@ -145,6 +143,8 @@ void c_Npc::Init()
 }
 void c_Npc::Update(double dt)
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	ElapsedTime += dt;
 	camera.Update(dt);
 	camera.WBmove(dt, 280.f, -280.f, 220.f, -150.f);
@@ -152,7 +152,8 @@ void c_Npc::Update(double dt)
 	if (scene->checkState("NPC"))
 		UpdateNpc(dt);
 	else
-		Garage.Update(dt);
+		scene->getScene("GARAGE")->Update(dt);
+		//Garage.Update(dt);
 
 	
 }
@@ -162,6 +163,8 @@ static const float SKYBOXSIZE = 500.f;
 
 void c_Npc::Render()
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -181,11 +184,14 @@ void c_Npc::Render()
 	if (scene->checkState("NPC"))
 		RenderNpc();
 	else
-		Garage.Render();
+		scene->getScene("GARAGE")->Render();
+		//Garage.Render();
 }
 
 void c_Npc::UpdateNpc(double dt)
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168)
 	{
 		StartGame = true;
@@ -311,8 +317,10 @@ void c_Npc::UpdateNpc(double dt)
 					scene->updateLevel("MLEVELONE");
 				scene->updateState("GARAGE");
 
-				Garage.Init();
-				Garage.Update(dt);
+				scene->getScene("GARAGE")->Init();
+				scene->getScene("GARAGE")->Update(dt);
+				/*Garage.Init();
+				Garage.Update(dt);*/
 			}
 			else if (ArrowY == 6)
 			{
@@ -322,8 +330,10 @@ void c_Npc::UpdateNpc(double dt)
 					scene->updateLevel("MLEVELTWO");
 				scene->updateState("GARAGE");
 
-				Garage.Init();
-				Garage.Update(dt);
+				scene->getScene("GARAGE")->Init();
+				scene->getScene("GARAGE")->Update(dt);
+				/*Garage.Init();
+				Garage.Update(dt);*/
 			}
 			else if (ArrowY == 5)
 			{
@@ -333,8 +343,10 @@ void c_Npc::UpdateNpc(double dt)
 					scene->updateLevel("MLEVELTHREE");
 				scene->updateState("GARAGE");
 
-				Garage.Init();
-				Garage.Update(dt);
+				scene->getScene("GARAGE")->Init();
+				scene->getScene("GARAGE")->Update(dt);
+				/*Garage.Init();
+				Garage.Update(dt);*/
 			}
 		}
 		if (Options)

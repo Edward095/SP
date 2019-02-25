@@ -1,22 +1,53 @@
-﻿  c_GameEnd.cpp
+﻿  Application.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  d:\users\539\desktop\sp2\sp\glfw\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+  c_Continue.cpp
+  c_DataManager.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_datamanager.cpp(96): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_datamanager.cpp(133): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_datamanager.cpp(192): warning C4018: '<': signed/unsigned mismatch
+  c_GameEnd.cpp
+  c_Garage.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(353): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1264): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1268): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1272): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1340): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1344): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_garage.cpp(1348): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  c_LevelOne.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(38): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(206): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(232): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(233): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(294): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(338): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(343): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(431): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(511): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(527): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(744): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1180): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1184): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1188): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1192): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1193): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1197): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1201): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1202): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1206): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1210): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1211): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1215): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1219): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1223): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1224): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\539\desktop\sp2\sp\opengl\source\c_levelone.cpp(1228): warning C4305: 'argument': truncation from 'double' to 'float'
+  c_Npc.cpp
+  c_SceneManager.cpp
   Generating code
-  1 of 779 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+  4 of 1589 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-c_Weather.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'c_Weather.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
-c_Sound.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'c_Sound.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
-FirstPersonCamera.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'FirstPersonCamera.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
-LoadOBJ.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'LoadOBJ.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
-Camera.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'Camera.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
-LoadTGA.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'LoadTGA.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
-Mesh.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'Mesh.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
-MeshBuilder.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'MeshBuilder.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
-main.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'main.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
-shader.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'shader.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
-Utility.obj : warning LNK4099: PDB 'vc141.pdb' was not found with 'Utility.obj' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\vc141.pdb'; linking object as if no debug info
-Common.lib(Vector3.obj) : warning LNK4099: PDB 'Common.pdb' was not found with 'Common.lib(Vector3.obj)' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\Common.pdb'; linking object as if no debug info
-Common.lib(Mtx44.obj) : warning LNK4099: PDB 'Common.pdb' was not found with 'Common.lib(Mtx44.obj)' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\Common.pdb'; linking object as if no debug info
-Common.lib(MatrixStack.obj) : warning LNK4099: PDB 'Common.pdb' was not found with 'Common.lib(MatrixStack.obj)' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\Common.pdb'; linking object as if no debug info
-Common.lib(timer.obj) : warning LNK4099: PDB 'Common.pdb' was not found with 'Common.lib(timer.obj)' or at 'C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\Common.pdb'; linking object as if no debug info
-  OpenGL.vcxproj -> C:\Users\incre\OneDrive\Desktop\Edward\SP\Release\OpenGL.exe
+  OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Release\OpenGL.exe

@@ -11,6 +11,8 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 
+#include "c_SceneManager.h"
+#include "c_DataManager.h"
 
 c_GameEnd::c_GameEnd()
 {
@@ -23,7 +25,8 @@ c_GameEnd::~c_GameEnd()
 
 void c_GameEnd::Init()
 {
-	data = c_DataManager::getInstance();
+	c_SceneManager* scene = c_SceneManager::getInstance();
+	c_DataManager* data = c_DataManager::getInstance();
 	elapsedTime = bounceTime = 0.f;
 	ArrowX = -3.8f;
 	ArrowY = 2.55f;
@@ -310,18 +313,21 @@ void c_GameEnd::updateSelection()
 }
 void c_GameEnd::goNextLevel()
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
 	if (scene->checkLevel("SLEVELONE"))
 	{
-		//npc->Init();
+		scene->getScene("NPC")->Init();
 		scene->updateLevel("SLEVELTWO");
 	}
 	else if (scene->checkLevel("SLEVELTWO"))
 	{
-		//npc->Init();
+		scene->getScene("NPC")->Init();
 		scene->updateLevel("SLEVELTHREE");
 	}
 }
 void c_GameEnd::retry()
 {
-	//scene->getScene("SL1")->Init();
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
+	scene->getScene("SLEVELONE")->Init();
 }

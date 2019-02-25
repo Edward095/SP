@@ -11,7 +11,6 @@
 #include "c_Sound.h"
 
 #include "c_ObjectManager.h"
-#include "c_SceneManager.h"
 
 #include "c_LevelOne.h"
 #include "c_LevelTwo.h"
@@ -194,7 +193,6 @@ private:
 	void f_UpdateGarage(double dt);
 	void f_UpdateGarage2(double dt);
 	void f_RenderGarage();
-	void f_RenderGarage2();
 
 	c_List v_CarList;
 	c_List v_ColourList;
@@ -205,24 +203,14 @@ private:
 	const char* v_CarColourPath2[9];
 	const char* v_CarColourPath3[9];
 
-	c_LevelOne sLevelOne;
+	/*c_LevelOne sLevelOne;
 	c_LevelTwo sLevelTwo;
 	c_LevelThree sLevelThree;
-
-	c_FirstCar car1Type1;
-	c_SecondCar car1Type2;
-	c_ThirdCar car1Type3;
-	c_FirstCar car2Type1;
-	c_SecondCar car2Type2;
-	c_ThirdCar car2Type3;
-
-
 	c_MultiplayerLevel mLevelOne;
 	c_MultiplayerLevelTwo mLevelTwo;
-	c_MultiplayerLevelThree mLevelThree;
+	c_MultiplayerLevelThree mLevelThree;*/
 
 	c_ObjectManager* manager;
-	c_SceneManager* scene;
 
 };
 

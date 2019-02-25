@@ -15,6 +15,15 @@ c_SceneManager::c_SceneManager()
 	game_State[MLEVELTWO] = "MLEVELTWO";
 	game_State[MLEVELTHREE] = "MLEVELTHREE";
 	game_State[FINISHED] = "FINISHED";
+
+	npc = new c_Npc();
+	garage = new c_Garage();
+	sLevelOne = new c_LevelOne();
+	sLevelTwo = new c_LevelTwo();
+	sLevelThree = new c_LevelThree();
+	mLevelOne = new c_MultiplayerLevel();
+	mLevelTwo = new c_MultiplayerLevelTwo();
+	mLevelThree = new c_MultiplayerLevelThree();
 }
 
 
@@ -31,6 +40,10 @@ c_SceneManager* c_SceneManager::getInstance()
 	}
 	else
 		return instance;
+}
+void c_SceneManager::cleanUp()
+{
+
 }
 
 void c_SceneManager::updateState(std::string state)
@@ -60,4 +73,23 @@ std::string c_SceneManager::getLevel()
 bool c_SceneManager::singleOrMulti(char sOrm)
 {
 	return (sOrm == level[0]);
+}
+Scene* c_SceneManager::getScene(std::string sceneName)
+{
+	if (sceneName == "NPC")
+		return npc;
+	else if (sceneName == "GARAGE")
+		return garage;
+	else if (sceneName == "SLEVELONE")
+		return sLevelOne;
+	else if (sceneName == "SLEVELTWO")
+		return sLevelTwo;
+	else if (sceneName == "SLEVELTHREE")
+		return sLevelThree;
+	else if (sceneName == "MLEVELONE")
+		return mLevelOne;
+	else if (sceneName == "MLEVELTWO")
+		return mLevelTwo;
+	else if (sceneName == "MLEVELTHREE")
+		return mLevelThree;
 }

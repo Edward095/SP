@@ -8,9 +8,6 @@
 #include "Light.h"
 #include "c_Sound.h"
 
-#include "c_DataManager.h"
-#include "c_SceneManager.h"
-
 class c_GameEnd : public Scene
 {
 public:
@@ -66,9 +63,6 @@ private:
 	MS modelStack, viewStack, projectionStack;
 
 	Light light[1];
-
-	c_DataManager* data;
-	c_SceneManager* scene;
 
 	void RenderMesh(Mesh *mesh, bool enableLight);
 	void initLights();

@@ -14,6 +14,8 @@
 #include "c_OffRoadManager.h"
 #include "c_ObjectManager.h"
 
+#include "c_GameEnd.h"
+
 class c_LevelOne : public Scene
 {
 public:
@@ -161,7 +163,7 @@ private:
 
 	void renderEnviroment();
 	void updateEnviromentCollision();
-
+	void resetVar();
 
 	
 	c_Entity front;
@@ -207,18 +209,20 @@ private:
 	int Cooldown;
 	float Countdown;
 	float Timer;
-	bool Finish = false;
+	bool Finish;
 	int laps;
 	int AIlaps;
-	bool AIFinish = false;
-	bool CheckEnd = false;
-	bool Win = false;
-	bool Lose = false;
+	bool AIFinish;
+	bool CheckEnd;
+	bool Win;
+	bool Lose;
 
 	c_Weather rain;
 	c_Weather snow;
 	void renderRain();
 	void RenderSnow();
+
+	c_GameEnd gameEnd;
 };
 
 #endif
