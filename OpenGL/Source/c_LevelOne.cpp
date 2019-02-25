@@ -236,7 +236,7 @@ void c_LevelOne::Update(double dt)
 	//----Power Up Timer------------------// 
 	//FreezeTime = (float)(dt + (dt * 0));
 	//------------------------------------//
-	
+
 		//----Updating Camera Position---------------------------------------------------------------//
 		CamPosX = (car->getPos().x - (sin(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
 		CamPosY = car->getPos().y + 8;
@@ -361,7 +361,7 @@ void c_LevelOne::Update(double dt)
 		camera.Update(dt);
 
 			Lose = true;
-	
+
 }
 
 void c_LevelOne::Render()
@@ -497,7 +497,7 @@ void c_LevelOne::Render()
 		//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 		RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
 		//----------------------------------------------------------------------------------------------------------//
-	
+
 }
 
 void c_LevelOne::renderRain()
