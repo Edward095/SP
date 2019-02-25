@@ -10,16 +10,18 @@ public:
 	c_CarBaseClass();
 	~c_CarBaseClass();
 	void updateAppearance(const char* meshPath, const char* TGApath);
+	float GetSteeringAngle();
+	float GetSpeed();
+	float GetMaxAcceleration();
+	float GetAcceleration();
+	void SetSpeed(float speed);
+	void SetFriction(float friction);
+	void SetSteering(float Steering);
+	void SetSteeringAngle(float SteeringAngle);
+	void SetMaxSpeed(float Speed);
+
 	virtual void Movement(double dt);
-	virtual float GetSteeringAngle();
 	virtual void PadEffect(double dt);
-	virtual float GetMaxAcceleration();
-	virtual float GetSpeed();
-	virtual float GetAcceleration();
-	virtual void SetSpeed(float speed);
-	virtual void SetFriction(float friction);
-	virtual void SetSteering(float Steering);
-	virtual void SetMaxSpeed(float Speed);
 	virtual void Ability(double dt) = 0;
 	virtual void PowerUp(bool check) = 0;
 	virtual void isOffRoad() = 0;

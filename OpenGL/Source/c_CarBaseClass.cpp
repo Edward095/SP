@@ -413,6 +413,11 @@ void c_CarBaseClass::SetSteering(float Steering)
 	this->Steering = Steering;
 }
 
+void c_CarBaseClass::SetSteeringAngle(float SteeringAngle)
+{
+	this->SteeringAngle = SteeringAngle;
+}
+
 void c_CarBaseClass::SetMaxSpeed(float Speed)
 {
 	this->MaxSpeed = Speed;

@@ -43,7 +43,23 @@ c_SceneManager* c_SceneManager::getInstance()
 }
 void c_SceneManager::cleanUp()
 {
+	garage->Exit();
+	sLevelOne->Exit();
+	sLevelTwo->Exit();
+	sLevelThree->Exit();
+	mLevelOne->Exit();
+	mLevelTwo->Exit();
+	mLevelThree->Exit();
 
+
+	delete npc;
+	delete garage;
+	delete sLevelOne;
+	delete sLevelTwo;
+	delete sLevelThree;
+	delete mLevelOne;
+	delete mLevelTwo;
+	delete mLevelThree;
 }
 
 void c_SceneManager::updateState(std::string state)

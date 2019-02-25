@@ -154,8 +154,6 @@ void c_Npc::Update(double dt)
 	else
 		scene->getScene("GARAGE")->Update(dt);
 		//Garage.Update(dt);
-
-	
 }
 
 
@@ -508,6 +506,8 @@ void c_Npc::RenderNpc()
 }
 void c_Npc::Exit()
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	// Cleanup here
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
 	{
@@ -516,6 +516,8 @@ void c_Npc::Exit()
 	}
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
+
+	scene->cleanUp();
 }
 void c_Npc::RenderMesh(Mesh *mesh, bool enableLight)
 {
@@ -728,4 +730,11 @@ void c_Npc::RenderText(Mesh* mesh, std::string text, Color color, float spacing)
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 	glEnable(GL_DEPTH_TEST);
+}
+void c_Npc::resetVar()
+{
+	ElapsedTime = TimePassed = BounceTime = 0;
+	ArrowY = 7;
+
+	AbleToPress = Talk = Talk1 = LevelSelection = SinglePlayer = MultiPlayer = StartGame = Continue = Options = false;
 }
