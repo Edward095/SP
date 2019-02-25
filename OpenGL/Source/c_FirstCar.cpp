@@ -5,7 +5,6 @@
 #include "c_OffRoadManager.h"
 #include "LoadTGA.h"
 
-c_OffRoadManager* manager = c_OffRoadManager::getInstance();
 c_FirstCar::c_FirstCar()
 {
 	VelocityZ = 0;
@@ -85,6 +84,8 @@ void c_FirstCar::PowerUp(bool check)
 }
 void c_FirstCar::isOffRoad()
 {
+	c_OffRoadManager* manager = c_OffRoadManager::getInstance();
+
 	for (int i = 0; i < manager->getList().size(); i++)
 	{
 		if (gotCollide(manager->getList()[i],false) || !gotCollide("track", false))
