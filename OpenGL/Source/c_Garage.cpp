@@ -456,8 +456,6 @@ void c_Garage::Update(double dt)
 
 	else if (scene->checkState("MLEVELTHREE"))
 		scene->getScene("MLEVELTHREE")->Update(dt);
-	
-	//scene->updateState(scene->getLevel());
 }
 
 void c_Garage::RenderMesh(Mesh *mesh, bool enableLight)

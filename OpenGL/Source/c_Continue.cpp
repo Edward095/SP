@@ -12,6 +12,11 @@
 #include "LoadTGA.h"
 
 #include "c_ObjectManager.h"
+#include "c_DataManager.h"
+
+#include "c_FirstCar.h"
+#include "c_SecondCar.h"
+#include "c_ThirdCar.h"
 
 
 c_Continue::c_Continue()
@@ -25,8 +30,6 @@ c_Continue::~c_Continue()
 
 void c_Continue::Init()
 {
-	data = c_DataManager::getInstance();
-
 	ArrowX = -3.8f;
 	ArrowY = 2.85f;
 	bounceTime = 0;
@@ -288,6 +291,7 @@ void c_Continue::renderSelection()
 void c_Continue::updateSelection(double dt)
 {
 	c_ObjectManager* OBJmanager = c_ObjectManager::getInstance();
+	c_DataManager* data = c_DataManager::getInstance();
 
 	if (Application::IsKeyPressed(VK_UP) && bounceTime < elapsedTime)
 	{
@@ -320,5 +324,12 @@ void c_Continue::updateSelection(double dt)
 }
 void c_Continue::loadFile()
 {
+	c_DataManager* data = c_DataManager::getInstance();
+
 	data->readFromFile(OBJpath,TGApath);
+}
+
+void c_Continue::resetVar()
+{
+
 }

@@ -24,6 +24,9 @@ c_SceneManager::c_SceneManager()
 	mLevelOne = new c_MultiplayerLevel();
 	mLevelTwo = new c_MultiplayerLevelTwo();
 	mLevelThree = new c_MultiplayerLevelThree();
+
+	continueGame = new c_Continue();
+	gameEnd = new c_GameEnd();
 }
 
 
@@ -50,6 +53,8 @@ void c_SceneManager::cleanUp()
 	mLevelOne->Exit();
 	mLevelTwo->Exit();
 	mLevelThree->Exit();
+	continueGame->Exit();
+	gameEnd->Exit();
 
 
 	delete npc;
@@ -60,6 +65,9 @@ void c_SceneManager::cleanUp()
 	delete mLevelOne;
 	delete mLevelTwo;
 	delete mLevelThree;
+
+	delete continueGame;
+	delete gameEnd;
 }
 
 void c_SceneManager::updateState(std::string state)
