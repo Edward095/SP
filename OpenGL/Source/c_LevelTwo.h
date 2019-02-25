@@ -6,10 +6,11 @@
 #include "FirstPersonCamera.h"
 #include "MatrixStack.h"
 #include "Light.h"
-#include "c_FirstCar.h"
-#include "c_Entity.h"
 #include "c_AI.h"
 #include "c_Weather.h"
+#include "c_CarBaseClass.h"
+
+#include "c_ObjectManager.h"
 
 
 class c_LevelTwo : public Scene
@@ -27,6 +28,10 @@ public:
 		TRACK,
 		RACEBANNER,
 		STREETLIGHT,
+		TRAFFICRED,
+		TRAFFICNULL,
+		TRAFFICNULL2,
+		TRAFFICGREEN,
 		NITRO,
 		BOOSTPAD,
 		SLOWPAD,
@@ -161,18 +166,22 @@ private:
 	void renderEnviroment();
 	void updateEnviromentCollision();
 
-	c_FirstCar car;
 
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
 	c_Entity nitro;
+	c_Entity track;
+
 	c_AI AI;
+	c_CarBaseClass* car;
 
 	c_Entity boost;
 	c_Entity slow;
 	c_Entity FinishLine;
+
+	c_ObjectManager* OBJmanager;
 	//Variables
 
 	bool talk;
@@ -214,10 +223,14 @@ private:
 	bool OptionSelection;
 	bool VehicleMove;
 
+	//Traffic Lights
+	float red1, red2, red3, green1, green2, green3;
+	bool RedLight, GreenLight;
+
 	c_Weather rain;
 	c_Weather snow;
-	/*void renderRain();
-	void RenderSnow();*/
+	void renderRain();
+	void RenderSnow();
 
 
 };
