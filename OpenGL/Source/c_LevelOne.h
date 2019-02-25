@@ -184,16 +184,18 @@ private:
 
 	//Variables
 
+	bool talk;
+	float elapsedTime;
+//	float FreezeTime;
+	float TimePassed;
+	bool AbletoPress;
 	float CamPosX;
 	float CamPosY;
 	float CamPosZ;
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
-
-	float elapsedTime;
-	float TimePassed;
-	bool AbletoPress;
+	//bool Freeze = false;
 	bool Raining = false;
 	bool Snowing = false;
 	bool OffRoad = false;

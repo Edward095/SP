@@ -11,7 +11,6 @@ public:
 	virtual void Update(double dt) = 0;
 	virtual void Render() = 0;
 	virtual void Exit() = 0;
-	virtual void resetVar() = 0;
 };
 
 #endif

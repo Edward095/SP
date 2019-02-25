@@ -1394,18 +1394,3 @@ void c_Garage::f_RenderGarage()
 	RenderMesh(meshList[UI], false);
 	modelStack.PopMatrix();
 }
-
-void c_Garage::resetVar()
-{
-	v_MusicPause = false;
-
-	v_RotateCar = 0;
-	v_ConfirmRotation = 50;
-	v_ElapsedTime = 0;
-	v_BounceTime = 0;
-	v_BTPause = 0;
-	v_ScaleBlue = v_ScaleRed = v_ScalePurple = v_ScaleGreen = v_ScalePink = v_ScaleYellow = v_ScaleWhite = v_ScaleGrey = v_ScaleBlack = 1;
-	v_MoveBlue = v_MoveRed = v_MovePurple = v_MoveGreen = v_MovePink = v_MoveYellow = v_MoveWhite = v_MoveGrey = v_MoveBlack = 0;
-	v_ScalePreview1 = v_ScalePreview2 = v_ScalePreview3 = 1;
-	v_Car1Changed = v_Car2Changed = false;
-}
