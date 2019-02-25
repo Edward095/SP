@@ -419,44 +419,45 @@ void c_Garage::Update(double dt)
 		{
 			if (scene->checkLevel("SLEVELONE"))
 				scene->getScene("SLEVELONE")->Init();
-				//sLevelOne.Init();
+
 			else if (scene->checkLevel("SLEVELTWO"))
 				scene->getScene("SLEVELTWO")->Init();
-				//sLevelTwo.Init();
+
 			else if (scene->checkLevel("SLEVELTHREE"))
 				scene->getScene("SLEVELTHREE")->Init();
-				//sLevelThree.Init();
+
 			else if (scene->checkLevel("MLEVELONE"))
 				scene->getScene("MLEVELONE")->Init();
-				//mLevelOne.Init();
+
 			else if (scene->checkLevel("MLEVELTWO"))
 				scene->getScene("MLEVELTWO")->Init();
-				//mLevelTwo.Init();
+
 			else if (scene->checkLevel("MLEVELTHREE"))
 				scene->getScene("MLEVELTHREE")->Init();
-				//mLevelThree.Init();
+
 			scene->updateState(scene->getLevel());
 		}
 
 	}
 	else if (scene->checkState("SLEVELONE"))
 		scene->getScene("SLEVELONE")->Update(dt);
-		//sLevelOne.Update(dt);
+
 	else if (scene->checkState("SLEVELTWO"))
 		scene->getScene("SLEVELTWO")->Update(dt);
-		//sLevelTwo.Update(dt);
+
 	else if (scene->checkState("SLEVELTHREE"))
 		scene->getScene("SLEVELTHREE")->Update(dt);
-		//sLevelThree.Update(dt);
+
 	else if(scene->checkState("MLEVELONE"))
 		scene->getScene("MLEVELONE")->Update(dt);
-		//mLevelOne.Update(dt);
+
 	else if (scene->checkState("MLEVELTWO"))
 		scene->getScene("MLEVELTWO")->Update(dt);
-		//mLevelTwo.Update(dt);
+
 	else if (scene->checkState("MLEVELTHREE"))
 		scene->getScene("MLEVELTHREE")->Update(dt);
-		//mLevelThree.Update(dt);
+	
+	//scene->updateState(scene->getLevel());
 }
 
 void c_Garage::RenderMesh(Mesh *mesh, bool enableLight)
@@ -1347,31 +1348,6 @@ void c_Garage::f_UpdateGarage2(double dt)
 		{
 			manager->addCanCollide("player2", v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
 		}
-		/*if (v_CarList.f_GetCurCar()->f_GetCarNum() == 0)
-		{
-			car2Type1.init("player2", v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
-		}
-		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 1)
-		{
-			car2Type2.init("player2", v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
-		}
-		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
-		{
-			car2Type3.init("player2", v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
-		}*/
-		/*if (v_CarList.f_GetCurCar()->f_GetCarNum() == 0)
-		{
-			secondCar.updateAppearance(v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
-		}
-		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 1)
-		{
-			secondCar.updateAppearance(v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
-		}
-		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
-		{
-			secondCar.updateAppearance(v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()]);
-
-		}*/
 	}
 	if (Application::IsKeyPressed(VK_SPACE) && v_BTPause < v_ElapsedTime)
 	{

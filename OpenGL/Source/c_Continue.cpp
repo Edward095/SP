@@ -11,6 +11,8 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 
+#include "c_ObjectManager.h"
+
 
 c_Continue::c_Continue()
 {
@@ -29,6 +31,7 @@ void c_Continue::Init()
 	ArrowY = 2.85f;
 	bounceTime = 0;
 	elapsedTime = 0;
+	levelNum = 0;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -96,8 +99,11 @@ void c_Continue::Init()
 }
 void c_Continue::Update(double dt)
 {		
-	elapsedTime += dt;
+	//c_SceneManager* scene = c_SceneManager::getInstance();
 
+	elapsedTime += dt;
+	//if(scene->checkState("CONTINUE"))
+	//	updateSelection(dt);
 	updateSelection(dt);
 }
 void c_Continue::Render()
@@ -281,6 +287,8 @@ void c_Continue::renderSelection()
 }
 void c_Continue::updateSelection(double dt)
 {
+	c_ObjectManager* OBJmanager = c_ObjectManager::getInstance();
+
 	if (Application::IsKeyPressed(VK_UP) && bounceTime < elapsedTime)
 	{
 		ArrowY += 2.3f;
@@ -305,11 +313,12 @@ void c_Continue::updateSelection(double dt)
 			data->selectFile(3);
 
 		loadFile();
+		OBJmanager->addCanCollide("player1", OBJpath, TGApath, (0, 0, 0));
 
 		bounceTime = elapsedTime + 0.125;
 	}
 }
 void c_Continue::loadFile()
 {
-	data->readFromFile();
+	data->readFromFile(OBJpath,TGApath);
 }

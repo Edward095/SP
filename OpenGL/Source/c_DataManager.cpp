@@ -144,7 +144,7 @@ void c_DataManager::saveCurrentLevel(int levelNum)
 		std::cout << "File cannot be open.Is it in the correct directory and did u add the file extension?" << std::endl;
 }
 
-void c_DataManager::readFromFile()
+void c_DataManager::readFromFile(const char* OBJpath, const char* TGApath)
 {
 	std::string line;
 	int counter = 1;
@@ -156,17 +156,9 @@ void c_DataManager::readFromFile()
 		{
 			std::getline(file, line);
 			if (counter == 1)
-			{
-
-			}
+				setPath(line, OBJpath);
 			else if (counter == 2)
-			{
-
-			}
-			else if (counter == 3)
-			{
-
-			}
+				setPath(line, TGApath);
 			else if (counter == 4)
 				setLevel(line);
 			counter++;
@@ -185,6 +177,16 @@ void c_DataManager::setLevel(std::string line)
 	else if (line[7] == '2')
 		scene->updateLevel("SLEVELTWO");
 }
+void c_DataManager::setPath(std::string line, const char* path)
+{
+	std::string filePath;
+	for (int i = 9; i < line.size(); i++)
+	{
+		filePath.push_back(line[i]);
+	}
+	path = filePath.c_str();
+}
+
 float c_DataManager::getTiming(std::string line)
 {
 	std::string timeString;

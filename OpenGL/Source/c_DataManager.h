@@ -15,7 +15,7 @@ public:
 	void saveSoundOptions();
 	void updateLeaderBoards(float lapTime, std::string name);
 	void selectFile(int fileNum);
-	void readFromFile();
+	void readFromFile(const char* OBJpath,const char* TGApath);
 
 
 private://Variables
@@ -31,6 +31,7 @@ private://Variables
 
 private://Functions
 	void setLevel(std::string line);
+	void setPath(std::string line, const char* path);
 	float getTiming(std::string line);
 	c_DataManager();
 };
