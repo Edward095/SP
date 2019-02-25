@@ -28,6 +28,10 @@ public:
 		LIGHT2,
 		TRACK,
 		RACEBANNER,
+		TRAFFICRED,
+		TRAFFICNULL,
+		TRAFFICNULL2,
+		TRAFFICGREEN,
 		STREETLIGHT,
 		NITRO,
 		BOOSTPAD,
@@ -140,7 +144,7 @@ public:
 	void Update(double dt);
 	void Render();
 	void Exit();
-	
+
 private:
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];
@@ -215,13 +219,23 @@ private:
 	bool Win = false;
 	bool Lose = false;
 
+	float ArrowP;
+	bool ExitGame;
+	bool AbleToPress;
+	bool OptionSelection;
+	bool VehicleMove;
+
+	//Traffic Lights
+	float red1, red2, red3, green1, green2, green3;
+	bool RedLight, GreenLight;
+
 	c_Weather rain;
 	c_Weather snow;
 	void renderRain();
 	void RenderSnow();
 
 
-	
+
 
 };
 
