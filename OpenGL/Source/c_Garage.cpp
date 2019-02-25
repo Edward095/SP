@@ -12,6 +12,7 @@
 #include "LoadTGA.h"
 
 #include "c_SceneManager.h"
+#include "c_DataManager.h"
 
 // +++++++++++++++++++++++++ CAR CLASS +++++++++++++++++++++++++++
 
@@ -1227,6 +1228,7 @@ void c_Garage::Exit()
 void c_Garage::f_UpdateGarage(double dt)
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
+	c_DataManager* data = c_DataManager::getInstance();
 
 	if (Application::IsKeyPressed('W') && v_BounceTime < v_ElapsedTime)
 	{
@@ -1275,6 +1277,8 @@ void c_Garage::f_UpdateGarage(double dt)
 			v_CarList.f_ChangeCurrentCar('R');
 			v_ColourList.f_ChangeCurrentColour('R');
 		}
+		if (scene->singleOrMulti('S'))
+			data->saveCustomization(manager->getCanCollide("player1")->getMeshPath(), manager->getCanCollide("player1")->getTGApath());
 		
 	}
 	if (Application::IsKeyPressed(VK_SPACE) && v_BTPause < v_ElapsedTime)

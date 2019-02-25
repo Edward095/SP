@@ -193,3 +193,7 @@ const char* c_Entity::getMeshPath()
 {
 	return meshPath;
 }
+const char* c_Entity::getTGApath()
+{
+	return TGApath;
+}

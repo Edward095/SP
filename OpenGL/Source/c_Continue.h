@@ -79,8 +79,8 @@ private:
 	double elapsedTime;
 	double bounceTime;
 
-	const char* OBJpath;
-	const char* TGApath;
+	std::string OBJpath;
+	std::string TGApath;
 	int levelNum;
 };
 

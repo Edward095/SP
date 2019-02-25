@@ -318,16 +318,18 @@ void c_GameEnd::goNextLevel()
 	{
 		scene->getScene("NPC")->Init();
 		scene->updateLevel("SLEVELTWO");
+		scene->updateState("SLEVELTWO");
 	}
 	else if (scene->checkLevel("SLEVELTWO"))
 	{
 		scene->getScene("NPC")->Init();
 		scene->updateLevel("SLEVELTHREE");
+		scene->updateState("SLEVELTHREE");
 	}
 }
 void c_GameEnd::retry()
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
 
-	scene->getScene("SLEVELONE")->Init();
+	//scene->getScene("SLEVELONE")->Init();
 }

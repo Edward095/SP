@@ -116,4 +116,8 @@ Scene* c_SceneManager::getScene(std::string sceneName)
 		return mLevelTwo;
 	else if (sceneName == "MLEVELTHREE")
 		return mLevelThree;
+	else if (sceneName == "CONTINUE")
+		return continueGame;
+	else if (sceneName == "GAMEEND")
+		return gameEnd;
 }

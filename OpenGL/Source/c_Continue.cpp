@@ -13,6 +13,7 @@
 
 #include "c_ObjectManager.h"
 #include "c_DataManager.h"
+#include "c_SceneManager.h"
 
 #include "c_FirstCar.h"
 #include "c_SecondCar.h"
@@ -292,6 +293,7 @@ void c_Continue::updateSelection(double dt)
 {
 	c_ObjectManager* OBJmanager = c_ObjectManager::getInstance();
 	c_DataManager* data = c_DataManager::getInstance();
+	c_SceneManager* scene = c_SceneManager::getInstance();
 
 	if (Application::IsKeyPressed(VK_UP) && bounceTime < elapsedTime)
 	{
@@ -317,8 +319,11 @@ void c_Continue::updateSelection(double dt)
 			data->selectFile(3);
 
 		loadFile();
-		OBJmanager->addCanCollide("player1", OBJpath, TGApath, (0, 0, 0));
-
+		const char* obj = OBJpath.c_str();
+		OBJmanager->addCanCollide("player1", obj, TGApath.c_str(), (0, 0, 0));
+		scene->getScene("GARAGE")->Init();
+		scene->getScene(scene->getLevel())->Init();
+		scene->updateState(scene->getLevel());
 		bounceTime = elapsedTime + 0.125;
 	}
 }

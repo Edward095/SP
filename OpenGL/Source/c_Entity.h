@@ -23,6 +23,7 @@ public:
 	Vector3 getPos();
 	c_Collision* getOBB();
 	const char* getMeshPath();
+	const char* getTGApath();
 
 protected:
 	std::string uniqueName;
