@@ -29,6 +29,8 @@ void c_Npc::Init()
 	c_SceneManager* scene = c_SceneManager::getInstance();
 	c_DataManager* data = c_DataManager::getInstance();
 	data->selectFile(1);
+	data->saveCustomization("OBJ//Car1.obj", "Image//Car1Blue.tga");
+	data->saveCurrentLevel(1);
 
 	scene->updateState("NPC");
 
@@ -154,6 +156,8 @@ void c_Npc::Update(double dt)
 
 	if (scene->checkState("NPC"))
 		UpdateNpc(dt);
+	else if (scene->checkState("CONTINUE"))
+		scene->getScene("CONTINUE")->Update(dt);
 	else
 		scene->getScene("GARAGE")->Update(dt);
 		//Garage.Update(dt);
@@ -186,9 +190,10 @@ void c_Npc::Render()
 	
 	if (scene->checkState("NPC"))
 		RenderNpc();
+	else if (scene->checkState("CONTINUE"))
+		scene->getScene("CONTINUE")->Render();
 	else
 		scene->getScene("GARAGE")->Render();
-		//Garage.Render();
 }
 
 void c_Npc::UpdateNpc(double dt)
@@ -354,7 +359,6 @@ void c_Npc::UpdateNpc(double dt)
 	}
 	if ((Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && StartGame == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Options == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Continue == true && AbleToPress == true))
 	{
-		
 		ArrowY = 7;
 		if (LevelSelection == false && StartGame == true)
 		{
@@ -433,7 +437,8 @@ void c_Npc::UpdateNpc(double dt)
 			if (ArrowY == 7)
 			{
 				//yes
-				//edward put ur save data here
+				scene->updateState("CONTINUE");
+				scene->getScene("CONTINUE")->Init();
 			}
 			else if (ArrowY == 6)
 			{
@@ -448,6 +453,7 @@ void c_Npc::UpdateNpc(double dt)
 
 void c_Npc::RenderNpc()
 {
+	c_DataManager* dataManager = c_DataManager::getInstance();
 	//Human OBJ
     //Newgame
 	modelStack.PushMatrix();
@@ -618,7 +624,18 @@ void c_Npc::RenderNpc()
 
 	if (LeaderBoard == true && Talk4 == true)
 	{
-		RenderTextOnScreen(meshList[TEXT], "LeaderBoard", Color(1, 0, 0), 3, 9, 13);
+		int counter = 13;
+		std::vector <float> data;
+		std::vector <std::string> name;
+		dataManager->getLeaderBoards(data, name);
+
+		RenderTextOnScreen(meshList[TEXT], "LeaderBoard", Color(1, 0, 0), 3, 9, 18);
+		for (int i = 0; i < data.size(); i++)
+		{
+			RenderTextOnScreen(meshList[TEXT], name[i], Color(0, 0, 1), 3, 9, counter);
+			RenderTextOnScreen(meshList[TEXT], std::to_string(data[i]), Color(0, 1, 0), 3, 19, counter);
+			counter--;
+		}
 	}
 	if (Instructions == true && Talk5 == true)
 	{

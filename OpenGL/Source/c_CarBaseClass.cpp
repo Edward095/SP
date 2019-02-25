@@ -446,3 +446,8 @@ void c_CarBaseClass::SetSpeed(float speed)
 {
 	this->VelocityZ = speed;
 }
+
+void c_CarBaseClass::SetSteeringAngle(float angle)
+{
+	this->SteeringAngle = angle;
+}

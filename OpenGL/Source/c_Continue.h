@@ -8,11 +8,6 @@
 #include "Light.h"
 #include "c_Sound.h"
 
-#include "c_DataManager.h"
-#include "c_FirstCar.h"
-#include "c_SecondCar.h"
-#include "c_ThirdCar.h"
-
 class c_Continue : public Scene
 {
 public:
@@ -58,6 +53,7 @@ public:
 	void Update(double dt);
 	void Render();
 	void Exit();
+	void resetVar();
 
 private:
 	unsigned m_vertexArrayID;
@@ -68,8 +64,6 @@ private:
 	MS modelStack, viewStack, projectionStack;
 
 	Light light[1];
-
-	c_DataManager* data;
 
 	void RenderMesh(Mesh *mesh, bool enableLight);
 	void initLights();
@@ -85,8 +79,8 @@ private:
 	double elapsedTime;
 	double bounceTime;
 
-	const char* OBJpath;
-	const char* TGApath;
+	std::string OBJpath;
+	std::string TGApath;
 	int levelNum;
 };
 
