@@ -65,7 +65,6 @@ public:
 	void Update(double dt);
 	void Render();
 	void Exit();
-	void resetVar();
 	void UpdateNpc(double dt);
 	void RenderNpc();
 

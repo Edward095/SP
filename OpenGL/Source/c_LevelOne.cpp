@@ -57,6 +57,7 @@ void c_LevelOne::Init()
 
 	//----Time Related Variables-----//
 	elapsedTime = 0;
+	//FreezeTime = 0;
 	duration = 0;
 	Cooldown = 0;
 	Countdown = 3;
@@ -181,6 +182,10 @@ void c_LevelOne::Init()
 	meshList[LIGHT2] = MeshBuilder::GenerateSphere("street light", Color(1, 1, 1), 18, 36, 1.f);
 	//------------------------------------------------------------------------------------------------//
 
+	//----Rendering Race Track And Stuff On Race Track----------------------------------------//
+	// meshList[TRACK] = MeshBuilder::GenerateOBJ("racetrack", "OBJ//RaceTrack1.obj");
+	// meshList[TRACK]->textureID = LoadTGA("Image//RaceTrack.tga");
+
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
@@ -222,7 +227,6 @@ void c_LevelOne::Init()
 	c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car1);
 	if (third)
 		car = third;
-
 
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0), false);
 	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0), false);
@@ -342,7 +346,7 @@ void c_LevelOne::Update(double dt)
 		{
 			if (elapsedTime >= 59 && elapsedTime <= 65)
 				AIlaps = 1;
-			if (elapsedTime >= 10 && elapsedTime <= 1128)//119
+			if (elapsedTime >= 119 && elapsedTime <= 1128)//119
 				AIlaps = 0;
 		}
 
@@ -1485,34 +1489,4 @@ void c_LevelOne::Exit()
 	}
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
-}
-
-void c_LevelOne::resetVar()
-{
-	AIFinish = false;
-	CheckEnd = false;
-	Win = false;
-	Lose = false;
-
-	//----Time Related Variables-----//
-	elapsedTime = 0;
-	duration = 0;
-	Cooldown = 0;
-	Countdown = 3;
-	Timer = 0;
-	laps = 2;
-	AIlaps = 2;
-	FPS = 0;
-
-	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0), true);
-	car->updatePos(0, 0, 0);
-	car->SetSteeringAngle(0);
-
-	//----Setting Up Camera Coordinates--------//
-	CamPosX = car->getPos().x + 1;
-	CamPosY = car->getPos().y + 1;
-	CamPosZ = car->getPos().z + 1;
-	CamTargetX = car->getPos().x;
-	CamTargetY = car->getPos().y;
-	CamTargetZ = car->getPos().z;
 }

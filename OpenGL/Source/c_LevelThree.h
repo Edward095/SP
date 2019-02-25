@@ -145,8 +145,6 @@ public:
 	void Render();
 	void Exit();
 
-	void resetVar();
-	
 private:
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];

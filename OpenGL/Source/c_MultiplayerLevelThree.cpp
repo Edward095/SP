@@ -948,8 +948,3 @@ void c_MultiplayerLevelThree::updateEnviromentCollision()
 
 	offRoadManager->updateCollision("OffRoad//offRoadPos3.txt", "OffRoad//offRoadRotate3.txt");
 }
-
-void c_MultiplayerLevelThree::resetVar()
-{
-
-}

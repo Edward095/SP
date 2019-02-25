@@ -949,8 +949,3 @@ void c_MultiplayerLevelTwo::updateEnviromentCollision()
 
 	offRoadManager->updateCollision("OffRoad//offRoadPos2.txt", "OffRoad//offRoadRotate2.txt");
 }
-
-void c_MultiplayerLevelTwo::resetVar()
-{
-
-}
