@@ -1,11 +1,11 @@
-﻿  c_SecondCar.cpp
-c:\users\marc-\documents\github\sp\opengl\source\c_secondcar.cpp(15): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\marc-\documents\github\sp\opengl\source\c_secondcar.cpp(18): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\marc-\documents\github\sp\opengl\source\c_secondcar.cpp(19): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\marc-\documents\github\sp\opengl\source\c_secondcar.cpp(92): warning C4018: '<': signed/unsigned mismatch
+﻿  c_MultiplayerLevelTwo.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(154): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(155): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(156): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(157): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Generating code
-  1 of 1651 functions (<0.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+c:\users\marc-\documents\github\sp\opengl\source\c_scenemanager.cpp(123): warning C4715: 'c_SceneManager::getScene': not all control paths return a value
+c:\users\marc-\documents\github\sp\opengl\source\c_objectmanager.cpp(61): warning C4715: 'c_ObjectManager::getCannotCollide': not all control paths return a value
+  All 1667 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   OpenGL.vcxproj -> C:\Users\marc-\Documents\GitHub\SP\Release\OpenGL.exe

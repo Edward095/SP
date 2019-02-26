@@ -297,7 +297,6 @@ void c_MultiplayerLevelTwo::Render()
 			AbleToPress = true;
 			RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
 			AbleToPress = true;
-			TimePassed -= FreezeTime;
 		}
 
 }
