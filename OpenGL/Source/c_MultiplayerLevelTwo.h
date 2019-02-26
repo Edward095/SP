@@ -1,5 +1,5 @@
-#ifndef C_MULTIPLAYERLEVELTWO_H
-#define C_MULTIPLAYERLEVELTWO_H
+#ifndef C_MULTIPLAYERLEVELTHREE_H
+#define C_MULTIPLAYERLEVELTHREE_H
 
 #include "Scene.h"
 #include "Mesh.h"
@@ -7,15 +7,14 @@
 #include "MatrixStack.h"
 #include "Light.h"
 
-#include "c_OffRoadManager.h"
 #include "c_ObjectManager.h"
+#include "c_OffRoadManager.h"
 
 #include "c_CarBaseClass.h"
-
 #include "c_Impulse.h"
 
 
-class c_MultiplayerLevelTwo : public Scene
+class c_MultiplayerLevelThree : public Scene
 {
 public:
 	enum GEOMETRY_TYPE
@@ -133,8 +132,8 @@ public:
 		U_TOTAL,
 	};
 
-	c_MultiplayerLevelTwo();
-	~c_MultiplayerLevelTwo();
+	c_MultiplayerLevelThree();
+	~c_MultiplayerLevelThree();
 	void Init();
 	void Update(double dt);
 	void Render();
@@ -202,7 +201,8 @@ private:
 	c_CarBaseClass* playerTwo;
 
 	c_Impulse Impulse;
-		
+	
+
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
 };
