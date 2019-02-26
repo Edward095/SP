@@ -273,7 +273,6 @@ void c_LevelThree::Update(double dt)
 	CamTargetY = car->getPos().y + 5;
 	CamTargetZ = car->getPos().z;
 	//-------------------------------------------------------------------------------------------//
-
 	//------------Updating Traffic Lights------------//
 	if (elapsedTime >= 10)
 	{
