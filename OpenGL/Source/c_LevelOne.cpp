@@ -44,6 +44,7 @@ void c_LevelOne::Init()
 	srand(time(NULL));
 	//Initialization Of Variables//
 	
+	//----Starting---------------//
 	OptionSelection = true;
 	AbleToPress = false;
 	VehicleMove = true;
@@ -53,12 +54,22 @@ void c_LevelOne::Init()
 	RedLight = true;
 	GreenLight = false;
 	//-------------------------------//
+
+	//-------------ability related----------------//
+	pick = false;
+	checkF = false;
 	AIFinish = false;
-	CheckEnd = false;
+	Freeze = false;
+	//-------------------------------//
+
+	//-------------race related----------------//
 	Win = false;
 	Lose = false;
+	Finish = false;
+	//----Weather--------------------//
 	Raining = false;
 	Snowing = false;
+	//-------------------------------//
 
 	//----Time Related Variables-----//
 	elapsedTime = 0;
@@ -1569,11 +1580,26 @@ void c_LevelOne::Exit()
 
 void c_LevelOne::resetVar()
 {
-	elapsedTime = TimePassed = Countdown = Timer = 0;
-	duration = Cooldown = 0;
-	laps = AIlaps = 2;
-	Finish = Raining = Snowing = AIFinish = CheckEnd = Win = Lose = false;
-
 	car->updatePos(0,0,0);
 	car->SetSteeringAngle(0);
+	car->SetFriction(0.1);
+	car->SetSteering(5);
+	
+	CamPosX = car->getPos().x + 1;
+	CamPosY = car->getPos().y + 1;
+	CamPosZ = car->getPos().z + 1;
+	CamTargetX = car->getPos().x;
+	CamTargetY = car->getPos().y;
+	CamTargetZ = car->getPos().z;
+
+	bLightEnabled  = OptionSelection = VehicleMove = RedLight = true;
+	AbleToPress = GreenLight = false;
+	pick  = checkF = AIFinish = Freeze  = Raining = Snowing = false;
+	Win = Lose = Finish = false;
+
+	elapsedTime = FreezeTime = duration = Cooldown = Timer = FPS = 0;
+	laps = AIlaps = 0;
+	ArrowP = 7;
+	Countdown = 3;
+	cooldown = 300;
 }

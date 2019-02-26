@@ -159,10 +159,9 @@ private:
 	void renderPlayerTwo();
 
 	void updateEnviromentCollision();
-	void updatePlayerOneCollision();
-	void updatePlayerTwoCollision();
 	void RenderSpeedometerOne();
 	void RenderSpeedometerTwo();
+	void resetVar();
 
 	FirstPersonCamera playerOneCam;
 	float playerOneCamPosX;
@@ -180,18 +179,9 @@ private:
 	float playerTwoCamTargetY;
 	float playerTwoCamTargetZ;
 
-	float elapsedTime;
 	std::string elapedTimeCut;
-
-	float ArrowP;
-	bool ExitGame;
-	bool AbleToPress;
-	bool OptionSelection;
-	bool VehicleMove;
 	
-	//Traffic Lights
-	float red1, red2, red3, green1, green2, green3;
-	bool RedLight, GreenLight;
+
 
 	c_Entity front;
 	c_Entity back;
@@ -210,6 +200,41 @@ private:
 
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
+
+	bool RedLight;
+	bool GreenLight;
+	bool ExitGame;
+	bool AbleToPress;
+	bool OptionSelection;
+	bool VehicleMove;
+
+	bool pick;
+	bool OffRoad;
+	bool Snowing;
+	bool checkFO;
+	bool checkFT;
+
+	bool OFreeze;
+	bool TFreeze;
+	bool Raining;
+	bool PoneFinish;
+	bool PTwoFinish;
+	bool Win;
+	bool Lose;
+
+	float ArrowP;
+	float elapsedTime;
+	float Timer;
+	float Countdown;
+	float FreezeTime;
+	float red1, red2, red3, green1, green2, green3;
+	int Cooldown;
+	int Ponelaps;
+	int PTwolaps;
+	int Oduration;
+	int Tduration;
+	int Tcooldown;
+	int Ocooldown;
 };
 
 #endif

@@ -163,8 +163,6 @@ private:
 	void renderPlayerTwo();
 
 	void updateEnviromentCollision();
-	void updatePlayerOneCollision();
-	void updatePlayerTwoCollision();
 	void RenderSpeedometerOne();
 	void RenderSpeedometerTwo();
 
@@ -211,13 +209,12 @@ private:
 	int Cooldown;
 	float Countdown;
 	float Timer;
-	bool PoneFinish = false;
+	bool PoneFinish;
 	int Ponelaps;
 	int PTwolaps;
-	bool PTwoFinish = false;
-	bool CheckEnd = false;
-	bool Win = false;
-	bool Lose = false;
+	bool PTwoFinish;
+	bool Win;
+	bool Lose;
 
     //Traffic Lights
 	float red1, red2, red3, green1, green2, green3;
@@ -227,18 +224,19 @@ private:
 	c_Weather snow;
 	void renderRain();
 	void RenderSnow();
+	void resetVar();
 
-	bool Raining = false;
-	bool OffRoad = false;
-	bool Snowing = false;
-	bool checkFO = false;
-	bool checkFT = false;
-	bool OFreeze = false;
-	bool TFreeze = false;
+	bool Raining;
+	bool OffRoad;
+	bool Snowing;
+	bool checkFO;
+	bool checkFT;
+	bool OFreeze;
+	bool TFreeze;
 	int Oduration;
 	int Tduration;
 	float FreezeTime;
-	bool pick = false;
+	bool pick;
 	int Tcooldown;
 	int Ocooldown;
 };

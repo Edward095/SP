@@ -911,3 +911,10 @@ void c_Npc::RenderText(Mesh* mesh, std::string text, Color color, float spacing)
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 	glEnable(GL_DEPTH_TEST);
 }
+
+void c_Npc::resetVar()
+{
+	AbleToPress = Talk = Talk1 = Talk2 = Talk3 = false;
+	LevelSelection = SinglePlayer = MultiPlayer = StartGame = false;
+	Continue  = Options = LeaderBoard= false;
+}

@@ -193,6 +193,7 @@ private:
 	void f_UpdateGarage(double dt);
 	void f_UpdateGarage2(double dt);
 	void f_RenderGarage();
+	void resetVar();
 
 	c_List v_CarList;
 	c_List v_ColourList;

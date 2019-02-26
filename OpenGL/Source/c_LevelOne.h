@@ -206,14 +206,13 @@ private:
 	//Variables
 	float elapsedTime;
 	float FreezeTime;
-	float TimePassed;
 	float CamPosX;
 	float CamPosY;
 	float CamPosZ;
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
-	bool Freeze = false;
+	bool Freeze;
 
 	float FPS;
 	float Countdown;
@@ -228,18 +227,15 @@ private:
 	int laps;
 	int AIlaps;
 
-	bool pick = false;
-	bool checkF = false;
+	bool pick;
+	bool checkF;
 	int cooldown;
 	bool Finish;
 	bool Raining;
 	bool Snowing;
 	bool AIFinish;
-	bool CheckEnd;
 	bool Win;
 	bool Lose;
-
-	float WheelRotation;
 
 	float ArrowP;
 	bool ExitGame;

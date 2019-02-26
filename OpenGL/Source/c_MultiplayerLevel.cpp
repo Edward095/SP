@@ -84,6 +84,27 @@ void c_MultiplayerLevel::Init()
 	GreenLight = false;
 	//-------------------------------//
 
+	//----Ability related---------------//
+	
+	pick = false;
+	OffRoad = false;
+	Snowing = false;
+	checkFO = false;
+	checkFT = false;
+	OFreeze = false;
+	TFreeze = false;
+	Raining = false;
+	//-------------------------------//
+
+	//----race related---------------//
+	PoneFinish = false;
+	PTwoFinish = false;
+	Win = false;
+	Lose = false;
+	
+	//-------------------------------//
+
+
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	//Enable depth buffer and depth testing
@@ -212,7 +233,8 @@ void c_MultiplayerLevel::Init()
 	Cooldown = 0;
 	Countdown = 3;
 	Timer = 0;
-	Ponelaps = 2;
+	Ponelaps = 0;
+	PTwolaps = 0;
 	Oduration = 0;
 	Tduration = 0;
 	FreezeTime = 0;
@@ -300,14 +322,14 @@ void c_MultiplayerLevel::Update(double dt)
 	if (Application::IsKeyPressed('Q') && checkFO)
 		OFreeze = true;
 
-	if (OFreeze && Oduration <= 150)
+	if (OFreeze && Oduration <= 200)
 	{
 		Oduration++;
 		playerTwo->SetTSlowed(true);
 		Ocooldown = 300;
 	}
 
-	if (Oduration >= 150) // 3 sec/dt
+	if (Oduration >= 200) // 3 sec/dt
 	{
 		OFreeze = false;
 		playerTwo->SetTSlowed(false);
@@ -321,14 +343,14 @@ void c_MultiplayerLevel::Update(double dt)
 	if (Application::IsKeyPressed('P') && checkFT)
 		TFreeze = true;
 
-	if (TFreeze && Tduration <= 150)
+	if (TFreeze && Tduration <= 200)
 	{
 		Tduration++;
 		playerOne->SetOSlowed(true);
 		Tcooldown = 300;
 	}
 
-	if (Tduration >= 150) // 3 sec/dt
+	if (Tduration >= 200) // 3 sec/dt
 	{
 		TFreeze = false;
 		playerOne->SetOSlowed(false);
@@ -339,6 +361,10 @@ void c_MultiplayerLevel::Update(double dt)
 		Tduration = 0;
 
 	//--------------------------------------------------//
+	if (playerOne->gotCollide("FinishLine", false))
+		PoneFinish = true;
+	else
+		PoneFinish = false;
 
 	if (PoneFinish)
 	{
@@ -358,6 +384,9 @@ void c_MultiplayerLevel::Update(double dt)
 
 	if (PTwoFinish)
 	{
+		if (elapsedTime <= 36)
+			elapsedTime += (dt + 2);
+
 		if (elapsedTime >= 37 && elapsedTime <= 80)
 			Ponelaps = 1;
 		if (elapsedTime >= 81 && elapsedTime <= 140)
@@ -367,9 +396,9 @@ void c_MultiplayerLevel::Update(double dt)
 	if (Ponelaps == 0 || PTwolaps == 0)
 	{
 		if (Ponelaps < PTwolaps)
-			Win = true;
+			Win = true;// Player 2 wins
 		else
-			Lose = true;
+			Lose = true; //Player 1 wins
 	}
 
 	if ((playerOne->gotCollide("Pickup", false)) || (playerTwo->gotCollide("Pickup", false)))
@@ -412,13 +441,13 @@ void c_MultiplayerLevel::Render()
 
 	if (Random == 1)
 	{
-		//if (!pick)
-		//renderRain();
+		if (!pick)
+		renderRain();
 	}
 	if (Random == 2)
 	{
-		//if (!pick)
-		//RenderSnow();
+		if (!pick)
+		RenderSnow();
 	}
 
 	glDisable(GL_SCISSOR_TEST);
@@ -432,35 +461,6 @@ void c_MultiplayerLevel::Render()
 
 	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
 	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
-
-	CountdownCut = std::to_string(Countdown);
-	CountdownCut.resize(1);
-	elapedTimeCut = std::to_string(elapsedTime);
-	elapedTimeCut.resize(5);
-	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
-
-
-	if (Countdown >= 0)
-		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 10, 14);
-	else
-	{
-		Cooldown++;
-		elapedTimeCut = std::to_string(elapsedTime);
-		elapedTimeCut.resize(5);
-
-		if (Cooldown <= 50)
-			RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 10, 14);
-		else
-			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 10, 14);
-	}
-
-	RenderTextOnScreen(meshList[TEXT], std::to_string(Ponelaps), Color(1, 0, 0), 3, 9, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(PTwolaps), Color(1, 0, 0), 3, 11, 3);
-
-	if (Win)
-		RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 10, 10);
-	if (Lose)
-		RenderTextOnScreen(meshList[TEXT], "YOU LOSE", Color(1, 0, 0), 4, 10, 10);
 
 	if (!pick)
 	{
@@ -1056,9 +1056,33 @@ void c_MultiplayerLevel::renderPlayerOne()
 	playerTwo->getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerTwo->getOBB()->calcNewAxis(playerTwo->GetSteeringAngle(), 0, 1, 0);
 
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	CountdownCut = std::to_string(Countdown);
+	CountdownCut.resize(1);
+
+	if (Countdown >= 0)
+		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 11, 14);
+	else
+	{
+		Cooldown++;
+		elapedTimeCut = std::to_string(elapsedTime);
+		elapedTimeCut.resize(5);
+
+		if (Cooldown <= 50)
+			RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 9, 14);
+		else
+			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 9, 14);
+	}
+
+
+	RenderTextOnScreen(meshList[TEXT], "Player 1 lap: ", Color(1, 0, 0), 3, 16.3, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(Ponelaps), Color(1, 0, 0), 3, 24, 3);
+	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 3);
+
+	if (Win)
+		RenderTextOnScreen(meshList[TEXT], "Player 2 wins", Color(1, 0, 0), 4, 9, 10);
+	if (Lose)
+		RenderTextOnScreen(meshList[TEXT], "Player 1 wins", Color(1, 0, 0), 4, 9, 10);
+
 	RenderSpeedometerOne();
 }
 void c_MultiplayerLevel::renderPlayerTwo()
@@ -1106,9 +1130,33 @@ void c_MultiplayerLevel::renderPlayerTwo()
 	playerTwo->getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerTwo->getOBB()->calcNewAxis(playerTwo->GetSteeringAngle(), 0, 1, 0);
 
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	CountdownCut = std::to_string(Countdown);
+	CountdownCut.resize(1);
+
+	if (Countdown >= 0)
+		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 11, 14);
+	else
+	{
+		Cooldown++;
+		elapedTimeCut = std::to_string(elapsedTime);
+		elapedTimeCut.resize(5);
+
+		if (Cooldown <= 50)
+			RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 9, 14);
+		else
+			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 9, 14);
+	}
+
+
+	RenderTextOnScreen(meshList[TEXT], "Player 2 lap: ", Color(1, 0, 0), 3, 16, 2);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(PTwolaps), Color(1, 0, 0), 3, 24, 2);
+	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 2);
+
+	if (Win)
+		RenderTextOnScreen(meshList[TEXT], "Player 2 wins", Color(1, 0, 0), 4, 9, 10);
+	if (Lose)
+		RenderTextOnScreen(meshList[TEXT], "Player 1 wins", Color(1, 0, 0), 4, 9, 10);
+
 	RenderSpeedometerTwo();
 }
 
@@ -1399,4 +1447,16 @@ void c_MultiplayerLevel::RenderSpeedometerTwo()
 	modelStack.PopMatrix();
 	viewStack.PopMatrix();
 	projectionStack.PopMatrix();
+}
+
+void c_MultiplayerLevel::resetVar()
+{
+	RedLight = true;
+
+	pick = OffRoad = Snowing = checkFO = checkFT = GreenLight = false;
+	OFreeze = TFreeze = Raining = PoneFinish = PTwoFinish = Win = Lose = false;
+	
+	elapsedTime = Cooldown = Timer = Ponelaps = PTwolaps  = Oduration = Tduration  = FreezeTime = 0;
+	Tcooldown = Ocooldown = 300;
+	Countdown = 3;
 }

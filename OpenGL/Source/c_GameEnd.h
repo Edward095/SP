@@ -73,6 +73,7 @@ private:
 	void updateSelection();
 	void goNextLevel();
 	void retry();
+	void resetVar();
 
 	float ArrowX, ArrowY;
 	double elapsedTime;

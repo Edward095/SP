@@ -333,3 +333,8 @@ void c_GameEnd::retry()
 
 	//scene->getScene("SLEVELONE")->Init();
 }
+
+void c_GameEnd::resetVar()
+{
+	
+}

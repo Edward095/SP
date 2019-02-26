@@ -36,7 +36,10 @@ void c_MultiplayerLevelTwo::Init()
 		playerOne = first;
 	c_SecondCar* second = dynamic_cast <c_SecondCar*>(car);
 	if (second)
+	{
 		playerOne = second;
+		checkFO = true;
+	}
 	c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car);
 	if (third)
 		playerOne = third;
@@ -48,7 +51,10 @@ void c_MultiplayerLevelTwo::Init()
 		playerTwo = first;
 	second = dynamic_cast <c_SecondCar*>(car);
 	if (second)
+	{
 		playerTwo = second;
+		checkFO = true;
+	}
 	third = dynamic_cast <c_ThirdCar*>(car);
 	if (third)
 		playerTwo = third;
@@ -71,7 +77,41 @@ void c_MultiplayerLevelTwo::Init()
 	//----Traffic Light---------------//
 	RedLight = true;
 	GreenLight = false;
+	OptionSelection = true;
+	AbleToPress = false;
+	VehicleMove = true;
 	//-------------------------------//
+
+	//----Ability related---------------//
+
+	pick = false;
+	OffRoad = false;
+	Snowing = false;
+	checkFO = false;
+	checkFT = false;
+	OFreeze = false;
+	TFreeze = false;
+	Raining = false;
+	//-------------------------------//
+
+	//----race related---------------//
+	PoneFinish = false;
+	PTwoFinish = false;
+	Win = false;
+	Lose = false;
+	//-------------------------------//
+
+	elapsedTime = 0;
+	Cooldown = 0;
+	Countdown = 3;
+	Timer = 0;
+	Ponelaps = 0;
+	PTwolaps = 0;
+	Oduration = 0;
+	Tduration = 0;
+	FreezeTime = 0;
+	Tcooldown = 300;
+	Ocooldown = 300;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -188,15 +228,14 @@ void c_MultiplayerLevelTwo::Update(double dt)
 	playerOne->Movement(dt);
 	playerTwo->Movement(dt);
 
-	//if (Countdown <= 0)
-	//{
-	//	elapsedTime += (float)dt;
-	//	playerOne->Movement(dt);
-	//	playerTwo->Movement(dt);
-	//	playerOne->Ability(dt);
-	//	playerTwo->Ability(dt);
-
-	//}
+	if (Countdown <= 0)
+	{
+		elapsedTime += (float)dt;
+		playerOne->Movement(dt);
+		playerTwo->Movement(dt);
+		playerOne->Ability(dt);
+		playerTwo->Ability(dt);
+	}
 
 	//------------Updating Traffic Lights------------//
 	if (elapsedTime >= 10)
@@ -206,55 +245,114 @@ void c_MultiplayerLevelTwo::Update(double dt)
 	}
 	//-----------------------------------------------//
 
-	if (Application::IsKeyPressed('Q') && checkFO)
+	if (Countdown <= 0)
 	{
-		OFreeze = true;
+		elapsedTime += (float)dt;
+		playerOne->Movement(dt);
+		playerTwo->Movement(dt);
+		playerOne->Ability(dt);
+		playerTwo->Ability(dt);
 	}
 
-	if (OFreeze && Oduration <= 150)
+	if (playerOne->gotCollide("FinishLine", false))
+		PoneFinish = true;
+	else
+		PoneFinish = false;
+
+	if (Application::IsKeyPressed('Q') && checkFO)
+		OFreeze = true;
+
+	if (OFreeze && Oduration <= 200)
 	{
 		Oduration++;
 		playerTwo->SetTSlowed(true);
+		Ocooldown = 300;
 	}
 
-	if (Oduration >= 150) // 3 sec/dt
+	if (Oduration >= 200) // 3 sec/dt
 	{
 		OFreeze = false;
 		playerTwo->SetTSlowed(false);
-		Oduration = 0;
+		Ocooldown--;
 	}
+
+	if (Ocooldown <= 0)
+		Oduration = 0;
 
 	//--------------------------------------------------//
 	if (Application::IsKeyPressed('P') && checkFT)
-	{
 		TFreeze = true;
-	}
 
-	if (TFreeze && Tduration <= 150)
+	if (TFreeze && Tduration <= 200)
 	{
 		Tduration++;
 		playerOne->SetOSlowed(true);
+		Tcooldown = 300;
 	}
 
-	if (Tduration >= 150) // 3 sec/dt
+	if (Tduration >= 200) // 3 sec/dt
 	{
 		TFreeze = false;
 		playerOne->SetOSlowed(false);
-		Tduration = 0;
+		Tcooldown--;
 	}
 
-	/*if ((playerOne->gotCollide("Pickup", false)) || (playerTwo->gotCollide("Pickup", false)))
+	if (Tcooldown <= 0)
+		Tduration = 0;
+
+	//--------------------------------------------------//
+	if (playerOne->gotCollide("FinishLine", false))
+		PoneFinish = true;
+	else
+		PoneFinish = false;
+
+	if (PoneFinish)
+	{
+		if (elapsedTime <= 36)
+			elapsedTime += (dt + 2);
+
+		if (elapsedTime >= 37 && elapsedTime <= 80)
+			Ponelaps = 1;
+		if (elapsedTime >= 81 && elapsedTime <= 140)
+			Ponelaps = 0;
+	}
+
+	if (playerTwo->gotCollide("FinishLine", false))
+		PTwoFinish = true;
+	else
+		PTwoFinish = false;
+
+	if (PTwoFinish)
+	{
+		if (elapsedTime <= 36)
+			elapsedTime += (dt + 2);
+
+		if (elapsedTime >= 37 && elapsedTime <= 80)
+			Ponelaps = 1;
+		if (elapsedTime >= 81 && elapsedTime <= 140)
+			Ponelaps = 0;
+	}
+
+	if (Ponelaps == 0 || PTwolaps == 0)
+	{
+		if (Ponelaps < PTwolaps)
+			Win = true;// Player 2 wins
+		else
+			Lose = true; //Player 1 wins
+	}
+
+	if ((playerOne->gotCollide("Pickup", false)) || (playerTwo->gotCollide("Pickup", false)))
 	{
 		pick = true;
 		Raining = false;
 		Snowing = false;
 	}
 
-	if (!pick)
-	{
-		rain.update(dt);
-		snow.update(dt);
-	}*/
+	//if (!pick)
+	//{
+	//	rain.update(dt);
+	//	snow.update(dt);
+	//}
 
 }
 void c_MultiplayerLevelTwo::Render()
@@ -1145,4 +1243,17 @@ void c_MultiplayerLevelTwo::RenderSpeedometerTwo()
 	modelStack.PopMatrix();
 	viewStack.PopMatrix();
 	projectionStack.PopMatrix();
+}
+void c_MultiplayerLevelTwo::resetVar()
+{
+	RedLight = true;
+
+	pick = OffRoad = Snowing = checkFO = checkFT = GreenLight = false;
+	OFreeze = TFreeze = Raining = PoneFinish = PTwoFinish = Win = Lose = false;
+	ExitGame = AbleToPress = OptionSelection = VehicleMove = false;
+
+	elapsedTime = Cooldown = Timer = Ponelaps = PTwolaps = Oduration = Tduration = FreezeTime = 0;
+	red1 = red2 = red3 = green1 = green2 = green3 = 0;
+	Tcooldown = Ocooldown = 300;
+	Countdown = 3;
 }

@@ -46,7 +46,10 @@ void c_LevelThree::Init()
 		car = first;
 	c_SecondCar* second = dynamic_cast <c_SecondCar*>(car1);
 	if (second)
+	{
 		car = second;
+		checkF = true;
+	}
 	c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car1);
 	if (third)
 		car = third;
@@ -91,6 +94,19 @@ void c_LevelThree::Init()
 	AIlaps = 2;
 	FPS = 0;
 	cooldown = 300;
+	//-------------------------------//
+	//-------------ability related----------------//
+	pick = false;
+	checkF = false;
+	Freeze = false;
+	OffRoad = false;
+	AIFinish = false;
+	//-------------------------------//
+
+	//-------------race related----------------//
+	Win = false;
+	Lose = false;
+	Finish = false;
 	//-------------------------------//
 
 	//----Random Number Gen----------//
@@ -255,7 +271,7 @@ void c_LevelThree::Init()
 	slow6.init("Slowpad6", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-350, 1.f, -385), false);
 	slow7.init("Slowpad7", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-30, 1.f, -340), false);
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), false);
-	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0), true);
+	AI.init("AI", "OBJ//Car3.obj", "Image//Car1Blue.tga", Vector3(-15, 3, 0), true);
 	track.init("track", "OBJ//RaceTrack3.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
 	PickUp.init("Pickup", "OBJ//Pad.obj", "Image//Car1Blue.tga", Vector3(0, 1, 50), false);
 	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
@@ -492,7 +508,7 @@ void c_LevelThree::Update(double dt)
 			elapsedTime += (float)dt;
 			car->Movement(dt);
 			car->Ability(dt);
-			AI.LevelOne(dt);
+			AI.LevelThree(dt);
 		}
 	}
 	//-------------------------------------------//
@@ -1591,4 +1607,31 @@ void c_LevelThree::Exit()
 	}
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
+}
+
+void c_LevelThree::resetVar()
+{
+	OptionSelection = VehicleMove = RedLight = bLightEnabled = true;
+	AbleToPress = GreenLight = Raining = Snowing = false;
+	pick = checkF = Freeze = OffRoad = AIFinish = false;
+	Win = Lose = Finish = false;
+
+	car->SetFriction(0.1);
+	car->SetSteering(5);
+
+	car->updatePos(0, 0, 0);
+	car->SetSteeringAngle(0);
+
+	CamPosX = car->getPos().x + 1;
+	CamPosY = car->getPos().y + 1;
+	CamPosZ = car->getPos().z + 1;
+	CamTargetX = car->getPos().x;
+	CamTargetY = car->getPos().y;
+	CamTargetZ = car->getPos().z;
+
+	elapsedTime = FreezeTime = duration = Cooldown = Timer = FPS = 0;
+	ArrowP = 7;
+	Countdown = 3;
+	laps = AIlaps = 0;
+	cooldown = 300;
 }
