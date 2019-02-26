@@ -28,9 +28,11 @@ void c_Npc::Init()
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
 	c_DataManager* data = c_DataManager::getInstance();
-	data->selectFile(1);
-	data->saveCustomization("OBJ//Car1.obj", "Image//Car1Blue.tga");
-	data->saveCurrentLevel(1);
+	Audio = c_Sound::getInstance();
+
+	float volume = data->getSoundOptions();
+	Audio->f_AdjustMusicVolume(volume);
+	Audio->f_AdjustSFXVolume(volume);
 
 	scene->updateState("NPC");
 
@@ -166,6 +168,8 @@ void c_Npc::Update(double dt)
 		UpdateNpc(dt);
 	else if (scene->checkState("CONTINUE"))
 		scene->getScene("CONTINUE")->Update(dt);
+	else if (scene->checkState("FINISHED"))
+		scene->getScene("FINISHED")->Update(dt);
 	else
 		scene->getScene("GARAGE")->Update(dt);
 		//Garage.Update(dt);
@@ -200,6 +204,8 @@ void c_Npc::Render()
 		RenderNpc();
 	else if (scene->checkState("CONTINUE"))
 		scene->getScene("CONTINUE")->Render();
+	else if (scene->checkState("FINISHED"))
+		scene->getScene("FINISHED")->Render();
 	else
 		scene->getScene("GARAGE")->Render();
 }
@@ -377,23 +383,19 @@ void c_Npc::UpdateNpc(double dt)
 		BounceTime = ElapsedTime + 0.125;
 		Audio->f_Menu_ConfirmSelect();
 
-		ArrowY = 7;
-
 		if (LevelSelection == false && StartGame == true && Override == false)
 		{
 			if (ArrowY == 7)
 			{
-				if(data->isEmpty(1) == true)
+				data->selectFile(1);
+				if(data->isEmpty() == true)
 				{
 					//if first data save is empty,
-					data->selectFile(1);
 					LevelSelection = true;
 					Override = false;
 				}
 				else
 				{
-					data->selectFile(1);
-
 					LevelSelection = false;
 					Override = true;
 				}
@@ -401,7 +403,8 @@ void c_Npc::UpdateNpc(double dt)
 			}
 			else if (ArrowY == 6)
 			{
-				if (data->isEmpty(2) == true)
+				data->selectFile(2);
+				if (data->isEmpty() == true)
 				{
 					LevelSelection = true;
 					Override = false;
@@ -414,7 +417,8 @@ void c_Npc::UpdateNpc(double dt)
 			}
 			else if (ArrowY == 5)
 			{
-				if (data->isEmpty(3) == true)
+				data->selectFile(3);
+				if (data->isEmpty() == true)
 				{
 					LevelSelection = true;
 					Override = false;
@@ -433,6 +437,7 @@ void c_Npc::UpdateNpc(double dt)
 				//yes
 				Override = false;
 				LevelSelection = true;
+				data->clearFile();
 			}
 			else if (ArrowY == 6)
 			{
@@ -486,21 +491,25 @@ void c_Npc::UpdateNpc(double dt)
 				//put music here 
 				Audio->f_AdjustMusicVolume(1.0f);
 				Audio->f_AdjustSFXVolume(1.0f);
+				data->saveSoundOptions(1.0f);
 			}
 			else if (ArrowY == 6)
 			{
 				Audio->f_AdjustMusicVolume(0.75f);
 				Audio->f_AdjustSFXVolume(0.75f);
+				data->saveSoundOptions(0.75f);
 			}
 			else if (ArrowY == 5)
 			{
 				Audio->f_AdjustMusicVolume(0.5f);
 				Audio->f_AdjustSFXVolume(0.5f);
+				data->saveSoundOptions(0.5f);
 			}
 			else if (ArrowY == 4)
 			{
 				Audio->f_AdjustMusicVolume(0.0f);
 				Audio->f_AdjustSFXVolume(0.0f);
+				data->saveSoundOptions(0.0f);
 			}
 		}
 		if (Continue)

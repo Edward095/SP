@@ -33,6 +33,12 @@ c_DataManager* c_DataManager::getInstance()
 	else
 		return instance;
 }
+void c_DataManager::clearFile()
+{
+	std::ofstream file;
+	file.open(currentFile, std::ofstream::out | std::ofstream::trunc);
+	file.close();
+}
 void c_DataManager::selectFile(int fileNum)
 {
 	if (fileNum == 1)
@@ -104,7 +110,12 @@ void c_DataManager::saveCurrentLevel(int levelNum)
 	else
 		std::cout << "File cannot be open.Is it in the correct directory and did u add the file extension?" << std::endl;
 }
-
+void c_DataManager::saveSoundOptions(float volume)
+{
+	std::ofstream writeFile(soundFile);
+	writeFile << "Volume: " << std::to_string(volume);
+	writeFile.close();
+}
 void c_DataManager::readFromFile(std::string& OBJpath,std::string& TGApath)
 {
 	std::string line;
@@ -151,17 +162,11 @@ void c_DataManager::getLeaderBoards(std::vector <float>& data, std::vector <std:
 	else
 		std::cout << "File cannot be open.Is it in the correct directory and did u add the file extension?" << std::endl;
 }
-bool c_DataManager::isEmpty(int fileNum)
+bool c_DataManager::isEmpty()
 {
 	std::vector < std::string> lines;
 	std::string line;
-	std::ifstream readFile;
-	if (fileNum == 1)
-		readFile.open(saveFile1);
-	else if (fileNum == 2)
-		readFile.open(saveFile2);
-	else if (fileNum == 3)
-		readFile.open(saveFile3);
+	std::ifstream readFile(currentFile);
 
 	if (readFile.is_open())
 	{
@@ -173,7 +178,21 @@ bool c_DataManager::isEmpty(int fileNum)
 		readFile.close();
 	}
 
-	return lines.empty();
+	return lines[0] == "";
+}
+float c_DataManager::getSoundOptions()
+{
+	std::string line;
+	std::string volume;
+	std::ifstream readFile(soundFile);
+	
+	std::getline(readFile, line);
+	for (int i = 8; i < line.size(); i++)
+	{
+		volume.push_back(line[i]);
+	}
+
+	return std::stof(volume);
 }
 
 
