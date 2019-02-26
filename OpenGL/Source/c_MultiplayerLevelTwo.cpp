@@ -188,9 +188,10 @@ void c_MultiplayerLevelTwo::Update(double dt)
 
 	if (VehicleMove == true)
 	{
-		playerOne->Movement(dt);
-		playerTwo->Movement(dt);
+	playerOne->Movement(dt);
+	playerTwo->Movement(dt);
 	}
+	
 	if (OptionSelection == true)
 	{
 		VehicleMove = true;
@@ -243,7 +244,7 @@ void c_MultiplayerLevelTwo::Update(double dt)
 		}
 	}
 	//---------------------------------------------//
-
+	
 	//------------Updating Traffic Lights------------//
 	if (elapsedTime >= 10)
 	{
@@ -1019,6 +1020,7 @@ void c_MultiplayerLevelTwo::renderEnviroment()
 		RenderMesh(meshList[TRAFFICGREEN], false);
 		modelStack.PopMatrix();
 	}
+	
 	// Pause Screen
 	if (OptionSelection == false)
 	{
