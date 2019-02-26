@@ -69,6 +69,16 @@ void c_LevelTwo::Init()
 	CamTargetY = car->getPos().y;
 	CamTargetZ = car->getPos().z;
 	//-----------------------------------------//
+	
+        OptionSelection = true;
+	AbleToPress = false;
+	VehicleMove = true;
+	ArrowP = 7;
+
+	//----Traffic Light---------------//
+	RedLight = true;
+	GreenLight = false;
+	//-------------------------------//
 
 	AbleToPress = false;
 	VehicleMove = true;
@@ -430,9 +440,9 @@ void c_LevelTwo::Update(double dt)
 	//----Countdown to Start Of the Game---------//
 	if (Countdown <= 0)
 	{
-		elapsedTime += (float)dt;
 		if (VehicleMove == true)
 		{
+			elapsedTime += (float)dt;
 			car->Movement(dt);
 			car->Ability(dt);
 			AI.LevelOne(dt);

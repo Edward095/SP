@@ -43,7 +43,8 @@ void c_LevelOne::Init()
 	//Seed Generation For rand() function
 	srand(time(NULL));
 	//Initialization Of Variables//
-
+	
+	OptionSelection = true;
 	AbleToPress = false;
 	VehicleMove = true;
 	ArrowP = 7;
@@ -61,7 +62,7 @@ void c_LevelOne::Init()
 
 	//----Time Related Variables-----//
 	elapsedTime = 0;
-	//FreezeTime = 0;
+	FreezeTime = 0;
 	duration = 0;
 	Cooldown = 0;
 	Countdown = 3;
@@ -1153,35 +1154,8 @@ void c_LevelOne::renderEntity()
 	RenderMesh(slow3.getMesh(), true);
 	modelStack.PopMatrix();
 
-	slow3.updatePos(slow3.getPos().x, slow3.getPos().y, slow3.getPos().z);
-	slow3.getOBB()->calcNewDimensions(3, 1, 3);
-
-	modelStack.PushMatrix();
-	modelStack.Translate(slow4.getPos().x, slow4.getPos().y, slow4.getPos().z);
-	modelStack.Scale(3, 1, 3);
-	RenderMesh(slow4.getMesh(), true);
-	modelStack.PopMatrix();
-
-	slow4.updatePos(slow4.getPos().x, slow4.getPos().y, slow4.getPos().z);
-	slow4.getOBB()->calcNewDimensions(3, 1, 3);
-
-	modelStack.PushMatrix();
-	modelStack.Translate(slow5.getPos().x, slow5.getPos().y, slow5.getPos().z);
-	modelStack.Scale(3, 1, 3);
-	RenderMesh(slow5.getMesh(), true);
-	modelStack.PopMatrix();
-
-	slow5.updatePos(slow5.getPos().x, slow5.getPos().y, slow5.getPos().z);
-	slow5.getOBB()->calcNewDimensions(3, 1, 3);
-
-	modelStack.PushMatrix();
-	modelStack.Translate(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
-	modelStack.Scale(3, 1, 3);
-	RenderMesh(slow6.getMesh(), true);
-	modelStack.PopMatrix();
-
-	slow6.updatePos(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
-	slow6.getOBB()->calcNewDimensions(3, 1, 3);
+	boost6.updatePos(boost6.getPos().x, boost6.getPos().y, boost6.getPos().z);
+	boost6.getOBB()->calcNewDimensions(3, 1, 3);
 
 	/**************************************************************		FinishLine		***************************************************************/
 
@@ -1364,10 +1338,13 @@ void c_LevelOne::updateLevel(double dt)
 	//----Countdown to Start Of the Game---------//
 	if (Countdown <= 0)
 	{
-		elapsedTime += (float)dt;
-		car->Movement(dt);
-		car->Ability(dt);
-		AI.LevelOne(dt);
+		if (VehicleMove == true)
+		{
+			elapsedTime += (float)dt;
+			car->Movement(dt);
+			car->Ability(dt);
+			AI.LevelOne(dt);
+		}
 	}
 	//-------------------------------------------//
 
