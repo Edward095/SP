@@ -29,8 +29,6 @@ public:
 	virtual void SetTSlowed(bool speed);
 	virtual float GetSpedoSpeed();
 
-	c_Sound* Audio;
-
 protected:
 	float VelocityZ;
 	float MaxSpeed;
@@ -42,6 +40,7 @@ protected:
 	int Duration;
 	int Cooldown;
 	float SpedoVeloZ;
+	int padDuration;
 
 	bool Driving = false;
 	bool Backwards = false;

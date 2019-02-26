@@ -30,7 +30,8 @@ c_SecondCar::c_SecondCar()
 	Tslowed = false;
 	abilityUsed = false;
 	audioCD = 0;
-	Audio = c_Sound::getInstance();
+	audioUsed = false;
+
 }
 c_SecondCar::c_SecondCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
 {
@@ -44,19 +45,14 @@ c_SecondCar::~c_SecondCar()
 
 void c_SecondCar::Ability(double dt)
 {
+	c_Sound* Audio = c_Sound::getInstance();
 	if (uniqueName == "player2")
 	{
 		if (Application::IsKeyPressed('P'))
 		{
 			//PressQ = true;
-			
-			if (!abilityUsed)
-			{
-				Audio->f_Game_Ability_Freezetime();
-				abilityUsed = true;
-			}
-			PressQ = true;
-			
+			//PressQ = true;
+			audioUsed = true;
 		}
 	}
 	else
@@ -64,21 +60,23 @@ void c_SecondCar::Ability(double dt)
 		if (Application::IsKeyPressed('Q'))
 		{
 			//PressQ = true;
-			if (!abilityUsed)
-			{
-				Audio->f_Game_Ability_Freezetime();
-				abilityUsed = true;
-			}
-			PressQ = true;
+			//PressQ = true;
+			audioUsed = true;
 		}
 	}
-	if (abilityUsed)
+	if (audioUsed)
 	{
 		audioCD++;
+		if (!abilityUsed)
+		{
+			Audio->f_Game_Ability_Freezetime();
+			abilityUsed = true;
+		}
 	}
-	if (audioCD >= 300)
+	if (audioCD >= 500)
 	{
 		abilityUsed = false;
+		audioUsed = false;
 		audioCD = 0;
 	}
 }

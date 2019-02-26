@@ -29,6 +29,8 @@ void c_Sound::f_Init_Sound()
 	s_MM_Music = irrklang::createIrrKlangDevice();
 	s_MM_SFX = irrklang::createIrrKlangDevice();
 
+	s_Abilities = irrklang::createIrrKlangDevice();
+
 	s_Weather_Rain = irrklang::createIrrKlangDevice();
 
 	// Levels
@@ -127,17 +129,17 @@ void c_Sound::f_WeatherRain()
 
 void c_Sound::f_Game_Ability_Nitro()
 {
-	s_GP_SFX->play2D(s_Nitro);
+	s_Abilities->play2D(s_Nitro);
 }
 
 void c_Sound::f_Game_Ability_Teleport()
 {
-	s_GP_SFX->play2D(s_Teleport);
+	s_Abilities->play2D(s_Teleport);
 }
 
 void c_Sound::f_Game_Ability_Freezetime()
 {
-	s_GP_SFX->play2D(s_FreezeTime);
+	s_Abilities->play2D(s_FreezeTime);
 }
 
 void c_Sound::f_Game_Fanfare_Boost()
@@ -169,9 +171,9 @@ void c_Sound::f_InitSFX()
 	s_StartingLine = s_GP_SFX->addSoundSourceFromFile("SFX//Game_SFX_StartingLine.wav");
 
 	// - Abilities
-	s_Nitro = s_GP_SFX->addSoundSourceFromFile("SFX//Game_SFX_Ability_Nitro.mp3");
-	s_Teleport = s_GP_SFX->addSoundSourceFromFile("SFX//Game_SFX_Ability_Teleport.wav");
-	s_FreezeTime = s_GP_SFX->addSoundSourceFromFile("SFX//Game_SFX_Ability_FreezeTime.wav");
+	s_Nitro = s_Abilities->addSoundSourceFromFile("SFX//Game_SFX_Ability_Nitro.mp3");
+	s_Teleport = s_Abilities->addSoundSourceFromFile("SFX//Game_SFX_Ability_Teleport.wav");
+	s_FreezeTime = s_Abilities->addSoundSourceFromFile("SFX//Game_SFX_Ability_FreezeTime.wav");
 }
 
 void c_Sound::f_AdjustMusicVolume(float v_Volume)

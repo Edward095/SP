@@ -181,7 +181,7 @@ void c_MultiplayerLevelTwo::Update(double dt)
 	}
 	if (music && startline)
 	{
-		Audio->f_Level_1_music();
+		Audio->f_Level_2_music();
 		music = false;
 	}
 	playerOneCamPosX = (playerOne->getPos().x - (sin(Math::DegreeToRadian(playerOne->GetSteeringAngle()))) * 10);

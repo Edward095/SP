@@ -284,7 +284,7 @@ void c_LevelThree::Update(double dt)
 	}
 	if (music && startline)
 	{
-		Audio->f_Level_1_music();
+		Audio->f_Level_3_music();
 		music = false;
 	}
 

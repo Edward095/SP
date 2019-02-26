@@ -15,6 +15,7 @@ c_CarBaseClass::c_CarBaseClass()
 	Duration = 0;
 	MaxAcceleration = 1;
 	Friction = 0.5;
+	padDuration = 0;
 
 	VelocityZ = 0;
 	Acceleration = 0;
@@ -422,22 +423,31 @@ void c_CarBaseClass::SetMaxSpeed(float Speed)
 }
 void c_CarBaseClass::PadEffect(double dt)
 {
+	c_Sound* Audio = c_Sound::getInstance();
 	if (BoostPad)
 	{
-		Duration++;
-		if (Duration >= 50) // 3 sec/dt
+		if (padDuration == 0)
+		{
+			Audio->f_Game_Fanfare_Boost();
+		}
+		padDuration++;
+		if (padDuration >= 50) // 3 sec/dt
 		{
 			BoostPad = false;
-			Duration = 0;
+			padDuration = 0;
 		}
 	}
 	if (SlowPad)
 	{
-		Duration++;
-		if (Duration >= 25) // 3 sec/dt
+		if (padDuration == 0)
+		{
+			Audio->f_Game_Fanfare_Slow();
+		}
+		padDuration++;
+		if (padDuration >= 25) // 3 sec/dt
 		{
 			SlowPad = false;
-			Duration = 0;
+			padDuration = 0;
 		}
 	}
 }

@@ -17,6 +17,7 @@ public:
 
 private:
 	float audioCD;
+	bool audioUsed;
 };
 
 #endif

@@ -295,7 +295,7 @@ void c_LevelTwo::Update(double dt)
 	}
 	if (music && startline)
 	{
-		Audio->f_Level_1_music();
+		Audio->f_Level_2_music();
 		music = false;
 	}
 

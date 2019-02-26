@@ -1,1 +1,5 @@
-﻿
+﻿  MatrixStack.cpp
+  Mtx44.cpp
+  Vector3.cpp
+  timer.cpp
+  Common.vcxproj -> C:\Users\marc-\Documents\GitHub\SP\Release\Common.lib

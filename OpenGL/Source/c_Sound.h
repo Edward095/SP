@@ -57,6 +57,8 @@ private:
 
 	irrklang::ISoundEngine* s_Weather_Rain;
 
+	irrklang::ISoundEngine* s_Abilities;
+
 	// SFX
 	irrklang::ISoundEngine* s_MM_SFX;
 	irrklang::ISoundSource* s_MoveSound;
