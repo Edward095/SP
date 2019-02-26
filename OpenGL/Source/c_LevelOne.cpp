@@ -280,7 +280,7 @@ void c_LevelOne::Update(double dt)
 	if (scene->checkState("SLEVELONE"))
 		updateLevel(dt);
 	else if (scene->checkState("FINISHED"))
-		scene->getScene("FINSIHED")->Update(dt);
+		scene->getScene("FINISHED")->Update(dt);
 }
 
 void c_LevelOne::Render()
@@ -1350,6 +1350,11 @@ void c_LevelOne::updateLevel(double dt)
 			Lose = true;
 	}
 	//-----------------------------------------------------------//
+	if (Win || Lose)
+	{
+		scene->getScene("FINISHED")->Init();
+		scene->updateState("FINISHED");
+	}
 
 	if (car->gotCollide("Pickup", false))
 	{

@@ -1,1 +1,15 @@
-﻿
+﻿  c_CarBaseClass.cpp
+  c_MultiplayerLevel.cpp
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_multiplayerlevel.cpp(33): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_multiplayerlevel.cpp(268): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_multiplayerlevel.cpp(269): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_multiplayerlevel.cpp(283): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_multiplayerlevel.cpp(346): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_multiplayerlevel.cpp(1230): warning C4018: '<': signed/unsigned mismatch
+c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_multiplayerlevel.cpp(1256): warning C4018: '<': signed/unsigned mismatch
+  Generating code
+  1 of 1657 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  OpenGL.vcxproj -> C:\Users\irfan\Desktop\Sp2(Github)\SP\Release\OpenGL.exe
