@@ -29,6 +29,11 @@ void c_MultiplayerLevel::Init()
 	OBJmanager = c_ObjectManager::getInstance();
 	offRoadManager = c_OffRoadManager::getInstance();
 
+	Audio = Audio->getInstance();
+
+	music = false;
+	startline = false;
+
 	//Seed Generation For rand() function
 	srand(time(NULL));
 
@@ -204,6 +209,18 @@ void c_MultiplayerLevel::Init()
 }
 void c_MultiplayerLevel::Update(double dt)
 {
+	if (!startline)
+	{
+		Audio->f_Game_Fanfare_Startline();
+		startline = true;
+		music = true;
+	}
+	if (startline && music)
+	{
+		Audio->f_Level_1_music();
+		music = false;
+	}
+
 	playerOneCamPosX = (playerOne->getPos().x - (sin(Math::DegreeToRadian(playerOne->GetSteeringAngle()))) * 10);
 	playerOneCamPosY = playerOne->getPos().y + 8;
 	playerOneCamPosZ = (playerOne->getPos().z - (cos(Math::DegreeToRadian(playerOne->GetSteeringAngle()))) * 10);

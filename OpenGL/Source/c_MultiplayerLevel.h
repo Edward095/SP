@@ -219,6 +219,10 @@ private:
 	bool OffRoad = false;
 	bool Snowing = false;
 
+	bool startline;
+	bool music;
+
+	c_Sound* Audio;
 };
 
 #endif

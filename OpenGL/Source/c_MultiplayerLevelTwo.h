@@ -192,6 +192,11 @@ private:
 		
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
+
+	c_Sound* Audio;
+
+	bool startline;
+	bool music;
 };
 
 #endif

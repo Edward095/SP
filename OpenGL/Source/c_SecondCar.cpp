@@ -28,6 +28,8 @@ c_SecondCar::c_SecondCar()
 	SlowPad = false;
 	once = false;
 
+	abilityUsed = true;
+
 	offRoad = false;
 }
 c_SecondCar::c_SecondCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
@@ -48,6 +50,11 @@ void c_SecondCar::Ability(double dt)
 	{
 		if (Application::IsKeyPressed('P'))
 		{
+			if (abilityUsed)
+			{
+				Audio->f_Game_Ability_Freezetime();
+				abilityUsed = false;
+			}
 			PressQ = true;
 		}
 	}
@@ -55,6 +62,11 @@ void c_SecondCar::Ability(double dt)
 	{
 		if (Application::IsKeyPressed('2'))
 		{
+			if (abilityUsed)
+			{
+				Audio->f_Game_Ability_Freezetime();
+				abilityUsed = false;
+			}
 			PressQ = true;
 		}
 	}

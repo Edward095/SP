@@ -233,6 +233,11 @@ private:
 	void renderRain();
 	void RenderSnow();
 
+	c_Sound* Audio;
+
+	bool startline;
+	bool music;
+
 
 };
 

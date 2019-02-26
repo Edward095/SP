@@ -12,6 +12,8 @@ public:
 	virtual void PowerUp(bool check);
 	virtual void isOffRoad();
 
+	bool abilityUsed;
+
 private:
 	float elapsedTime;
 	float FreezeTime;

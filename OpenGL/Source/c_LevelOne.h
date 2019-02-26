@@ -10,6 +10,7 @@
 #include "c_Entity.h"
 #include "c_AI.h"
 #include "c_Weather.h"
+#include "c_Sound.h"
 
 #include "c_OffRoadManager.h"
 #include "c_ObjectManager.h"
@@ -167,6 +168,7 @@ private:
 
 	void updateLevel(double dt);
 
+	c_Sound* Audio;
 	
 	c_Entity front;
 	c_Entity back;
@@ -206,6 +208,7 @@ private:
 	float CamTargetZ;
 	float FPS;
 	float Countdown;
+	float beep;
 	float Timer;
 	float bLightEnabled;
 
@@ -223,6 +226,9 @@ private:
 	bool CheckEnd;
 	bool Win;
 	bool Lose;
+
+	bool startline;
+	bool music;
 
 	float WheelRotation;
 

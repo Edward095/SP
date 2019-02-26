@@ -9,6 +9,7 @@
 #include "c_CarBaseClass.h"
 #include "c_AI.h"
 #include "c_Weather.h"
+#include "c_Sound.h"
 
 #include "c_ObjectManager.h"
 #include "c_OffRoadManager.h"
@@ -232,7 +233,10 @@ private:
 	void renderRain();
 	void RenderSnow();
 
+	c_Sound* Audio;
 
+	bool startline;
+	bool music;
 	
 
 };
