@@ -348,7 +348,7 @@ void c_Npc::UpdateNpc(double dt)
 		ArrowY++;
 		Audio->f_Menu_MoveSelect();
 
-                if (Continue == true || Override == true)
+        if (Continue == true || Override == true)
 		{
 			if (ArrowY > 7)
 			{
