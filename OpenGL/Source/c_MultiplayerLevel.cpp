@@ -344,11 +344,14 @@ void c_MultiplayerLevel::Update(double dt)
 
 	if (Countdown <= 0)
 	{
-		elapsedTime += (float)dt;
-		playerOne->Movement(dt);
-		playerTwo->Movement(dt);
-		playerOne->Ability(dt);
-		playerTwo->Ability(dt);
+		if (VehicleMove == true)
+		{
+			elapsedTime += (float)dt;
+			playerOne->Movement(dt);
+			playerTwo->Movement(dt);
+			playerOne->Ability(dt);
+			playerTwo->Ability(dt);
+		}
 	}
 
 	if (playerOne->gotCollide("FinishLine",false))
