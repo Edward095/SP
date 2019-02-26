@@ -25,6 +25,10 @@ public:
 		TOP,
 		BOTTOM,
 		RACEBANNER,
+		TRAFFICRED,
+		TRAFFICNULL,
+		TRAFFICNULL2,
+		TRAFFICGREEN,
 		STREETLIGHT,
 		LIGHT1,
 		LIGHT2,
@@ -178,6 +182,15 @@ private:
 	float elapsedTime;
 	std::string elapedTimeCut;
 
+	float ArrowP;
+	bool ExitGame;
+	bool AbleToPress;
+	bool OptionSelection;
+	bool VehicleMove;
+	
+	//Traffic Lights
+	float red1, red2, red3, green1, green2, green3;
+	bool RedLight, GreenLight;
 
 	c_Entity front;
 	c_Entity back;
