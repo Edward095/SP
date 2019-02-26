@@ -68,6 +68,11 @@ void c_MultiplayerLevelThree::Init()
 	playerTwoCamTargetY = playerTwo->getPos().y;
 	playerTwoCamTargetZ = playerTwo->getPos().z;
 
+	OptionSelection = true;
+	AbleToPress = false;
+	VehicleMove = true;
+	ArrowP = 7;
+
 	//----Traffic Light---------------//
 	RedLight = true;
 	GreenLight = false;
