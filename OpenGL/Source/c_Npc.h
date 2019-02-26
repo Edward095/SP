@@ -117,6 +117,7 @@ private:
 	bool Continue;
 	bool Options;
 	bool Instructions;
+	bool Override;
 
 	bool LeaderBoard;
 };

@@ -58,20 +58,39 @@ void c_FirstCar::Ability(double dt)
 	}
 	
 	if (VelocityZ > MaxSpeed && (PressQ))
-				VelocityZ = 1.5;
+	{
+		if (VelocityZ < 2)
+		{
+			VelocityZ += 0.2;
+		}
+		else
+		{
+			VelocityZ = 2;
+		}
+	}
 	if (PressQ)
 	{
-		//VelocityZ += Acceleration * (float)dt;
-
-		//VelocityZ = 1.5;
 		Duration++;
-		
 	}
-	if (Duration >= 150) // 3 sec/dt
+	if (Duration > 150) // 3 sec/dt
 	{
-		PressQ = false;
-		Duration = 0;
+		if (VelocityZ > MaxSpeed)
+		{
+			VelocityZ -= 0.3;
+		}
+		else
+		{
+			VelocityZ = MaxSpeed;
+			PressQ = false;
+			Duration = 0;
+
+		}
+				
 	}
+
+
+	
+	
 }
 
 void c_FirstCar::PowerUp(bool check)

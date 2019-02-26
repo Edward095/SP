@@ -138,6 +138,8 @@ void c_Npc::Init()
 	Talk1 = false;
 	Talk2 = false;
 	Talk3 = false;
+	Talk4 = false;
+	Talk5 = false;
 	LevelSelection = false;
 	SinglePlayer = false;
 	MultiPlayer = false;
@@ -145,6 +147,7 @@ void c_Npc::Init()
 	Continue = false;
 	Options = false;
 	LeaderBoard = false;
+	Override = false;
 }
 void c_Npc::Update(double dt)
 {
@@ -199,6 +202,7 @@ void c_Npc::Render()
 void c_Npc::UpdateNpc(double dt)
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
+	c_DataManager* data = c_DataManager::getInstance();
 
 	if (camera.position.z < -10 && camera.position.z > -100 && camera.position.y < 200 && camera.position.x < -310 && camera.position.x > -380)
 	{
@@ -209,9 +213,11 @@ void c_Npc::UpdateNpc(double dt)
 		Options = false;
 		LeaderBoard = false;
 		Instructions = false;
+	
 	}
 	else
 	{
+		Override = false;
 		StartGame = false;
 		Talk = false;
 		SinglePlayer = false;
@@ -304,10 +310,10 @@ void c_Npc::UpdateNpc(double dt)
 	}
 	
 	
-	if ((Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Continue == true))
+	if ((Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Continue == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Override == true))
 	{
 		ArrowY--;
-		if (Continue == true)
+		if (Continue == true || Override == true)
 		{
 			if (ArrowY < 6)
 			{
@@ -330,11 +336,11 @@ void c_Npc::UpdateNpc(double dt)
 		}
 		BounceTime = ElapsedTime + 0.125;
 	}
-	if ((Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Continue == true))
+	if ((Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Continue == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Override == true))
 	{
 	
 		ArrowY++;
-		if (Continue == true)
+		if (Continue == true || Override == true)
 		{
 			if (ArrowY > 7)
 			{
@@ -357,18 +363,69 @@ void c_Npc::UpdateNpc(double dt)
 		}
 		BounceTime = ElapsedTime + 0.125;
 	}
-	if ((Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && StartGame == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Options == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Continue == true && AbleToPress == true))
+	if ((Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && StartGame == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Options == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Continue == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Override == true && AbleToPress == true))
 	{
-		ArrowY = 7;
-		if (LevelSelection == false && StartGame == true)
+		if (LevelSelection == false && StartGame == true && Override == false)
 		{
 			if (ArrowY == 7)
 			{
+				if(data->isEmpty(1) == true)
+				{
+					//if first data save is empty,
+					data->selectFile(1);
+					LevelSelection = true;
+					Override = false;
+				}
+				else
+				{
+					data->selectFile(1);
+
+					LevelSelection = false;
+					Override = true;
+				}
+				
+			}
+			else if (ArrowY == 6)
+			{
+				if (data->isEmpty(2) == true)
+				{
+					LevelSelection = true;
+					Override = false;
+				}
+				else
+				{
+					LevelSelection = false;
+					Override = true;
+				}
+			}
+			else if (ArrowY == 5)
+			{
+				if (data->isEmpty(3) == true)
+				{
+					LevelSelection = true;
+					Override = false;
+				}
+				else
+				{
+					LevelSelection = false;
+					Override = true;
+				}
+			}
+		}
+		else if (Override == true && LevelSelection == false && StartGame == true)
+		{
+			if (ArrowY == 7)
+			{
+				//yes
+				Override = false;
 				LevelSelection = true;
 			}
 			else if (ArrowY == 6)
 			{
-				LevelSelection = true;
+				//no
+				Override = false;
+				LevelSelection = false;
+				StartGame = true;
 			}
 		}
 		else if ((LevelSelection == true && StartGame == true) || MultiPlayer == true)
@@ -383,8 +440,6 @@ void c_Npc::UpdateNpc(double dt)
 
 				scene->getScene("GARAGE")->Init();
 				scene->getScene("GARAGE")->Update(dt);
-				/*Garage.Init();
-				Garage.Update(dt);*/
 			}
 			else if (ArrowY == 6)
 			{
@@ -396,8 +451,6 @@ void c_Npc::UpdateNpc(double dt)
 
 				scene->getScene("GARAGE")->Init();
 				scene->getScene("GARAGE")->Update(dt);
-				/*Garage.Init();
-				Garage.Update(dt);*/
 			}
 			else if (ArrowY == 5)
 			{
@@ -409,10 +462,9 @@ void c_Npc::UpdateNpc(double dt)
 
 				scene->getScene("GARAGE")->Init();
 				scene->getScene("GARAGE")->Update(dt);
-				/*Garage.Init();
-				Garage.Update(dt);*/
 			}
 		}
+		
 		if (Options)
 		{
 			if (ArrowY == 7)
@@ -445,10 +497,12 @@ void c_Npc::UpdateNpc(double dt)
 				//no
 			}
 		}
+		
+		ArrowY = 7;
 		BounceTime = ElapsedTime + 0.125;
 	}
 
-
+	
 }
 
 void c_Npc::RenderNpc()
@@ -561,32 +615,32 @@ void c_Npc::RenderNpc()
 	{
 		RenderTextOnScreen(meshList[TEXT], "Press 'F' to talk to NPC", Color(1, 0, 0), 3, 6, 10);
 	}
-	if (StartGame == true && Talk == true && LevelSelection == false)
+	if (StartGame == true && Talk == true && LevelSelection == false && Override == false)
 	{
 		RenderTextOnScreen(meshList[TEXT], "Save Files", Color(1, 0, 0), 3, 9, 13);
 		AbleToPress = true;
 	}
-	if ((StartGame == true && Talk == true && LevelSelection == false))
+	if ((StartGame == true && Talk == true && LevelSelection == false && Override == false))
 	{
 		RenderTextOnScreen(meshList[TEXT], "Save File 1", Color(1, 0, 0), 5, 7, 7);
 		AbleToPress = true;
 	}
-	if ((StartGame == true && Talk == true && LevelSelection == false))
+	if ((StartGame == true && Talk == true && LevelSelection == false && Override == false))
 	{
 		RenderTextOnScreen(meshList[TEXT], "Save File 2", Color(1, 0, 0), 5, 7, 6);
 		AbleToPress = true;
 	}
-	if ((StartGame == true && Talk == true && LevelSelection == false))
+	if ((StartGame == true && Talk == true && LevelSelection == false && Override == false))
 	{
 		RenderTextOnScreen(meshList[TEXT], "Save File 3", Color(1, 0, 0), 5, 7, 5);
 		AbleToPress = true;
 	}
-	if (Continue == true && Talk3 == true)
+	if ((Continue == true && Talk3 == true) || Override == true)
 	{
 		RenderTextOnScreen(meshList[TEXT], "Yes", Color(1, 0, 0), 5, 7, 7);
 		AbleToPress = true;
 	}
-	if (Continue == true && Talk3 == true)
+	if ((Continue == true && Talk3 == true) || Override == true)
 	{
 		RenderTextOnScreen(meshList[TEXT], "No", Color(1, 0, 0), 5, 7, 6);
 		AbleToPress = true;
@@ -666,6 +720,10 @@ void c_Npc::RenderNpc()
 	if (Options == true && Talk1 == true)
 	{
 		RenderTextOnScreen(meshList[TEXT], "Off", Color(1, 0, 0), 5, 7, 4);
+	}
+	if (Override == true && LevelSelection == false && StartGame == true)
+	{
+		RenderTextOnScreen(meshList[TEXT], "Override Data?", Color(1, 0, 0), 3, 9, 13);
 	}
 
 }
