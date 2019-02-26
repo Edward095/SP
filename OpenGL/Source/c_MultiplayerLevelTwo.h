@@ -1,5 +1,5 @@
-#ifndef C_MULTIPLAYERLEVELTHREE_H
-#define C_MULTIPLAYERLEVELTHREE_H
+#ifndef C_MULTIPLAYERLEVELTWO_H
+#define C_MULTIPLAYERLEVELTWO_H
 
 #include "Scene.h"
 #include "Mesh.h"
@@ -7,14 +7,15 @@
 #include "MatrixStack.h"
 #include "Light.h"
 
-#include "c_ObjectManager.h"
 #include "c_OffRoadManager.h"
+#include "c_ObjectManager.h"
 
 #include "c_CarBaseClass.h"
+
 #include "c_Impulse.h"
 
 
-class c_MultiplayerLevelThree : public Scene
+class c_MultiplayerLevelTwo : public Scene
 {
 public:
 	enum GEOMETRY_TYPE
@@ -132,8 +133,8 @@ public:
 		U_TOTAL,
 	};
 
-	c_MultiplayerLevelThree();
-	~c_MultiplayerLevelThree();
+	c_MultiplayerLevelTwo();
+	~c_MultiplayerLevelTwo();
 	void Init();
 	void Update(double dt);
 	void Render();
@@ -161,6 +162,8 @@ private:
 	void updateEnviromentCollision();
 	void updatePlayerOneCollision();
 	void updatePlayerTwoCollision();
+	void RenderSpeedometerOne();
+	void RenderSpeedometerTwo();
 
 	FirstPersonCamera playerOneCam;
 	float playerOneCamPosX;
@@ -181,7 +184,7 @@ private:
 	float elapsedTime;
 	std::string elapedTimeCut;
 
-	float ArrowP;
+        float ArrowP;
 	bool ExitGame;
 	bool AbleToPress;
 	bool OptionSelection;
@@ -196,15 +199,27 @@ private:
 	c_Entity left;
 	c_Entity right;
 	c_Entity track;
-
+	c_Entity PickUp;
 	c_CarBaseClass* playerOne;
 	c_CarBaseClass* playerTwo;
+	c_Entity speedometer;
+	c_Entity needle;
+	c_Entity circle;
 
 	c_Impulse Impulse;
-	
-
+		
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
+
+	bool checkFO = false;
+	bool checkFT = false;
+	bool OFreeze = false;
+	bool TFreeze = false;
+	int Oduration;
+	int Tduration;
+	float FreezeTime;
+	bool pick = false;
+	int cooldown;
 };
 
 #endif
