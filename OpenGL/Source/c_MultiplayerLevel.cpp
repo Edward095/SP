@@ -516,6 +516,20 @@ void c_MultiplayerLevel::Render()
 	RenderTextOnScreen(meshList[TEXT], std::to_string(Ponelaps), Color(1, 0, 0), 3, 9, 3);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(PTwolaps), Color(1, 0, 0), 3, 11, 3);
 
+	// Pause Screen
+		if (OptionSelection == false)
+		{
+			RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
+			AbleToPress = true;
+			TimePassed -= FreezeTime;
+		}
+	
 	if (Win)
 		RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 10, 10);
 	if (Lose)
@@ -1281,19 +1295,6 @@ void c_MultiplayerLevel::renderEnviroment()
 		modelStack.Scale(1, 1, 1);
 		RenderMesh(meshList[TRAFFICGREEN], false);
 		modelStack.PopMatrix();
-	}
-	// Pause Screen
-	if (OptionSelection == false)
-	{
-		RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
-		AbleToPress = true;
-		elapsedTime -= FreezeTime;
 	}
 	if (ExitGame == true)
 	{
