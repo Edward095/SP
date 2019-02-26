@@ -1,0 +1,9 @@
+﻿  c_ObjectManager.cpp
+d:\users\539\desktop\sp2\sp\opengl\source\c_objectmanager.cpp(59): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_objectmanager.cpp(71): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_objectmanager.cpp(80): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_objectmanager.cpp(104): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_objectmanager.cpp(114): warning C4018: '<': signed/unsigned mismatch
+d:\users\539\desktop\sp2\sp\opengl\source\c_objectmanager.cpp(64): warning C4715: 'c_ObjectManager::getCannotCollide': not all control paths return a value
+d:\users\539\desktop\sp2\sp\opengl\source\c_objectmanager.cpp(76): warning C4715: 'c_ObjectManager::getCanCollide': not all control paths return a value
+  OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\OpenGL.exe

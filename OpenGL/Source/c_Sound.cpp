@@ -4,6 +4,7 @@ c_Sound* c_Sound::instance = 0;
 
 c_Sound::c_Sound()
 {
+	f_Init_Sound();
 }
 
 
