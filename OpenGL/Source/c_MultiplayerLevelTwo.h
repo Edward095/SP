@@ -220,6 +220,10 @@ private:
 	float FreezeTime;
 	bool pick = false;
 	int cooldown;
+	c_Sound* Audio;
+
+	bool startline;
+	bool music;
 };
 
 #endif

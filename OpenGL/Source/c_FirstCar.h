@@ -12,6 +12,8 @@ public:
 	void Ability(double dt);
 	virtual void PowerUp(bool check);
 	virtual void isOffRoad();
+
+	bool abilityUsed;
 };
 
 
