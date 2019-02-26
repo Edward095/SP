@@ -11,7 +11,7 @@
 #include "c_ObjectManager.h"
 
 #include "c_CarBaseClass.h"
-
+#include"c_Sound.h"
 #include "c_Impulse.h"
 
 
@@ -182,8 +182,6 @@ private:
 
 	std::string elapedTimeCut;
 
-	
-
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
@@ -201,6 +199,7 @@ private:
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
 
+	float ArrowP;
 	bool RedLight;
 	bool pick;
 	bool OffRoad;
@@ -220,6 +219,8 @@ private:
 	bool PTwoFinish;
 	bool Win;
 	bool Lose;
+	bool startline;
+	bool music;
 
 	float elapsedTime;
 	float Timer;
@@ -234,7 +235,7 @@ private:
 	int Tcooldown;
 	int Ocooldown;
 
-
+	c_Sound* Audio;
 };
 
 #endif

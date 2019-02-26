@@ -3,7 +3,7 @@
 
 #include "c_Entity.h"
 #include "Application.h"
-
+#include "c_Sound.h"
 class c_CarBaseClass : public c_Entity
 {
 public:
@@ -29,7 +29,6 @@ public:
 	virtual void SetTSlowed(bool speed);
 	virtual float GetSpedoSpeed();
 
-
 protected:
 	float VelocityZ;
 	float MaxSpeed;
@@ -41,6 +40,7 @@ protected:
 	int Duration;
 	int Cooldown;
 	float SpedoVeloZ;
+	int padDuration;
 
 	bool Driving = false;
 	bool Backwards = false;
@@ -55,6 +55,8 @@ protected:
 	bool freeze = false;
 	bool Oslowed;
 	bool Tslowed;
+
+	bool abilityUsed;
 };
 
 

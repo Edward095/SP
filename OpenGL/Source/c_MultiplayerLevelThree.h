@@ -9,7 +9,7 @@
 
 #include "c_ObjectManager.h"
 #include "c_OffRoadManager.h"
-
+#include "c_Sound.h"
 #include "c_CarBaseClass.h"
 #include "c_Impulse.h"
 
@@ -235,6 +235,10 @@ private:
 	int Tduration;
 	int Tcooldown;
 	int Ocooldown;
+	bool startline;
+	bool music;
+
+	c_Sound* Audio;
 };
 
 #endif

@@ -27,6 +27,8 @@ c_ThirdCar::c_ThirdCar()
 	once = false;
 	Cooldown = 150;
 	offRoad = false;
+	abilityUsed = false;
+
 }
 c_ThirdCar::c_ThirdCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos,bool canCollide)
 {
@@ -41,6 +43,7 @@ c_ThirdCar::~c_ThirdCar()
 
 void c_ThirdCar::Ability(double dt)
 {
+	c_Sound* Audio = c_Sound::getInstance();
 	if (uniqueName == "player2")
 	{
 		if (Application::IsKeyPressed('P') && !once)
@@ -75,11 +78,17 @@ void c_ThirdCar::Ability(double dt)
 	if (once)
 	{
 		Duration++;
+		if (!abilityUsed)
+		{
+			Audio->f_Game_Ability_Teleport();
+			abilityUsed = true;
+		}
 	}
 
 	if (Duration >= 500) // 3 sec/dt
 	{
 		once = false;
+		abilityUsed = false;
 		Duration = 0;
 	}
 }

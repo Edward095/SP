@@ -9,7 +9,7 @@
 
 #include "c_ObjectManager.h"
 #include "c_OffRoadManager.h"
-
+#include "c_Sound.h"
 #include "c_CarBaseClass.h"
 #include "c_Impulse.h"
 #include "c_Weather.h"
@@ -216,7 +216,12 @@ private:
 	bool Win;
 	bool Lose;
 
-    //Traffic Lights
+	float ArrowP;
+	bool ExitGame;
+	bool AbleToPress;
+	bool OptionSelection;
+	bool VehicleMove;
+        //Traffic Lights
 	float red1, red2, red3, green1, green2, green3;
 	bool RedLight, GreenLight;
 
@@ -239,6 +244,11 @@ private:
 	bool pick;
 	int Tcooldown;
 	int Ocooldown;
+
+	bool startline;
+	bool music;
+
+	c_Sound* Audio;
 };
 
 #endif

@@ -9,6 +9,7 @@
 #include "c_CarBaseClass.h"
 #include "c_AI.h"
 #include "c_Weather.h"
+#include "c_Sound.h"
 
 #include "c_ObjectManager.h"
 #include "c_OffRoadManager.h"
@@ -251,7 +252,12 @@ private:
 	void renderRain();
 	void RenderSnow();
 	void RenderSpeedometer();
+
 	void resetVar();
+	bool startline;
+	bool music;
+
+	c_Sound* Audio;
 };
 
 

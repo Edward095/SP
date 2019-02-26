@@ -1,1 +1,11 @@
-﻿
+﻿  c_MultiplayerLevelTwo.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(154): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(155): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(156): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(157): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating code
+c:\users\marc-\documents\github\sp\opengl\source\c_scenemanager.cpp(123): warning C4715: 'c_SceneManager::getScene': not all control paths return a value
+c:\users\marc-\documents\github\sp\opengl\source\c_objectmanager.cpp(61): warning C4715: 'c_ObjectManager::getCannotCollide': not all control paths return a value
+  All 1667 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  OpenGL.vcxproj -> C:\Users\marc-\Documents\GitHub\SP\Release\OpenGL.exe

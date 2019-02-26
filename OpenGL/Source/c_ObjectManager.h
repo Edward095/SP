@@ -18,6 +18,7 @@ public:
 	void getCanCollide(std::string uniqueName,c_Entity* entity);
 	void delInstance();
 	void delNullOBJ();
+	void clearAll();
 private: 
 	c_ObjectManager();
 	std::vector <c_Entity*> cannotCollideOBJ;

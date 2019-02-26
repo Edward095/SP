@@ -12,7 +12,9 @@
 #include "LoadTGA.h"
 
 #include "c_SceneManager.h"
+#include "c_ObjectManager.h"
 #include "c_DataManager.h"
+#include "c_OffRoadManager.h"
 
 c_GameEnd::c_GameEnd()
 {
@@ -93,6 +95,8 @@ void c_GameEnd::Init()
 	meshList[TEXT]->textureID = LoadTGA("Image//gameEnd.tga");
 	meshList[ARROW] = MeshBuilder::GenerateQuad("Arrow", Color(1, 0, 0), 0.7f);
 	meshList[ARROW]->textureID = LoadTGA("Image//Arrow.tga");
+	meshList[GAMEOVER] = MeshBuilder::GenerateQuad("GAMEOVER", Color(1, 0, 0), 10.f);
+	meshList[GAMEOVER]->textureID = LoadTGA("Image//Arrow.tga");
 
 }
 void c_GameEnd::Update(double dt)
@@ -314,17 +318,58 @@ void c_GameEnd::updateSelection()
 void c_GameEnd::goNextLevel()
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
-	if (scene->checkLevel("SLEVELONE"))
+	c_ObjectManager* OBJmanager = c_ObjectManager::getInstance();
+	c_OffRoadManager* offRoadManager = c_OffRoadManager::getInstance();
+
+	if (scene->singleOrMulti('S'))
 	{
-		scene->getScene("NPC")->Init();
-		scene->updateLevel("SLEVELTWO");
-		scene->updateState("SLEVELTWO");
+		if (scene->checkLevel("SLEVELONE"))
+		{
+			offRoadManager->clearList();
+			OBJmanager->clearAll();
+			scene->getScene("SLEVELTWO")->Init();
+			scene->updateLevel("SLEVELTWO");
+			scene->updateState("SLEVELTWO");
+		}
+		else if (scene->checkLevel("SLEVELTWO"))
+		{
+			offRoadManager->clearList();
+			OBJmanager->clearAll();
+			scene->getScene("SLEVELTWO")->Init();
+			scene->updateLevel("SLEVELTHREE");
+			scene->updateState("SLEVELTHREE");
+		}
+		else
+		{
+			modelStack.PushMatrix();
+			RenderMesh(meshList[GAMEOVER], false);
+			modelStack.PopMatrix();
+		}
 	}
-	else if (scene->checkLevel("SLEVELTWO"))
+	else
 	{
-		scene->getScene("NPC")->Init();
-		scene->updateLevel("SLEVELTHREE");
-		scene->updateState("SLEVELTHREE");
+		if (scene->checkLevel("MLEVELONE"))
+		{
+			offRoadManager->clearList();
+			OBJmanager->clearAll();
+			scene->getScene("MLEVELONE")->Init();
+			scene->updateLevel("MLEVELTWO");
+			scene->updateState("MLEVELTWO");
+		}
+		else if (scene->checkLevel("MLEVELTWO"))
+		{
+			offRoadManager->clearList();
+			OBJmanager->clearAll();
+			scene->getScene("MLEVELTWO")->Init();
+			scene->updateLevel("MLEVELTHREE");
+			scene->updateState("MLEVELTHREE");
+		}
+		else
+		{
+			modelStack.PushMatrix();
+			RenderMesh(meshList[GAMEOVER], false);
+			modelStack.PopMatrix();
+		}
 	}
 }
 void c_GameEnd::retry()

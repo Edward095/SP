@@ -36,7 +36,7 @@ void c_LevelThree::Init()
 	offRoadManager = c_OffRoadManager::getInstance();
 	OBJmanager = c_ObjectManager::getInstance();
 	c_DataManager* dataManager = c_DataManager::getInstance();
-
+	Audio = c_Sound::getInstance();
 	dataManager->saveCurrentLevel(3);
 
 	c_Entity* car1;
@@ -108,6 +108,9 @@ void c_LevelThree::Init()
 	Lose = false;
 	Finish = false;
 	//-------------------------------//
+
+	startline = false;
+	music = false;
 
 	//----Random Number Gen----------//
 	Random = rand() % 3 + 1;
@@ -291,6 +294,18 @@ void c_LevelThree::Init()
 
 void c_LevelThree::Update(double dt)
 {
+	if (!startline)
+	{
+		Audio->f_Game_Fanfare_Startline();
+		startline = true;
+		music = true;
+	}
+	if (music && startline)
+	{
+		Audio->f_Level_3_music();
+		music = false;
+	}
+
 	//----Setting Of Time And FPS-------//
 	Timer += (float)dt;
 	Countdown -= (float)Timer * dt;
@@ -309,7 +324,6 @@ void c_LevelThree::Update(double dt)
 	CamTargetY = car->getPos().y + 5;
 	CamTargetZ = car->getPos().z;
 	//-------------------------------------------------------------------------------------------//
-
 	//------------Updating Traffic Lights------------//
 	if (elapsedTime >= 10)
 	{
@@ -828,6 +842,20 @@ void c_LevelThree::Render()
 
 	RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 9, 1);
 
+	// Pause Screen
+		if (OptionSelection == false)
+		{
+			RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
+			AbleToPress = true;
+			TimePassed -= FreezeTime;
+		}
+	
 	if (Win)
 		RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 10, 10);
 	if (Lose)
@@ -985,20 +1013,6 @@ void c_LevelThree::renderEnviroment()
 		modelStack.Scale(1, 1, 1);
 		RenderMesh(meshList[TRAFFICGREEN], false);
 		modelStack.PopMatrix();
-	}
-
-	// Pause Screen
-	if (OptionSelection == false)
-	{
-		RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
-		AbleToPress = true;
-		elapsedTime -= FreezeTime;
 	}
 	if (ExitGame == true)
 	{
@@ -1634,4 +1648,7 @@ void c_LevelThree::resetVar()
 	Countdown = 3;
 	laps = AIlaps = 0;
 	cooldown = 300;
+
+	startline = false;
+	music = false;
 }

@@ -15,6 +15,7 @@ public:
 	void addOffRoad(std::string offRoadOBJtxt);
 	void updateCollision(std::string posLocation,std::string rotateLocation);
 	void defaultData();
+	void clearList();
 
 private:
 	c_OffRoadManager();

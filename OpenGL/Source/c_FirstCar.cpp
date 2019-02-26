@@ -27,6 +27,7 @@ c_FirstCar::c_FirstCar()
 	once = false;
 	Cooldown = 300;
 	offRoad = false;
+	abilityUsed = false;
 }
 c_FirstCar::c_FirstCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
 {
@@ -40,43 +41,78 @@ c_FirstCar::~c_FirstCar()
 
 void c_FirstCar::Ability(double dt)
 {
+	c_Sound* Audio = c_Sound::getInstance();
+
 	if (uniqueName == "player2")
 	{
 		if (Application::IsKeyPressed('P'))
 		{
 			if (Driving || Backwards)
+			{
 				PressQ = true;
+			}
 		}
 	}
 	else
 	{
 		if (Application::IsKeyPressed('Q'))
 		{
-			if (Driving || Backwards)
+			if (Driving)
 				PressQ = true;
+			else
+				PressQ = false;
 		}
 	}
 	
 	if (VelocityZ > MaxSpeed && (PressQ))
-		VelocityZ = 1.5;
-
+	{
+		if (VelocityZ < 2)
+		{
+			VelocityZ += 0.2;
+		}
+		else
+		{
+			VelocityZ = 2;
+		}
+	}
 	if (PressQ)
 	{
 		Cooldown = 300;
 		Duration++;
+		if (!abilityUsed)
+		{
+			abilityUsed = true;
+			Audio->f_Game_Ability_Nitro();
+		}
 	}
-	
-	if (Duration >= 200) // 4 sec/dt
+	if (Duration > 200) // 4 sec/dt
 	{
-		PressQ = false;
-		Cooldown--;
+		if (VelocityZ > MaxSpeed)
+		{
+			VelocityZ -= 0.3;
+		}
+		else
+		{
+			VelocityZ = MaxSpeed;
+			PressQ = false;
+			Cooldown--;
+		}
+		if (Cooldown <= 0)
+		{
+			Duration = 0;
+			Cooldown = 300;
+		}
+
+
 	}
-	
+
 	if (Cooldown <= 0)
 	{
+		abilityUsed = false;
 		Duration = 0;
 		Cooldown = 300;
 	}
+
 }
 
 void c_FirstCar::PowerUp(bool check)

@@ -28,7 +28,7 @@ void c_MultiplayerLevelTwo::Init()
 {
 	OBJmanager = c_ObjectManager::getInstance();
 	offRoadManager = c_OffRoadManager::getInstance();
-
+	Audio = c_Sound::getInstance();
 	c_Entity* car = OBJmanager->getCanCollide("player1");
 
 	c_FirstCar* first = dynamic_cast <c_FirstCar*>(car);
@@ -112,6 +112,9 @@ void c_MultiplayerLevelTwo::Init()
 	FreezeTime = 0;
 	Tcooldown = 300;
 	Ocooldown = 300;
+
+	startline = false;
+	music = false;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -205,6 +208,17 @@ void c_MultiplayerLevelTwo::Init()
 }
 void c_MultiplayerLevelTwo::Update(double dt)
 {
+	if (!startline)
+	{
+		Audio->f_Game_Fanfare_Startline();
+		startline = true;
+		music = true;
+	}
+	if (music && startline)
+	{
+		Audio->f_Level_2_music();
+		music = false;
+	}
 	playerOneCamPosX = (playerOne->getPos().x - (sin(Math::DegreeToRadian(playerOne->GetSteeringAngle()))) * 10);
 	playerOneCamPosY = playerOne->getPos().y + 8;
 	playerOneCamPosZ = (playerOne->getPos().z - (cos(Math::DegreeToRadian(playerOne->GetSteeringAngle()))) * 10);
@@ -372,6 +386,18 @@ void c_MultiplayerLevelTwo::Render()
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
+	// Pause Screen
+		if (OptionSelection == false)
+		{
+			RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
+			AbleToPress = true;
+		}
 
 }
 void c_MultiplayerLevelTwo::Exit()
@@ -1122,6 +1148,11 @@ void c_MultiplayerLevelTwo::renderEnviroment()
 		RenderMesh(meshList[TRAFFICGREEN], false);
 		modelStack.PopMatrix();
 	}
+	if (ExitGame == true)
+	{
+		glDeleteVertexArrays(1, &m_vertexArrayID);
+		glDeleteProgram(m_programID);
+	}
 }
 void c_MultiplayerLevelTwo::updateEnviromentCollision()
 {
@@ -1248,9 +1279,9 @@ void c_MultiplayerLevelTwo::resetVar()
 {
 	RedLight = true;
 
-	pick = OffRoad = Snowing = checkFO = checkFT = GreenLight = false;
+	pick = OffRoad = Snowing = checkFO = checkFT = GreenLight = startline = false;
 	OFreeze = TFreeze = Raining = PoneFinish = PTwoFinish = Win = Lose = false;
-	ExitGame = AbleToPress = OptionSelection = VehicleMove = false;
+	ExitGame = AbleToPress = OptionSelection = VehicleMove  = music = false;
 
 	elapsedTime = Cooldown = Timer = Ponelaps = PTwolaps = Oduration = Tduration = FreezeTime = 0;
 	red1 = red2 = red3 = green1 = green2 = green3 = 0;

@@ -28,7 +28,7 @@ void c_MultiplayerLevel::Init()
 {
 	OBJmanager = c_ObjectManager::getInstance();
 	offRoadManager = c_OffRoadManager::getInstance();
-
+	Audio = c_Sound::getInstance();
 	//Seed Generation For rand() function
 	srand(time(NULL));
 
@@ -79,6 +79,11 @@ void c_MultiplayerLevel::Init()
 	playerTwoCamTargetY = playerTwo->getPos().y;
 	playerTwoCamTargetZ = playerTwo->getPos().z;
 
+	OptionSelection = true;
+	AbleToPress = false;
+	VehicleMove = true;
+	ArrowP = 7;
+
 	//----Traffic Light---------------//
 	RedLight = true;
 	GreenLight = false;
@@ -104,6 +109,8 @@ void c_MultiplayerLevel::Init()
 	
 	//-------------------------------//
 
+	startline = false;
+	music = false;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -248,6 +255,17 @@ void c_MultiplayerLevel::Init()
 }
 void c_MultiplayerLevel::Update(double dt)
 {
+	if (!startline)
+	{
+		Audio->f_Game_Fanfare_Startline();
+		startline = true;
+		music = true;
+	}
+	if (music && startline)
+	{
+		Audio->f_Level_1_music();
+		music = false;
+	}
 	playerOneCamPosX = (playerOne->getPos().x - (sin(Math::DegreeToRadian(playerOne->GetSteeringAngle()))) * 10);
 	playerOneCamPosY = playerOne->getPos().y + 8;
 	playerOneCamPosZ = (playerOne->getPos().z - (cos(Math::DegreeToRadian(playerOne->GetSteeringAngle()))) * 10);
@@ -268,8 +286,62 @@ void c_MultiplayerLevel::Update(double dt)
 	playerOne->updatePos(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
 	playerTwo->updatePos(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
 
-	playerOne->Movement(dt);
-	playerTwo->Movement(dt);
+        if (VehicleMove == true)
+	{
+		playerOne->Movement(dt);
+		playerTwo->Movement(dt);
+	}
+	if (OptionSelection == true)
+	{
+		VehicleMove = true;
+		//duration++;
+	}
+	//------------KeyPress to Pause Game-------------//
+	if (Application::IsKeyPressed('P'))
+	{
+		OptionSelection = false;
+		VehicleMove = false;
+	}
+	//-----------KeyPress to Move Arrow Up-----------//
+	if (Application::IsKeyPressed(VK_UP))
+	{
+		ArrowP--;
+		if (OptionSelection == false)
+		{
+			if (ArrowP <= 6)
+			{
+				ArrowP = 7;
+			}
+		}
+	}
+	//----------KeyPress to Move Arrow Down----------//
+	if (Application::IsKeyPressed(VK_DOWN))
+	{
+		ArrowP++;
+		if (OptionSelection == false)
+		{
+			if (ArrowP >= 7)
+			{
+				ArrowP = 6;
+			}
+		}
+	}
+	//-----------KeyPress to Select Option-----------//
+	if (OptionSelection == false && ArrowP == 7)
+	{
+		if (Application::IsKeyPressed(VK_RETURN))
+		{
+			OptionSelection = true;
+		}
+	}
+	if (OptionSelection == false && ArrowP == 6)
+	{
+		if (Application::IsKeyPressed(VK_RETURN))
+		{
+			ExitGame = true;
+		}
+	}
+	//---------------------------------------------//
 
 	//------------Updating Traffic Lights------------//
 	if (elapsedTime >= 10)
@@ -307,11 +379,14 @@ void c_MultiplayerLevel::Update(double dt)
 
 	if (Countdown <= 0)
 	{
-		elapsedTime += (float)dt;
-		playerOne->Movement(dt);
-		playerTwo->Movement(dt);
-		playerOne->Ability(dt);
-		playerTwo->Ability(dt);
+		if (VehicleMove == true)
+		{
+			elapsedTime += (float)dt;
+			playerOne->Movement(dt);
+			playerTwo->Movement(dt);
+			playerOne->Ability(dt);
+			playerTwo->Ability(dt);
+		}
 	}
 
 	if (playerOne->gotCollide("FinishLine",false))
@@ -1271,6 +1346,24 @@ void c_MultiplayerLevel::renderEnviroment()
 		RenderMesh(meshList[TRAFFICGREEN], false);
 		modelStack.PopMatrix();
 	}
+	// Pause Screen
+	if (OptionSelection == false)
+	{
+		RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
+		AbleToPress = true;
+		RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
+		AbleToPress = true;
+		RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
+		AbleToPress = true;
+		RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
+		AbleToPress = true;
+		elapsedTime -= FreezeTime;
+	}
+	if (ExitGame == true)
+	{
+		glDeleteVertexArrays(1, &m_vertexArrayID);
+		glDeleteProgram(m_programID);
+	}
 }
 
 void c_MultiplayerLevel::renderRain()
@@ -1453,7 +1546,7 @@ void c_MultiplayerLevel::resetVar()
 {
 	RedLight = true;
 
-	pick = OffRoad = Snowing = checkFO = checkFT = GreenLight = false;
+	pick = OffRoad = Snowing = checkFO = checkFT = GreenLight = startline = music = false;
 	OFreeze = TFreeze = Raining = PoneFinish = PTwoFinish = Win = Lose = false;
 	
 	elapsedTime = Cooldown = Timer = Ponelaps = PTwolaps  = Oduration = Tduration  = FreezeTime = 0;
