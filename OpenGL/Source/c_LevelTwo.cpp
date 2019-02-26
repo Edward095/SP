@@ -37,8 +37,6 @@ void c_LevelTwo::Init()
 	OBJmanager = c_ObjectManager::getInstance();
 	c_DataManager* dataManager = c_DataManager::getInstance();
 
-	Audio = Audio->getInstance();
-
 	dataManager->saveCurrentLevel(2);
 
 	c_Entity* car1;
@@ -103,8 +101,21 @@ void c_LevelTwo::Init()
 	FPS = 0;
 	cooldown = 300;
 	//-------------------------------//
-	startline = false;
-	music = false;
+
+	//car1 = OBJmanager->getCanCollide("player1");
+	//c_FirstCar* first = dynamic_cast <c_FirstCar*>(car1);
+	//if (first)
+	//	car = first;
+	//c_SecondCar* second = dynamic_cast <c_SecondCar*>(car1);
+	//if (second)
+	//{
+	//	car = second;
+	//	checkF = true;
+	//}
+
+	//c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car1);
+	//if (third)
+	//	car = third;
 
 	//----Random Number Gen----------//
 	Random = rand() % 3 + 1;
@@ -277,18 +288,6 @@ void c_LevelTwo::Update(double dt)
 	Countdown -= (float)Timer * dt;
 	FPS = 1 / dt;
 	//----------------------------------//
-
-	if (!startline)
-	{
-		Audio->f_Game_Fanfare_Startline();
-		startline = true;
-		music = true;
-	}
-	if (startline && music)
-	{
-		Audio->f_Level_2_music();
-		music = false;
-	}
 
 	//----Power Up Timer------------------// 
 	FreezeTime = (float)(dt + (dt * 0));

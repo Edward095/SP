@@ -29,11 +29,6 @@ void c_MultiplayerLevelThree::Init()
 	OBJmanager = c_ObjectManager::getInstance();
 	offRoadManager = c_OffRoadManager::getInstance();
 
-	Audio = Audio->getInstance();
-
-	startline = false;
-	music = false;
-
 	c_Entity* car = OBJmanager->getCanCollide("player1");
 
 	c_FirstCar* first = dynamic_cast <c_FirstCar*>(car);
@@ -174,18 +169,6 @@ void c_MultiplayerLevelThree::Init()
 }
 void c_MultiplayerLevelThree::Update(double dt)
 {
-
-	if (!startline)
-	{
-		Audio->f_Game_Fanfare_Startline();
-		startline = true;
-		music = true;
-	}
-	if (startline && music)
-	{
-		Audio->f_Level_3_music();
-		music = false;
-	}
 	playerOneCamPosX = (playerOne->getPos().x - (sin(Math::DegreeToRadian(playerOne->GetSteeringAngle()))) * 10);
 	playerOneCamPosY = playerOne->getPos().y + 8;
 	playerOneCamPosZ = (playerOne->getPos().z - (cos(Math::DegreeToRadian(playerOne->GetSteeringAngle()))) * 10);

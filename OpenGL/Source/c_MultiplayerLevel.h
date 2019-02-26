@@ -237,7 +237,6 @@ private:
 	bool Raining = false;
 	bool OffRoad = false;
 	bool Snowing = false;
-
 	bool checkFO = false;
 	bool checkFT = false;
 	bool OFreeze = false;
@@ -248,12 +247,6 @@ private:
 	bool pick = false;
 	int Tcooldown;
 	int Ocooldown;
-
-	bool startline;
-	bool music;
-
-	c_Sound* Audio;
-
 };
 
 #endif

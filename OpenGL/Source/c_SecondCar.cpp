@@ -25,7 +25,6 @@ c_SecondCar::c_SecondCar()
 	BoostPad = false;
 	SlowPad = false;
 	once = false;
-	abilityUsed = true;
 	offRoad = false;
 	Oslowed = false;
 	Tslowed = false;
@@ -46,35 +45,12 @@ void c_SecondCar::Ability(double dt)
 	{
 		if (Application::IsKeyPressed('P'))
 		{
-			if (abilityUsed)
-			{
-				Audio->f_Game_Ability_Freezetime();
-				abilityUsed = false;
-			}
-			PressQ = true;
+			//PressQ = true;
 		}
 	}
 	else
 	{
-
 		if (Application::IsKeyPressed('Q'))
-		{
-
-			if (abilityUsed)
-			{
-				Audio->f_Game_Ability_Freezetime();
-				abilityUsed = false;
-			}
-			PressQ = true;
-		}
-
-
-	if (PressQ && Duration <= 150)
-	{
-		Duration++;
-		elapsedTime -= FreezeTime;
-		if (Duration >= 150) // 3 sec/dt
-
 		{
 			//PressQ = true;
 		}

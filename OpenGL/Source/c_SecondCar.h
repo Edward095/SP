@@ -15,8 +15,6 @@ public:
 	void SetTSlowed(bool speed);
 
 
-	bool abilityUsed;
-
 private:
 };
 
