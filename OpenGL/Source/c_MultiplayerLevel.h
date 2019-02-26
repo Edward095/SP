@@ -9,7 +9,7 @@
 
 #include "c_ObjectManager.h"
 #include "c_OffRoadManager.h"
-
+#include "c_Sound.h"
 #include "c_CarBaseClass.h"
 #include "c_Impulse.h"
 #include "c_Weather.h"
@@ -247,6 +247,11 @@ private:
 	bool pick = false;
 	int Tcooldown;
 	int Ocooldown;
+
+	bool startline;
+	bool music;
+
+	c_Sound* Audio;
 };
 
 #endif

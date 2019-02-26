@@ -36,7 +36,7 @@ void c_LevelTwo::Init()
 	offRoadManager = c_OffRoadManager::getInstance();
 	OBJmanager = c_ObjectManager::getInstance();
 	c_DataManager* dataManager = c_DataManager::getInstance();
-
+	Audio = c_Sound::getInstance();
 	dataManager->saveCurrentLevel(2);
 
 	c_Entity* car1;
@@ -46,7 +46,10 @@ void c_LevelTwo::Init()
 		car = first;
 	c_SecondCar* second = dynamic_cast <c_SecondCar*>(car1);
 	if (second)
+	{
 		car = second;
+		checkF = true;
+	}
 	c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car1);
 	if (third)
 		car = third;
@@ -88,7 +91,8 @@ void c_LevelTwo::Init()
 	RedLight = true;
 	GreenLight = false;
 	//-------------------------------//
-
+	startline = false;
+	music = false;
 	//----Time Related Variables-----//
 	elapsedTime = 0;
 	FreezeTime = 0;
@@ -283,6 +287,18 @@ void c_LevelTwo::Init()
 
 void c_LevelTwo::Update(double dt)
 {
+	if (!startline)
+	{
+		Audio->f_Game_Fanfare_Startline();
+		startline = true;
+		music = true;
+	}
+	if (music && startline)
+	{
+		Audio->f_Level_1_music();
+		music = false;
+	}
+
 	//----Setting Of Time And FPS-------//
 	Timer += (float)dt;
 	Countdown -= (float)Timer * dt;

@@ -36,7 +36,7 @@ void c_LevelThree::Init()
 	offRoadManager = c_OffRoadManager::getInstance();
 	OBJmanager = c_ObjectManager::getInstance();
 	c_DataManager* dataManager = c_DataManager::getInstance();
-
+	Audio = c_Sound::getInstance();
 	dataManager->saveCurrentLevel(3);
 
 	c_Entity* car1;
@@ -92,7 +92,8 @@ void c_LevelThree::Init()
 	FPS = 0;
 	cooldown = 300;
 	//-------------------------------//
-
+	startline = false;
+	music = false;
 	//----Random Number Gen----------//
 	Random = rand() % 3 + 1;
 	//-------------------------------//
@@ -275,6 +276,18 @@ void c_LevelThree::Init()
 
 void c_LevelThree::Update(double dt)
 {
+	if (!startline)
+	{
+		Audio->f_Game_Fanfare_Startline();
+		startline = true;
+		music = true;
+	}
+	if (music && startline)
+	{
+		Audio->f_Level_1_music();
+		music = false;
+	}
+
 	//----Setting Of Time And FPS-------//
 	Timer += (float)dt;
 	Countdown -= (float)Timer * dt;

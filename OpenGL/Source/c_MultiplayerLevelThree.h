@@ -9,7 +9,7 @@
 
 #include "c_ObjectManager.h"
 #include "c_OffRoadManager.h"
-
+#include "c_Sound.h"
 #include "c_CarBaseClass.h"
 #include "c_Impulse.h"
 
@@ -210,6 +210,11 @@ private:
 
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
+
+	bool startline;
+	bool music;
+
+	c_Sound* Audio;
 };
 
 #endif

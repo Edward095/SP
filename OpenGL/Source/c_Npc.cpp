@@ -28,6 +28,7 @@ void c_Npc::Init()
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
 	c_DataManager* data = c_DataManager::getInstance();
+	Audio = c_Sound::getInstance();
 	data->selectFile(1);
 	data->saveCustomization("OBJ//Car1.obj", "Image//Car1Blue.tga");
 	data->saveCurrentLevel(1);
@@ -132,9 +133,7 @@ void c_Npc::Init()
 	ArrowY = 7;
 	BounceTime = 0;
 	
-	Audio = c_Sound::getInstance();
 
-	Audio->f_Init_Sound();
 	Audio->f_Start_Menu_music();
 
 	//booleans

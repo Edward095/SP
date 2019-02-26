@@ -28,7 +28,7 @@ void c_MultiplayerLevelThree::Init()
 {
 	OBJmanager = c_ObjectManager::getInstance();
 	offRoadManager = c_OffRoadManager::getInstance();
-
+	Audio = c_Sound::getInstance();
 	c_Entity* car = OBJmanager->getCanCollide("player1");
 
 	c_FirstCar* first = dynamic_cast <c_FirstCar*>(car);
@@ -77,7 +77,8 @@ void c_MultiplayerLevelThree::Init()
 	RedLight = true;
 	GreenLight = false;
 	//-------------------------------//
-
+	startline = false;
+	music = false;
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	//Enable depth buffer and depth testing
@@ -169,6 +170,17 @@ void c_MultiplayerLevelThree::Init()
 }
 void c_MultiplayerLevelThree::Update(double dt)
 {
+	if (!startline)
+	{
+		Audio->f_Game_Fanfare_Startline();
+		startline = true;
+		music = true;
+	}
+	if (music && startline)
+	{
+		Audio->f_Level_1_music();
+		music = false;
+	}
 	playerOneCamPosX = (playerOne->getPos().x - (sin(Math::DegreeToRadian(playerOne->GetSteeringAngle()))) * 10);
 	playerOneCamPosY = playerOne->getPos().y + 8;
 	playerOneCamPosZ = (playerOne->getPos().z - (cos(Math::DegreeToRadian(playerOne->GetSteeringAngle()))) * 10);

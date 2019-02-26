@@ -11,7 +11,7 @@
 #include "c_ObjectManager.h"
 
 #include "c_CarBaseClass.h"
-
+#include"c_Sound.h"
 #include "c_Impulse.h"
 
 
@@ -220,6 +220,11 @@ private:
 	float FreezeTime;
 	bool pick = false;
 	int cooldown;
+
+	bool startline;
+	bool music;
+
+	c_Sound* Audio;
 };
 
 #endif

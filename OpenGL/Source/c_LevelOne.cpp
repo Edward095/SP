@@ -37,6 +37,7 @@ void c_LevelOne::Init()
 	offRoadManager = c_OffRoadManager::getInstance();
 	OBJmanager = c_ObjectManager::getInstance();
 	c_DataManager* dataManager = c_DataManager::getInstance();
+	Audio = c_Sound::getInstance();
 
 	dataManager->saveCurrentLevel(1);
 
@@ -72,7 +73,8 @@ void c_LevelOne::Init()
 	FPS = 0;
 	cooldown = 300;
 	//-------------------------------//
-
+	startline = false;
+	music = false;
 	//----Random Number Gen----------//
 	Random = rand() % 3 + 1;
 	//-------------------------------//
@@ -267,7 +269,19 @@ void c_LevelOne::Init()
 
 void c_LevelOne::Update(double dt)
 {
+
 	c_SceneManager* scene = c_SceneManager::getInstance();
+	if (!startline)
+	{
+		Audio->f_Game_Fanfare_Startline();
+		startline = true;
+		music = true;
+	}
+	if (music && startline)
+	{
+		Audio->f_Level_1_music();
+		music = false;
+	}
 
 	//----Setting Of Time And FPS-------//
 	Timer += (float)dt;

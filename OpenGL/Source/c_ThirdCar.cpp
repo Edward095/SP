@@ -27,6 +27,8 @@ c_ThirdCar::c_ThirdCar()
 	once = false;
 	Cooldown = 150;
 	offRoad = false;
+	abilityUsed = false;
+	Audio = c_Sound::getInstance();
 }
 c_ThirdCar::c_ThirdCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos,bool canCollide)
 {
@@ -53,6 +55,11 @@ void c_ThirdCar::Ability(double dt)
 				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
 			}
 			//PressQ = true;
+			if (!abilityUsed)
+			{
+				Audio->f_Game_Ability_Teleport();
+				abilityUsed = true;
+			}
 			once = true;
 		}
 	}
@@ -67,6 +74,11 @@ void c_ThirdCar::Ability(double dt)
 			{
 				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
 			}
+			if (!abilityUsed)
+			{
+				Audio->f_Game_Ability_Teleport();
+				abilityUsed = true;
+			}
 			//PressQ = true;
 			once = true;
 		}
@@ -80,6 +92,7 @@ void c_ThirdCar::Ability(double dt)
 	if (Duration >= 500) // 3 sec/dt
 	{
 		once = false;
+		abilityUsed = false;
 		Duration = 0;
 	}
 }

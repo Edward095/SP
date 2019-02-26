@@ -388,8 +388,6 @@ void c_Garage::Init()
 	meshList[UI] = MeshBuilder::GenerateQuad("controls", Color(0, 0, 0), 3);
 	meshList[UI]->textureID = LoadTGA("Image//UI.tga");
 
-	v_Garage_SFX->f_Init_Sound();
-
 
 }
 
@@ -425,23 +423,35 @@ void c_Garage::Update(double dt)
 		else
 		{
 			if (scene->checkLevel("SLEVELONE"))
+			{
 				scene->getScene("SLEVELONE")->Init();
-
+				v_Garage_SFX->f_Pause_Menu_Music();
+			}
 			else if (scene->checkLevel("SLEVELTWO"))
+			{
 				scene->getScene("SLEVELTWO")->Init();
-
+				v_Garage_SFX->f_Pause_Menu_Music();
+			}
 			else if (scene->checkLevel("SLEVELTHREE"))
+			{
 				scene->getScene("SLEVELTHREE")->Init();
-
+				v_Garage_SFX->f_Pause_Menu_Music();
+			}
 			else if (scene->checkLevel("MLEVELONE"))
+			{
 				scene->getScene("MLEVELONE")->Init();
-
+				v_Garage_SFX->f_Pause_Menu_Music();
+			}
 			else if (scene->checkLevel("MLEVELTWO"))
+			{
 				scene->getScene("MLEVELTWO")->Init();
-
+				v_Garage_SFX->f_Pause_Menu_Music();
+			}
 			else if (scene->checkLevel("MLEVELTHREE"))
+			{
 				scene->getScene("MLEVELTHREE")->Init();
-
+				v_Garage_SFX->f_Pause_Menu_Music();
+			}
 			scene->updateState(scene->getLevel());
 		}
 

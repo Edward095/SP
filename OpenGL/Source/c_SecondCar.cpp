@@ -28,6 +28,9 @@ c_SecondCar::c_SecondCar()
 	offRoad = false;
 	Oslowed = false;
 	Tslowed = false;
+	abilityUsed = false;
+	audioCD = 0;
+	Audio = c_Sound::getInstance();
 }
 c_SecondCar::c_SecondCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
 {
@@ -46,6 +49,14 @@ void c_SecondCar::Ability(double dt)
 		if (Application::IsKeyPressed('P'))
 		{
 			//PressQ = true;
+			
+			if (!abilityUsed)
+			{
+				Audio->f_Game_Ability_Freezetime();
+				abilityUsed = true;
+			}
+			PressQ = true;
+			
 		}
 	}
 	else
@@ -53,7 +64,22 @@ void c_SecondCar::Ability(double dt)
 		if (Application::IsKeyPressed('Q'))
 		{
 			//PressQ = true;
+			if (!abilityUsed)
+			{
+				Audio->f_Game_Ability_Freezetime();
+				abilityUsed = true;
+			}
+			PressQ = true;
 		}
+	}
+	if (abilityUsed)
+	{
+		audioCD++;
+	}
+	if (audioCD >= 300)
+	{
+		abilityUsed = false;
+		audioCD = 0;
 	}
 }
 
