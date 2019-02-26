@@ -3,6 +3,7 @@
 
 #include "Mesh.h"
 #include "c_Collision.h"
+#include "c_Sound.h"
 
 
 class c_Entity
@@ -24,6 +25,8 @@ public:
 	c_Collision* getOBB();
 	const char* getMeshPath();
 	const char* getTGApath();
+
+	c_Sound* Audio = c_Sound::getInstance();
 
 protected:
 	std::string uniqueName;

@@ -4,6 +4,7 @@ c_Sound* c_Sound::instance = 0;
 
 c_Sound::c_Sound()
 {
+	f_Init_Sound();
 }
 
 
@@ -151,7 +152,7 @@ void c_Sound::f_Game_Fanfare_Slow()
 
 void c_Sound::f_Game_Fanfare_Startline()
 {
-	s_GP_SFX->play2D(s_StartingLine);
+	s_GP_SFX->play2D(s_StartingLine, false, false, true);
 }
 
 void c_Sound::f_InitSFX()

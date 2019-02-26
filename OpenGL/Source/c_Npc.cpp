@@ -134,7 +134,6 @@ void c_Npc::Init()
 	
 	Audio = c_Sound::getInstance();
 
-	Audio->f_Init_Sound();
 	Audio->f_Start_Menu_music();
 
 	//booleans
