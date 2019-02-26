@@ -134,3 +134,10 @@ void c_OffRoadManager::defaultData()
 		counter++;
 	}
 }
+void c_OffRoadManager::clearList()
+{
+	while (!listToIgnore.empty())
+	{
+		listToIgnore.pop_back();
+	}
+}

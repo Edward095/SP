@@ -294,7 +294,7 @@ void c_LevelOne::Update(double dt)
 	if (scene->checkState("SLEVELONE"))
 		updateLevel(dt);
 	else if (scene->checkState("FINISHED"))
-		scene->getScene("FINSIHED")->Update(dt);
+		scene->getScene("FINISHED")->Update(dt);
 }
 
 void c_LevelOne::Render()
@@ -1033,20 +1033,6 @@ void c_LevelOne::renderEnviroment()
 		RenderMesh(meshList[TRAFFICGREEN], false);
 		modelStack.PopMatrix();
 	}
-
-	// Pause Screen
-	if (OptionSelection == false)
-	{
-		RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
-		AbleToPress = true;
-		elapsedTime -= FreezeTime;
-	}
 	if (ExitGame == true)
 	{
 		glDeleteVertexArrays(1, &m_vertexArrayID);
@@ -1236,6 +1222,20 @@ void c_LevelOne::renderEntity()
 		RenderTextOnScreen(meshList[TEXT], std::to_string(AIlaps), Color(1, 0, 0), 3, 24, 2);
 		RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 2);
 
+	        // Pause Screen
+		if (OptionSelection == false)
+		{
+			RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
+			AbleToPress = true;
+			TimePassed -= FreezeTime;
+		}
+	
 		if (Win)
 			RenderTextOnScreen(meshList[TEXT], "YOU LOSE", Color(1, 0, 0), 4, 9, 10);
 		if (Lose)
@@ -1364,6 +1364,11 @@ void c_LevelOne::updateLevel(double dt)
 			Lose = true;
 	}
 	//-----------------------------------------------------------//
+	if (Win || Lose)
+	{
+		scene->getScene("FINISHED")->Init();
+		scene->updateState("FINISHED");
+	}
 
 	if (car->gotCollide("Pickup", false))
 	{
@@ -1408,7 +1413,7 @@ void c_LevelOne::updateLevel(double dt)
 	}
 	//-------------------------------------------//
 
-//------------Updating Traffic Lights------------//
+        //------------Updating Traffic Lights------------//
 	if (elapsedTime >= 10)
 	{
 		RedLight = false;

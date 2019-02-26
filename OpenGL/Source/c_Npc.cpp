@@ -29,9 +29,10 @@ void c_Npc::Init()
 	c_SceneManager* scene = c_SceneManager::getInstance();
 	c_DataManager* data = c_DataManager::getInstance();
 	Audio = c_Sound::getInstance();
-	data->selectFile(1);
-	data->saveCustomization("OBJ//Car1.obj", "Image//Car1Blue.tga");
-	data->saveCurrentLevel(1);
+
+	float volume = data->getSoundOptions();
+	Audio->f_AdjustMusicVolume(volume);
+	Audio->f_AdjustSFXVolume(volume);
 
 	scene->updateState("NPC");
 
@@ -142,6 +143,8 @@ void c_Npc::Init()
 	Talk1 = false;
 	Talk2 = false;
 	Talk3 = false;
+	Talk4 = false;
+	Talk5 = false;
 	LevelSelection = false;
 	SinglePlayer = false;
 	MultiPlayer = false;
@@ -149,6 +152,7 @@ void c_Npc::Init()
 	Continue = false;
 	Options = false;
 	LeaderBoard = false;
+	Override = false;
 }
 void c_Npc::Update(double dt)
 {
@@ -162,6 +166,8 @@ void c_Npc::Update(double dt)
 		UpdateNpc(dt);
 	else if (scene->checkState("CONTINUE"))
 		scene->getScene("CONTINUE")->Update(dt);
+	else if (scene->checkState("FINISHED"))
+		scene->getScene("FINISHED")->Update(dt);
 	else
 		scene->getScene("GARAGE")->Update(dt);
 		//Garage.Update(dt);
@@ -196,6 +202,8 @@ void c_Npc::Render()
 		RenderNpc();
 	else if (scene->checkState("CONTINUE"))
 		scene->getScene("CONTINUE")->Render();
+	else if (scene->checkState("FINISHED"))
+		scene->getScene("FINISHED")->Render();
 	else
 		scene->getScene("GARAGE")->Render();
 }
@@ -203,6 +211,7 @@ void c_Npc::Render()
 void c_Npc::UpdateNpc(double dt)
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
+	c_DataManager* data = c_DataManager::getInstance();
 
 	if (camera.position.z < -10 && camera.position.z > -100 && camera.position.y < 200 && camera.position.x < -310 && camera.position.x > -380)
 	{
@@ -213,9 +222,11 @@ void c_Npc::UpdateNpc(double dt)
 		Options = false;
 		LeaderBoard = false;
 		Instructions = false;
+	
 	}
 	else
 	{
+		Override = false;
 		StartGame = false;
 		Talk = false;
 		SinglePlayer = false;
@@ -308,11 +319,11 @@ void c_Npc::UpdateNpc(double dt)
 	}
 	
 	
-	if ((Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Continue == true))
+	if ((Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Continue == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Override == true))
 	{
 		Audio->f_Menu_MoveSelect();
 		ArrowY--;
-		if (Continue == true)
+		if (Continue == true || Override == true)
 		{
 			if (ArrowY < 6)
 			{
@@ -335,14 +346,13 @@ void c_Npc::UpdateNpc(double dt)
 		}
 		BounceTime = ElapsedTime + 0.125;
 	}
-	if ((Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Continue == true))
+	if ((Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Continue == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Override == true))
 	{
 	
 		ArrowY++;
 		Audio->f_Menu_MoveSelect();
 
-
-		if (Continue == true)
+        if (Continue == true || Override == true)
 		{
 			if (ArrowY > 7)
 			{
@@ -365,23 +375,74 @@ void c_Npc::UpdateNpc(double dt)
 		}
 		BounceTime = ElapsedTime + 0.125;
 	}
-	if ((Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && StartGame == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Options == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Continue == true && AbleToPress == true))
+	if ((Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && StartGame == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Options == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Continue == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Override == true && AbleToPress == true))
 	{
 
 		BounceTime = ElapsedTime + 0.125;
 		Audio->f_Menu_ConfirmSelect();
 
-		ArrowY = 7;
-
-		if (LevelSelection == false && StartGame == true)
+		if (LevelSelection == false && StartGame == true && Override == false)
 		{
 			if (ArrowY == 7)
 			{
-				LevelSelection = true;
+				data->selectFile(1);
+				if(data->isEmpty() == true)
+				{
+					//if first data save is empty,
+					LevelSelection = true;
+					Override = false;
+				}
+				else
+				{
+					LevelSelection = false;
+					Override = true;
+				}
+				
 			}
 			else if (ArrowY == 6)
 			{
+				data->selectFile(2);
+				if (data->isEmpty() == true)
+				{
+					LevelSelection = true;
+					Override = false;
+				}
+				else
+				{
+					LevelSelection = false;
+					Override = true;
+				}
+			}
+			else if (ArrowY == 5)
+			{
+				data->selectFile(3);
+				if (data->isEmpty() == true)
+				{
+					LevelSelection = true;
+					Override = false;
+				}
+				else
+				{
+					LevelSelection = false;
+					Override = true;
+				}
+			}
+		}
+		else if (Override == true && LevelSelection == false && StartGame == true)
+		{
+			if (ArrowY == 7)
+			{
+				//yes
+				Override = false;
 				LevelSelection = true;
+				data->clearFile();
+			}
+			else if (ArrowY == 6)
+			{
+				//no
+				Override = false;
+				LevelSelection = false;
+				StartGame = true;
 			}
 		}
 		else if ((LevelSelection == true && StartGame == true) || MultiPlayer == true)
@@ -396,8 +457,6 @@ void c_Npc::UpdateNpc(double dt)
 
 				scene->getScene("GARAGE")->Init();
 				scene->getScene("GARAGE")->Update(dt);
-				/*Garage.Init();
-				Garage.Update(dt);*/
 			}
 			else if (ArrowY == 6)
 			{
@@ -409,8 +468,6 @@ void c_Npc::UpdateNpc(double dt)
 
 				scene->getScene("GARAGE")->Init();
 				scene->getScene("GARAGE")->Update(dt);
-				/*Garage.Init();
-				Garage.Update(dt);*/
 			}
 			else if (ArrowY == 5)
 			{
@@ -422,10 +479,9 @@ void c_Npc::UpdateNpc(double dt)
 
 				scene->getScene("GARAGE")->Init();
 				scene->getScene("GARAGE")->Update(dt);
-				/*Garage.Init();
-				Garage.Update(dt);*/
 			}
 		}
+		
 		if (Options)
 		{
 			if (ArrowY == 7)
@@ -433,21 +489,25 @@ void c_Npc::UpdateNpc(double dt)
 				//put music here 
 				Audio->f_AdjustMusicVolume(1.0f);
 				Audio->f_AdjustSFXVolume(1.0f);
+				data->saveSoundOptions(1.0f);
 			}
 			else if (ArrowY == 6)
 			{
 				Audio->f_AdjustMusicVolume(0.75f);
 				Audio->f_AdjustSFXVolume(0.75f);
+				data->saveSoundOptions(0.75f);
 			}
 			else if (ArrowY == 5)
 			{
 				Audio->f_AdjustMusicVolume(0.5f);
 				Audio->f_AdjustSFXVolume(0.5f);
+				data->saveSoundOptions(0.5f);
 			}
 			else if (ArrowY == 4)
 			{
 				Audio->f_AdjustMusicVolume(0.0f);
 				Audio->f_AdjustSFXVolume(0.0f);
+				data->saveSoundOptions(0.0f);
 			}
 		}
 		if (Continue)
@@ -463,10 +523,12 @@ void c_Npc::UpdateNpc(double dt)
 				//no
 			}
 		}
+		
+		ArrowY = 7;
 		BounceTime = ElapsedTime + 0.125;
 	}
 
-
+	
 }
 
 void c_Npc::RenderNpc()
@@ -579,32 +641,32 @@ void c_Npc::RenderNpc()
 	{
 		RenderTextOnScreen(meshList[TEXT], "Press 'F' to talk to NPC", Color(1, 0, 0), 3, 6, 10);
 	}
-	if (StartGame == true && Talk == true && LevelSelection == false)
+	if (StartGame == true && Talk == true && LevelSelection == false && Override == false)
 	{
 		RenderTextOnScreen(meshList[TEXT], "Save Files", Color(1, 0, 0), 3, 9, 13);
 		AbleToPress = true;
 	}
-	if ((StartGame == true && Talk == true && LevelSelection == false))
+	if ((StartGame == true && Talk == true && LevelSelection == false && Override == false))
 	{
 		RenderTextOnScreen(meshList[TEXT], "Save File 1", Color(1, 0, 0), 5, 7, 7);
 		AbleToPress = true;
 	}
-	if ((StartGame == true && Talk == true && LevelSelection == false))
+	if ((StartGame == true && Talk == true && LevelSelection == false && Override == false))
 	{
 		RenderTextOnScreen(meshList[TEXT], "Save File 2", Color(1, 0, 0), 5, 7, 6);
 		AbleToPress = true;
 	}
-	if ((StartGame == true && Talk == true && LevelSelection == false))
+	if ((StartGame == true && Talk == true && LevelSelection == false && Override == false))
 	{
 		RenderTextOnScreen(meshList[TEXT], "Save File 3", Color(1, 0, 0), 5, 7, 5);
 		AbleToPress = true;
 	}
-	if (Continue == true && Talk3 == true)
+	if ((Continue == true && Talk3 == true) || Override == true)
 	{
 		RenderTextOnScreen(meshList[TEXT], "Yes", Color(1, 0, 0), 5, 7, 7);
 		AbleToPress = true;
 	}
-	if (Continue == true && Talk3 == true)
+	if ((Continue == true && Talk3 == true) || Override == true)
 	{
 		RenderTextOnScreen(meshList[TEXT], "No", Color(1, 0, 0), 5, 7, 6);
 		AbleToPress = true;
@@ -684,6 +746,10 @@ void c_Npc::RenderNpc()
 	if (Options == true && Talk1 == true)
 	{
 		RenderTextOnScreen(meshList[TEXT], "Off", Color(1, 0, 0), 5, 7, 4);
+	}
+	if (Override == true && LevelSelection == false && StartGame == true)
+	{
+		RenderTextOnScreen(meshList[TEXT], "Override Data?", Color(1, 0, 0), 3, 9, 13);
 	}
 
 }
