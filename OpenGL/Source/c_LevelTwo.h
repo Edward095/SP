@@ -255,12 +255,6 @@ private:
 	void RenderSnow();
 	void RenderSpeedometer();
 
-	c_Sound* Audio;
-
-	bool startline;
-	bool music;
-
-
 };
 
 

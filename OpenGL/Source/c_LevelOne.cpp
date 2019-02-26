@@ -37,7 +37,6 @@ void c_LevelOne::Init()
 	offRoadManager = c_OffRoadManager::getInstance();
 	OBJmanager = c_ObjectManager::getInstance();
 	c_DataManager* dataManager = c_DataManager::getInstance();
-	Audio = Audio->getInstance();
 
 	dataManager->saveCurrentLevel(1);
 
@@ -61,21 +60,17 @@ void c_LevelOne::Init()
 	Raining = false;
 	Snowing = false;
 
-	startline = false;
-	music = false;
-
 	//----Time Related Variables-----//
 	elapsedTime = 0;
 	FreezeTime = 0;
 	duration = 0;
 	Cooldown = 0;
-	Countdown = 8;
+	Countdown = 3;
 	Timer = 0;
 	laps = 0;
 	AIlaps = 0;
 	FPS = 0;
 	cooldown = 300;
-	beep = 0;
 	//-------------------------------//
 
 	//----Random Number Gen----------//
@@ -277,24 +272,11 @@ void c_LevelOne::Update(double dt)
 	//----Setting Of Time And FPS-------//
 	Timer += (float)dt;
 	Countdown -= (float)Timer * dt;
-	beep = Countdown / 2;
 	FPS = 1 / dt;
 	//----------------------------------//
 
 	//----Power Up Timer------------------// 
 	
-	if (!startline)
-	{
-		Audio->f_Game_Fanfare_Startline();
-		startline = true;
-		music = true;
-	}
-	if (startline && music)
-	{
-		Audio->f_Level_1_music();
-		music = false;
-	}
-
 	if (scene->checkState("SLEVELONE"))
 		updateLevel(dt);
 	else if (scene->checkState("FINISHED"))
@@ -1213,8 +1195,11 @@ void c_LevelOne::renderEntity()
 
 	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
 	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
-	CountdownCut = std::to_string(beep);
+	CountdownCut = std::to_string(Countdown);
 	CountdownCut.resize(1);
+
+		CountdownCut = std::to_string(Countdown);
+		CountdownCut.resize(1);
 
 		if (Countdown >= 0)
 			RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 11, 14);

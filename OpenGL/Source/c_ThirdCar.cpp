@@ -25,12 +25,7 @@ c_ThirdCar::c_ThirdCar()
 	BoostPad = false;
 	SlowPad = false;
 	once = false;
-
 	Cooldown = 150;
-
-
-	abilityUsed = true;
-
 	offRoad = false;
 }
 c_ThirdCar::c_ThirdCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos,bool canCollide)
@@ -58,11 +53,6 @@ void c_ThirdCar::Ability(double dt)
 				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
 			}
 			//PressQ = true;
-			if (abilityUsed)
-			{
-				Audio->f_Game_Ability_Teleport();
-				abilityUsed = false;
-			}
 			once = true;
 		}
 	}
@@ -78,11 +68,6 @@ void c_ThirdCar::Ability(double dt)
 				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
 			}
 			//PressQ = true;
-			if (abilityUsed)
-			{
-				Audio->f_Game_Ability_Teleport();
-				abilityUsed = false;
-			}
 			once = true;
 		}
 	}
