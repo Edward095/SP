@@ -271,6 +271,19 @@ void c_MultiplayerLevelTwo::Render()
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
+	// Pause Screen
+		if (OptionSelection == false)
+		{
+			RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
+			AbleToPress = true;
+			RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
+			AbleToPress = true;
+			TimePassed -= FreezeTime;
+		}
 
 }
 void c_MultiplayerLevelTwo::Exit()
@@ -1018,20 +1031,6 @@ void c_MultiplayerLevelTwo::renderEnviroment()
 		modelStack.Scale(1, 1, 1);
 		RenderMesh(meshList[TRAFFICGREEN], false);
 		modelStack.PopMatrix();
-	}
-	
-	// Pause Screen
-	if (OptionSelection == false)
-	{
-		RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
-		AbleToPress = true;
-		elapsedTime -= FreezeTime;
 	}
 	if (ExitGame == true)
 	{
