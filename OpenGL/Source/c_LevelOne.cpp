@@ -1375,7 +1375,7 @@ void c_LevelOne::updateLevel(double dt)
 	}
 	//-------------------------------------------//
 
-//------------Updating Traffic Lights------------//
+        //------------Updating Traffic Lights------------//
 	if (elapsedTime >= 10)
 	{
 		RedLight = false;
