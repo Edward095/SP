@@ -1,1 +1,14 @@
-﻿  Common.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\Common.lib
+<<<<<<< HEAD
+﻿  Common.vcxproj -> C:\Users\ASUS\Desktop\SP2\SP\Debug\Common.lib
+=======
+﻿  MatrixStack.cpp
+  Mtx44.cpp
+  timer.cpp
+  Vector3.cpp
+  Generating Code...
+<<<<<<< HEAD
+  Common.vcxproj -> C:\Users\marc-\Documents\GitHub\SP\Debug\Common.lib
+=======
+  Common.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\Common.lib
+>>>>>>> NewTemp
+>>>>>>> NewTemp

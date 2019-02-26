@@ -9,15 +9,13 @@ class c_DataManager
 public:
 	~c_DataManager();
 	static c_DataManager* getInstance();
-	void clearFile();
 	void saveCustomization(std::string OBJpath, std::string TGApath);
 	void saveCurrentLevel(int levelNum);
-	void saveSoundOptions(float volume);
+	void saveSoundOptions();
 	void updateLeaderBoards(float lapTime, std::string name);
 	void selectFile(int fileNum);
 	void readFromFile(std::string& OBJpath, std::string& TGApath);
 	void getLeaderBoards(std::vector <float>& data, std::vector <std::string>& name);
-	float getSoundOptions();
 	bool isEmpty(int fileNum);
 
 

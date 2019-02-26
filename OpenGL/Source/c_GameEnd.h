@@ -14,7 +14,6 @@ public:
 	enum GEOMETRY_TYPE
 	{
 		TEXT,
-		GAMEOVER,
 		ARROW,
 		NUM_GEOMETRY,
 	};
