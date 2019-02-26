@@ -438,7 +438,7 @@ void c_LevelTwo::Update(double dt)
 	}
 	//---------------------------------------------------------//
 
-	if (car.gotCollide("Pickup", false))
+	if (car->gotCollide("Pickup", false))
 	{
 		pick = true;
 		Raining = false;
@@ -556,7 +556,7 @@ void c_LevelTwo::Render()
 	left.getOBB()->defaultData();
 	right.getOBB()->defaultData();
 	back.getOBB()->defaultData();
-	car.getOBB()->defaultData();
+	car->getOBB()->defaultData();
 	AI.getOBB()->defaultData();
 	boost.getOBB()->defaultData();
 	slow.getOBB()->defaultData();
@@ -1553,7 +1553,7 @@ void c_LevelTwo::RenderSpeedometer()
 	modelStack.LoadIdentity();
 	modelStack.Translate(9, 11, 2);
 	modelStack.Rotate(220, 0, 0, 1); //Velocity 0 = 220, Ve20 = 198, Ve40 = 176 etc.
-	modelStack.Rotate(-car.GetSpedoSpeed(), 0, 0, 1);
+	modelStack.Rotate(-car->GetSpedoSpeed(), 0, 0, 1);
 	modelStack.Scale(7, 7, 7);
 	RenderMesh(needle.getMesh(), false);
 	modelStack.PopMatrix();

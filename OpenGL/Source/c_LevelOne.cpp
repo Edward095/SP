@@ -18,9 +18,9 @@
 #include "c_DataManager.h"`
 #include "c_SceneManager.h"
 
-#include "c_FirstCar.h"
-#include "c_SecondCar.h"
-#include "c_ThirdCar.h"
+#include "c_Firstcar.h"
+#include "c_Secondcar.h"
+#include "c_Thirdcar.h"
 
 
 c_LevelOne::c_LevelOne()
@@ -1399,12 +1399,6 @@ void c_LevelOne::updateLevel(double dt)
 	else
 		car->SetFriction(0.1);
 
-	if (OffRoad)
-	{
-		car->SetFriction(0.5);
-		car->SetMaxSpeed(0.1);
-	}
-
 	if (!pick)
 	{
 		rain.update(dt);
@@ -1511,7 +1505,7 @@ void c_LevelOne::updateEnviromentCollision()
 	slow5.getOBB()->defaultData();
 	slow6.getOBB()->defaultData();
 	track.getOBB()->defaultData();
-	//offRoadManager->defaultData();
+	offRoadManager->defaultData();
 
 
 	//Front Skybox

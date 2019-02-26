@@ -11,9 +11,9 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 
-#include "c_FirstCar.h"
-#include "c_SecondCar.h"
-#include "c_ThirdCar.h"
+#include "c_Firstcar.h"
+#include "c_Secondcar.h"
+#include "c_Thirdcar.h"
 
 
 c_MultiplayerLevelTwo::c_MultiplayerLevelTwo()
@@ -1062,7 +1062,7 @@ void c_MultiplayerLevelTwo::updateEnviromentCollision()
 	//track
 	track.updatePos(-310.951f, 0, -135.453f);
 	track.getOBB()->calcNewAxis(90, 0, 1, 0);
-	offRoadManager->updateCollision("OffRoad//offRoadPos2.txt", "OffRoad//offRoadRotate2.txt")
+	offRoadManager->updateCollision("OffRoad//offRoadPos2.txt", "OffRoad//offRoadRotate2.txt");
 }
 
 void c_MultiplayerLevelTwo::RenderSpeedometerOne()

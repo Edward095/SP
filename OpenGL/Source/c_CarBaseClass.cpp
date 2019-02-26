@@ -388,7 +388,7 @@ void c_CarBaseClass::Movement(double dt)
 				}
 			}
 		}
-	}
+	
 }
 
 float c_CarBaseClass::GetMaxAcceleration()
