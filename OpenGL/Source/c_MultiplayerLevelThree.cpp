@@ -197,7 +197,7 @@ void c_MultiplayerLevelThree::Update(double dt)
 	if (OptionSelection == true)
 	{
 		VehicleMove = true;
-		duration++;
+		//duration++;
 	}
 	//------------KeyPress to Pause Game-------------//
 	if (Application::IsKeyPressed('P'))
@@ -1034,7 +1034,6 @@ void c_MultiplayerLevelThree::renderEnviroment()
 		AbleToPress = true;
 		RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
 		AbleToPress = true;
-		elapsedTime -= FreezeTime;
 	}
 	if (ExitGame == true)
 	{

@@ -259,7 +259,7 @@ void c_MultiplayerLevel::Update(double dt)
 	if (OptionSelection == true)
 	{
 		VehicleMove = true;
-		duration++;
+		//duration++;
 	}
 	//------------KeyPress to Pause Game-------------//
 	if (Application::IsKeyPressed('P'))
