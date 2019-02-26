@@ -219,7 +219,12 @@ private:
 	bool Win = false;
 	bool Lose = false;
 
-    //Traffic Lights
+	float ArrowP;
+	bool ExitGame;
+	bool AbleToPress;
+	bool OptionSelection;
+	bool VehicleMove;
+        //Traffic Lights
 	float red1, red2, red3, green1, green2, green3;
 	bool RedLight, GreenLight;
 
