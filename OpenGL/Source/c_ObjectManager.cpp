@@ -27,16 +27,15 @@ void c_ObjectManager::addCanCollide(c_Entity* OBJ)
 }
 void c_ObjectManager::addCanCollide(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos)
 {
-	if (meshPath == "OBJ//Car1.obj")
+	std::string temp = meshPath;
+
+	if (temp == "OBJ//Car1.obj")
 		canCollideOBJ.push_back(new c_FirstCar(uniqueName, meshPath, TGApath, pos, true));
-	else if (meshPath == "OBJ//Car2.obj")
+	else if (temp == "OBJ//Car2.obj")
 		canCollideOBJ.push_back(new c_SecondCar(uniqueName, meshPath, TGApath, pos, true));
-	else if (meshPath == "OBJ//Car3.obj")
+	else if (temp == "OBJ//Car3.obj")
 		canCollideOBJ.push_back(new c_ThirdCar(uniqueName, meshPath, TGApath, pos, true));
-	else
-	{
-		canCollideOBJ.push_back(new c_FirstCar(uniqueName, meshPath, TGApath, pos, true));
-	}
+
 }
 c_ObjectManager* c_ObjectManager::getInstance()
 {

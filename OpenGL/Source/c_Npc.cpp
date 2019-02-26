@@ -28,9 +28,11 @@ void c_Npc::Init()
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
 	c_DataManager* data = c_DataManager::getInstance();
-	data->selectFile(1);
-	data->saveCustomization("OBJ//Car1.obj", "Image//Car1Blue.tga");
-	data->saveCurrentLevel(1);
+	Audio = c_Sound::getInstance();
+
+	float volume = data->getSoundOptions();
+	Audio->f_AdjustMusicVolume(volume);
+	Audio->f_AdjustSFXVolume(volume);
 
 	scene->updateState("NPC");
 
@@ -131,10 +133,7 @@ void c_Npc::Init()
 	TimePassed = 0;
 	ArrowY = 7;
 	BounceTime = 0;
-	
-	Audio = c_Sound::getInstance();
 
-	Audio->f_Init_Sound();
 	Audio->f_Start_Menu_music();
 
 	//booleans
@@ -204,6 +203,7 @@ void c_Npc::Render()
 void c_Npc::UpdateNpc(double dt)
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
+	c_DataManager* data = c_DataManager::getInstance();
 
 	if (camera.position.z < -10 && camera.position.z > -100 && camera.position.y < 200 && camera.position.x < -310 && camera.position.x > -380)
 	{
@@ -434,21 +434,25 @@ void c_Npc::UpdateNpc(double dt)
 				//put music here 
 				Audio->f_AdjustMusicVolume(1.0f);
 				Audio->f_AdjustSFXVolume(1.0f);
+				data->saveSoundOptions(1.0f);
 			}
 			else if (ArrowY == 6)
 			{
 				Audio->f_AdjustMusicVolume(0.75f);
 				Audio->f_AdjustSFXVolume(0.75f);
+				data->saveSoundOptions(0.75f);
 			}
 			else if (ArrowY == 5)
 			{
 				Audio->f_AdjustMusicVolume(0.5f);
 				Audio->f_AdjustSFXVolume(0.5f);
+				data->saveSoundOptions(0.5f);
 			}
 			else if (ArrowY == 4)
 			{
 				Audio->f_AdjustMusicVolume(0.0f);
 				Audio->f_AdjustSFXVolume(0.0f);
+				data->saveSoundOptions(0.0f);
 			}
 		}
 		if (Continue)
