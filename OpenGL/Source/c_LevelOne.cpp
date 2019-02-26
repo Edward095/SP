@@ -1243,8 +1243,7 @@ void c_LevelOne::renderEntity()
 			RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
 			AbleToPress = true;
 			RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
-			AbleToPress = true;
-			TimePassed -= FreezeTime;
+			AbleToPress = true;		
 		}
 	
 		if (Win)
@@ -1433,7 +1432,7 @@ void c_LevelOne::updateLevel(double dt)
 	//-----------------------------------------------//
 
 	//------------KeyPress to Pause Game-------------//
-	if (Application::IsKeyPressed('P'))
+	if (Application::IsKeyPressed(VK_TAB))
 	{
 		OptionSelection = false;
 		VehicleMove = false;

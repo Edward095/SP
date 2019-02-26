@@ -376,7 +376,7 @@ void c_GameEnd::retry()
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
 
-	//scene->getScene("SLEVELONE")->Init();
+	scene->getScene(scene->getLevel())->resetVar();
 }
 
 void c_GameEnd::resetVar()

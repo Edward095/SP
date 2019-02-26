@@ -333,7 +333,7 @@ void c_LevelThree::Update(double dt)
 	//-----------------------------------------------//
 
 	//------------KeyPress to Pause Game-------------//
-	if (Application::IsKeyPressed('P'))
+	if (Application::IsKeyPressed(VK_TAB))
 	{
 		OptionSelection = false;
 		VehicleMove = false;
