@@ -1,20 +1,20 @@
-#ifndef C_LEVELONE_H
-#define C_LEVELONE_H
+#ifndef C_LEVELTHREE_H
+#define C_LEVELTHREE_H
 
 #include "Scene.h"
 #include "Mesh.h"
 #include "FirstPersonCamera.h"
 #include "MatrixStack.h"
 #include "Light.h"
-#include "c_FirstCar.h"
-#include "c_Entity.h"
+#include "c_CarBaseClass.h"
 #include "c_AI.h"
 #include "c_Weather.h"
 
-#include "c_OffRoadManager.h"
 #include "c_ObjectManager.h"
+#include "c_OffRoadManager.h"
 
-class c_LevelOne : public Scene
+
+class c_LevelThree : public Scene
 {
 public:
 	enum GEOMETRY_TYPE
@@ -49,7 +49,7 @@ public:
 		U_MATERIAL_DIFFUSE,
 		U_MATERIAL_SPECULAR,
 		U_MATERIAL_SHININESS,
-		
+
 		// Lights
 		U_LIGHT0_POSITION,
 		U_LIGHT0_COLOR,
@@ -138,13 +138,13 @@ public:
 		U_TOTAL,
 	};
 
-	c_LevelOne();
-	~c_LevelOne();
+	c_LevelThree();
+	~c_LevelThree();
 	void Init();
 	void Update(double dt);
 	void Render();
 	void Exit();
-
+	
 private:
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];
@@ -167,11 +167,12 @@ private:
 	void updateEnviromentCollision();
 
 
-	
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
+	c_Entity nitro;
+	c_Entity track;
 
 	c_AI AI;
 	c_CarBaseClass* car;
@@ -179,16 +180,15 @@ private:
 	c_Entity boost;
 	c_Entity slow;
 	c_Entity FinishLine;
-	c_Entity track;
 
-	c_OffRoadManager* offRoadManager;
 	c_ObjectManager* OBJmanager;
+	c_OffRoadManager* offRoadManager;
 
 	//Variables
 
 	bool talk;
 	float elapsedTime;
-	float FreezeTime; //
+	float FreezeTime;
 	float TimePassed;
 	bool AbletoPress;
 	float CamPosX;
@@ -197,7 +197,7 @@ private:
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
-	bool Freeze = false; //
+	bool Freeze = false;
 	bool Raining = false;
 	bool Snowing = false;
 	bool OffRoad = false;
@@ -233,6 +233,11 @@ private:
 	c_Weather snow;
 	void renderRain();
 	void RenderSnow();
+
+
+	
+
 };
+
 
 #endif

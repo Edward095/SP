@@ -1,4 +1,4 @@
-#include "c_LevelOne.h"
+#include "c_LevelTwo.h"
 #include "GL\glew.h"
 
 #include "shader.hpp"
@@ -12,31 +12,58 @@
 #include "LoadTGA.h"
 #include <iomanip>
 
+#include "c_Firstcar.h"
+#include "c_Secondcar.h";
+#include "c_Thirdcar.h"
+
 #include <Windows.h>
 #include <time.h>
 
-#include "c_FirstCar.h"
-#include "c_SecondCar.h"
-#include "c_ThirdCar.h"
 
-
-c_LevelOne::c_LevelOne()
+c_LevelTwo::c_LevelTwo()
 {
 }
 
 
-c_LevelOne::~c_LevelOne()
+c_LevelTwo::~c_LevelTwo()
 {
 }
 
-void c_LevelOne::Init()
+void c_LevelTwo::Init()
 {
 	offRoadManager = c_OffRoadManager::getInstance();
 	OBJmanager = c_ObjectManager::getInstance();
 
+	c_Entity* car1;
+	car1 = OBJmanager->getCanCollide("player1");
+	c_FirstCar* first = dynamic_cast <c_FirstCar*>(car1);
+	if (first)
+		car = first;
+	c_SecondCar* second = dynamic_cast <c_SecondCar*>(car1);
+	if (second)
+		car = second;
+	c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car1);
+	if (third)
+		car = third;
+
 	//Seed Generation For rand() function
 	srand(time(NULL));
+
 	//Initialization Of Variables//
+
+    //----Setting Car Variables------//
+	car->SetFriction(0.1);
+	car->SetSteering(5);
+	//-------------------------------//
+
+	//----Setting Up Camera Coordinates--------//
+	CamPosX = car->getPos().x + 1;
+	CamPosY = car->getPos().y + 1;
+	CamPosZ = car->getPos().z + 1;
+	CamTargetX = car->getPos().x;
+	CamTargetY = car->getPos().y;
+	CamTargetZ = car->getPos().z;
+	//-----------------------------------------//
 
 	AbleToPress = false;
 	VehicleMove = true;
@@ -49,7 +76,7 @@ void c_LevelOne::Init()
 
 	//----Time Related Variables-----//
 	elapsedTime = 0;
-	//FreezeTime = 0;
+	FreezeTime = 0;
 	duration = 0;
 	Cooldown = 0;
 	Countdown = 3;
@@ -62,7 +89,6 @@ void c_LevelOne::Init()
 	//----Random Number Gen----------//
 	Random = rand() % 3 + 1;
 	//-------------------------------//
-
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -124,7 +150,7 @@ void c_LevelOne::Init()
 	Mtx44 projection;
 	projection.SetToPerspective(60.f, 4.f / 3.f, 0.1f, 10000.f);
 	projectionStack.LoadMatrix(projection);
-	
+
 
 	//initialization of the Enums & Entity for skybox//
 
@@ -135,7 +161,7 @@ void c_LevelOne::Init()
 		meshList[TOP]->textureID = LoadTGA("Image//RainTop.tga");
 		meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
 		meshList[BOTTOM]->textureID = LoadTGA("Image//RainBottom.tga");
-		front.init("front", "quad", "Image//RainFront.tga", (float)(0, 0, 0),true);
+		front.init("front", "quad", "Image//RainFront.tga", (float)(0, 0, 0), true);
 		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0), true);
@@ -175,11 +201,10 @@ void c_LevelOne::Init()
 	//------------------------------------------------------------------------------------------------//
 
 	//----Rendering Race Track And Stuff On Race Track----------------------------------------//
-	// meshList[TRACK] = MeshBuilder::GenerateOBJ("racetrack", "OBJ//RaceTrack1.obj");
-	// meshList[TRACK]->textureID = LoadTGA("Image//RaceTrack.tga");
-
+	/*meshList[TRACK] = MeshBuilder::GenerateOBJ("racetrack", "OBJ//RaceTrack1.obj");
+	meshList[TRACK]->textureID = LoadTGA("Image//RaceTrack.tga");*/
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
-	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
+	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp2.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
 	meshList[TRAFFICRED] = MeshBuilder::GenerateSphere("traffic light", Color(1, 0, 0), 18, 36, 1.f);
 	meshList[TRAFFICNULL] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
@@ -187,46 +212,18 @@ void c_LevelOne::Init()
 	meshList[TRAFFICGREEN] = MeshBuilder::GenerateSphere("traffic light", Color(0, 1, 0), 18, 36, 1.f);
 	//----------------------------------------------------------------------------------------//
 
-
 	//----Rendering Weather Conditions--------------------------------------------------------//
-    meshList[RAIN] = MeshBuilder::GenerateSphere("Rain", Color(0,0,1), 18, 18, 2);
+	meshList[RAIN] = MeshBuilder::GenerateSphere("Rain", Color(0, 0, 1), 18, 18, 2);
 	meshList[SNOW] = MeshBuilder::GenerateSphere("Snow", Color(1, 1, 1), 18, 18, 2);
-    //----------------------------------------------------------------------------------------//
+	//----------------------------------------------------------------------------------------//
 
-	c_Entity* car1;
-	car1 = OBJmanager->getCanCollide("player1");
-	c_FirstCar* first = dynamic_cast <c_FirstCar*>(car1);
-	if (first)
-		car = first;
-	c_SecondCar* second = dynamic_cast <c_SecondCar*>(car1);
-	if (second)
-		car = second;
-	c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car1);
-	if (third)
-		car = third;
-
-	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0), false);
-	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0), false);
-	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), false);
+	//Init Entities//
+	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0), true);
+	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0), true);
+	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), true);
 	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0), true);
-	track.init("track", "OBJ//Racetrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0),false);
-	offRoadManager->addOffRoad("OffRoad//offRoadOBJ1.txt");
-	 //----Setting Car Variables------//
-	car->SetFriction(0.1);
-	car->SetSteering(5);
-	//-------------------------------//
-
-	//----Setting Up Camera Coordinates--------//
-	CamPosX = car->getPos().x + 1;
-	CamPosY = car->getPos().y + 1;
-	CamPosZ = car->getPos().z + 1;
-	CamTargetX = car->getPos().x;
-	CamTargetY = car->getPos().y;
-	CamTargetZ = car->getPos().z;
-	//-----------------------------------------//
-
-
-
+	track.init("track", "OBJ//Racetrack2.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
+	offRoadManager->addOffRoad("OffRoad//offRoadOBJ2.txt");
 
 
 	//---- Enabling Light------------//
@@ -238,7 +235,7 @@ void c_LevelOne::Init()
 	snow.init();
 }
 
-void c_LevelOne::Update(double dt)
+void c_LevelTwo::Update(double dt)
 {
 	//----Setting Of Time And FPS-------//
 	Timer += (float)dt;
@@ -247,7 +244,7 @@ void c_LevelOne::Update(double dt)
 	//----------------------------------//
 
 	//----Power Up Timer------------------// 
-	//FreezeTime = (float)(dt + (dt * 0));
+	FreezeTime = (float)(dt + (dt * 0));
 	//------------------------------------//
 
 	//----Updating Camera Position---------------------------------------------------------------//
@@ -259,7 +256,60 @@ void c_LevelOne::Update(double dt)
 	CamTargetZ = car->getPos().z;
 	//-------------------------------------------------------------------------------------------//
 
-	
+	//------------Updating Traffic Lights------------//
+	if (elapsedTime >= 10)
+	{
+		RedLight = false;
+		GreenLight = true;
+	}
+	//-----------------------------------------------//
+
+	//------------KeyPress to Pause Game-------------//
+	if (Application::IsKeyPressed('P'))
+	{
+		OptionSelection = false;
+		VehicleMove = false;
+	}
+	//-----------KeyPress to Move Arrow Up-----------//
+	if (Application::IsKeyPressed(VK_UP))
+	{
+		ArrowP--;
+		if (OptionSelection == false)
+		{
+			if (ArrowP <= 6)
+			{
+				ArrowP = 7;
+			}
+		}
+	}
+	//----------KeyPress to Move Arrow Down----------//
+	if (Application::IsKeyPressed(VK_DOWN))
+	{
+		ArrowP++;
+		if (OptionSelection == false)
+		{
+			if (ArrowP >= 7)
+			{
+				ArrowP = 6;
+			}
+		}
+	}
+	//-----------KeyPress to Select Option-----------//
+	if (OptionSelection == false && ArrowP == 7)
+	{
+		if (Application::IsKeyPressed(VK_RETURN))
+		{
+			OptionSelection = true;
+		}
+	}
+	if (OptionSelection == false && ArrowP == 6)
+	{
+		if (Application::IsKeyPressed(VK_RETURN))
+		{
+			ExitGame = true;
+		}
+	}
+	//---------------------------------------------//
 
 	//----KeyPress to Enable and Disable Light-------//
 	if (Application::IsKeyPressed('8'))
@@ -273,25 +323,29 @@ void c_LevelOne::Update(double dt)
 	//-----------------------------------------------//
 
 	//----KeyPress to enable PowerUps----------------//
-	//if (Application::IsKeyPressed('F'))
-	//{
-	//	Freeze = true;
-	//}
-	//if (Freeze && duration <= 150)
-	//{
-	//	duration++;
-	//	elapsedTime -= FreezeTime;
+	if (Application::IsKeyPressed('F'))
+	{
+		Freeze = true;
+	}
+	if (Freeze && duration <= 150)
+	{
+		duration++;
+		elapsedTime -= FreezeTime;
 
-	//	if (duration >= 150) // 3 sec/dt
-	//	{
-	//		Freeze = false;
-	//		duration = 0;
-	//	}
-	//}
+		if (duration >= 150) // 3 sec/dt
+		{
+			Freeze = false;
+			duration = 0;
+		}
+	}
+	if (car->getPos().x == nitro.getPos().x && car->getPos().z == nitro.getPos().z)
+	{
+		car->PowerUp(true);
+	}
 	//-------------------------------------------------//
-	
+
 	//----Collision For Finishing Line---------------------------//
-	if (car->gotCollide("FinishLine",false))
+	if (car->gotCollide("FinishLine", false))
 	{
 		Finish = true;
 	}
@@ -311,7 +365,7 @@ void c_LevelOne::Update(double dt)
 			laps = 0;
 	}
 
-	if (AI.gotCollide("FinishLine",false))
+	if (AI.gotCollide("FinishLine", false))
 	{
 		AIFinish = true;
 	}
@@ -363,7 +417,6 @@ void c_LevelOne::Update(double dt)
 		if (VehicleMove == true)
 		{
 			car->Movement(dt);
-			car->Ability(dt);
 			AI.LevelOne(dt);
 		}
 	}
@@ -374,7 +427,7 @@ void c_LevelOne::Update(double dt)
 		duration++;
 	}
 
-    //Updating Car Position for Player and AI
+	//Updating Car Position for Player and AI
 	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
 	//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 
@@ -382,7 +435,49 @@ void c_LevelOne::Update(double dt)
 	camera.Update(dt);
 }
 
-void c_LevelOne::Render()
+static const float SKYBOXSIZE = 1500.f;
+static const float translateLength = SKYBOXSIZE / 2;
+void c_LevelTwo::updateEnviromentCollision()
+{
+	front.getOBB()->defaultData();
+	left.getOBB()->defaultData();
+	right.getOBB()->defaultData();
+	back.getOBB()->defaultData();
+	car->getOBB()->defaultData();
+	AI.getOBB()->defaultData();
+	boost.getOBB()->defaultData();
+	slow.getOBB()->defaultData();
+	track.getOBB()->defaultData();
+	offRoadManager->defaultData();
+
+	//Front Skybox
+	front.updatePos(0, 0, translateLength);
+	front.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	front.getOBB()->calcNewAxis(180.f, 1, 0, 0);
+	front.getOBB()->calcNewAxis(180.f, 0, 0, 1);
+
+	//Left Skybox
+	left.updatePos(-translateLength, 0, 0);
+	left.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	left.getOBB()->calcNewAxis(90.f, 0, 1, 0);
+
+	//Right Skybox
+	right.updatePos(translateLength, 0, 0);
+	right.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	right.getOBB()->calcNewAxis(-90.f, 0, 1, 0);
+
+	//Back Skybox
+	back.updatePos(0, 0, -translateLength);
+	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+
+	//track
+	track.updatePos(-310.951f, 0, -135.453f);
+	track.getOBB()->calcNewAxis(90, 0, 1, 0);
+
+	offRoadManager->updateCollision("OffRoad//offRoadPos2.txt", "OffRoad//offRoadRotate2.txt");
+}
+
+void c_LevelTwo::Render()
 {
 	front.getOBB()->defaultData();
 	left.getOBB()->defaultData();
@@ -402,7 +497,7 @@ void c_LevelOne::Render()
 
 	//Define the view/ camera lookat and load the view matrix
 	viewStack.LoadIdentity();
-	viewStack.LookAt(CamPosX, CamPosY , CamPosZ, CamTargetX, CamTargetY , CamTargetZ, 0, 1, 0);
+	viewStack.LookAt(CamPosX, CamPosY, CamPosZ, CamTargetX, CamTargetY, CamTargetZ, 0, 1, 0);
 	modelStack.LoadIdentity();
 
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
@@ -433,13 +528,13 @@ void c_LevelOne::Render()
 	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
 	car->getOBB()->calcNewAxis(90, 0, 1, 0);
 	car->getOBB()->calcNewAxis(car->GetSteeringAngle(), 0, 1, 0);
-	
+
 	/**************************************************************		AI		***************************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Rotate(AI.GetTurning(), 0, 1, 0);
-	modelStack.Scale(0.7, 0.7, 0.7);
+	modelStack.Scale(1, 1, 1);
 	RenderMesh(AI.getMesh(), true);
 	modelStack.PopMatrix();
 
@@ -476,7 +571,7 @@ void c_LevelOne::Render()
 
 	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
 	slow.getOBB()->calcNewDimensions(3, 1, 3);
-    
+
 	CountdownCut = std::to_string(Countdown);
 	CountdownCut.resize(1);
 
@@ -499,7 +594,7 @@ void c_LevelOne::Render()
 			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 10, 14);
 	}
 
-	RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 9, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 9, 1);
 
 	if (Win)
 		RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 10, 10);
@@ -509,14 +604,14 @@ void c_LevelOne::Render()
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
 	//----------------------------------------------------------------------------------------------------------//
 }
 
-void c_LevelOne::renderRain()
+void c_LevelTwo::renderRain()
 {
 	for (int i = 0; i < rain.getX().size() - 2000; i++)
 	{
@@ -532,7 +627,7 @@ void c_LevelOne::renderRain()
 	Raining = true;
 }
 
-void c_LevelOne::RenderSnow()
+void c_LevelTwo::RenderSnow()
 {
 	for (int i = 0; i < snow.getX().size() - 2000; i++)
 	{
@@ -547,13 +642,147 @@ void c_LevelOne::RenderSnow()
 	}
 	Snowing = true;
 }
-void c_LevelOne::RenderMesh(Mesh *mesh, bool enableLight)
+
+
+void c_LevelTwo::renderEnviroment()
+{
+	/****************************************************Skybox*****************************************************/
+
+	//Front Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, translateLength);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(180, 1, 0, 0);
+	modelStack.Rotate(180, 0, 0, 1);
+	RenderMesh(front.getMesh(), false);
+	modelStack.PopMatrix();
+
+	//Top Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(0, translateLength, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(90, 1, 0, 0);
+	RenderMesh(meshList[TOP], false);
+	modelStack.PopMatrix();
+
+	//Bottom Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(0, -translateLength, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(-90, 1, 0, 0);
+	RenderMesh(meshList[BOTTOM], false);
+	modelStack.PopMatrix();
+
+	//Left Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(-translateLength, 0, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(90, 0, 1, 0);
+	RenderMesh(left.getMesh(), false);
+	modelStack.PopMatrix();
+
+	//Right Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(translateLength, 0, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(-90, 0, 1, 0);
+	RenderMesh(right.getMesh(), false);
+	modelStack.PopMatrix();
+
+	//Back Skybox
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, -translateLength);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	RenderMesh(back.getMesh(), false);
+	modelStack.PopMatrix();
+	/***************************************************************************************************************/
+
+	//Track
+	modelStack.PushMatrix();
+	modelStack.Translate(-310.951f, 0, -135.453f);
+	modelStack.Rotate(90, 0, 1, 0);
+	RenderMesh(track.getMesh(), true);
+	modelStack.PopMatrix();
+
+	//RaceBanner
+	modelStack.PushMatrix();
+	modelStack.Translate(-2, -6, 50);
+	modelStack.Rotate(90.f, 0, 1, 0);
+	modelStack.Scale(5, 5, 6);
+	RenderMesh(meshList[RACEBANNER], true);
+	modelStack.PopMatrix();
+
+	//StreetLight
+	modelStack.PushMatrix();
+	modelStack.Translate(-6, -3, 50); 
+	modelStack.Rotate(90.f, 0, 1, 0);
+	modelStack.Scale(6, 5, 6);
+	RenderMesh(meshList[STREETLIGHT], true);
+	modelStack.PopMatrix();
+
+	//TrafficLight
+	if (RedLight == false)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 9, 15);
+		modelStack.Scale(1, 1, 1);
+		RenderMesh(meshList[TRAFFICNULL], false);
+		modelStack.PopMatrix();
+	}
+	if (RedLight == true)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 9, 15);
+		modelStack.Scale(1, 1, 1);
+		RenderMesh(meshList[TRAFFICRED], false);
+		modelStack.PopMatrix();
+	}
+	if (GreenLight == false)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 6.5f, 15);
+		modelStack.Scale(1, 1, 1);
+		RenderMesh(meshList[TRAFFICNULL2], false);
+		modelStack.PopMatrix();
+	}
+	if (GreenLight == true)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 6.5f, 15);
+		modelStack.Scale(1, 1, 1);
+		RenderMesh(meshList[TRAFFICGREEN], false);
+		modelStack.PopMatrix();
+	}
+
+	// Pause Screen
+	if (OptionSelection == false)
+	{
+		RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
+		AbleToPress = true;
+		RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
+		AbleToPress = true;
+		RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
+		AbleToPress = true;
+		RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
+		AbleToPress = true;
+		elapsedTime -= FreezeTime;
+	}
+	if (ExitGame == true)
+	{
+		glDeleteVertexArrays(1, &m_vertexArrayID);
+		glDeleteProgram(m_programID);
+	}
+}
+
+
+
+void c_LevelTwo::RenderMesh(Mesh *mesh, bool enableLight)
 {
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
 
 	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
-    /*modelView = viewStack.Top() * modelStack.Top();
+	/*modelView = viewStack.Top() * modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);*/
 	if (enableLight && bLightEnabled)
 	{
@@ -593,7 +822,7 @@ void c_LevelOne::RenderMesh(Mesh *mesh, bool enableLight)
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
-void c_LevelOne::RenderText(Mesh* mesh, std::string text, Color color, float spacing)
+void c_LevelTwo::RenderText(Mesh* mesh, std::string text, Color color, float spacing)
 {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
@@ -618,7 +847,7 @@ void c_LevelOne::RenderText(Mesh* mesh, std::string text, Color color, float spa
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 	glEnable(GL_DEPTH_TEST);
 }
-void c_LevelOne::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y)
+void c_LevelTwo::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y)
 {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 	{
@@ -665,7 +894,7 @@ void c_LevelOne::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, f
 
 	glEnable(GL_DEPTH_TEST);
 }
-void c_LevelOne::initLights()
+void c_LevelTwo::initLights()
 {
 	/***********************************************	Light 1		***************************************************************************/
 	m_parameters[U_LIGHT0_TYPE] = glGetUniformLocation(m_programID, "lights[0].type");
@@ -681,7 +910,7 @@ void c_LevelOne::initLights()
 	m_parameters[U_LIGHT0_EXPONENT] = glGetUniformLocation(m_programID, "lights[0].exponent");
 
 	lights[0].type = Light::LIGHT_DIRECTIONAL;
-	lights[0].position.Set(-9.f, 30.8f, 50.f);
+	lights[0].position.Set(-6.f, 30.8f, 50.f);
 	lights[0].color.Set(1, 1, 1);
 	lights[0].power = 1.f;
 	lights[0].kC = 1.f;
@@ -714,9 +943,9 @@ void c_LevelOne::initLights()
 	m_parameters[U_LIGHT1_COSCUTOFF] = glGetUniformLocation(m_programID, "lights[1].cosCutoff");
 	m_parameters[U_LIGHT1_COSINNER] = glGetUniformLocation(m_programID, "lights[1].cosInner");
 	m_parameters[U_LIGHT1_EXPONENT] = glGetUniformLocation(m_programID, "lights[1].exponent");
-	
+
 	lights[1].type = Light::LIGHT_POINT;
-	lights[1].position.Set(-31.f, 30.8f, -8.3f);
+	lights[1].position.Set(-28.f, 30.8f, -8.3f);
 	lights[1].color.Set(1, 1, 1);
 	lights[1].power = 2;
 	lights[1].kC = 1.f;
@@ -751,7 +980,7 @@ void c_LevelOne::initLights()
 	m_parameters[U_LIGHT2_EXPONENT] = glGetUniformLocation(m_programID, "lights[2].exponent");
 
 	lights[2].type = Light::LIGHT_POINT;
-	lights[2].position.Set(-178.f, 30.8f, -348.3f);
+	lights[2].position.Set(-175.f, 30.8f, -351.3f);
 	lights[2].color.Set(1, 1, 1);
 	lights[2].power = 2;
 	lights[2].kC = 1.f;
@@ -786,7 +1015,7 @@ void c_LevelOne::initLights()
 	m_parameters[U_LIGHT3_EXPONENT] = glGetUniformLocation(m_programID, "lights[3].exponent");
 
 	lights[3].type = Light::LIGHT_POINT;
-	lights[3].position.Set(-571.f, 30.8f, -336.3f);
+	lights[3].position.Set(-573.f, 30.8f, -337.3f);
 	lights[3].color.Set(1, 1, 1);
 	lights[3].power = 2;
 	lights[3].kC = 1.f;
@@ -806,7 +1035,7 @@ void c_LevelOne::initLights()
 	glUniform1f(m_parameters[U_LIGHT3_COSCUTOFF], lights[3].cosCutoff);
 	glUniform1f(m_parameters[U_LIGHT3_COSINNER], lights[3].cosInner);
 	glUniform1f(m_parameters[U_LIGHT3_EXPONENT], lights[3].exponent);
-	
+
 	/***********************************************	Light 5		***************************************************************************/
 	m_parameters[U_LIGHT4_TYPE] = glGetUniformLocation(m_programID, "lights[4].type");
 	m_parameters[U_LIGHT4_POSITION] = glGetUniformLocation(m_programID, "lights[4].position_cameraspace");
@@ -821,7 +1050,7 @@ void c_LevelOne::initLights()
 	m_parameters[U_LIGHT4_EXPONENT] = glGetUniformLocation(m_programID, "lights[4].exponent");
 
 	lights[4].type = Light::LIGHT_POINT;
-	lights[4].position.Set(-223.f, 30.3f, -42.3f);
+	lights[4].position.Set(-227.f, 30.8f, -42.3f);
 	lights[4].color.Set(1, 1, 1);
 	lights[4].power = 2;
 	lights[4].kC = 1.f;
@@ -856,7 +1085,7 @@ void c_LevelOne::initLights()
 	m_parameters[U_LIGHT5_EXPONENT] = glGetUniformLocation(m_programID, "lights[5].exponent");
 
 	lights[5].type = Light::LIGHT_POINT;
-	lights[5].position.Set(-276.f, 30.8f, 298.3f);
+	lights[5].position.Set(-273.f, 30.8f, 200.3f);
 	lights[5].color.Set(1, 1, 1);
 	lights[5].power = 2;
 	lights[5].kC = 1.f;
@@ -879,7 +1108,7 @@ void c_LevelOne::initLights()
 
 	/*******************************************************************************************************************************************/
 }
-void c_LevelOne::renderLights()
+void c_LevelTwo::renderLights()
 {
 	/***********************************************	Light 1		***************************************************************************/
 	if (lights[0].type == Light::LIGHT_DIRECTIONAL)
@@ -900,7 +1129,7 @@ void c_LevelOne::renderLights()
 		Position lightPosition_cameraspace = viewStack.Top() * lights[0].position;
 		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
 	}
-	
+
 	/***********************************************	Light 2		***************************************************************************/
 	if (lights[1].type == Light::LIGHT_DIRECTIONAL)
 	{
@@ -920,7 +1149,7 @@ void c_LevelOne::renderLights()
 		Position lightPosition_cameraspace = viewStack.Top() * lights[1].position;
 		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1, &lightPosition_cameraspace.x);
 	}
-	
+
 	/***********************************************	Light 3		***************************************************************************/
 	if (lights[2].type == Light::LIGHT_DIRECTIONAL)
 	{
@@ -937,8 +1166,8 @@ void c_LevelOne::renderLights()
 	}
 	else
 	{
-			Position lightPosition_cameraspace = viewStack.Top() * lights[2].position;
-			glUniform3fv(m_parameters[U_LIGHT2_POSITION], 1, &lightPosition_cameraspace.x);
+		Position lightPosition_cameraspace = viewStack.Top() * lights[2].position;
+		glUniform3fv(m_parameters[U_LIGHT2_POSITION], 1, &lightPosition_cameraspace.x);
 	}
 
 	/***********************************************	Light 4		***************************************************************************/
@@ -960,7 +1189,7 @@ void c_LevelOne::renderLights()
 		Position lightPosition_cameraspace = viewStack.Top() * lights[3].position;
 		glUniform3fv(m_parameters[U_LIGHT3_POSITION], 1, &lightPosition_cameraspace.x);
 	}
-	
+
 	/***********************************************	Light 5		***************************************************************************/
 	if (lights[4].type == Light::LIGHT_DIRECTIONAL)
 	{
@@ -980,7 +1209,7 @@ void c_LevelOne::renderLights()
 		Position lightPosition_cameraspace = viewStack.Top() * lights[4].position;
 		glUniform3fv(m_parameters[U_LIGHT4_POSITION], 1, &lightPosition_cameraspace.x);
 	}
-	
+
 	/***********************************************	Light 6		***************************************************************************/
 	if (lights[5].type == Light::LIGHT_DIRECTIONAL)
 	{
@@ -1018,7 +1247,7 @@ void c_LevelOne::renderLights()
 		modelStack.PopMatrix();
 	}
 }
-void c_LevelOne::updateLights(int num)
+void c_LevelTwo::updateLights(int num)
 {
 	if (num == 0)
 	{
@@ -1094,251 +1323,7 @@ void c_LevelOne::updateLights(int num)
 	}
 }
 
-static const float SKYBOXSIZE = 1500.f;
-static const float translateLength = SKYBOXSIZE / 2;
-void c_LevelOne::renderEnviroment()
-{
-	/****************************************************Skybox*****************************************************/
-
-	//Front Skybox
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, translateLength);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(180, 1, 0, 0);
-	modelStack.Rotate(180, 0, 0, 1);
-	RenderMesh(front.getMesh(), false);
-	modelStack.PopMatrix();
-
-	//Top Skybox
-	modelStack.PushMatrix();
-	modelStack.Translate(0, translateLength, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(90, 1, 0, 0);
-	RenderMesh(meshList[TOP], false);
-	modelStack.PopMatrix();
-
-	//Bottom Skybox
-	modelStack.PushMatrix();
-	modelStack.Translate(0, -translateLength, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(-90, 1, 0, 0);
-	RenderMesh(meshList[BOTTOM], false);
-	modelStack.PopMatrix();
-
-	//Left Skybox
-	modelStack.PushMatrix();
-	modelStack.Translate(-translateLength, 0, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(90, 0, 1, 0);
-	RenderMesh(left.getMesh(), false);
-	modelStack.PopMatrix();
-
-	//Right Skybox
-	modelStack.PushMatrix();
-	modelStack.Translate(translateLength, 0, 0);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	modelStack.Rotate(-90, 0, 1, 0);
-	RenderMesh(right.getMesh(), false);
-	modelStack.PopMatrix();
-
-	//Back Skybox
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, -translateLength);
-	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	RenderMesh(back.getMesh(), false);
-	modelStack.PopMatrix();
-	
-	/*********************************************************************************************************************************/
-
-	//Track
-	modelStack.PushMatrix();
-	modelStack.Translate(-320.f, 0, -130.f);
-	modelStack.Rotate(90.f, 0, 1, 0);
-	RenderMesh(track.getMesh(), true);
-	modelStack.PopMatrix();
-
-	//RaceBanner
-	modelStack.PushMatrix();
-	modelStack.Translate(-11, -6, 50);
-	modelStack.Rotate(90.f, 0, 1, 0);
-	modelStack.Scale(5, 5, 6);
-	RenderMesh(meshList[RACEBANNER], true);
-	modelStack.PopMatrix();
-
-	//StreetLight
-	modelStack.PushMatrix();
-	modelStack.Translate(-9, -3, 50);
-	modelStack.Rotate(90.f, 0, 1, 0);
-	modelStack.Scale(6, 5, 6);
-	RenderMesh(meshList[STREETLIGHT], true);
-	modelStack.PopMatrix();
-
-	//TrafficLight
-	if (RedLight == false)
-	{
-		modelStack.PushMatrix();
-		modelStack.Translate(15, 9, 15);
-		modelStack.Scale(1, 1, 1);
-		RenderMesh(meshList[TRAFFICNULL], false);
-		modelStack.PopMatrix();
-	}
-	if (RedLight == true)
-	{
-		modelStack.PushMatrix();
-		modelStack.Translate(15, 9, 15);
-		modelStack.Scale(1, 1, 1);
-		RenderMesh(meshList[TRAFFICRED], false);
-		modelStack.PopMatrix();
-	}
-	if (GreenLight == false)
-	{
-		modelStack.PushMatrix();
-		modelStack.Translate(15, 6.5f, 15);
-		modelStack.Scale(1, 1, 1);
-		RenderMesh(meshList[TRAFFICNULL2], false);
-		modelStack.PopMatrix();
-	}
-	// x: -right , +left z: -backward, +forward
-	if (GreenLight == true)
-	{
-		modelStack.PushMatrix();
-		modelStack.Translate(15, 6.5f, 15);
-		modelStack.Scale(1, 1, 1);
-		RenderMesh(meshList[TRAFFICGREEN], false);
-		modelStack.PopMatrix();
-	}
-
-	// Pause Screen
-	if (OptionSelection == false)
-	{
-		RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
-		AbleToPress = true;
-		elapsedTime -= FreezeTime;
-	}
-	if (ExitGame == true)
-	{
-		glDeleteVertexArrays(1, &m_vertexArrayID);
-		glDeleteProgram(m_programID);
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-	modelStack.PushMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(-322.748, 0, 216.681);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad0")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-134.857, 0, 84.854);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad1")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-346.992, 0, -34.851);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad2")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-484.88, 0, -53.034);
-		modelStack.Rotate(-2.978, 0, 1, 0);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad3")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-459.12, 0, 131.827);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad4")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-242.44, 0, 112.128);
-		modelStack.Rotate(35.1, 0, 1, 0);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad5")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-324.263, 0, -269.714);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad6")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-157.586, 0, -159.101);
-		modelStack.Rotate(30.164, 0, 1, 0);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad7")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-489.425, 0, -440.937);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad8")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-159.101, 0, -475.788);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad9")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(15.152, 0, -186.376);
-		modelStack.Rotate(-34.279, 0, 1, 0);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad10")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-616.706, 0, 45.457);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad11")->getMesh(), false);
-		modelStack.PopMatrix();
-	modelStack.PopMatrix();
-}
-
-void c_LevelOne::updateEnviromentCollision()
-{
-	front.getOBB()->defaultData();
-	left.getOBB()->defaultData();
-	right.getOBB()->defaultData();
-	back.getOBB()->defaultData();
-	car->getOBB()->defaultData();
-	AI.getOBB()->defaultData();
-	boost.getOBB()->defaultData();
-	slow.getOBB()->defaultData();
-	track.getOBB()->defaultData();
-	offRoadManager->defaultData();
-
-
-	//Front Skybox
-	front.updatePos(0, 0, translateLength);
-	front.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	front.getOBB()->calcNewAxis(180.f, 1, 0, 0);
-	front.getOBB()->calcNewAxis(180.f, 0, 0, 1);
-
-	//Left Skybox
-	left.updatePos(-translateLength, 0, 0);
-	left.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	left.getOBB()->calcNewAxis(90.f, 0, 1, 0);
-
-	//Right Skybox
-	right.updatePos(translateLength, 0, 0);
-	right.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-	right.getOBB()->calcNewAxis(-90.f, 0, 1, 0);
-
-	//Back Skybox
-	back.updatePos(0, 0, -translateLength);
-	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
-
-	//Track
-	track.updatePos(-320.f, 0, -130.f);
-	track.getOBB()->calcNewAxis(90, 0, 1, 0);
-
-	//OffRoad
-	offRoadManager->updateCollision("OffRoad//offRoadPos1.txt","OffRoad//offRoadRotate1.txt");
-
-}
-
-void c_LevelOne::Exit()
+void c_LevelTwo::Exit()
 {
 	// Cleanup here
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
