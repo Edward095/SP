@@ -165,6 +165,8 @@ private:
 	void updateEnviromentCollision();
 	void updatePlayerOneCollision();
 	void updatePlayerTwoCollision();
+	void RenderSpeedometerOne();
+	void RenderSpeedometerTwo();
 
 	FirstPersonCamera playerOneCam;
 	float playerOneCamPosX;
@@ -193,7 +195,10 @@ private:
 	c_Entity right;
 	c_Entity FinishLine;
 	c_Entity track;
-
+	c_Entity PickUp;
+	c_Entity speedometer;
+	c_Entity needle;
+	c_Entity circle;
 	c_CarBaseClass* playerOne;
 	c_CarBaseClass* playerTwo;
 
@@ -214,7 +219,13 @@ private:
 	bool Win = false;
 	bool Lose = false;
 
-    //Traffic Lights
+	float ArrowP;
+	bool ExitGame;
+	bool AbleToPress;
+	bool OptionSelection;
+	bool VehicleMove;
+	
+        //Traffic Lights
 	float red1, red2, red3, green1, green2, green3;
 	bool RedLight, GreenLight;
 
@@ -226,7 +237,16 @@ private:
 	bool Raining = false;
 	bool OffRoad = false;
 	bool Snowing = false;
-
+	bool checkFO = false;
+	bool checkFT = false;
+	bool OFreeze = false;
+	bool TFreeze = false;
+	int Oduration;
+	int Tduration;
+	float FreezeTime;
+	bool pick = false;
+	int Tcooldown;
+	int Ocooldown;
 };
 
 #endif

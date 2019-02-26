@@ -68,6 +68,11 @@ void c_MultiplayerLevelThree::Init()
 	playerTwoCamTargetY = playerTwo->getPos().y;
 	playerTwoCamTargetZ = playerTwo->getPos().z;
 
+	OptionSelection = true;
+	AbleToPress = false;
+	VehicleMove = true;
+	ArrowP = 7;
+
 	//----Traffic Light---------------//
 	RedLight = true;
 	GreenLight = false;
@@ -155,6 +160,9 @@ void c_MultiplayerLevelThree::Init()
 	right.init("right", "quad", "Image//SunnyRight.tga", (0, 0, 0), true);
 	back.init("back", "quad", "Image/SunnyBack.tga", (0, 0, 0), true);
 	track.init("track", "OBJ//RaceTrack3.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
+	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
+	needle.init("needle", "quad", "Image//needle.tga", (float)(1, 1, 1), false);
+	circle.init("circle", "quad", "Image//circle.tga", (float)(1, 1, 1), false);
 	offRoadManager->addOffRoad("OffRoad//offRoadOBJ3.txt");
 
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
@@ -794,9 +802,10 @@ void c_MultiplayerLevelThree::renderPlayerOne()
 	playerTwo->getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerTwo->getOBB()->calcNewAxis(playerTwo->GetSteeringAngle(), 0, 1, 0);
 
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	RenderSpeedometerOne();
 }
 void c_MultiplayerLevelThree::renderPlayerTwo()
 {
@@ -843,9 +852,10 @@ void c_MultiplayerLevelThree::renderPlayerTwo()
 	playerTwo->getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerTwo->getOBB()->calcNewAxis(playerTwo->GetSteeringAngle(), 0, 1, 0);
 
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	RenderSpeedometerTwo();
 }
 
 static const float SKYBOXSIZE = 1500.f;
@@ -996,6 +1006,87 @@ void c_MultiplayerLevelThree::updateEnviromentCollision()
 	//Track
 	track.updatePos(-313.97, 0, -137.378);
 	track.getOBB()->calcNewAxis(90, 0, 1, 0);
-
 	offRoadManager->updateCollision("OffRoad//offRoadPos3.txt", "OffRoad//offRoadRotate3.txt");
+}
+
+void c_MultiplayerLevelThree::RenderSpeedometerOne()
+{
+	Mtx44 ortho;
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity();
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 0);
+	modelStack.Scale(12, 12, 12);
+	RenderMesh(speedometer.getMesh(), false);
+	modelStack.PopMatrix();
+	viewStack.PopMatrix();
+	projectionStack.PopMatrix();
+
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity();
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 1);
+	modelStack.Scale(9, 9, 9);
+	RenderMesh(circle.getMesh(), false);
+
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 2);
+	modelStack.Rotate(220, 0, 0, 1); //Velocity 0 = 220, Ve20 = 198, Ve40 = 176 etc.
+	modelStack.Rotate(-playerOne->GetSpedoSpeed(), 0, 0, 1);
+	modelStack.Scale(7, 7, 7);
+	RenderMesh(needle.getMesh(), false);
+	modelStack.PopMatrix();
+	modelStack.PopMatrix();
+	viewStack.PopMatrix();
+	projectionStack.PopMatrix();
+}
+
+void c_MultiplayerLevelThree::RenderSpeedometerTwo()
+{
+	Mtx44 ortho;
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity();
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 0);
+	modelStack.Scale(12, 12, 12);
+	RenderMesh(speedometer.getMesh(), false);
+	modelStack.PopMatrix();
+	viewStack.PopMatrix();
+	projectionStack.PopMatrix();
+
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity();
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 1);
+	modelStack.Scale(9, 9, 9);
+	RenderMesh(circle.getMesh(), false);
+
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 2);
+	modelStack.Rotate(220, 0, 0, 1); //Velocity 0 = 220, Ve20 = 198, Ve40 = 176 etc.
+	modelStack.Rotate(-playerTwo->GetSpedoSpeed(), 0, 0, 1);
+	modelStack.Scale(7, 7, 7);
+	RenderMesh(needle.getMesh(), false);
+	modelStack.PopMatrix();
+	modelStack.PopMatrix();
+	viewStack.PopMatrix();
+	projectionStack.PopMatrix();
 }

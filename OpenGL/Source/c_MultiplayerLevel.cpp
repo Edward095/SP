@@ -39,7 +39,10 @@ void c_MultiplayerLevel::Init()
 		playerOne = first;
 	c_SecondCar* second = dynamic_cast <c_SecondCar*>(car);
 	if (second)
+	{
 		playerOne = second;
+		checkFO = true;
+	}
 	c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car);
 	if (third)
 		playerOne = third;
@@ -51,7 +54,10 @@ void c_MultiplayerLevel::Init()
 		playerTwo = first;
 	second = dynamic_cast <c_SecondCar*>(car);
 	if (second)
+	{
 		playerTwo = second;
+		checkFT = true;
+	}
 	third = dynamic_cast <c_ThirdCar*>(car);
 	if (third)
 		playerTwo = third;
@@ -72,6 +78,11 @@ void c_MultiplayerLevel::Init()
 	playerTwoCamTargetX = playerTwo->getPos().x;
 	playerTwoCamTargetY = playerTwo->getPos().y;
 	playerTwoCamTargetZ = playerTwo->getPos().z;
+
+	OptionSelection = true;
+	AbleToPress = false;
+	VehicleMove = true;
+	ArrowP = 7;
 
 	//----Traffic Light---------------//
 	RedLight = true;
@@ -197,13 +208,21 @@ void c_MultiplayerLevel::Init()
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), false);
 	track.init("track", "OBJ//RaceTrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
 	offRoadManager->addOffRoad("OffRoad//offRoadOBJ1.txt");
+	PickUp.init("Pickup", "OBJ//Pad.obj", "Image//Car1Blue.tga", Vector3(0, 1, 50), false);
+	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
+	needle.init("needle", "quad", "Image//needle.tga", (float)(1, 1, 1), false);
+	circle.init("circle", "quad", "Image//circle.tga", (float)(1, 1, 1), false);
 
 	elapsedTime = 0;
 	Cooldown = 0;
 	Countdown = 3;
 	Timer = 0;
 	Ponelaps = 2;
-
+	Oduration = 0;
+	Tduration = 0;
+	FreezeTime = 0;
+	Tcooldown = 300;
+	Ocooldown = 300;
 
 	//Initialization Of Weather Functions//
 	rain.init();
@@ -267,19 +286,64 @@ void c_MultiplayerLevel::Update(double dt)
 
 	Timer += (float)dt;
 	Countdown -= (float)Timer * dt;
+	FreezeTime = (float)(dt + (dt * 0));
 
 	if (Countdown <= 0)
 	{
 		elapsedTime += (float)dt;
 		playerOne->Movement(dt);
 		playerTwo->Movement(dt);
+		playerOne->Ability(dt);
+		playerTwo->Ability(dt);
 	}
-	
 
 	if (playerOne->gotCollide("FinishLine",false))
 		PoneFinish = true;
 	else
 		PoneFinish = false;
+
+	if (Application::IsKeyPressed('Q') && checkFO)
+		OFreeze = true;
+
+	if (OFreeze && Oduration <= 150)
+	{
+		Oduration++;
+		playerTwo->SetTSlowed(true);
+		Ocooldown = 300;
+	}
+
+	if (Oduration >= 150) // 3 sec/dt
+	{
+		OFreeze = false;
+		playerTwo->SetTSlowed(false);
+		Ocooldown--;
+	}
+
+	if (Ocooldown <= 0)
+		Oduration = 0;
+
+	//--------------------------------------------------//
+	if (Application::IsKeyPressed('P') && checkFT)
+		TFreeze = true;
+
+	if (TFreeze && Tduration <= 150)
+	{
+		Tduration++;
+		playerOne->SetOSlowed(true);
+		Tcooldown = 300;
+	}
+
+	if (Tduration >= 150) // 3 sec/dt
+	{
+		TFreeze = false;
+		playerOne->SetOSlowed(false);
+		Tcooldown--;
+	}
+
+	if (Tcooldown <= 0)
+		Tduration = 0;
+
+	//--------------------------------------------------//
 
 	if (PoneFinish)
 	{
@@ -312,6 +376,20 @@ void c_MultiplayerLevel::Update(double dt)
 		else
 			Lose = true;
 	}
+
+	if ((playerOne->gotCollide("Pickup", false)) || (playerTwo->gotCollide("Pickup", false)))
+	{
+		pick = true;
+		Raining = false;
+		Snowing = false;
+	}
+
+	if (!pick)
+	{
+		rain.update(dt);
+		snow.update(dt);
+	}
+
 }
 void c_MultiplayerLevel::Render()
 {
@@ -324,11 +402,13 @@ void c_MultiplayerLevel::Render()
 	renderPlayerOne();
 	if (Random == 1)
 	{
-		//renderRain();
+		if (!pick)
+		renderRain();
 	}
 	if (Random == 2)
 	{
-		//RenderSnow();
+		if (!pick)
+		RenderSnow();
 	}
 
 	glViewport(960, 0, 960, 1080);
@@ -337,10 +417,12 @@ void c_MultiplayerLevel::Render()
 
 	if (Random == 1)
 	{
+		//if (!pick)
 		//renderRain();
 	}
 	if (Random == 2)
 	{
+		//if (!pick)
 		//RenderSnow();
 	}
 
@@ -385,7 +467,17 @@ void c_MultiplayerLevel::Render()
 	if (Lose)
 		RenderTextOnScreen(meshList[TEXT], "YOU LOSE", Color(1, 0, 0), 4, 10, 10);
 
+	if (!pick)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
+		modelStack.Scale(3, 1, 3);
+		RenderMesh(PickUp.getMesh(), true);
+		modelStack.PopMatrix();
 
+		PickUp.updatePos(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
+		PickUp.getOBB()->calcNewDimensions(3, 1, 3);
+	}
 	
 }
 void c_MultiplayerLevel::Exit()
@@ -969,9 +1061,10 @@ void c_MultiplayerLevel::renderPlayerOne()
 	playerTwo->getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerTwo->getOBB()->calcNewAxis(playerTwo->GetSteeringAngle(), 0, 1, 0);
 
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	RenderSpeedometerOne();
 }
 void c_MultiplayerLevel::renderPlayerTwo()
 {
@@ -1018,9 +1111,10 @@ void c_MultiplayerLevel::renderPlayerTwo()
 	playerTwo->getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerTwo->getOBB()->calcNewAxis(playerTwo->GetSteeringAngle(), 0, 1, 0);
 
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	RenderSpeedometerTwo();
 }
 
 static const float SKYBOXSIZE = 1500.f;
@@ -1228,4 +1322,86 @@ void c_MultiplayerLevel::updateEnviromentCollision()
 
 	//OffRoad
 	offRoadManager->updateCollision("OffRoad//offRoadPos1.txt", "OffRoad//offRoadRotate1.txt");
+}
+
+void c_MultiplayerLevel::RenderSpeedometerOne()
+{
+	Mtx44 ortho;
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity();
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 0);
+	modelStack.Scale(12, 12, 12);
+	RenderMesh(speedometer.getMesh(), false);
+	modelStack.PopMatrix();
+	viewStack.PopMatrix();
+	projectionStack.PopMatrix();
+
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity();
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 1);
+	modelStack.Scale(9, 9, 9);
+	RenderMesh(circle.getMesh(), false);
+
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 2);
+	modelStack.Rotate(220, 0, 0, 1); //Velocity 0 = 220, Ve20 = 198, Ve40 = 176 etc.
+	modelStack.Rotate(-playerOne->GetSpedoSpeed(), 0, 0, 1);
+	modelStack.Scale(7, 7, 7);
+	RenderMesh(needle.getMesh(), false);
+	modelStack.PopMatrix();
+	modelStack.PopMatrix();
+	viewStack.PopMatrix();
+	projectionStack.PopMatrix();
+}
+
+void c_MultiplayerLevel::RenderSpeedometerTwo()
+{
+	Mtx44 ortho;
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity();
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 0);
+	modelStack.Scale(12, 12, 12);
+	RenderMesh(speedometer.getMesh(), false);
+	modelStack.PopMatrix();
+	viewStack.PopMatrix();
+	projectionStack.PopMatrix();
+
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity();
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 1);
+	modelStack.Scale(9, 9, 9);
+	RenderMesh(circle.getMesh(), false);
+
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 2);
+	modelStack.Rotate(220, 0, 0, 1); //Velocity 0 = 220, Ve20 = 198, Ve40 = 176 etc.
+	modelStack.Rotate(-playerTwo->GetSpedoSpeed(), 0, 0, 1);
+	modelStack.Scale(7, 7, 7);
+	RenderMesh(needle.getMesh(), false);
+	modelStack.PopMatrix();
+	modelStack.PopMatrix();
+	viewStack.PopMatrix();
+	projectionStack.PopMatrix();
 }
