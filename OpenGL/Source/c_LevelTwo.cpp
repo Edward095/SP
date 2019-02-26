@@ -99,7 +99,23 @@ void c_LevelTwo::Init()
 	laps = 2;
 	AIlaps = 2;
 	FPS = 0;
+	cooldown = 300;
 	//-------------------------------//
+
+	//car1 = OBJmanager->getCanCollide("player1");
+	//c_FirstCar* first = dynamic_cast <c_FirstCar*>(car1);
+	//if (first)
+	//	car = first;
+	//c_SecondCar* second = dynamic_cast <c_SecondCar*>(car1);
+	//if (second)
+	//{
+	//	car = second;
+	//	checkF = true;
+	//}
+
+	//c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car1);
+	//if (third)
+	//	car = third;
 
 	//----Random Number Gen----------//
 	Random = rand() % 3 + 1;
@@ -250,8 +266,11 @@ void c_LevelTwo::Init()
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), false);
 	AI.init("AI", "OBJ//Car1.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0), true);
 	track.init("track", "OBJ//RaceTrack2.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
+	PickUp.init("Pickup", "OBJ//Pad.obj", "Image//Car1Blue.tga", Vector3(0, 1, 50), false);
+	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
+	needle.init("needle", "quad", "Image//needle.tga", (float)(1, 1, 1), false);
+	circle.init("circle", "quad", "Image//circle.tga", (float)(1, 1, 1), false);
 	offRoadManager->addOffRoad("OffRoad//offRoadOBJ2.txt");
-
 
 	//---- Enabling Light------------//
 	bLightEnabled = true;
@@ -350,21 +369,32 @@ void c_LevelTwo::Update(double dt)
 	//-----------------------------------------------//
 
 	//----KeyPress to enable PowerUps----------------//
-	if (Application::IsKeyPressed('F'))
+	if (Application::IsKeyPressed('Q') && checkF)
 	{
 		Freeze = true;
 	}
-	if (Freeze && duration <= 150)
+
+	if (Freeze && duration <= 200)
 	{
 		duration++;
+		AI.Speed(0);
 		elapsedTime -= FreezeTime;
-
-		if (duration >= 150) // 3 sec/dt
-		{
-			Freeze = false;
-			duration = 0;
-		}
+		cooldown = 300;
 	}
+
+	if (duration >= 200) // 4 sec/dt
+	{
+		Freeze = false;
+		cooldown--;
+		AI.Speed(1);
+	}
+
+	if (cooldown <= 0)
+	{
+		duration = 0;
+		cooldown = 300;
+	}
+
 	if (car->getPos().x == nitro.getPos().x && car->getPos().z == nitro.getPos().z)
 	{
 		car->PowerUp(true);
@@ -416,7 +446,14 @@ void c_LevelTwo::Update(double dt)
 		else
 			Lose = true;
 	}
-	//-----------------------------------------------------------//
+	//---------------------------------------------------------//
+
+	if (car->gotCollide("Pickup", false))
+	{
+		pick = true;
+		Raining = false;
+		Snowing = false;
+	}
 
 	//----Weather and Environment Effects-------//
 	if (Raining)
@@ -436,16 +473,24 @@ void c_LevelTwo::Update(double dt)
 	rain.update(dt);
 	snow.update(dt);
 	//-------------------------------------------//
+	if (!pick)
+	{
+		rain.update(dt);
+		snow.update(dt);
+	}
 
 	//----Countdown to Start Of the Game---------//
 	if (Countdown <= 0)
 	{
+
+		elapsedTime += (float)dt;
+
 		if (VehicleMove == true)
 		{
 			elapsedTime += (float)dt;
 			car->Movement(dt);
 			car->Ability(dt);
-			AI.LevelOne(dt);
+			AI.LevelTwo(dt);
 		}
 	}
 	//-------------------------------------------//
@@ -519,6 +564,17 @@ void c_LevelTwo::updateEnviromentCollision()
 
 void c_LevelTwo::Render()
 {
+	front.getOBB()->defaultData();
+	left.getOBB()->defaultData();
+	right.getOBB()->defaultData();
+	back.getOBB()->defaultData();
+	car->getOBB()->defaultData();
+	AI.getOBB()->defaultData();
+	boost.getOBB()->defaultData();
+	slow.getOBB()->defaultData();
+	FinishLine.getOBB()->defaultData();
+	PickUp.getOBB()->defaultData();
+
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -539,10 +595,12 @@ void c_LevelTwo::Render()
 	updateEnviromentCollision();
 	if (Random == 1)
 	{
+		if (!pick)
 		renderRain();
 	}
 	if (Random == 2)
 	{
+		if (!pick)
 		RenderSnow();
 	}
 	//------------------------------------------------------//
@@ -573,14 +631,26 @@ void c_LevelTwo::Render()
 
 	/**************************************************************		BoostPad		***************************************************************/
 
-	modelStack.PushMatrix();
-	modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
-	modelStack.Scale(3, 1, 3);
-	RenderMesh(boost.getMesh(), true);
-	modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+		modelStack.Scale(3, 1, 3);
+		RenderMesh(boost.getMesh(), true);
+		modelStack.PopMatrix();
 
-	boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
-	boost.getOBB()->calcNewDimensions(3, 1, 3);
+		boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+		boost.getOBB()->calcNewDimensions(3, 1, 3);
+	
+		if (!pick)
+		{
+			modelStack.PushMatrix();
+			modelStack.Translate(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
+			modelStack.Scale(3, 1, 3);
+			RenderMesh(PickUp.getMesh(), true);
+			modelStack.PopMatrix();
+
+			PickUp.updatePos(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
+			PickUp.getOBB()->calcNewDimensions(3, 1, 3);
+		}
 
 	modelStack.PushMatrix();
 	modelStack.Translate(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);
@@ -747,6 +817,7 @@ void c_LevelTwo::Render()
 	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
+	RenderSpeedometer();
 	//----------------------------------------------------------------------------------------------------------//
 }
 
@@ -1460,6 +1531,47 @@ void c_LevelTwo::updateLights(int num)
 		glUniform1f(m_parameters[U_LIGHT5_COSINNER], lights[num].cosInner);
 		glUniform1f(m_parameters[U_LIGHT5_EXPONENT], lights[num].exponent);
 	}
+}
+
+void c_LevelTwo::RenderSpeedometer()
+{
+	Mtx44 ortho;
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity();
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 0);
+	modelStack.Scale(12, 12, 12);
+	RenderMesh(speedometer.getMesh(), false);
+	modelStack.PopMatrix();
+	viewStack.PopMatrix();
+	projectionStack.PopMatrix();
+
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity();
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 1);
+	modelStack.Scale(9, 9, 9);
+	RenderMesh(circle.getMesh(), false);
+
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 11, 2);
+	modelStack.Rotate(220, 0, 0, 1); //Velocity 0 = 220, Ve20 = 198, Ve40 = 176 etc.
+	modelStack.Rotate(-car->GetSpedoSpeed(), 0, 0, 1);
+	modelStack.Scale(7, 7, 7);
+	RenderMesh(needle.getMesh(), false);
+	modelStack.PopMatrix();
+	modelStack.PopMatrix();
+	viewStack.PopMatrix();
+	projectionStack.PopMatrix();
 }
 
 void c_LevelTwo::Exit()

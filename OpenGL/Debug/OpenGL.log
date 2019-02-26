@@ -1,4 +1,11 @@
 <<<<<<< HEAD
+﻿  c_SecondCar.cpp
+c:\users\asus\desktop\sp2\sp\opengl\source\c_secondcar.cpp(14): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\asus\desktop\sp2\sp\opengl\source\c_secondcar.cpp(17): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\asus\desktop\sp2\sp\opengl\source\c_secondcar.cpp(18): warning C4305: '=': truncation from 'double' to 'float'
+  OpenGL.vcxproj -> C:\Users\ASUS\Desktop\SP2\SP\Debug\OpenGL.exe
+=======
+<<<<<<< HEAD
 ﻿  c_DataManager.cpp
 c:\users\marc-\documents\github\sp\opengl\source\c_datamanager.cpp(96): warning C4018: '<': signed/unsigned mismatch
 c:\users\marc-\documents\github\sp\opengl\source\c_datamanager.cpp(133): warning C4018: '<': signed/unsigned mismatch
@@ -242,4 +249,5 @@ d:\users\539\desktop\sp2\sp\opengl\source\c_npc.cpp(571): warning C4244: 'argume
   c_SceneManager.cpp
   Generating Code...
 d:\users\539\desktop\sp2\sp\opengl\source\c_scenemanager.cpp(123): warning C4715: 'c_SceneManager::getScene': not all control paths return a value
+>>>>>>> NewTemp
 >>>>>>> NewTemp

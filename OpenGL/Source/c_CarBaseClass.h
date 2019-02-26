@@ -24,6 +24,10 @@ public:
 	virtual void Ability(double dt) = 0;
 	virtual void PowerUp(bool check) = 0;
 	virtual void isOffRoad() = 0;
+	virtual void PSpeed(float speed);
+	virtual void SetOSlowed(bool speed);
+	virtual void SetTSlowed(bool speed);
+	virtual float GetSpedoSpeed();
 
 
 protected:
@@ -35,7 +39,8 @@ protected:
 	float Friction;
 	float Steering;
 	int Duration;
-
+	int Cooldown;
+	float SpedoVeloZ;
 
 	bool Driving = false;
 	bool Backwards = false;
@@ -47,7 +52,9 @@ protected:
 
 	bool offRoad;
 	bool Collided = false;
-
+	bool freeze = false;
+	bool Oslowed;
+	bool Tslowed;
 };
 
 

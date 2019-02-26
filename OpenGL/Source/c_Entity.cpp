@@ -200,6 +200,7 @@ bool c_Entity::ignoreEntity(std::string uniqueName)
 		uniqueName != "Slowpad3" ||
 		uniqueName != "Slowpad4" ||
 		uniqueName != "Slowpad5" ||
+		uniqueName != "Pickup" ||
 		uniqueName != "Slowpad6");
 }
 const char* c_Entity::getMeshPath()

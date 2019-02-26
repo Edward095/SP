@@ -1,17 +1,1 @@
-﻿  c_MultiplayerLevelThree.cpp
-d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevelthree.cpp(153): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevelthree.cpp(154): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevelthree.cpp(155): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevelthree.cpp(156): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevelthree.cpp(908): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\539\desktop\sp2\sp\opengl\source\c_multiplayerlevelthree.cpp(997): warning C4305: 'argument': truncation from 'double' to 'float'
-  Application.cpp
-c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
-  d:\users\539\desktop\sp2\sp\glfw\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
-  Generating code
-d:\users\539\desktop\sp2\sp\opengl\source\c_scenemanager.cpp(123): warning C4715: 'c_SceneManager::getScene': not all control paths return a value
-d:\users\539\desktop\sp2\sp\opengl\source\c_objectmanager.cpp(74): warning C4715: 'c_ObjectManager::getCanCollide': not all control paths return a value
-d:\users\539\desktop\sp2\sp\opengl\source\c_objectmanager.cpp(62): warning C4715: 'c_ObjectManager::getCannotCollide': not all control paths return a value
-  All 1622 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-  Finished generating code
-  OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Release\OpenGL.exe
+﻿

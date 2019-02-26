@@ -174,6 +174,7 @@ private:
 	c_Entity right;
 	c_Entity nitro;
 	c_Entity track;
+	c_Entity PickUp;
 
 	c_AI AI;
 	c_CarBaseClass* car;
@@ -194,6 +195,9 @@ private:
 	c_Entity slow7;
 
 	c_Entity FinishLine;
+	c_Entity speedometer;
+	c_Entity needle;
+	c_Entity circle;
 
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
@@ -231,6 +235,9 @@ private:
 	bool CheckEnd = false;
 	bool Win = false;
 	bool Lose = false;
+	bool pick = false;
+	bool checkF = false;
+	int cooldown;
 
 	float ArrowP;
 	bool ExitGame;
@@ -246,7 +253,7 @@ private:
 	c_Weather snow;
 	void renderRain();
 	void RenderSnow();
-
+	void RenderSpeedometer();
 
 };
 

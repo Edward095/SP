@@ -162,6 +162,8 @@ private:
 	void updateEnviromentCollision();
 	void updatePlayerOneCollision();
 	void updatePlayerTwoCollision();
+	void RenderSpeedometerOne();
+	void RenderSpeedometerTwo();
 
 	FirstPersonCamera playerOneCam;
 	float playerOneCamPosX;
@@ -191,14 +193,27 @@ private:
 	c_Entity left;
 	c_Entity right;
 	c_Entity track;
-
+	c_Entity PickUp;
 	c_CarBaseClass* playerOne;
 	c_CarBaseClass* playerTwo;
+	c_Entity speedometer;
+	c_Entity needle;
+	c_Entity circle;
 
 	c_Impulse Impulse;
 		
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
+
+	bool checkFO = false;
+	bool checkFT = false;
+	bool OFreeze = false;
+	bool TFreeze = false;
+	int Oduration;
+	int Tduration;
+	float FreezeTime;
+	bool pick = false;
+	int cooldown;
 };
 
 #endif
