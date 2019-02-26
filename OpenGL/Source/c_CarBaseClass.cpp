@@ -248,7 +248,14 @@ void c_CarBaseClass::Movement(double dt)
 					//VelocityZ -= 0.5;
 					VelocityZ = MaxSpeed;
 				if (BoostPad)
-					VelocityZ = 1.8f;
+				{
+					VelocityZ += 1.8f;
+				  /*   if (!BoostPad)
+				     {
+					    VelocityZ -= 0.8f;
+				     }*/
+				} 
+			
 				if (SlowPad)
 					VelocityZ = 0.5f;
 			}

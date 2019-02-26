@@ -374,9 +374,6 @@ void c_Npc::UpdateNpc(double dt)
 	if ((Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && StartGame == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Options == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Continue == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Override == true && AbleToPress == true))
 	{
 
-
-
-
 		BounceTime = ElapsedTime + 0.125;
 		Audio->f_Menu_ConfirmSelect();
 

@@ -83,16 +83,16 @@ void c_FirstCar::Ability(double dt)
 		{
 			VelocityZ = MaxSpeed;
 			PressQ = false;
-		        Cooldown--;
+			Cooldown--;
 		}
 		if (Cooldown <= 0)
-	{
-		Duration = 0;
-		Cooldown = 300;
+		{
+			Duration = 0;
+			Cooldown = 300;
+		}
+
+
 	}
-
-
-	
 	
 }
 
