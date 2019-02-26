@@ -24,7 +24,7 @@ c_ThirdCar::c_ThirdCar()
 	BoostPad = false;
 	SlowPad = false;
 	once = false;
-
+	Cooldown = 150;
 	offRoad = false;
 }
 c_ThirdCar::c_ThirdCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos,bool canCollide)
@@ -48,19 +48,17 @@ void c_ThirdCar::Ability(double dt)
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
 
 			updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
-			//PressQ = true;
 			once = true;
 		}
 	}
 	else
 	{
-		if (Application::IsKeyPressed('3') && !once)
+		if (Application::IsKeyPressed('Q') && !once)
 		{
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
 
 			updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
-			//PressQ = true;
 			once = true;
 		}
 	}
@@ -68,11 +66,10 @@ void c_ThirdCar::Ability(double dt)
 	if (once)
 	{
 		Duration++;
-		
 	}
-	if (Duration >= 150) // 3 sec/dt
+
+	if (Duration >= 500) // 3 sec/dt
 	{
-		PressQ = false;
 		once = false;
 		Duration = 0;
 	}

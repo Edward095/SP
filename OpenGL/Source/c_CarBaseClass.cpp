@@ -28,6 +28,9 @@ c_CarBaseClass::c_CarBaseClass()
 	BoostPad = false;
 	SlowPad = false;
 	once = false;
+	Oslowed = false;
+	Tslowed = false;
+	SpedoVeloZ = 0;
 }
 c_CarBaseClass::~c_CarBaseClass()
 {
@@ -74,9 +77,10 @@ void c_CarBaseClass::Movement(double dt)
 				Backwards = false;
 				if (Acceleration > MaxAcceleration - Friction)
 					Acceleration = MaxAcceleration - Friction;
-				if (VelocityZ > MaxSpeed && (PressQ))
-					VelocityZ = 1.5;
-				else if (VelocityZ > MaxSpeed && (!PressQ || !Nitro))
+				if (VelocityZ > MaxSpeed && (!PressQ))
+					//VelocityZ -= 0.5;
+					VelocityZ = MaxSpeed;
+				if (VelocityZ < MaxSpeed && (!PressQ))
 					//VelocityZ -= 0.5;
 					VelocityZ = MaxSpeed;
 				if (BoostPad)
@@ -242,6 +246,9 @@ void c_CarBaseClass::Movement(double dt)
 			if (VelocityZ > MaxSpeed && (!PressQ))
 				//VelocityZ -= 0.5;
 				VelocityZ = MaxSpeed;
+			if (VelocityZ < MaxSpeed && (!PressQ))
+				//VelocityZ -= 0.5;
+				VelocityZ = MaxSpeed;
 			if (BoostPad)
 				VelocityZ = 1.8f;
 			if (SlowPad)
@@ -259,7 +266,7 @@ void c_CarBaseClass::Movement(double dt)
 				VelocityZ = -VelocityZ / 2;
 			}
 		}
-
+		 
 	}
 	if (Driving)
 	{
@@ -385,13 +392,6 @@ void c_CarBaseClass::Movement(double dt)
 	}
 }
 
-
-
-float c_CarBaseClass::GetSpeed()
-{
-	return VelocityZ;
-}
-
 float c_CarBaseClass::GetMaxAcceleration()
 {
 	return MaxAcceleration;
@@ -402,6 +402,10 @@ float c_CarBaseClass::GetAcceleration()
 	return Acceleration;
 }
 
+float c_CarBaseClass::GetSpeed()
+{
+	return VelocityZ;
+}
 
 void c_CarBaseClass::SetFriction(float friction)
 {
@@ -443,4 +447,28 @@ void c_CarBaseClass::PadEffect(double dt)
 void c_CarBaseClass::SetSpeed(float speed)
 {
 	this->VelocityZ = speed;
+}
+
+void c_CarBaseClass::PSpeed(float speed)
+{
+	this->VelocityZ = speed;
+}
+
+void c_CarBaseClass::SetOSlowed(bool speed)
+{
+	Oslowed = speed;
+}
+
+void c_CarBaseClass::SetTSlowed(bool speed)
+{
+	Tslowed = speed;
+}
+
+float c_CarBaseClass::GetSpedoSpeed()
+{
+	SpedoVeloZ = (VelocityZ * 180);
+	if (VelocityZ <= 0)
+		SpedoVeloZ = 0;
+
+	return SpedoVeloZ;
 }

@@ -157,6 +157,8 @@ private:
 	void updateEnviromentCollision();
 	void updatePlayerOneCollision();
 	void updatePlayerTwoCollision();
+	void RenderSpeedometerOne();
+	void RenderSpeedometerTwo();
 
 	FirstPersonCamera playerOneCam;
 	float playerOneCamPosX;
@@ -183,6 +185,9 @@ private:
 	c_Entity left;
 	c_Entity right;
 	c_Entity track;
+	c_Entity speedometer;
+	c_Entity needle;
+	c_Entity circle;
 
 	c_CarBaseClass* playerOne;
 	c_CarBaseClass* playerTwo;

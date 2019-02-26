@@ -26,7 +26,7 @@ c_FirstCar::c_FirstCar()
 	BoostPad = false;
 	SlowPad = false;
 	once = false;
-
+	Cooldown = 300;
 	offRoad = false;
 }
 c_FirstCar::c_FirstCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
@@ -51,7 +51,7 @@ void c_FirstCar::Ability(double dt)
 	}
 	else
 	{
-		if (Application::IsKeyPressed('1'))
+		if (Application::IsKeyPressed('Q'))
 		{
 			if (Driving || Backwards)
 				PressQ = true;
@@ -59,19 +59,24 @@ void c_FirstCar::Ability(double dt)
 	}
 	
 	if (VelocityZ > MaxSpeed && (PressQ))
-				VelocityZ = 1.5;
+		VelocityZ = 1.5;
+
 	if (PressQ)
 	{
-		//VelocityZ += Acceleration * (float)dt;
-
-		//VelocityZ = 1.5;
+		Cooldown = 300;
 		Duration++;
-		
 	}
-	if (Duration >= 150) // 3 sec/dt
+	
+	if (Duration >= 200) // 4 sec/dt
 	{
 		PressQ = false;
+		Cooldown--;
+	}
+	
+	if (Cooldown <= 0)
+	{
 		Duration = 0;
+		Cooldown = 300;
 	}
 }
 

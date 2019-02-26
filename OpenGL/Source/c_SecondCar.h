@@ -11,10 +11,11 @@ public:
 	void Ability(double dt);
 	virtual void PowerUp(bool check);
 	virtual void isOffRoad();
+	void SetOSlowed(bool speed);
+	void SetTSlowed(bool speed);
+
 
 private:
-	float elapsedTime;
-	/*float FreezeTime;*/
 };
 
 #endif

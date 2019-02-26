@@ -17,8 +17,6 @@ c_SecondCar::c_SecondCar()
 	MaxAcceleration = 0.8;
 	Friction = 0.04;
 	Steering = 4;
-	elapsedTime = 0;
-	//FreezeTime = 0;
 	Driving = false;
 	Backwards = false;
 	PressQ = false;
@@ -26,8 +24,9 @@ c_SecondCar::c_SecondCar()
 	BoostPad = false;
 	SlowPad = false;
 	once = false;
-
 	offRoad = false;
+	Oslowed = false;
+	Tslowed = false;
 }
 c_SecondCar::c_SecondCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
 {
@@ -41,35 +40,19 @@ c_SecondCar::~c_SecondCar()
 
 void c_SecondCar::Ability(double dt)
 {
-	elapsedTime += dt;
-	//FreezeTime = (float)(dt + (dt * 0));
-
 	if (uniqueName == "player2")
 	{
 		if (Application::IsKeyPressed('P'))
 		{
-			PressQ = true;
+			//PressQ = true;
 		}
 	}
 	else
 	{
-		if (Application::IsKeyPressed('2'))
+		if (Application::IsKeyPressed('Q'))
 		{
-			PressQ = true;
+			//PressQ = true;
 		}
-	}
-
-
-	if (PressQ && Duration <= 150)
-	{
-		Duration++;
-		//elapsedTime -= FreezeTime;
-	}
-
-	if (Duration >= 150) // 3 sec/dt
-	{
-		PressQ = false;
-		Duration = 0;
 	}
 }
 
@@ -91,6 +74,27 @@ void c_SecondCar::isOffRoad()
 	else
 	{
 		SetFriction(0.04f);
-		SetMaxSpeed(0.6f);
+
+		if (Oslowed && !Tslowed)
+			SetMaxSpeed(0.3f);
+
+		if (Tslowed && !Oslowed)
+			SetMaxSpeed(0.3f);
+
+		if (!Tslowed && !Oslowed)
+			SetMaxSpeed(0.6f);
+
+		if (Tslowed && Oslowed)
+			SetMaxSpeed(0.6f);
 	}
+}
+
+void c_SecondCar::SetOSlowed(bool speed)
+{
+	Oslowed = speed;
+}
+
+void c_SecondCar::SetTSlowed(bool speed)
+{
+	Tslowed = speed;
 }

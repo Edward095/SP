@@ -169,10 +169,13 @@ private:
 	c_Entity nitro;
 	c_AI AI;
 	c_Entity track;
-
+	c_Entity PickUp;
 	c_Entity boost;
 	c_Entity slow;
 	c_Entity FinishLine;
+	c_Entity speedometer;
+	c_Entity needle;
+	c_Entity circle;
 	//Variables
 
 	bool talk;
@@ -207,15 +210,15 @@ private:
 	bool CheckEnd = false;
 	bool Win = false;
 	bool Lose = false;
+	bool pick = false;
+	bool checkF = false;
+	int cooldown;
 
 	c_Weather rain;
 	c_Weather snow;
 	void renderRain();
 	void RenderSnow();
-
-
-	
-
+	void RenderSpeedometer();
 };
 
 

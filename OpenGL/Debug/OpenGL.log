@@ -1,12 +1,5 @@
-<<<<<<< HEAD
-﻿  c_AI.cpp
-c:\users\asus\desktop\sp2\sp\opengl\source\c_ai.cpp(120): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\asus\desktop\sp2\sp\opengl\source\c_ai.cpp(394): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\asus\desktop\sp2\sp\opengl\source\c_ai.cpp(646): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\asus\desktop\sp2\sp\opengl\source\c_ai.cpp(771): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+﻿  c_SecondCar.cpp
+c:\users\asus\desktop\sp2\sp\opengl\source\c_secondcar.cpp(14): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\asus\desktop\sp2\sp\opengl\source\c_secondcar.cpp(17): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\asus\desktop\sp2\sp\opengl\source\c_secondcar.cpp(18): warning C4305: '=': truncation from 'double' to 'float'
   OpenGL.vcxproj -> C:\Users\ASUS\Desktop\SP2\SP\Debug\OpenGL.exe
-=======
-﻿  c_Collision.cpp
-d:\users\539\desktop\sp2\sp\opengl\source\c_collision.cpp(132): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  OpenGL.vcxproj -> D:\Users\539\Desktop\SP2\SP\Debug\OpenGL.exe
->>>>>>> NewTemp

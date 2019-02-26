@@ -172,10 +172,14 @@ private:
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
+	c_Entity speedometer;
+	c_Entity needle;
+	c_Entity circle;
 
 	c_AI AI;
 
 	c_Entity boost;
+	c_Entity PickUp;
 	c_Entity slow;
 	c_Entity FinishLine;
 	c_Entity track;
@@ -187,7 +191,7 @@ private:
 
 	bool talk;
 	float elapsedTime;
-//	float FreezeTime;
+	float FreezeTime;
 	float TimePassed;
 	bool AbletoPress;
 	float CamPosX;
@@ -196,7 +200,7 @@ private:
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
-	//bool Freeze = false;
+	bool Freeze = false;
 	bool Raining = false;
 	bool Snowing = false;
 	bool OffRoad = false;
@@ -217,11 +221,15 @@ private:
 	bool CheckEnd = false;
 	bool Win = false;
 	bool Lose = false;
+	bool pick = false;
+	bool checkF = false;
+	int cooldown;
 
 	c_Weather rain;
 	c_Weather snow;
 	void renderRain();
 	void RenderSnow();
+	void RenderSpeedometer();
 };
 
 #endif

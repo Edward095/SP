@@ -187,6 +187,7 @@ bool c_Entity::ignoreEntity(std::string uniqueName)
 	return	(uniqueName != this->uniqueName &&
 		uniqueName != "track" ||
 		uniqueName != "Boostpad" ||
+		uniqueName != "Pickup" ||
 		uniqueName != "Slowpad");
 }
 const char* c_Entity::getMeshPath()
