@@ -195,7 +195,7 @@ void c_MultiplayerLevel::Init()
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
 
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), false);
-	track.init("track", "OBJ//Racetrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
+	track.init("track", "OBJ//RaceTrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
 	offRoadManager->addOffRoad("OffRoad//offRoadOBJ1.txt");
 
 	elapsedTime = 0;

@@ -71,14 +71,14 @@ void c_Collision::setHighLow(const char *file_path)
 		}
 
 		type = "OBJ";
-		dimensions.Set((highestX - lowestX) / 1.5, (highestY - lowestY) / 1.5, (highestZ - lowestZ) / 1.5);
+		dimensions.Set((highestX - lowestX) / 2, (highestY - lowestY) / 2, (highestZ - lowestZ) / 2);
 	}
 
 }
 
 void c_Collision::calcNewAxis(float rotateAmt, float xAxis, float yAxis, float zAxis)
 {
-	float angle = Math::DegreeToRadian(rotateAmt);
+	float angle = Math::DegreeToRadian(-rotateAmt);
 
 	if (xAxis == 1)
 	{
@@ -203,9 +203,9 @@ bool c_Collision::OBB(c_Collision* other)
 }
 bool c_Collision::checkSurroundingOBJ(c_Collision* other)
 {
-	return (other->pos.x >= pos.x - dimensions.x && other->pos.x <= pos.x + dimensions.x
-		&& other->pos.y >= pos.y - dimensions.y && other->pos.y <= pos.y + dimensions.y
-		&& other->pos.z >= pos.z - dimensions.z && other->pos.z <= pos.z + dimensions.z);
+	return (other->pos.x >= pos.x - 3 * dimensions.x && other->pos.x <= pos.x + 3 * dimensions.x
+		&& other->pos.y >= pos.y - 3 * dimensions.y && other->pos.y <= pos.y + 3 * dimensions.y
+		&& other->pos.z >= pos.z - 3 * dimensions.z && other->pos.z <= pos.z + 3 * dimensions.z);
 }
 //void c_Collision::updateHighLow()
 //{

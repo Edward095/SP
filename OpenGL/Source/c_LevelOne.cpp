@@ -15,6 +15,9 @@
 #include <Windows.h>
 #include <time.h>
 
+#include "c_DataManager.h"`
+#include "c_SceneManager.h"
+
 #include "c_FirstCar.h"
 #include "c_SecondCar.h"
 #include "c_ThirdCar.h"
@@ -33,6 +36,9 @@ void c_LevelOne::Init()
 {
 	offRoadManager = c_OffRoadManager::getInstance();
 	OBJmanager = c_ObjectManager::getInstance();
+	c_DataManager* dataManager = c_DataManager::getInstance();
+
+	dataManager->saveCurrentLevel(1);
 
 	//Seed Generation For rand() function
 	srand(time(NULL));
@@ -46,6 +52,12 @@ void c_LevelOne::Init()
 	RedLight = true;
 	GreenLight = false;
 	//-------------------------------//
+	AIFinish = false;
+	CheckEnd = false;
+	Win = false;
+	Lose = false;
+	Raining = false;
+	Snowing = false;
 
 	//----Time Related Variables-----//
 	elapsedTime = 0;
@@ -205,12 +217,23 @@ void c_LevelOne::Init()
 	if (third)
 		car = third;
 
-	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0), false);
-	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0), false);
+	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-15, 1.f, 275), false);
+	boost2.init("Boostpad2", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-350, 1.f, 325),false);
+	boost3.init("Boostpad3", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-500, 1.f, 90), false);
+	boost4.init("Boostpad4", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-258, 1.f, 50), false);
+	boost5.init("Boostpad5", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-350, 1.f, -160), false);
+	boost6.init("Boostpad6", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-360, 1.f, -370), false);
+	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-25, 1.f, 275), false);
+	slow2.init("Slowpad2", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-370, 1.f, 331), false);
+	slow3.init("Slowpad3", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-269, 1.f, 60), false);
+	slow4.init("Slowpad4", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-600, 1.f, -300), false);
+	slow5.init("Slowpad5", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, -250), false);
+	slow6.init("Slowpad6", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-37, 1.f, -165), false);
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), false);
 	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0), true);
-	track.init("track", "OBJ//Racetrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0),false);
+	track.init("track", "OBJ//RaceTrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0),false);
 	offRoadManager->addOffRoad("OffRoad//offRoadOBJ1.txt");
+
 	 //----Setting Car Variables------//
 	car->SetFriction(0.1);
 	car->SetSteering(5);
@@ -225,10 +248,6 @@ void c_LevelOne::Init()
 	CamTargetZ = car->getPos().z;
 	//-----------------------------------------//
 
-
-
-
-
 	//---- Enabling Light------------//
 	bLightEnabled = true;
 	//-------------------------------//
@@ -240,6 +259,8 @@ void c_LevelOne::Init()
 
 void c_LevelOne::Update(double dt)
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	//----Setting Of Time And FPS-------//
 	Timer += (float)dt;
 	Countdown -= (float)Timer * dt;
@@ -249,141 +270,17 @@ void c_LevelOne::Update(double dt)
 	//----Power Up Timer------------------// 
 	//FreezeTime = (float)(dt + (dt * 0));
 	//------------------------------------//
-
-	//----Updating Camera Position---------------------------------------------------------------//
-	CamPosX = (car->getPos().x - (sin(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
-	CamPosY = car->getPos().y + 8;
-	CamPosZ = (car->getPos().z - (cos(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
-	CamTargetX = car->getPos().x;
-	CamTargetY = car->getPos().y + 5;
-	CamTargetZ = car->getPos().z;
-	//-------------------------------------------------------------------------------------------//
-
 	
-
-	//----KeyPress to Enable and Disable Light-------//
-	if (Application::IsKeyPressed('8'))
-	{
-		bLightEnabled = true;
-	}
-	else if (Application::IsKeyPressed('9'))
-	{
-		bLightEnabled = false;
-	}
-	//-----------------------------------------------//
-
-	//----KeyPress to enable PowerUps----------------//
-	//if (Application::IsKeyPressed('F'))
-	//{
-	//	Freeze = true;
-	//}
-	//if (Freeze && duration <= 150)
-	//{
-	//	duration++;
-	//	elapsedTime -= FreezeTime;
-
-	//	if (duration >= 150) // 3 sec/dt
-	//	{
-	//		Freeze = false;
-	//		duration = 0;
-	//	}
-	//}
-	//-------------------------------------------------//
-	
-	//----Collision For Finishing Line---------------------------//
-	if (car->gotCollide("FinishLine",false))
-	{
-		Finish = true;
-	}
-	else
-	{
-		Finish = false;
-	}
-
-	if (Finish)
-	{
-		if (elapsedTime <= 36)
-			elapsedTime += (dt + 2);
-
-		if (elapsedTime >= 37 && elapsedTime <= 80)
-			laps = 1;
-		if (elapsedTime >= 81 && elapsedTime <= 140)
-			laps = 0;
-	}
-
-	if (AI.gotCollide("FinishLine",false))
-	{
-		AIFinish = true;
-	}
-	else
-	{
-		AIFinish = false;
-	}
-
-	if (AIFinish)
-	{
-		if (elapsedTime >= 59 && elapsedTime <= 65)
-			AIlaps = 1;
-		if (elapsedTime >= 119 && elapsedTime <= 1128)
-			AIlaps = 0;
-	}
-
-	if (laps == 0 || AIlaps == 0)
-	{
-		if (laps < AIlaps)
-			Win = true;
-		else
-			Lose = true;
-	}
-	//-----------------------------------------------------------//
-
-	//----Weather and Environment Effects-------//
-	if (Raining)
-	{
-		car->SetSteering(9);
-	}
-	if (Snowing)
-	{
-		car->SetFriction(0.01);
-	}
-	if (OffRoad)
-	{
-		car->SetFriction(0.5);
-		car->SetMaxSpeed(0.1);
-	}
-
-	rain.update(dt);
-	snow.update(dt);
-	//-------------------------------------------//
-
-	//----Countdown to Start Of the Game---------//
-	if (Countdown <= 0)
-	{
-		elapsedTime += (float)dt;
-		if (VehicleMove == true)
-		{
-			car->Movement(dt);
-			car->Ability(dt);
-			AI.LevelOne(dt);
-		}
-	}
-	//-------------------------------------------//
-	if (OptionSelection == true)
-	{
-		VehicleMove = true;
-		duration++;
-	}
-
-    //Updating Car Position for Player and AI
-	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
-	//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
-
-	//Update Camera
-	camera.Update(dt);
+	if (scene->checkState("SLEVELONE"))
+		updateLevel(dt);
+	else if (scene->checkState("FINISHED"))
+		scene->getScene("FINSIHED")->Update(dt);
 }
 
 void c_LevelOne::Render()
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	front.getOBB()->defaultData();
 	left.getOBB()->defaultData();
 	right.getOBB()->defaultData();
@@ -391,7 +288,17 @@ void c_LevelOne::Render()
 	car->getOBB()->defaultData();
 	AI.getOBB()->defaultData();
 	boost.getOBB()->defaultData();
+	boost2.getOBB()->defaultData();
+	boost3.getOBB()->defaultData();
+	boost4.getOBB()->defaultData();
+	boost5.getOBB()->defaultData();
+	boost6.getOBB()->defaultData();
 	slow.getOBB()->defaultData();
+	slow2.getOBB()->defaultData();
+	slow3.getOBB()->defaultData();
+	slow4.getOBB()->defaultData();
+	slow5.getOBB()->defaultData();
+	slow6.getOBB()->defaultData();
 	FinishLine.getOBB()->defaultData();
 
 	//clear depth and color buffer
@@ -407,113 +314,11 @@ void c_LevelOne::Render()
 
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
-
-	//----Render Functions----------------------------------//
-	renderLights();
-	renderEnviroment();
-	updateEnviromentCollision();
-	if (Random == 1)
-	{
-		renderRain();
-	}
-	if (Random == 2)
-	{
-		RenderSnow();
-	}
-	//------------------------------------------------------//
-	/**************************************************************		CAR		***************************************************************/
-	modelStack.PushMatrix();
-	modelStack.Translate(car->getPos().x, car->getPos().y, car->getPos().z);
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Rotate(car->GetSteeringAngle(), 0, 1, 0);
-	RenderMesh(car->getMesh(), true);
-	modelStack.PopMatrix();
-
-	//UpdateCollisions
-	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
-	car->getOBB()->calcNewAxis(90, 0, 1, 0);
-	car->getOBB()->calcNewAxis(car->GetSteeringAngle(), 0, 1, 0);
 	
-	/**************************************************************		AI		***************************************************************/
-	modelStack.PushMatrix();
-	modelStack.Translate(AI.getPos().x, AI.getPos().y, AI.getPos().z);
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Rotate(AI.GetTurning(), 0, 1, 0);
-	modelStack.Scale(0.7, 0.7, 0.7);
-	RenderMesh(AI.getMesh(), true);
-	modelStack.PopMatrix();
-
-	AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
-	AI.getOBB()->calcNewAxis(AI.GetSteeringAngle(), 0, 1, 0);
-
-	/**************************************************************		BoostPad		***************************************************************/
-
-	modelStack.PushMatrix();
-	modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
-	modelStack.Scale(3, 1, 3);
-	RenderMesh(boost.getMesh(), true);
-	modelStack.PopMatrix();
-
-	boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
-	boost.getOBB()->calcNewDimensions(3, 1, 3);
-
-	/**************************************************************		SlowPad		***************************************************************/
-	modelStack.PushMatrix();
-	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Scale(50, 15, 50);
-	RenderMesh(FinishLine.getMesh(), true);
-	modelStack.PopMatrix();
-
-	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
-
-	modelStack.PushMatrix();
-	modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
-	modelStack.Scale(3, 1, 3);
-	RenderMesh(slow.getMesh(), true);
-	modelStack.PopMatrix();
-
-	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
-	slow.getOBB()->calcNewDimensions(3, 1, 3);
-    
-	CountdownCut = std::to_string(Countdown);
-	CountdownCut.resize(1);
-
-	//----Render Text On Screen-----------------------------------------------------------------------------------//
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
-
-	if (Countdown >= 0)
-		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 10, 14);
-	else
-	{
-		Cooldown++;
-		elapedTimeCut = std::to_string(elapsedTime);
-		elapedTimeCut.resize(5);
-
-		if (Cooldown <= 50)
-			RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 10, 14);
-		else
-			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 10, 14);
-	}
-
-	RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 9, 3);
-
-	if (Win)
-		RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 10, 10);
-	if (Lose)
-		RenderTextOnScreen(meshList[TEXT], "YOU LOSE", Color(1, 0, 0), 4, 10, 10);
-
-	elapedTimeCut = std::to_string(elapsedTime);
-	elapedTimeCut.resize(5);
-	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
-	//----------------------------------------------------------------------------------------------------------//
+	if (scene->checkState("SLEVELONE"))
+		renderLevel();
+	else if (scene->checkState("FINISHED"))
+		scene->getScene("FINISHED")->Render();
 }
 
 void c_LevelOne::renderRain()
@@ -1226,73 +1031,411 @@ void c_LevelOne::renderEnviroment()
 		glDeleteVertexArrays(1, &m_vertexArrayID);
 		glDeleteProgram(m_programID);
 	}
+}
+void c_LevelOne::renderEntity()
+{
+	//----Render Functions----------------------------------//
+		renderLights();
+		renderEnviroment();
+		updateEnviromentCollision();
+		if (Random == 1)
+		{
+			renderRain();
+		}
+		if (Random == 2)
+		{
+			RenderSnow();
+		}
+		//------------------------------------------------------//
+		/**************************************************************		CAR		***************************************************************/
+		modelStack.PushMatrix();
+		modelStack.Translate(car->getPos().x, car->getPos().y, car->getPos().z);
+		modelStack.Rotate(90, 0, 1, 0);
+		modelStack.Rotate(car->GetSteeringAngle(), 0, 1, 0);
+		RenderMesh(car->getMesh(), true);
+		modelStack.PopMatrix();
 
+		//UpdateCollisions
+		car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
+		car->getOBB()->calcNewAxis(90, 0, 1, 0);
+		car->getOBB()->calcNewAxis(car->GetSteeringAngle(), 0, 1, 0);
 
+		/**************************************************************		AI		***************************************************************/
+		modelStack.PushMatrix();
+		modelStack.Translate(AI.getPos().x, AI.getPos().y, AI.getPos().z);
+		modelStack.Rotate(90, 0, 1, 0);
+		modelStack.Rotate(AI.GetTurning(), 0, 1, 0);
+		modelStack.Scale(0.7, 0.7, 0.7);
+		RenderMesh(AI.getMesh(), true);
+		modelStack.PopMatrix();
 
+		AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
+		AI.getOBB()->calcNewAxis(AI.GetSteeringAngle(), 0, 1, 0);
 
-
-
-
-
-
-
-
+		/**************************************************************		BoostPad		***************************************************************/
 
 	modelStack.PushMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(-322.748, 0, 216.681);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad0")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-134.857, 0, 84.854);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad1")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-346.992, 0, -34.851);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad2")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-484.88, 0, -53.034);
-		modelStack.Rotate(-2.978, 0, 1, 0);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad3")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-459.12, 0, 131.827);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad4")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-242.44, 0, 112.128);
-		modelStack.Rotate(35.1, 0, 1, 0);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad5")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-324.263, 0, -269.714);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad6")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-157.586, 0, -159.101);
-		modelStack.Rotate(30.164, 0, 1, 0);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad7")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-489.425, 0, -440.937);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad8")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-159.101, 0, -475.788);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad9")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(15.152, 0, -186.376);
-		modelStack.Rotate(-34.279, 0, 1, 0);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad10")->getMesh(), false);
-		modelStack.PopMatrix();
-		modelStack.PushMatrix();
-		modelStack.Translate(-616.706, 0, 45.457);
-		RenderMesh(OBJmanager->getCannotCollide("offRoad11")->getMesh(), false);
-		modelStack.PopMatrix();
+	modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost.getMesh(), true);
 	modelStack.PopMatrix();
+
+	boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+	boost.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost2.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost2.updatePos(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);
+	boost2.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost3.getPos().x, boost3.getPos().y, boost3.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost3.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost3.updatePos(boost3.getPos().x, boost3.getPos().y, boost3.getPos().z);
+	boost3.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost4.getPos().x, boost4.getPos().y, boost4.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost4.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost4.updatePos(boost4.getPos().x, boost4.getPos().y, boost4.getPos().z);
+	boost4.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost5.getPos().x, boost5.getPos().y, boost5.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost5.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost5.updatePos(boost5.getPos().x, boost5.getPos().y, boost5.getPos().z);
+	boost5.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost6.getPos().x, boost6.getPos().y, boost6.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost6.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost6.updatePos(boost6.getPos().x, boost6.getPos().y, boost6.getPos().z);
+	boost6.getOBB()->calcNewDimensions(3, 1, 3);
+
+	/**************************************************************		SlowPad		***************************************************************/
+	modelStack.PushMatrix();
+	modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
+	slow.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow2.getPos().x, slow2.getPos().y, slow2.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow2.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow2.updatePos(slow2.getPos().x, slow2.getPos().y, slow2.getPos().z);
+	slow2.getOBB()->calcNewDimensions(3, 1, 3);
+    
+	modelStack.PushMatrix();
+	modelStack.Translate(slow3.getPos().x, slow3.getPos().y, slow3.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow3.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow3.updatePos(slow3.getPos().x, slow3.getPos().y, slow3.getPos().z);
+	slow3.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow4.getPos().x, slow4.getPos().y, slow4.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow4.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow4.updatePos(slow4.getPos().x, slow4.getPos().y, slow4.getPos().z);
+	slow4.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow5.getPos().x, slow5.getPos().y, slow5.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow5.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow5.updatePos(slow5.getPos().x, slow5.getPos().y, slow5.getPos().z);
+	slow5.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow6.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow6.updatePos(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
+	slow6.getOBB()->calcNewDimensions(3, 1, 3);
+
+	/**************************************************************		FinishLine		***************************************************************/
+
+	modelStack.PushMatrix();
+	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	modelStack.Rotate(90, 1, 0, 0);
+	modelStack.Scale(50, 15, 50);
+	RenderMesh(FinishLine.getMesh(), true);
+	modelStack.PopMatrix();
+
+	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
+	CountdownCut = std::to_string(Countdown);
+	CountdownCut.resize(1);
+
+
+
+		CountdownCut = std::to_string(Countdown);
+		CountdownCut.resize(1);
+
+		//----Render Text On Screen-----------------------------------------------------------------------------------//
+		RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+		RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+		RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+
+		if (Countdown >= 0)
+			RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 10, 14);
+		else
+		{
+			Cooldown++;
+			elapedTimeCut = std::to_string(elapsedTime);
+			elapedTimeCut.resize(5);
+
+			if (Cooldown <= 50)
+				RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 10, 14);
+			else
+				RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 10, 14);
+		}
+
+		RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 9, 3);
+
+		if (Win)
+			RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 10, 10);
+		if (Lose)
+			RenderTextOnScreen(meshList[TEXT], "YOU LOSE", Color(1, 0, 0), 4, 10, 10);
+
+		elapedTimeCut = std::to_string(elapsedTime);
+		elapedTimeCut.resize(5);
+		RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
+		//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+		//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+		//RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+		RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
+		//----------------------------------------------------------------------------------------------------------//
+}
+void c_LevelOne::renderLevel()
+{
+	//----Render Functions----------------------------------//
+	renderLights();
+	renderEnviroment();
+	updateEnviromentCollision();
+	if (Random == 1)
+	{
+		renderRain();
+	}
+	if (Random == 2)
+	{
+		RenderSnow();
+	}
+	//------------------------------------------------------//
+	renderEntity();
+}
+void c_LevelOne::updateLevel(double dt)
+{
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
+	//----Updating Camera Position---------------------------------------------------------------//
+	CamPosX = (car->getPos().x - (sin(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
+	CamPosY = car->getPos().y + 8;
+	CamPosZ = (car->getPos().z - (cos(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
+	CamTargetX = car->getPos().x;
+	CamTargetY = car->getPos().y + 5;
+	CamTargetZ = car->getPos().z;
+	//-------------------------------------------------------------------------------------------//
+
+	//----KeyPress to Enable and Disable Light-------//
+	if (Application::IsKeyPressed('8'))
+	{
+		bLightEnabled = true;
+	}
+	else if (Application::IsKeyPressed('9'))
+	{
+		bLightEnabled = false;
+	}
+	//-----------------------------------------------//
+
+	//----KeyPress to enable PowerUps----------------//
+	//if (Application::IsKeyPressed('F'))
+	//{
+	//	Freeze = true;
+	//}
+	//if (Freeze && duration <= 150)
+	//{
+	//	duration++;
+	//	elapsedTime -= FreezeTime;
+
+	//	if (duration >= 150) // 3 sec/dt
+	//	{
+	//		Freeze = false;
+	//		duration = 0;
+	//	}
+	//}
+	//-------------------------------------------------//
+
+	//----Collision For Finishing Line---------------------------//
+	if (car->gotCollide("FinishLine", false))
+	{
+		Finish = true;
+	}
+	else
+	{
+		Finish = false;
+	}
+
+	if (Finish)
+	{
+		if (elapsedTime <= 36)
+			elapsedTime += (dt + 2);
+
+		if (elapsedTime >= 37 && elapsedTime <= 80)
+			laps = 1;
+		if (elapsedTime >= 81 && elapsedTime <= 140)
+			laps = 0;
+	}
+
+	if (AI.gotCollide("FinishLine", false))
+	{
+		AIFinish = true;
+	}
+	else
+	{
+		AIFinish = false;
+	}
+
+	if (AIFinish)
+	{
+		if (elapsedTime >= 59 && elapsedTime <= 65)
+			AIlaps = 1;
+		if (elapsedTime >= 119 && elapsedTime <= 1128)//119
+			AIlaps = 0;
+	}
+
+	if (laps == 0 || AIlaps == 0)
+	{
+		if (laps < AIlaps)
+			Win = true;
+		else
+		{
+			Lose = true;
+			scene->getScene("FINSIHED")->Init();
+			scene->updateState("FINISHED");
+		}
+	}
+	//-----------------------------------------------------------//
+
+	//----Weather and Environment Effects-------//
+	if (Raining)
+	{
+		car->SetSteering(9);
+	}
+	if (Snowing)
+	{
+		car->SetFriction(0.01);
+	}
+
+	rain.update(dt);
+	snow.update(dt);
+	//-------------------------------------------//
+
+	//----Countdown to Start Of the Game---------//
+	if (Countdown <= 0)
+	{
+		elapsedTime += (float)dt;
+		car->Movement(dt);
+		car->Ability(dt);
+		AI.LevelOne(dt);
+	}
+	//-------------------------------------------//
+
+//------------Updating Traffic Lights------------//
+	if (elapsedTime >= 10)
+	{
+		RedLight = false;
+		GreenLight = true;
+	}
+	//-----------------------------------------------//
+
+	//------------KeyPress to Pause Game-------------//
+	if (Application::IsKeyPressed('P'))
+	{
+		OptionSelection = false;
+		VehicleMove = false;
+	}
+	//-----------KeyPress to Move Arrow Up-----------//
+	if (Application::IsKeyPressed(VK_UP))
+	{
+		ArrowP--;
+		if (OptionSelection == false)
+		{
+			if (ArrowP <= 6)
+			{
+				ArrowP = 7;
+			}
+		}
+	}
+	//----------KeyPress to Move Arrow Down----------//
+	if (Application::IsKeyPressed(VK_DOWN))
+	{
+		ArrowP++;
+		if (OptionSelection == false)
+		{
+			if (ArrowP >= 7)
+			{
+				ArrowP = 6;
+			}
+		}
+	}
+	//-----------KeyPress to Select Option-----------//
+	if (OptionSelection == false && ArrowP == 7)
+	{
+		if (Application::IsKeyPressed(VK_RETURN))
+		{
+			OptionSelection = true;
+		}
+	}
+	if (OptionSelection == false && ArrowP == 6)
+	{
+		if (Application::IsKeyPressed(VK_RETURN))
+		{
+			ExitGame = true;
+		}
+	}
+	//---------------------------------------------//
+	if (OptionSelection == true)
+	{
+		VehicleMove = true;
+		duration++;
+	}
+	//Updating Car Position for Player and AI
+	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
+	//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
+
+	//Update Camera
+	camera.Update(dt);
 }
 
 void c_LevelOne::updateEnviromentCollision()
@@ -1304,7 +1447,17 @@ void c_LevelOne::updateEnviromentCollision()
 	car->getOBB()->defaultData();
 	AI.getOBB()->defaultData();
 	boost.getOBB()->defaultData();
+	boost2.getOBB()->defaultData();
+	boost3.getOBB()->defaultData();
+	boost4.getOBB()->defaultData();
+	boost5.getOBB()->defaultData();
+	boost6.getOBB()->defaultData();
 	slow.getOBB()->defaultData();
+	slow2.getOBB()->defaultData();
+	slow3.getOBB()->defaultData();
+	slow4.getOBB()->defaultData();
+	slow5.getOBB()->defaultData();
+	slow6.getOBB()->defaultData();
 	track.getOBB()->defaultData();
 	offRoadManager->defaultData();
 
@@ -1348,4 +1501,15 @@ void c_LevelOne::Exit()
 	}
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
+}
+
+void c_LevelOne::resetVar()
+{
+	elapsedTime = TimePassed = Countdown = Timer = 0;
+	duration = Cooldown = 0;
+	laps = AIlaps = 2;
+	Finish = Raining = Snowing = AIFinish = CheckEnd = Win = Lose = false;
+
+	car->updatePos(0,0,0);
+	car->SetSteeringAngle(0);
 }

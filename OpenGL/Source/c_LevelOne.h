@@ -144,6 +144,7 @@ public:
 	void Update(double dt);
 	void Render();
 	void Exit();
+	void resetVar();
 
 private:
 	unsigned m_vertexArrayID;
@@ -159,13 +160,16 @@ private:
 	void renderLights();
 	void updateLights(int num);
 
-	void RenderMesh(Mesh *mesh, bool enableLight);
+	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
 	void renderEnviroment();
 	void updateEnviromentCollision();
+	void renderEntity();
+	void renderLevel();
 
+	void updateLevel(double dt);
 
 	
 	c_Entity front;
@@ -177,7 +181,18 @@ private:
 	c_CarBaseClass* car;
 
 	c_Entity boost;
+	c_Entity boost2;
+	c_Entity boost3;
+	c_Entity boost4;
+	c_Entity boost5;
+	c_Entity boost6;
 	c_Entity slow;
+	c_Entity slow2;
+	c_Entity slow3;
+	c_Entity slow4;
+	c_Entity slow5;
+	c_Entity slow6;
+
 	c_Entity FinishLine;
 	c_Entity track;
 
@@ -185,39 +200,36 @@ private:
 	c_ObjectManager* OBJmanager;
 
 	//Variables
-
-	bool talk;
 	float elapsedTime;
 	float FreezeTime; //
 	float TimePassed;
-	bool AbletoPress;
 	float CamPosX;
 	float CamPosY;
 	float CamPosZ;
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
-	bool Freeze = false; //
-	bool Raining = false;
-	bool Snowing = false;
-	bool OffRoad = false;
 	float FPS;
-
-	int duration;
-	int Random;
-	float bLightEnabled;
-	std::string elapedTimeCut;
-	std::string CountdownCut;
-	int Cooldown;
 	float Countdown;
 	float Timer;
-	bool Finish = false;
+	float bLightEnabled;
+
+	std::string elapedTimeCut;
+	std::string CountdownCut;
+	int duration;
+	int Random;
+	int Cooldown;
 	int laps;
 	int AIlaps;
-	bool AIFinish = false;
-	bool CheckEnd = false;
-	bool Win = false;
-	bool Lose = false;
+	bool Finish;
+	bool Raining;
+	bool Snowing;
+	bool AIFinish;
+	bool CheckEnd;
+	bool Win;
+	bool Lose;
+
+	float WheelRotation;
 
 	float ArrowP;
 	bool ExitGame;

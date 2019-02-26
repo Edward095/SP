@@ -12,6 +12,8 @@
 #include "LoadTGA.h"
 #include <iomanip>
 
+#include "c_DataManager.h"
+
 #include "c_Firstcar.h"
 #include "c_Secondcar.h";
 #include "c_Thirdcar.h"
@@ -33,6 +35,9 @@ void c_LevelThree::Init()
 {
 	offRoadManager = c_OffRoadManager::getInstance();
 	OBJmanager = c_ObjectManager::getInstance();
+	c_DataManager* dataManager = c_DataManager::getInstance();
+
+	dataManager->saveCurrentLevel(3);
 
 	c_Entity* car1;
 	car1 = OBJmanager->getCanCollide("player1");
@@ -218,11 +223,23 @@ void c_LevelThree::Init()
 	//----------------------------------------------------------------------------------------//
 
 	//Init Entities//
-	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0), true);
-	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0), true);
-	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), true);
+	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-10, 1.f, 270), false);
+	boost2.init("Boostpad2", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-300, 1.f, 315), false);
+	boost3.init("Boostpad3", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-610, 1.f, 315), false);
+	boost4.init("Boostpad4", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-615, 1.f, 0), false);
+	boost5.init("Boostpad5", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-595, 1.f, -575), false);
+	boost6.init("Boostpad6", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-395, 1.f, -580), false);
+	boost7.init("Boostpad7", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-40, 1.f, -370), false);
+	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-25, 1.f, 295), false);
+	slow2.init("Slowpad2", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-300, 1.f, 325), false);
+	slow3.init("Slowpad3", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-590, 1.f, 305), false);
+	slow4.init("Slowpad4", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-605, 1.f, 40), false);
+	slow5.init("Slowpad5", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-555, 1.f, -585), false);
+	slow6.init("Slowpad6", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-350, 1.f, -385), false);
+	slow7.init("Slowpad7", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-30, 1.f, -340), false);
+	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), false);
 	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0), true);
-	track.init("track", "OBJ//Racetrack3.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
+	track.init("track", "OBJ//RaceTrack3.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
 	offRoadManager->addOffRoad("OffRoad//offRoadOBJ3.txt");
 
 
@@ -417,6 +434,7 @@ void c_LevelThree::Update(double dt)
 		if (VehicleMove == true)
 		{
 			car->Movement(dt);
+			car->Ability(dt);
 			AI.LevelOne(dt);
 		}
 	}
@@ -446,7 +464,21 @@ void c_LevelThree::updateEnviromentCollision()
 	car->getOBB()->defaultData();
 	AI.getOBB()->defaultData();
 	boost.getOBB()->defaultData();
+	boost2.getOBB()->defaultData();
+	boost3.getOBB()->defaultData();
+	boost4.getOBB()->defaultData();
+	boost5.getOBB()->defaultData();
+	boost6.getOBB()->defaultData();
+	boost7.getOBB()->defaultData();
 	slow.getOBB()->defaultData();
+	slow2.getOBB()->defaultData();
+	slow3.getOBB()->defaultData();
+	slow4.getOBB()->defaultData();
+	slow5.getOBB()->defaultData();
+	slow6.getOBB()->defaultData();
+	slow7.getOBB()->defaultData();
+	FinishLine.getOBB()->defaultData();
+	track.getOBB()->defaultData();
 	offRoadManager->defaultData();
 
 	//Front Skybox
@@ -478,17 +510,6 @@ void c_LevelThree::updateEnviromentCollision()
 
 void c_LevelThree::Render()
 {
-	front.getOBB()->defaultData();
-	left.getOBB()->defaultData();
-	right.getOBB()->defaultData();
-	back.getOBB()->defaultData();
-	car->getOBB()->defaultData();
-	AI.getOBB()->defaultData();
-	boost.getOBB()->defaultData();
-	slow.getOBB()->defaultData();
-	FinishLine.getOBB()->defaultData();
-	track.getOBB()->defaultData();
-
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -552,16 +573,62 @@ void c_LevelThree::Render()
 	boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
 	boost.getOBB()->calcNewDimensions(3, 1, 3);
 
-	/**************************************************************		SlowPad		***************************************************************/
 	modelStack.PushMatrix();
-	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Scale(50, 15, 50);
-	RenderMesh(FinishLine.getMesh(), true);
+	modelStack.Translate(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost2.getMesh(), true);
 	modelStack.PopMatrix();
 
-	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
+	boost2.updatePos(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);
+	boost2.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost3.getPos().x, boost3.getPos().y, boost3.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost3.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost3.updatePos(boost3.getPos().x, boost3.getPos().y, boost3.getPos().z);
+	boost3.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost4.getPos().x, boost4.getPos().y, boost4.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost4.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost4.updatePos(boost4.getPos().x, boost4.getPos().y, boost4.getPos().z);
+	boost4.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost5.getPos().x, boost5.getPos().y, boost5.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost5.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost5.updatePos(boost5.getPos().x, boost5.getPos().y, boost5.getPos().z);
+	boost5.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost6.getPos().x, boost6.getPos().y, boost6.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost6.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost6.updatePos(boost6.getPos().x, boost6.getPos().y, boost6.getPos().z);
+	boost6.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost7.getPos().x, boost7.getPos().y, boost7.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost7.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost7.updatePos(boost7.getPos().x, boost7.getPos().y, boost7.getPos().z);
+	boost7.getOBB()->calcNewDimensions(3, 1, 3);
+
+
+	/**************************************************************		SlowPad		***************************************************************/
 
 	modelStack.PushMatrix();
 	modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
@@ -571,6 +638,72 @@ void c_LevelThree::Render()
 
 	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
 	slow.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow2.getPos().x, slow2.getPos().y, slow2.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow2.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow2.updatePos(slow2.getPos().x, slow2.getPos().y, slow2.getPos().z);
+	slow2.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow3.getPos().x, slow3.getPos().y, slow3.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow3.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow3.updatePos(slow3.getPos().x, slow3.getPos().y, slow3.getPos().z);
+	slow3.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow4.getPos().x, slow4.getPos().y, slow4.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow4.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow4.updatePos(slow4.getPos().x, slow4.getPos().y, slow4.getPos().z);
+	slow4.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow5.getPos().x, slow5.getPos().y, slow5.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow5.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow5.updatePos(slow5.getPos().x, slow5.getPos().y, slow5.getPos().z);
+	slow5.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow6.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow6.updatePos(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
+	slow6.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow7.getPos().x, slow7.getPos().y, slow7.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow7.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow7.updatePos(slow7.getPos().x, slow7.getPos().y, slow7.getPos().z);
+	slow7.getOBB()->calcNewDimensions(3, 1, 3);
+
+	/**************************************************************		FinishLine		***************************************************************/
+
+	modelStack.PushMatrix();
+	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	modelStack.Rotate(90, 1, 0, 0);
+	modelStack.Scale(50, 15, 50);
+	RenderMesh(FinishLine.getMesh(), true);
+	modelStack.PopMatrix();
+
+	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
 
 	CountdownCut = std::to_string(Countdown);
 	CountdownCut.resize(1);
@@ -701,7 +834,7 @@ void c_LevelThree::renderEnviroment()
 	modelStack.PushMatrix();
 	modelStack.Translate(-313.97, 0, -137.378);
 	modelStack.Rotate(90, 0, 1, 0);
-	RenderMesh(track.getMesh(), true);
+	RenderMesh(track.getMesh(), false);
 	modelStack.PopMatrix();
 
 	//RaceBanner

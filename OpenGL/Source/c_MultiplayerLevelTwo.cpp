@@ -154,7 +154,7 @@ void c_MultiplayerLevelTwo::Init()
 	left.init("left", "quad", "Image//SunnyLeft.tga", (0, 0, 0), true);
 	right.init("right", "quad", "Image//SunnyRight.tga", (0, 0, 0), true);
 	back.init("back", "quad", "Image/SunnyBack.tga", (0, 0, 0), true);
-	track.init("track", "OBJ//Racetrack2.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
+	track.init("track", "OBJ//RaceTrack2.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
 	offRoadManager->addOffRoad("OffRoad//offRoadOBJ2.txt");
 
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);

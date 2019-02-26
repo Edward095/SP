@@ -7,7 +7,10 @@
 #include "NPCCamera.h"
 #include "MatrixStack.h"
 #include "Light.h"
+
 #include "c_Garage.h"
+#include "c_LevelOne.h"
+#include "c_Sound.h"
 
 class c_Npc :
 	public Scene
@@ -23,6 +26,8 @@ public:
 		RIGHT,
 		BOTTOM,
 		NPC,
+		HOUSE,
+		INSTRUCTIONS,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -56,13 +61,6 @@ public:
 		U_TOTAL,
 	};
 
-	enum GAME_STATE_NPC
-	{
-		_NPC,
-		GARAGE,
-
-	};
-
 	c_Npc();
 	~c_Npc();
 	void Init();
@@ -80,14 +78,15 @@ private:
 	unsigned m_parameters[U_TOTAL];
 	NPCCamera camera;
 	MS modelStack, viewStack, projectionStack;
-	//Gamestate
-	GAME_STATE_NPC e_GameState_NPC;
 
 	//Light
 	Light light[1];
 	
 	//Class
-	c_Garage Garage;
+	//c_Garage Garage;
+	//c_LevelOne LevelOne;
+
+	c_Sound* Audio;
 
 
 	//Function
@@ -100,9 +99,8 @@ private:
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
 
-	//Variables
 
-	
+	//Variables
 	double ElapsedTime;
 	double TimePassed;
 	float ArrowY;
@@ -110,9 +108,20 @@ private:
 
 	bool AbleToPress;
 	bool Talk;
+	bool Talk1;
+	bool Talk2;
+	bool Talk3;
+	bool Talk4;
+	bool Talk5;
 	bool LevelSelection;
-	bool Level1;
-	bool Level2;
+	bool SinglePlayer;
+	bool MultiPlayer;
+	bool StartGame;
+	bool Continue;
+	bool Options;
+	bool Instructions;
+
+	bool LeaderBoard;
 };
 
 #endif

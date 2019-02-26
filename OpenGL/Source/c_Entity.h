@@ -9,16 +9,21 @@ class c_Entity
 {
 public:
 	c_Entity();
+	c_Entity(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide);
 	~c_Entity();
-	void init(std::string uniqueName,const char* meshPath, const char* TGApath, Vector3 pos);
+	virtual void init(std::string uniqueName,const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide);
 	void init(std::string uniqueName);
 	void updatePos(float xPos,float yPos,float zPos);
+	bool ignoreEntity(std::string uniqueName);
 	bool gotCollide(float x, float y, float z);
+	bool gotCollide(std::string uniqueName, bool canCollide);
 	std::string getUniqueName();
-	c_Entity* getEntity(std::string uniqueName);
+	c_Entity* getEntity(std::string uniqueName, bool canCollide);
 	Mesh* getMesh();
 	Vector3 getPos();
 	c_Collision* getOBB();
+	const char* getMeshPath();
+	const char* getTGApath();
 
 protected:
 	std::string uniqueName;
