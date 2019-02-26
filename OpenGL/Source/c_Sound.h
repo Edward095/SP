@@ -7,9 +7,8 @@
 class c_Sound
 {
 public:
-	c_Sound();
 	~c_Sound();
-
+	static c_Sound* getInstance();
 	void f_Init_Sound();
 	void f_AdjustMusicVolume(float v_Volume);
 	void f_AdjustSFXVolume(float v_Volume);
@@ -47,6 +46,9 @@ public:
 	void f_UnpauseLevel_3_music();
 
 private:
+	c_Sound();
+	static c_Sound* instance;
+
 	// Music
 	irrklang::ISoundEngine* s_MM_Music;
 	irrklang::ISoundEngine* s_L1_Music; 

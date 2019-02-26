@@ -6,10 +6,12 @@
 #include "FirstPersonCamera.h"
 #include "MatrixStack.h"
 #include "Light.h"
-#include "c_FirstCar.h"
-#include "c_Entity.h"
+#include "c_CarBaseClass.h"
 #include "c_AI.h"
 #include "c_Weather.h"
+
+#include "c_ObjectManager.h"
+#include "c_OffRoadManager.h"
 
 
 class c_LevelThree : public Scene
@@ -26,6 +28,10 @@ public:
 		LIGHT2,
 		TRACK,
 		RACEBANNER,
+		TRAFFICRED,
+		TRAFFICNULL,
+		TRAFFICNULL2,
+		TRAFFICGREEN,
 		STREETLIGHT,
 		NITRO,
 		BOOSTPAD,
@@ -160,22 +166,39 @@ private:
 	void renderEnviroment();
 	void updateEnviromentCollision();
 
-	c_FirstCar car;
 
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
 	c_Entity nitro;
-	c_AI AI;
 	c_Entity track;
 	c_Entity PickUp;
+	c_AI AI;
+	c_CarBaseClass* car;
+
 	c_Entity boost;
+	c_Entity boost2;
+	c_Entity boost3;
+	c_Entity boost4;
+	c_Entity boost5;
+	c_Entity boost6;
+	c_Entity boost7;
 	c_Entity slow;
+	c_Entity slow2;
+	c_Entity slow3;
+	c_Entity slow4;
+	c_Entity slow5;
+	c_Entity slow6;
+	c_Entity slow7;
 	c_Entity FinishLine;
 	c_Entity speedometer;
 	c_Entity needle;
 	c_Entity circle;
+
+	c_ObjectManager* OBJmanager;
+	c_OffRoadManager* offRoadManager;
+
 	//Variables
 
 	bool talk;
@@ -213,6 +236,16 @@ private:
 	bool pick = false;
 	bool checkF = false;
 	int cooldown;
+
+	float ArrowP;
+	bool ExitGame;
+	bool AbleToPress;
+	bool OptionSelection;
+	bool VehicleMove;
+
+	//Traffic Lights
+	float red1, red2, red3, green1, green2, green3;
+	bool RedLight, GreenLight;
 
 	c_Weather rain;
 	c_Weather snow;

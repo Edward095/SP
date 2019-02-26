@@ -1,6 +1,7 @@
 #include "c_ThirdCar.h"
 #include "Application.h"
 #include "c_ObjectManager.h"
+#include "c_OffRoadManager.h"
 #include "LoadTGA.h"
 
 c_ThirdCar::c_ThirdCar()
@@ -47,7 +48,11 @@ void c_ThirdCar::Ability(double dt)
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
 
-			updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
+			if (pos.x + updateX < 700 && pos.z + updateZ < 700 && pos.x + updateX > -700 && pos.z + updateZ > -700)
+			{
+				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
+			}
+			//PressQ = true;
 			once = true;
 		}
 	}
@@ -58,7 +63,11 @@ void c_ThirdCar::Ability(double dt)
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
 
-			updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
+			if (pos.x + updateX < 700 && pos.z + updateZ < 700 && pos.x + updateX > -700 && pos.z + updateZ > -700)
+			{
+				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
+			}
+			//PressQ = true;
 			once = true;
 		}
 	}
@@ -82,10 +91,17 @@ void c_ThirdCar::PowerUp(bool check)
 
 void c_ThirdCar::isOffRoad()
 {
-	if (!gotCollide("track",false))//|| gotCollide("offRoad1") || gotCollide("offRoad2") || gotCollide("offRoad3") || gotCollide("offRoad4") || gotCollide("offRoad5") || gotCollide("offRoad6"))
-		offRoad = true;
-	else
-		offRoad = false;
+	c_OffRoadManager* manager = c_OffRoadManager::getInstance();
+
+	for (int i = 0; i < manager->getList().size(); i++)
+	{
+		if (gotCollide(manager->getList()[i], false) || !gotCollide("track", false))
+		{
+			offRoad = true;
+			break;
+		}
+		else offRoad = false;
+	}
 	if (offRoad)
 	{
 		SetFriction(0.5f);

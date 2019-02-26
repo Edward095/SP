@@ -68,6 +68,11 @@ void c_MultiplayerLevelTwo::Init()
 	playerTwoCamTargetY = playerTwo->getPos().y;
 	playerTwoCamTargetZ = playerTwo->getPos().z;
 
+	//----Traffic Light---------------//
+	RedLight = true;
+	GreenLight = false;
+	//-------------------------------//
+
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	//Enable depth buffer and depth testing
@@ -140,6 +145,10 @@ void c_MultiplayerLevelTwo::Init()
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
+	meshList[TRAFFICRED] = MeshBuilder::GenerateSphere("traffic light", Color(1, 0, 0), 18, 36, 1.f);
+	meshList[TRAFFICNULL] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
+	meshList[TRAFFICNULL2] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
+	meshList[TRAFFICGREEN] = MeshBuilder::GenerateSphere("traffic light", Color(0, 1, 0), 18, 36, 1.f);
 
 	front.init("front", "quad", "Image//SunnyFront.tga", (0, 0, 0), true);
 	left.init("left", "quad", "Image//SunnyLeft.tga", (0, 0, 0), true);
@@ -150,6 +159,7 @@ void c_MultiplayerLevelTwo::Init()
 	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
 	needle.init("needle", "quad", "Image//needle.tga", (float)(1, 1, 1), false);
 	circle.init("circle", "quad", "Image//circle.tga", (float)(1, 1, 1), false);
+	offRoadManager->addOffRoad("OffRoad//offRoadOBJ2.txt");
 
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
 }
@@ -187,6 +197,14 @@ void c_MultiplayerLevelTwo::Update(double dt)
 	//	playerTwo->Ability(dt);
 
 	//}
+
+	//------------Updating Traffic Lights------------//
+	if (elapsedTime >= 10)
+	{
+		RedLight = false;
+		GreenLight = true;
+	}
+	//-----------------------------------------------//
 
 	if (Application::IsKeyPressed('Q') && checkFO)
 	{
@@ -375,7 +393,7 @@ void c_MultiplayerLevelTwo::initLights()
 	m_parameters[U_LIGHT0_EXPONENT] = glGetUniformLocation(m_programID, "lights[0].exponent");
 
 	lights[0].type = Light::LIGHT_DIRECTIONAL;
-	lights[0].position.Set(1.f, -16.f, 25.f);
+	lights[0].position.Set(-6.f, 30.8f, 50.f);
 	lights[0].color.Set(1, 1, 1);
 	lights[0].power = 0.f;
 	lights[0].kC = 1.f;
@@ -410,7 +428,7 @@ void c_MultiplayerLevelTwo::initLights()
 	m_parameters[U_LIGHT1_EXPONENT] = glGetUniformLocation(m_programID, "lights[1].exponent");
 
 	lights[1].type = Light::LIGHT_POINT;
-	lights[1].position.Set(59.f, 30.8f, -22.3f);
+	lights[1].position.Set(-28.f, 30.8f, -8.3f);
 	lights[1].color.Set(1, 1, 1);
 	lights[1].power = 2;
 	lights[1].kC = 1.f;
@@ -445,7 +463,7 @@ void c_MultiplayerLevelTwo::initLights()
 	m_parameters[U_LIGHT2_EXPONENT] = glGetUniformLocation(m_programID, "lights[2].exponent");
 
 	lights[2].type = Light::LIGHT_POINT;
-	lights[2].position.Set(398.f, 30.8, -169.3f);
+	lights[2].position.Set(-175.f, 30.8f, -351.3f);
 	lights[2].color.Set(1, 1, 1);
 	lights[2].power = 2;
 	lights[2].kC = 1.f;
@@ -480,7 +498,7 @@ void c_MultiplayerLevelTwo::initLights()
 	m_parameters[U_LIGHT3_EXPONENT] = glGetUniformLocation(m_programID, "lights[3].exponent");
 
 	lights[3].type = Light::LIGHT_POINT;
-	lights[3].position.Set(387.f, 30.8f, -563.3f);
+	lights[3].position.Set(-573.f, 30.8f, -337.3f);
 	lights[3].color.Set(1, 1, 1);
 	lights[3].power = 2;
 	lights[3].kC = 1.f;
@@ -515,7 +533,7 @@ void c_MultiplayerLevelTwo::initLights()
 	m_parameters[U_LIGHT4_EXPONENT] = glGetUniformLocation(m_programID, "lights[4].exponent");
 
 	lights[4].type = Light::LIGHT_POINT;
-	lights[4].position.Set(92.f, 29.8f, -215.3f);
+	lights[4].position.Set(-227.f, 30.8f, -42.3f);
 	lights[4].color.Set(1, 1, 1);
 	lights[4].power = 2;
 	lights[4].kC = 1.f;
@@ -550,7 +568,7 @@ void c_MultiplayerLevelTwo::initLights()
 	m_parameters[U_LIGHT5_EXPONENT] = glGetUniformLocation(m_programID, "lights[5].exponent");
 
 	lights[5].type = Light::LIGHT_POINT;
-	lights[5].position.Set(-249.f, 30.8f, -266.3f);
+	lights[5].position.Set(-273.f, 30.8f, 200.3f);
 	lights[5].color.Set(1, 1, 1);
 	lights[5].power = 2;
 	lights[5].kC = 1.f;
@@ -959,17 +977,53 @@ void c_MultiplayerLevelTwo::renderEnviroment()
 
 	//RaceBanner
 	modelStack.PushMatrix();
-	modelStack.Translate(0, -3, 0);
+	modelStack.Translate(-2, -6, 50);
+	modelStack.Rotate(90.f, 0, 1, 0);
 	modelStack.Scale(5, 5, 6);
 	RenderMesh(meshList[RACEBANNER], true);
 	modelStack.PopMatrix();
 
 	//StreetLight
 	modelStack.PushMatrix();
-	modelStack.Translate(0, -3, 0);
+	modelStack.Translate(-6, -3, 50); 
+	modelStack.Rotate(90.f, 0, 1, 0);
 	modelStack.Scale(6, 5, 6);
 	RenderMesh(meshList[STREETLIGHT], true);
 	modelStack.PopMatrix();
+
+	//TrafficLight
+	if (RedLight == false)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 9, 15);
+		modelStack.Scale(1, 1, 1);
+		RenderMesh(meshList[TRAFFICNULL], false);
+		modelStack.PopMatrix();
+	}
+	if (RedLight == true)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 9, 15);
+		modelStack.Scale(1, 1, 1);
+		RenderMesh(meshList[TRAFFICRED], false);
+		modelStack.PopMatrix();
+	}
+	if (GreenLight == false)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 6.5f, 15);
+		modelStack.Scale(1, 1, 1);
+		RenderMesh(meshList[TRAFFICNULL2], false);
+		modelStack.PopMatrix();
+	}
+	if (GreenLight == true)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 6.5f, 15);
+		modelStack.Scale(1, 1, 1);
+		RenderMesh(meshList[TRAFFICGREEN], false);
+		modelStack.PopMatrix();
+	}
 }
 void c_MultiplayerLevelTwo::updateEnviromentCollision()
 {
@@ -980,6 +1034,7 @@ void c_MultiplayerLevelTwo::updateEnviromentCollision()
 	track.getOBB()->defaultData();
 	playerOne->getOBB()->defaultData();
 	playerTwo->getOBB()->defaultData();
+	offRoadManager->defaultData();
 	//AI.getOBB()->defaultData();
 	//boost.getOBB()->defaultData();
 	//slow.getOBB()->defaultData();
@@ -1007,6 +1062,7 @@ void c_MultiplayerLevelTwo::updateEnviromentCollision()
 	//track
 	track.updatePos(-310.951f, 0, -135.453f);
 	track.getOBB()->calcNewAxis(90, 0, 1, 0);
+	offRoadManager->updateCollision("OffRoad//offRoadPos2.txt", "OffRoad//offRoadRotate2.txt")
 }
 
 void c_MultiplayerLevelTwo::RenderSpeedometerOne()

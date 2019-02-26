@@ -11,12 +11,8 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 
-
-bool c_Npc::MultiPlayer = false;
-bool c_Npc::SinglePlayer = false;
-bool c_Npc::Level1 = false;
-bool c_Npc::Level2 = false;
-bool c_Npc::Level3 = false;
+#include "c_DataManager.h"
+#include "c_SceneManager.h"
 
 
 c_Npc::c_Npc()
@@ -30,9 +26,13 @@ c_Npc::~c_Npc()
 
 void c_Npc::Init()
 {
-	Garage.Init();
-	//LevelOne.Init();
-	e_GameState_NPC = _NPC;
+	c_SceneManager* scene = c_SceneManager::getInstance();
+	c_DataManager* data = c_DataManager::getInstance();
+	data->selectFile(1);
+	data->saveCustomization("OBJ//Car1.obj", "Image//Car1Blue.tga");
+	data->saveCurrentLevel(1);
+
+	scene->updateState("NPC");
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -79,7 +79,7 @@ void c_Npc::Init()
 	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID,
 		"textColor");
 	//Initialize camera settings
-	camera.Init(Vector3(0, 0, 220));
+	camera.Init(Vector3(0, 0, 10));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -121,7 +121,8 @@ void c_Npc::Init()
 	meshList[HOUSE] = MeshBuilder::GenerateOBJ("House", "OBJ//House.obj");
 	meshList[HOUSE]->textureID = LoadTGA("Image//House.tga");
 
-
+	meshList[INSTRUCTIONS] = MeshBuilder::GenerateQuad("Instructions", Color(1, 1, 1), 100);
+	meshList[INSTRUCTIONS]->textureID = LoadTGA("Image//Instructiontex.tga");
 
 
 
@@ -131,38 +132,41 @@ void c_Npc::Init()
 	ArrowY = 7;
 	BounceTime = 0;
 	
+	Audio = c_Sound::getInstance();
+
+	Audio->f_Init_Sound();
+	Audio->f_Start_Menu_music();
+
 	//booleans
 	AbleToPress = false;
 	Talk = false;
 	Talk1 = false;
+	Talk2 = false;
+	Talk3 = false;
 	LevelSelection = false;
-	Level1 = false;
-	Level2 = false;
-	Level3 = false;
 	SinglePlayer = false;
 	MultiPlayer = false;
 	StartGame = false;
 	Continue = false;
 	Options = false;
-
+	LeaderBoard = false;
 }
 void c_Npc::Update(double dt)
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	ElapsedTime += dt;
 	camera.Update(dt);
-	camera.WBmove(dt, 280.f, -280.f, 220.f, -150.f);
+	camera.WBmove(dt, 300.f, -450.f, 218.f, -150.f);
 
-	switch (e_GameState_NPC)
-	{
-	case _NPC:
+	if (scene->checkState("NPC"))
 		UpdateNpc(dt);
-		break;
-	case GARAGE:
-		Garage.Update(dt);
-		break;
-	case LEVEL1:
-		LevelOne.Update(dt);
-	}
+	else if (scene->checkState("CONTINUE"))
+		scene->getScene("CONTINUE")->Update(dt);
+	else
+		scene->getScene("GARAGE")->Update(dt);
+		//Garage.Update(dt);
+
 	
 }
 
@@ -171,6 +175,8 @@ static const float SKYBOXSIZE = 500.f;
 
 void c_Npc::Render()
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -187,81 +193,134 @@ void c_Npc::Render()
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
 	
-	if (e_GameState_NPC == _NPC)
-	{
+	if (scene->checkState("NPC"))
 		RenderNpc();
-	}
-	else if (e_GameState_NPC == GARAGE)
-	{
-		Garage.Render();
-	}
-	else if (e_GameState_NPC == LEVEL1)
-	{
-		LevelOne.Render();
-	}
-
-
-
-	
-
-
+	else if (scene->checkState("CONTINUE"))
+		scene->getScene("CONTINUE")->Render();
+	else
+		scene->getScene("GARAGE")->Render();
 }
 
 void c_Npc::UpdateNpc(double dt)
 {
-	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < -116 && camera.position.x > -168)
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
+	if (camera.position.z < -10 && camera.position.z > -100 && camera.position.y < 200 && camera.position.x < -310 && camera.position.x > -380)
 	{
 		StartGame = true;
 		Continue = false;
+		SinglePlayer = true;
+		MultiPlayer = false;
 		Options = false;
+		LeaderBoard = false;
+		Instructions = false;
 	}
 	else
 	{
 		StartGame = false;
 		Talk = false;
+		SinglePlayer = false;
 	}
-	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < 40 && camera.position.x > -40)
+	if (camera.position.z < -10 && camera.position.z > -100 && camera.position.y < 200 && camera.position.x < -50 && camera.position.x > -150)
 	{
 		StartGame = false;
 		Continue = true;
+		SinglePlayer = false;
+		MultiPlayer = false;
 		Options = false;
+		LeaderBoard = false;
+		Instructions = false;
 	}
 	else
 	{
 		Continue = false;
-		//Talk = false;
+		Talk3 = false;
 	}
-	if (camera.position.z < 80 && camera.position.z > -10 && camera.position.y > -10 && camera.position.y < 40 && camera.position.x < 195 && camera.position.x > 105)
+	if (camera.position.z < -10 && camera.position.z > -100 && camera.position.y < 200 && camera.position.x < 200 && camera.position.x > 110)
 	{
 		StartGame = false;
 		Continue = false;
+		SinglePlayer = false;
+		MultiPlayer = true;
+		Options = false;
+		LeaderBoard = false;
+		Instructions = false;
+	}
+	else
+	{
+		MultiPlayer = false;
+		Talk2 = false;
+	}
+	if (camera.position.z < 100 && camera.position.z > 13 && camera.position.y < 200 && camera.position.x < 240 && camera.position.x > 150)
+	{
+		StartGame = false;
+		Continue = false;
+		SinglePlayer = false;
+		MultiPlayer = false;
 		Options = true;
+		LeaderBoard = false;
+		Instructions = false;
 	}
 	else
 	{
 		Options = false;
 		Talk1 = false;
 	}
+	if (camera.position.z < 100 && camera.position.z > 13 && camera.position.y < 200 && camera.position.x < -280 && camera.position.x > -370)
+	{
+		StartGame = false;
+		Continue = false;
+		SinglePlayer = false;
+		MultiPlayer = false;
+		Options = false;
+		LeaderBoard = true;
+		Instructions = false;
+	}
+	else
+	{
+		LeaderBoard = false;
+		Talk4 = false;		
+	}
+	if (camera.position.z < 110 && camera.position.z > 40 && camera.position.y < 200 && camera.position.x < -66 && camera.position.x > -136)
+	{
+		StartGame = false;
+		Continue = false;
+		SinglePlayer = false;
+		MultiPlayer = false;
+		Options = false;
+		LeaderBoard = false;
+		Instructions = true;
 
-	if ((Application::IsKeyPressed('F') && StartGame == true && Talk == false) || (Application::IsKeyPressed('F') && Options == true && Talk1 == false))
+	}
+	else
+	{
+		Instructions = false;
+		Talk5 = false;
+	}
+
+	if ((Application::IsKeyPressed('F') && StartGame == true && Talk == false) || (Application::IsKeyPressed('F') && Options == true && Talk1 == false) || (Application::IsKeyPressed('F') && MultiPlayer == true && Talk2 == false) || (Application::IsKeyPressed('F') && Continue == true && Talk3 == false) || (Application::IsKeyPressed('F') && LeaderBoard == true && Talk4 == false) || (Application::IsKeyPressed('F') && Instructions == true && Talk5 == false))
 	{
 		Talk = true;
 		Talk1 = true;
-		LevelSelection = false;
+		Talk2 = true;
+		Talk3 = true;
+		Talk4 = true;
+		Talk5 = true;
 	}
 	
 	
-	if ((Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Options == true))
+	if ((Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Continue == true))
 	{
+		Audio->f_Menu_MoveSelect();
 		ArrowY--;
-		if (LevelSelection == false && StartGame == true)
+		if (Continue == true)
 		{
 			if (ArrowY < 6)
 			{
 				ArrowY = 7;
 			}
 		}
-		if (LevelSelection == true && StartGame == true)
+		if ((StartGame == true) || MultiPlayer == true)
 		{
 			if (ArrowY < 5)
 			{
@@ -277,17 +336,21 @@ void c_Npc::UpdateNpc(double dt)
 		}
 		BounceTime = ElapsedTime + 0.125;
 	}
-	if ((Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Options == true))
+	if ((Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Continue == true))
 	{
+	
 		ArrowY++;
-		if (LevelSelection == false && StartGame == true)
+		Audio->f_Menu_MoveSelect();
+
+
+		if (Continue == true)
 		{
 			if (ArrowY > 7)
 			{
 				ArrowY = 6;
 			}
 		}
-		if (LevelSelection == true && StartGame == true)
+		if ((StartGame == true) || MultiPlayer == true)
 		{
 			if (ArrowY > 7)
 			{
@@ -303,55 +366,65 @@ void c_Npc::UpdateNpc(double dt)
 		}
 		BounceTime = ElapsedTime + 0.125;
 	}
-	if ((Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && StartGame == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Options == true && AbleToPress == true))
+	if ((Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && StartGame == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Options == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Continue == true && AbleToPress == true))
 	{
-		
+
 		BounceTime = ElapsedTime + 0.125;
+		Audio->f_Menu_ConfirmSelect();
+
+		ArrowY = 7;
+
 		if (LevelSelection == false && StartGame == true)
 		{
 			if (ArrowY == 7)
 			{
-				SinglePlayer = true;
-				MultiPlayer = false;
 				LevelSelection = true;
-				ArrowY = 7;
 			}
 			else if (ArrowY == 6)
 			{
-				MultiPlayer = true;
-				SinglePlayer = false;
 				LevelSelection = true;
-				ArrowY = 7;
 			}
 		}
-		else if (LevelSelection == true && StartGame == true)
+		else if ((LevelSelection == true && StartGame == true) || MultiPlayer == true)
 		{
 			if (ArrowY == 7)
 			{
-				Level1 = true;
-				Level2 = false;
-				Level3 = false;
-				e_GameState_NPC = GARAGE;
-				Garage.Init();
-				Garage.Update(dt);
+				if (SinglePlayer)
+					scene->updateLevel("SLEVELONE");
+				else if (MultiPlayer)
+					scene->updateLevel("MLEVELONE");
+				scene->updateState("GARAGE");
+
+				scene->getScene("GARAGE")->Init();
+				scene->getScene("GARAGE")->Update(dt);
+				/*Garage.Init();
+				Garage.Update(dt);*/
 			}
 			else if (ArrowY == 6)
 			{
-				Level1 = false;
-				Level2 = true;
-				Level3 = false;
-				e_GameState_NPC = GARAGE;
-				Garage.Init();
-				Garage.Update(dt);
+				if (SinglePlayer)
+					scene->updateLevel("SLEVELTWO");
+				else if (MultiPlayer)
+					scene->updateLevel("MLEVELTWO");
+				scene->updateState("GARAGE");
+
+				scene->getScene("GARAGE")->Init();
+				scene->getScene("GARAGE")->Update(dt);
+				/*Garage.Init();
+				Garage.Update(dt);*/
 			}
 			else if (ArrowY == 5)
 			{
-				Level1 = false;
-				Level2 = false;
-				Level3 = true;
-				e_GameState_NPC = GARAGE;
-				Garage.Init();
-				Garage.Update(dt);
+				if (SinglePlayer)
+					scene->updateLevel("SLEVELTHREE");
+				else if (MultiPlayer)
+					scene->updateLevel("MLEVELTHREE");
+				scene->updateState("GARAGE");
+
+				scene->getScene("GARAGE")->Init();
+				scene->getScene("GARAGE")->Update(dt);
+				/*Garage.Init();
+				Garage.Update(dt);*/
 			}
 		}
 		if (Options)
@@ -359,20 +432,39 @@ void c_Npc::UpdateNpc(double dt)
 			if (ArrowY == 7)
 			{
 				//put music here 
+				Audio->f_AdjustMusicVolume(1.0f);
+				Audio->f_AdjustSFXVolume(1.0f);
 			}
 			else if (ArrowY == 6)
 			{
-				
+				Audio->f_AdjustMusicVolume(0.75f);
+				Audio->f_AdjustSFXVolume(0.75f);
 			}
 			else if (ArrowY == 5)
 			{
-				
+				Audio->f_AdjustMusicVolume(0.5f);
+				Audio->f_AdjustSFXVolume(0.5f);
 			}
 			else if (ArrowY == 4)
 			{
-
+				Audio->f_AdjustMusicVolume(0.0f);
+				Audio->f_AdjustSFXVolume(0.0f);
 			}
 		}
+		if (Continue)
+		{
+			if (ArrowY == 7)
+			{
+				//yes
+				scene->updateState("CONTINUE");
+				scene->getScene("CONTINUE")->Init();
+			}
+			else if (ArrowY == 6)
+			{
+				//no
+			}
+		}
+		BounceTime = ElapsedTime + 0.125;
 	}
 
 
@@ -380,53 +472,99 @@ void c_Npc::UpdateNpc(double dt)
 
 void c_Npc::RenderNpc()
 {
+	c_DataManager* dataManager = c_DataManager::getInstance();
 	//Human OBJ
+    //Newgame
 	modelStack.PushMatrix();
-	modelStack.Translate(0, -50, -80);
+	modelStack.Translate(-350, 10, -200);
 	modelStack.Scale(0.5, 0.5, 0.5);
 	RenderMesh(meshList[NPC], false);
 	modelStack.PopMatrix();
 
+	//Continue
 	modelStack.PushMatrix();
-	modelStack.Translate(150, -50, -80);
+	modelStack.Translate(-100, 10, -200);
 	modelStack.Scale(0.5, 0.5, 0.5);
 	RenderMesh(meshList[NPC], false);
 	modelStack.PopMatrix();
 
+	//Multiplayer
 	modelStack.PushMatrix();
-	modelStack.Translate(-150, -50, -80);
+	modelStack.Translate(150, 10, -200);
 	modelStack.Scale(0.5, 0.5, 0.5);
 	RenderMesh(meshList[NPC], false);
 	modelStack.PopMatrix();
+
+	//Options
+	modelStack.PushMatrix();
+	modelStack.Translate(300, 10, 50);
+	modelStack.Scale(0.5, 0.5, 0.5);
+	modelStack.Rotate(-90, 0, 1, 0);
+	RenderMesh(meshList[NPC], false);
+	modelStack.PopMatrix();
+
+	//leaderboard
+	modelStack.PushMatrix();
+	modelStack.Translate(-450, 10, 50);
+	modelStack.Scale(0.5, 0.5, 0.5);
+	modelStack.Rotate(90, 0, 1, 0);
+	RenderMesh(meshList[NPC], false);
+	modelStack.PopMatrix();
+
+	//Instructions
+	modelStack.PushMatrix();
+	modelStack.Translate(-100, 10, 200);
+	modelStack.Scale(0.5, 0.5, 0.5);
+	modelStack.Rotate(180, 0, 1, 0);
+	RenderMesh(meshList[NPC], false);
+	modelStack.PopMatrix();
+
 
 	//Npc House
-	modelStack.PushMatrix();
-	modelStack.Translate(45, -50, 40);
-	modelStack.Scale(14, 10, 18);
 	RenderMesh(meshList[HOUSE], false);
-	modelStack.PopMatrix();
-
 
 	
 	//Text for name of NPC
 	modelStack.PushMatrix();
-	modelStack.Translate(-180, 55, -75);
+	modelStack.Translate(-375, 110, -195);
 	modelStack.Scale(20, 20, 20);
 	RenderText(meshList[TEXT], "New Game", Color(0, 0, 0), 1);
 	modelStack.PopMatrix();
 
 
 	modelStack.PushMatrix();
-	modelStack.Translate(-35, 55, -75);
+	modelStack.Translate(-130, 110, -195);
 	modelStack.Scale(20, 20, 20);
 	RenderText(meshList[TEXT], "Continue", Color(0, 0, 0), 1);
 	modelStack.PopMatrix();
 
+	modelStack.PushMatrix();
+	modelStack.Translate(105, 110, -195);
+	modelStack.Scale(20, 20, 20);
+	RenderText(meshList[TEXT], "Multiplayer", Color(0, 0, 0), 1);
+	modelStack.PopMatrix();
+
 
 	modelStack.PushMatrix();
-	modelStack.Translate(125, 55, -75);
+	modelStack.Translate(300, 110, 20);
 	modelStack.Scale(20, 20, 20);
+	modelStack.Rotate(-90, 0, 1, 0);
 	RenderText(meshList[TEXT], "Options", Color(0, 0, 0), 1);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-450, 110, 100);
+	modelStack.Scale(20, 20, 20);
+	modelStack.Rotate(90, 0, 1, 0);
+	RenderText(meshList[TEXT], "LeaderBoard", Color(0, 0, 0), 1);
+	modelStack.PopMatrix();
+
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-45, 110, 195);
+	modelStack.Scale(20, 20, 20);
+	modelStack.Rotate(180, 0, 1, 0);
+	RenderText(meshList[TEXT], "Instructions", Color(0, 0, 0), 1);
 	modelStack.PopMatrix();
 
 	//text for talking to NPC
@@ -438,54 +576,93 @@ void c_Npc::RenderNpc()
 	RenderTextOnScreen(meshList[TEXT], std::to_string(cameraY), Color(0, 0, 1), 3, 1, 18);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(cameraZ), Color(0, 0, 1), 3, 1, 17);
 
-	if ((StartGame == true && Talk == false) || (Options == true && Talk1 == false))
+	if ((StartGame == true && Talk == false) ||  (Options == true && Talk1 == false) || (MultiPlayer == true && Talk2 == false) || (Continue == true && Talk3 == false) || (LeaderBoard == true && Talk4 == false) || (Instructions == true && Talk5 == false))
 	{
 		RenderTextOnScreen(meshList[TEXT], "Press 'F' to talk to NPC", Color(1, 0, 0), 3, 6, 10);
 	}
 	if (StartGame == true && Talk == true && LevelSelection == false)
 	{
-		RenderTextOnScreen(meshList[TEXT], "Choose a GameMode", Color(1, 0, 0), 3, 9, 13);
+		RenderTextOnScreen(meshList[TEXT], "Save Files", Color(1, 0, 0), 3, 9, 13);
 		AbleToPress = true;
 	}
-	if (StartGame == true && Talk == true && LevelSelection == false)
+	if ((StartGame == true && Talk == true && LevelSelection == false))
 	{
-		RenderTextOnScreen(meshList[TEXT], "SinglePlayer", Color(1, 0, 0), 5, 7, 7);
+		RenderTextOnScreen(meshList[TEXT], "Save File 1", Color(1, 0, 0), 5, 7, 7);
 		AbleToPress = true;
 	}
-	if (StartGame == true && Talk == true && LevelSelection == false)
+	if ((StartGame == true && Talk == true && LevelSelection == false))
 	{
-		RenderTextOnScreen(meshList[TEXT], "MultiPlayer", Color(1, 0, 0), 5, 7, 6);
+		RenderTextOnScreen(meshList[TEXT], "Save File 2", Color(1, 0, 0), 5, 7, 6);
 		AbleToPress = true;
 	}
-	if (StartGame == true && Talk == true && LevelSelection == true)
+	if ((StartGame == true && Talk == true && LevelSelection == false))
+	{
+		RenderTextOnScreen(meshList[TEXT], "Save File 3", Color(1, 0, 0), 5, 7, 5);
+		AbleToPress = true;
+	}
+	if (Continue == true && Talk3 == true)
+	{
+		RenderTextOnScreen(meshList[TEXT], "Yes", Color(1, 0, 0), 5, 7, 7);
+		AbleToPress = true;
+	}
+	if (Continue == true && Talk3 == true)
+	{
+		RenderTextOnScreen(meshList[TEXT], "No", Color(1, 0, 0), 5, 7, 6);
+		AbleToPress = true;
+	}
+	if ((StartGame == true && Talk == true && LevelSelection == true) || (MultiPlayer == true && Talk2 == true))
 	{
 		RenderTextOnScreen(meshList[TEXT], "Choose a Level", Color(1, 0, 0), 3, 9, 13);
 		AbleToPress = true;
 	}
-	if ((StartGame == true && Talk == true) || (Options == true && Talk1 == true) )
+	if ((StartGame == true && Talk == true) || (Options == true && Talk1 == true) || (MultiPlayer == true && Talk2 == true) || (Continue == true && Talk3 == true))
 	{
 		RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowY);
 		AbleToPress = true;
 	}
-	if (StartGame == true && Talk == true && LevelSelection == true)
+	if ((StartGame == true && Talk == true && LevelSelection == true) || ( MultiPlayer == true && Talk2 == true))
 	{
 		RenderTextOnScreen(meshList[TEXT], "Level 1", Color(1, 0, 0), 5, 7, 7);
 		AbleToPress = true;
 	}
-	if (StartGame == true && Talk == true && LevelSelection == true)
+	if ((StartGame == true && Talk == true && LevelSelection == true) || (MultiPlayer == true && Talk2 == true))
 	{
 		RenderTextOnScreen(meshList[TEXT], "Level 2", Color(1, 0, 0), 5, 7, 6);
 		AbleToPress = true;
 	}
-	if (StartGame == true && Talk == true && LevelSelection == true)
+	if ((StartGame == true && Talk == true && LevelSelection == true) || (MultiPlayer == true && Talk2 == true))
 	{
 		RenderTextOnScreen(meshList[TEXT], "Level 3", Color(1, 0, 0), 5, 7, 5);
 		AbleToPress = true;
 	}
 
-	if (Continue == true)
+	if (Continue == true && Talk3 == true)
 	{
 		RenderTextOnScreen(meshList[TEXT], "Continue Game?", Color(1, 0, 0), 3, 9, 13);
+	}
+
+	if (LeaderBoard == true && Talk4 == true)
+	{
+		int counter = 13;
+		std::vector <float> data;
+		std::vector <std::string> name;
+		dataManager->getLeaderBoards(data, name);
+
+		RenderTextOnScreen(meshList[TEXT], "LeaderBoard", Color(1, 0, 0), 3, 9, 18);
+		for (int i = 0; i < data.size(); i++)
+		{
+			RenderTextOnScreen(meshList[TEXT], name[i], Color(0, 0, 1), 3, 9, counter);
+			RenderTextOnScreen(meshList[TEXT], std::to_string(data[i]), Color(0, 1, 0), 3, 19, counter);
+			counter--;
+		}
+	}
+	if (Instructions == true && Talk5 == true)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(-93, 75, 175);
+		modelStack.Rotate(180, 0, 1, 0);
+		RenderMesh(meshList[INSTRUCTIONS], false);
+		modelStack.PopMatrix();	
 	}
 
 	if (Options == true && Talk1 == true)
@@ -493,7 +670,7 @@ void c_Npc::RenderNpc()
 		RenderTextOnScreen(meshList[TEXT], "Adjust Volume Of Game Sound", Color(1, 0, 0), 3, 6, 13);
 	}
 
-	if (Options == true && Talk1== true)
+	if (Options == true && Talk1 == true)
 	{
 		RenderTextOnScreen(meshList[TEXT], "100%", Color(1, 0, 0), 5, 7, 7);
 	}
@@ -734,39 +911,3 @@ void c_Npc::RenderText(Mesh* mesh, std::string text, Color color, float spacing)
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 	glEnable(GL_DEPTH_TEST);
 }
-
-
-
-
-
-bool c_Npc::GetLevel1()
-{
-	return Level1;
-}
-
-
-bool c_Npc::GetLevel2()
-{
-	return Level2;
-}
-
-
-
-bool c_Npc::GetLevel3()
-{
-	return Level3;
-}
-
-
-
-bool c_Npc::GetSinglePlayer()
-{
-	return SinglePlayer;
-}
-
-
-bool c_Npc::GetMultiPlayer()
-{
-	return MultiPlayer;
-}
-

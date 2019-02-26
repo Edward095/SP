@@ -26,6 +26,10 @@ public:
 		TOP,
 		BOTTOM,
 		RACEBANNER,
+        TRAFFICRED,
+		TRAFFICNULL,
+		TRAFFICNULL2,
+		TRAFFICGREEN,
 		STREETLIGHT,
 		LIGHT1,
 		LIGHT2,
@@ -214,6 +218,10 @@ private:
 	bool CheckEnd = false;
 	bool Win = false;
 	bool Lose = false;
+
+    //Traffic Lights
+	float red1, red2, red3, green1, green2, green3;
+	bool RedLight, GreenLight;
 
 	c_Weather rain;
 	c_Weather snow;

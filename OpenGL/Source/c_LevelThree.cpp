@@ -12,6 +12,12 @@
 #include "LoadTGA.h"
 #include <iomanip>
 
+#include "c_DataManager.h"
+
+#include "c_Firstcar.h"
+#include "c_Secondcar.h";
+#include "c_Thirdcar.h"
+
 #include <Windows.h>
 #include <time.h>
 
@@ -27,24 +33,51 @@ c_LevelThree::~c_LevelThree()
 
 void c_LevelThree::Init()
 {
+	offRoadManager = c_OffRoadManager::getInstance();
+	OBJmanager = c_ObjectManager::getInstance();
+	c_DataManager* dataManager = c_DataManager::getInstance();
+
+	dataManager->saveCurrentLevel(3);
+
+	c_Entity* car1;
+	car1 = OBJmanager->getCanCollide("player1");
+	c_FirstCar* first = dynamic_cast <c_FirstCar*>(car1);
+	if (first)
+		car = first;
+	c_SecondCar* second = dynamic_cast <c_SecondCar*>(car1);
+	if (second)
+		car = second;
+	c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car1);
+	if (third)
+		car = third;
+
 	//Seed Generation For rand() function
 	srand(time(NULL));
 
 	//Initialization Of Variables//
 
     //----Setting Car Variables------//
-	car.SetFriction(0.1);
-	car.SetSteering(5);
+	car->SetFriction(0.1);
+	car->SetSteering(5);
 	//-------------------------------//
 
 	//----Setting Up Camera Coordinates--------//
-	CamPosX = car.getPos().x + 1;
-	CamPosY = car.getPos().y + 1;
-	CamPosZ = car.getPos().z + 1;
-	CamTargetX = car.getPos().x;
-	CamTargetY = car.getPos().y;
-	CamTargetZ = car.getPos().z;
+	CamPosX = car->getPos().x + 1;
+	CamPosY = car->getPos().y + 1;
+	CamPosZ = car->getPos().z + 1;
+	CamTargetX = car->getPos().x;
+	CamTargetY = car->getPos().y;
+	CamTargetZ = car->getPos().z;
 	//-----------------------------------------//
+
+	AbleToPress = false;
+	VehicleMove = true;
+	ArrowP = 7;
+
+	//----Traffic Light---------------//
+	RedLight = true;
+	GreenLight = false;
+	//-------------------------------//
 
 	//----Time Related Variables-----//
 	elapsedTime = 0;
@@ -177,8 +210,12 @@ void c_LevelThree::Init()
 	/*meshList[TRACK] = MeshBuilder::GenerateOBJ("racetrack", "OBJ//RaceTrack1.obj");
 	meshList[TRACK]->textureID = LoadTGA("Image//RaceTrack.tga");*/
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
-	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
+	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp3.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
+	meshList[TRAFFICRED] = MeshBuilder::GenerateSphere("traffic light", Color(1, 0, 0), 18, 36, 1.f);
+	meshList[TRAFFICNULL] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
+	meshList[TRAFFICNULL2] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
+	meshList[TRAFFICGREEN] = MeshBuilder::GenerateSphere("traffic light", Color(0, 1, 0), 18, 36, 1.f);
 	//----------------------------------------------------------------------------------------//
 
 	//----Rendering Weather Conditions--------------------------------------------------------//
@@ -202,16 +239,29 @@ void c_LevelThree::Init()
 	//	car = third;
 
 	//Init Entities//
-	car.init("player1");
-	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(20, 1.f, 0), true);
-	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, 0), true);
-	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), true);
+	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-10, 1.f, 270), false);
+	boost2.init("Boostpad2", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-300, 1.f, 315), false);
+	boost3.init("Boostpad3", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-610, 1.f, 315), false);
+	boost4.init("Boostpad4", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-615, 1.f, 0), false);
+	boost5.init("Boostpad5", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-595, 1.f, -575), false);
+	boost6.init("Boostpad6", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-395, 1.f, -580), false);
+	boost7.init("Boostpad7", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-40, 1.f, -370), false);
+	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-25, 1.f, 295), false);
+	slow2.init("Slowpad2", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-300, 1.f, 325), false);
+	slow3.init("Slowpad3", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-590, 1.f, 305), false);
+	slow4.init("Slowpad4", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-605, 1.f, 40), false);
+	slow5.init("Slowpad5", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-555, 1.f, -585), false);
+	slow6.init("Slowpad6", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-350, 1.f, -385), false);
+	slow7.init("Slowpad7", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-30, 1.f, -340), false);
+	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), false);
 	AI.init("AI", "OBJ//Car1Body.obj", "Image//Car1Blue.tga", Vector3(-5, 0, 0), true);
 	track.init("track", "OBJ//RaceTrack3.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
 	PickUp.init("Pickup", "OBJ//Pad.obj", "Image//Car1Blue.tga", Vector3(0, 1, 50), false);
 	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
 	needle.init("needle", "quad", "Image//needle.tga", (float)(1, 1, 1), false);
 	circle.init("circle", "quad", "Image//circle.tga", (float)(1, 1, 1), false);
+	offRoadManager->addOffRoad("OffRoad//offRoadOBJ3.txt");
+
 
 	//---- Enabling Light------------//
 	bLightEnabled = true;
@@ -235,13 +285,68 @@ void c_LevelThree::Update(double dt)
 	//------------------------------------//
 
 	//----Updating Camera Position---------------------------------------------------------------//
-	CamPosX = (car.getPos().x - (sin(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
-	CamPosY = car.getPos().y + 8;
-	CamPosZ = (car.getPos().z - (cos(Math::DegreeToRadian(car.GetSteeringAngle()))) * 10);
-	CamTargetX = car.getPos().x;
-	CamTargetY = car.getPos().y + 5;
-	CamTargetZ = car.getPos().z;
+	CamPosX = (car->getPos().x - (sin(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
+	CamPosY = car->getPos().y + 8;
+	CamPosZ = (car->getPos().z - (cos(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
+	CamTargetX = car->getPos().x;
+	CamTargetY = car->getPos().y + 5;
+	CamTargetZ = car->getPos().z;
 	//-------------------------------------------------------------------------------------------//
+
+	//------------Updating Traffic Lights------------//
+	if (elapsedTime >= 10)
+	{
+		RedLight = false;
+		GreenLight = true;
+	}
+	//-----------------------------------------------//
+
+	//------------KeyPress to Pause Game-------------//
+	if (Application::IsKeyPressed('P'))
+	{
+		OptionSelection = false;
+		VehicleMove = false;
+	}
+	//-----------KeyPress to Move Arrow Up-----------//
+	if (Application::IsKeyPressed(VK_UP))
+	{
+		ArrowP--;
+		if (OptionSelection == false)
+		{
+			if (ArrowP <= 6)
+			{
+				ArrowP = 7;
+			}
+		}
+	}
+	//----------KeyPress to Move Arrow Down----------//
+	if (Application::IsKeyPressed(VK_DOWN))
+	{
+		ArrowP++;
+		if (OptionSelection == false)
+		{
+			if (ArrowP >= 7)
+			{
+				ArrowP = 6;
+			}
+		}
+	}
+	//-----------KeyPress to Select Option-----------//
+	if (OptionSelection == false && ArrowP == 7)
+	{
+		if (Application::IsKeyPressed(VK_RETURN))
+		{
+			OptionSelection = true;
+		}
+	}
+	if (OptionSelection == false && ArrowP == 6)
+	{
+		if (Application::IsKeyPressed(VK_RETURN))
+		{
+			ExitGame = true;
+		}
+	}
+	//---------------------------------------------//
 
 	//----KeyPress to Enable and Disable Light-------//
 	if (Application::IsKeyPressed('8'))
@@ -281,14 +386,15 @@ void c_LevelThree::Update(double dt)
 		cooldown = 300;
 	}
 
-	if (car.getPos().x == nitro.getPos().x && car.getPos().z == nitro.getPos().z)
+
+	if (car->getPos().x == nitro.getPos().x && car->getPos().z == nitro.getPos().z)
 	{
-		car.PowerUp(true);
+		car->PowerUp(true);
 	}
 	//-------------------------------------------------//
 
 	//----Collision For Finishing Line---------------------------//
-	if (car.gotCollide("FinishLine",false))
+	if (car->gotCollide("FinishLine",false))
 	{
 		Finish = true;
 	}
@@ -361,16 +467,16 @@ void c_LevelThree::Update(double dt)
 	//----Weather and Environment Effects-------//
 	if (Raining)
 	{
-		car.SetSteering(9);
+		car->SetSteering(9);
 	}
 	if (Snowing)
 	{
-		car.SetFriction(0.01);
+		car->SetFriction(0.01);
 	}
 	if (OffRoad)
 	{
-		car.SetFriction(0.5);
-		car.SetMaxSpeed(0.1);
+		car->SetFriction(0.5);
+		car->SetMaxSpeed(0.1);
 	}
 
 	rain.update(dt);
@@ -381,13 +487,22 @@ void c_LevelThree::Update(double dt)
 	if (Countdown <= 0)
 	{
 		elapsedTime += (float)dt;
-		car.Movement(dt);
-		AI.LevelOne(dt);
+		if (VehicleMove == true)
+		{
+			car->Movement(dt);
+			car->Ability(dt);
+			AI.LevelOne(dt);
+		}
 	}
 	//-------------------------------------------//
+	if (OptionSelection == true)
+	{
+		VehicleMove = true;
+		duration++;
+	}
 
 	//Updating Car Position for Player and AI
-	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
+	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
 	//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 
 	//Update Camera
@@ -402,10 +517,25 @@ void c_LevelThree::updateEnviromentCollision()
 	left.getOBB()->defaultData();
 	right.getOBB()->defaultData();
 	back.getOBB()->defaultData();
-	car.getOBB()->defaultData();
+	car->getOBB()->defaultData();
 	AI.getOBB()->defaultData();
 	boost.getOBB()->defaultData();
+	boost2.getOBB()->defaultData();
+	boost3.getOBB()->defaultData();
+	boost4.getOBB()->defaultData();
+	boost5.getOBB()->defaultData();
+	boost6.getOBB()->defaultData();
+	boost7.getOBB()->defaultData();
 	slow.getOBB()->defaultData();
+	slow2.getOBB()->defaultData();
+	slow3.getOBB()->defaultData();
+	slow4.getOBB()->defaultData();
+	slow5.getOBB()->defaultData();
+	slow6.getOBB()->defaultData();
+	slow7.getOBB()->defaultData();
+	FinishLine.getOBB()->defaultData();
+	track.getOBB()->defaultData();
+	offRoadManager->defaultData();
 
 	//Front Skybox
 	front.updatePos(0, 0, translateLength);
@@ -430,6 +560,8 @@ void c_LevelThree::updateEnviromentCollision()
 	//Track
 	track.updatePos(-313.97, 0, -137.378);
 	track.getOBB()->calcNewAxis(90, 0, 1, 0);
+
+	offRoadManager->updateCollision("OffRoad//offRoadPos3.txt", "OffRoad//offRoadRotate3.txt");
 }
 
 void c_LevelThree::Render()
@@ -445,8 +577,6 @@ void c_LevelThree::Render()
 	FinishLine.getOBB()->defaultData();
 	track.getOBB()->defaultData();
 	PickUp.getOBB()->defaultData();
-
-
 
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -479,16 +609,16 @@ void c_LevelThree::Render()
 	//------------------------------------------------------//
 	/**************************************************************		CAR		***************************************************************/
 	modelStack.PushMatrix();
-	modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
+	modelStack.Translate(car->getPos().x, car->getPos().y, car->getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Rotate(car.GetSteeringAngle(), 0, 1, 0);
-	RenderMesh(car.getMesh(), true);
+	modelStack.Rotate(car->GetSteeringAngle(), 0, 1, 0);
+	RenderMesh(car->getMesh(), true);
 	modelStack.PopMatrix();
 
 	//UpdateCollisions
-	car.updatePos(car.getPos().x, car.getPos().y, car.getPos().z);
-	car.getOBB()->calcNewAxis(90, 0, 1, 0);
-	car.getOBB()->calcNewAxis(car.GetSteeringAngle(), 0, 1, 0);
+	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
+	car->getOBB()->calcNewAxis(90, 0, 1, 0);
+	car->getOBB()->calcNewAxis(car->GetSteeringAngle(), 0, 1, 0);
 
 	/**************************************************************		AI		***************************************************************/
 	modelStack.PushMatrix();
@@ -525,16 +655,62 @@ void c_LevelThree::Render()
 			PickUp.getOBB()->calcNewDimensions(3, 1, 3);
 		}
 
-	/**************************************************************		SlowPad		***************************************************************/
 	modelStack.PushMatrix();
-	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Scale(50, 15, 50);
-	RenderMesh(FinishLine.getMesh(), true);
+	modelStack.Translate(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost2.getMesh(), true);
 	modelStack.PopMatrix();
 
-	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
+	boost2.updatePos(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);
+	boost2.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost3.getPos().x, boost3.getPos().y, boost3.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost3.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost3.updatePos(boost3.getPos().x, boost3.getPos().y, boost3.getPos().z);
+	boost3.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost4.getPos().x, boost4.getPos().y, boost4.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost4.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost4.updatePos(boost4.getPos().x, boost4.getPos().y, boost4.getPos().z);
+	boost4.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost5.getPos().x, boost5.getPos().y, boost5.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost5.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost5.updatePos(boost5.getPos().x, boost5.getPos().y, boost5.getPos().z);
+	boost5.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost6.getPos().x, boost6.getPos().y, boost6.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost6.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost6.updatePos(boost6.getPos().x, boost6.getPos().y, boost6.getPos().z);
+	boost6.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost7.getPos().x, boost7.getPos().y, boost7.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost7.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost7.updatePos(boost7.getPos().x, boost7.getPos().y, boost7.getPos().z);
+	boost7.getOBB()->calcNewDimensions(3, 1, 3);
+
+
+	/**************************************************************		SlowPad		***************************************************************/
 
 	modelStack.PushMatrix();
 	modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
@@ -545,13 +721,79 @@ void c_LevelThree::Render()
 	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
 	slow.getOBB()->calcNewDimensions(3, 1, 3);
 
+	modelStack.PushMatrix();
+	modelStack.Translate(slow2.getPos().x, slow2.getPos().y, slow2.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow2.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow2.updatePos(slow2.getPos().x, slow2.getPos().y, slow2.getPos().z);
+	slow2.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow3.getPos().x, slow3.getPos().y, slow3.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow3.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow3.updatePos(slow3.getPos().x, slow3.getPos().y, slow3.getPos().z);
+	slow3.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow4.getPos().x, slow4.getPos().y, slow4.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow4.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow4.updatePos(slow4.getPos().x, slow4.getPos().y, slow4.getPos().z);
+	slow4.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow5.getPos().x, slow5.getPos().y, slow5.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow5.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow5.updatePos(slow5.getPos().x, slow5.getPos().y, slow5.getPos().z);
+	slow5.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow6.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow6.updatePos(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
+	slow6.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow7.getPos().x, slow7.getPos().y, slow7.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow7.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow7.updatePos(slow7.getPos().x, slow7.getPos().y, slow7.getPos().z);
+	slow7.getOBB()->calcNewDimensions(3, 1, 3);
+
+	/**************************************************************		FinishLine		***************************************************************/
+
+	modelStack.PushMatrix();
+	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	modelStack.Rotate(90, 1, 0, 0);
+	modelStack.Scale(50, 15, 50);
+	RenderMesh(FinishLine.getMesh(), true);
+	modelStack.PopMatrix();
+
+	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
+
 	CountdownCut = std::to_string(Countdown);
 	CountdownCut.resize(1);
 
 	//----Render Text On Screen-----------------------------------------------------------------------------------//
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 
 	if (Countdown >= 0)
 		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 10, 14);
@@ -577,9 +819,9 @@ void c_LevelThree::Render()
 	elapedTimeCut = std::to_string(elapsedTime);
 	elapedTimeCut.resize(5);
 	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car.GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
 	//----------------------------------------------------------------------------------------------------------//
 	RenderSpeedometer();
@@ -592,7 +834,7 @@ void c_LevelThree::renderRain()
 		modelStack.PushMatrix();
 		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
 		modelStack.Translate(rain.getTranslateX(), rain.getTranslateY(), rain.getTranslateZ());
-		modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
+		modelStack.Translate(car->getPos().x, car->getPos().y, car->getPos().z);
 		modelStack.Rotate(45, 0, 0, 1);
 		modelStack.Scale(0.1f, 0.5f, 0.1f);
 		RenderMesh(meshList[RAIN], true);
@@ -608,7 +850,7 @@ void c_LevelThree::RenderSnow()
 		modelStack.PushMatrix();
 		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
 		modelStack.Translate(snow.getTranslateX() / 3, snow.getTranslateY() / 3, snow.getTranslateZ() / 3);
-		modelStack.Translate(car.getPos().x, car.getPos().y, car.getPos().z);
+		modelStack.Translate(car->getPos().x, car->getPos().y, car->getPos().z);
 		modelStack.Rotate(45, 0, 0, 1);
 		modelStack.Scale(0.1f, 0.5f, 0.1f);
 		RenderMesh(meshList[SNOW], true);
@@ -680,17 +922,72 @@ void c_LevelThree::renderEnviroment()
 
 	//RaceBanner
 	modelStack.PushMatrix();
-	modelStack.Translate(0, -3, 0);
+	modelStack.Translate(-5.5f, -6, 50);
+	modelStack.Rotate(90.f, 0, 1, 0);
 	modelStack.Scale(5, 5, 6);
 	RenderMesh(meshList[RACEBANNER], true);
 	modelStack.PopMatrix();
 
 	//StreetLight
 	modelStack.PushMatrix();
-	modelStack.Translate(0, -3, 0);
+	modelStack.Translate(-9, -3, 50);
+	modelStack.Rotate(90.f, 0, 1, 0);
 	modelStack.Scale(6, 5, 6);
 	RenderMesh(meshList[STREETLIGHT], true);
 	modelStack.PopMatrix();
+
+	//TrafficLight
+	if (RedLight == false)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 9, 15);
+		modelStack.Scale(1, 1, 1);
+		RenderMesh(meshList[TRAFFICNULL], false);
+		modelStack.PopMatrix();
+	}
+	if (RedLight == true)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 9, 15);
+		modelStack.Scale(1, 1, 1);
+		RenderMesh(meshList[TRAFFICRED], false);
+		modelStack.PopMatrix();
+	}
+	if (GreenLight == false)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 6.5f, 15);
+		modelStack.Scale(1, 1, 1);
+		RenderMesh(meshList[TRAFFICNULL2], false);
+		modelStack.PopMatrix();
+	}
+	if (GreenLight == true)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 6.5f, 15);
+		modelStack.Scale(1, 1, 1);
+		RenderMesh(meshList[TRAFFICGREEN], false);
+		modelStack.PopMatrix();
+	}
+
+	// Pause Screen
+	if (OptionSelection == false)
+	{
+		RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
+		AbleToPress = true;
+		RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
+		AbleToPress = true;
+		RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
+		AbleToPress = true;
+		RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
+		AbleToPress = true;
+		elapsedTime -= FreezeTime;
+	}
+	if (ExitGame == true)
+	{
+		glDeleteVertexArrays(1, &m_vertexArrayID);
+		glDeleteProgram(m_programID);
+	}
 }
 
 
@@ -829,7 +1126,7 @@ void c_LevelThree::initLights()
 	m_parameters[U_LIGHT0_EXPONENT] = glGetUniformLocation(m_programID, "lights[0].exponent");
 
 	lights[0].type = Light::LIGHT_DIRECTIONAL;
-	lights[0].position.Set(1.f, -16.f, 25.f);
+	lights[0].position.Set(-9.f, 30.8f, 50.f);
 	lights[0].color.Set(1, 1, 1);
 	lights[0].power = 1.f;
 	lights[0].kC = 1.f;
@@ -864,7 +1161,7 @@ void c_LevelThree::initLights()
 	m_parameters[U_LIGHT1_EXPONENT] = glGetUniformLocation(m_programID, "lights[1].exponent");
 
 	lights[1].type = Light::LIGHT_POINT;
-	lights[1].position.Set(59.f, 30.8f, -22.3f);
+	lights[1].position.Set(-31.f, 30.8f, -8.3f);
 	lights[1].color.Set(1, 1, 1);
 	lights[1].power = 2;
 	lights[1].kC = 1.f;
@@ -899,7 +1196,7 @@ void c_LevelThree::initLights()
 	m_parameters[U_LIGHT2_EXPONENT] = glGetUniformLocation(m_programID, "lights[2].exponent");
 
 	lights[2].type = Light::LIGHT_POINT;
-	lights[2].position.Set(398.f, 30.8, -169.3f);
+	lights[2].position.Set(-178.f, 30.8f, -348.3f);
 	lights[2].color.Set(1, 1, 1);
 	lights[2].power = 2;
 	lights[2].kC = 1.f;
@@ -934,7 +1231,7 @@ void c_LevelThree::initLights()
 	m_parameters[U_LIGHT3_EXPONENT] = glGetUniformLocation(m_programID, "lights[3].exponent");
 
 	lights[3].type = Light::LIGHT_POINT;
-	lights[3].position.Set(387.f, 30.8f, -563.3f);
+	lights[3].position.Set(-571.f, 30.8f, -336.3f);
 	lights[3].color.Set(1, 1, 1);
 	lights[3].power = 2;
 	lights[3].kC = 1.f;
@@ -969,7 +1266,7 @@ void c_LevelThree::initLights()
 	m_parameters[U_LIGHT4_EXPONENT] = glGetUniformLocation(m_programID, "lights[4].exponent");
 
 	lights[4].type = Light::LIGHT_POINT;
-	lights[4].position.Set(92.f, 29.8f, -215.3f);
+	lights[4].position.Set(-591.f, 30.8f, 81.3f);
 	lights[4].color.Set(1, 1, 1);
 	lights[4].power = 2;
 	lights[4].kC = 1.f;
@@ -1004,7 +1301,7 @@ void c_LevelThree::initLights()
 	m_parameters[U_LIGHT5_EXPONENT] = glGetUniformLocation(m_programID, "lights[5].exponent");
 
 	lights[5].type = Light::LIGHT_POINT;
-	lights[5].position.Set(-249.f, 30.8f, -266.3f);
+	lights[5].position.Set(-276.f, 30.8f, 298.3f);
 	lights[5].color.Set(1, 1, 1);
 	lights[5].power = 2;
 	lights[5].kC = 1.f;
