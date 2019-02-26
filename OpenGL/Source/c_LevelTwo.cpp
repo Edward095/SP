@@ -281,7 +281,6 @@ void c_LevelTwo::Update(double dt)
 		GreenLight = true;
 	}
 	//-----------------------------------------------//
-
 	//------------KeyPress to Pause Game-------------//
 	if (Application::IsKeyPressed('P'))
 	{
