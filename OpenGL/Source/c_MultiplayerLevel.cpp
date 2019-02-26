@@ -73,11 +73,6 @@ void c_MultiplayerLevel::Init()
 	playerTwoCamTargetY = playerTwo->getPos().y;
 	playerTwoCamTargetZ = playerTwo->getPos().z;
 
-	OptionSelection = true;
-	AbleToPress = false;
-	VehicleMove = true;
-	ArrowP = 7;
-	
 	//----Traffic Light---------------//
 	RedLight = true;
 	GreenLight = false;
@@ -237,71 +232,8 @@ void c_MultiplayerLevel::Update(double dt)
 	playerOne->updatePos(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
 	playerTwo->updatePos(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
 
-	if (VehicleMove == true)
-	{
-	  playerOne->Movement(dt);
-	  playerTwo->Movement(dt);
-	}
-	if (OptionSelection == true)
-	{
-		VehicleMove = true;
-		duration++;
-	}
-
-	//------------KeyPress to Pause Game-------------//
-	if (Application::IsKeyPressed('P'))
-	{
-		OptionSelection = false;
-		VehicleMove = false;
-	}
-	//-----------KeyPress to Move Arrow Up-----------//
-	if (Application::IsKeyPressed(VK_UP))
-	{
-		ArrowP--;
-		if (OptionSelection == false)
-		{
-			if (ArrowP <= 6)
-			{
-				ArrowP = 7;
-			}
-		}
-	}
-	//----------KeyPress to Move Arrow Down----------//
-	if (Application::IsKeyPressed(VK_DOWN))
-	{
-		ArrowP++;
-		if (OptionSelection == false)
-		{
-			if (ArrowP >= 7)
-			{
-				ArrowP = 6;
-			}
-		}
-	}
-	//-----------KeyPress to Select Option-----------//
-	if (OptionSelection == false && ArrowP == 7)
-	{
-		if (Application::IsKeyPressed(VK_RETURN))
-		{
-			OptionSelection = true;
-		}
-	}
-	if (OptionSelection == false && ArrowP == 6)
-	{
-		if (Application::IsKeyPressed(VK_RETURN))
-		{
-			ExitGame = true;
-		}
-	}
-	//---------------------------------------------//
-	
-	//------------Updating Traffic Lights------------//
-	if (elapsedTime >= 10)
-	{
-		RedLight = false;
-		GreenLight = true;
-	}
-	//-----------------------------------------------//
+	playerOne->Movement(dt);
+	playerTwo->Movement(dt);
 
 	//------------Updating Traffic Lights------------//
 	if (elapsedTime >= 10)
@@ -1201,25 +1133,6 @@ void c_MultiplayerLevel::renderEnviroment()
 		modelStack.Scale(1, 1, 1);
 		RenderMesh(meshList[TRAFFICGREEN], false);
 		modelStack.PopMatrix();
-	}
-
-	// Pause Screen
-	if (OptionSelection == false)
-	{
-		RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
-		AbleToPress = true;
-		RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
-		AbleToPress = true;
-		elapsedTime -= FreezeTime;
-	}
-	if (ExitGame == true)
-	{
-		glDeleteVertexArrays(1, &m_vertexArrayID);
-		glDeleteProgram(m_programID);
 	}
 }
 
