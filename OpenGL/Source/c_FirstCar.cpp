@@ -52,8 +52,10 @@ void c_FirstCar::Ability(double dt)
 	{
 		if (Application::IsKeyPressed('Q'))
 		{
-			if (Driving || Backwards)
+			if (Driving)
 				PressQ = true;
+			else
+				PressQ = false;
 		}
 	}
 	

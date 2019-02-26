@@ -242,8 +242,6 @@ void c_CarBaseClass::Movement(double dt)
 				//Collided = false;
 				if (Acceleration > MaxAcceleration - Friction)
 					Acceleration = MaxAcceleration - Friction;
-				//if (VelocityZ > MaxSpeed && (PressQ))
-					//VelocityZ = 1.5; 
 				if (VelocityZ > MaxSpeed && (!PressQ))
 					//VelocityZ -= 0.5;
 					VelocityZ = MaxSpeed;
@@ -277,6 +275,7 @@ void c_CarBaseClass::Movement(double dt)
 		{
 			if (!Application::IsKeyPressed('W'))
 			{
+				PressQ = false;
 				Acceleration += -Friction;
 				VelocityZ -= Acceleration * (float)dt;
 
@@ -347,9 +346,9 @@ void c_CarBaseClass::Movement(double dt)
 
 				if (Acceleration < -(MaxAcceleration - Friction))
 					Acceleration = -(MaxAcceleration - Friction);
-				if (VelocityZ < -MaxSpeed && (PressQ))
-					VelocityZ = -2;
-				else if (VelocityZ < -MaxSpeed && (!PressQ))
+			/*	if (VelocityZ < -MaxSpeed && (PressQ))
+					VelocityZ = -2;*/
+				if (VelocityZ < -MaxSpeed && (!PressQ))
 					VelocityZ = -MaxSpeed;
 			}
 			else
