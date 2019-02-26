@@ -25,6 +25,10 @@ public:
 		TOP,
 		BOTTOM,
 		RACEBANNER,
+		TRAFFICRED,
+		TRAFFICNULL,
+		TRAFFICNULL2,
+		TRAFFICGREEN,
 		STREETLIGHT,
 		LIGHT1,
 		LIGHT2,
@@ -158,6 +162,8 @@ private:
 	void updateEnviromentCollision();
 	void updatePlayerOneCollision();
 	void updatePlayerTwoCollision();
+	void RenderSpeedometerOne();
+	void RenderSpeedometerTwo();
 
 	FirstPersonCamera playerOneCam;
 	float playerOneCamPosX;
@@ -178,20 +184,36 @@ private:
 	float elapsedTime;
 	std::string elapedTimeCut;
 
+	//Traffic Lights
+	float red1, red2, red3, green1, green2, green3;
+	bool RedLight, GreenLight;
 
 	c_Entity front;
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
 	c_Entity track;
-
+	c_Entity PickUp;
 	c_CarBaseClass* playerOne;
 	c_CarBaseClass* playerTwo;
+	c_Entity speedometer;
+	c_Entity needle;
+	c_Entity circle;
 
 	c_Impulse Impulse;
 		
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
+
+	bool checkFO = false;
+	bool checkFT = false;
+	bool OFreeze = false;
+	bool TFreeze = false;
+	int Oduration;
+	int Tduration;
+	float FreezeTime;
+	bool pick = false;
+	int cooldown;
 };
 
 #endif

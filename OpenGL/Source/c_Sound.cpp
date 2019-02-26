@@ -1,6 +1,6 @@
 #include "c_Sound.h"
 
-
+c_Sound* c_Sound::instance = 0;
 
 c_Sound::c_Sound()
 {
@@ -9,6 +9,17 @@ c_Sound::c_Sound()
 
 c_Sound::~c_Sound()
 {
+}
+
+c_Sound* c_Sound::getInstance()
+{
+	if (!instance)
+	{
+		instance = new c_Sound();
+		return instance;
+	}
+	else
+		return instance;
 }
 
 void c_Sound::f_Init_Sound()

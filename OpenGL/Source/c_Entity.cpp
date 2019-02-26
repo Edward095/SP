@@ -156,7 +156,10 @@ bool c_Entity::gotCollide(std::string uniqueName, bool canCollide)
 		for (int i = 0; i < objectManager->getCannotCollide().size(); i++)
 		{
 			if (objectManager->getCannotCollide().at(i)->getUniqueName() == uniqueName)
+			{
 				objectToCollide = objectManager->getCannotCollide().at(i)->getOBB();
+				break;
+			}
 		}
 	}
 	if (objectToCollide != nullptr && this->OBB->OBB(objectToCollide))
@@ -187,7 +190,18 @@ bool c_Entity::ignoreEntity(std::string uniqueName)
 	return	(uniqueName != this->uniqueName &&
 		uniqueName != "track" ||
 		uniqueName != "Boostpad" ||
-		uniqueName != "Slowpad");
+		uniqueName != "Boostpad2" ||
+		uniqueName != "Boostpad3" ||
+		uniqueName != "Boostpad4" ||
+		uniqueName != "Boostpad5" ||
+		uniqueName != "Boostpad6" ||
+		uniqueName != "Slowpad" ||
+		uniqueName != "Slowpad2" ||
+		uniqueName != "Slowpad3" ||
+		uniqueName != "Slowpad4" ||
+		uniqueName != "Slowpad5" ||
+		uniqueName != "Pickup" ||
+		uniqueName != "Slowpad6");
 }
 const char* c_Entity::getMeshPath()
 {

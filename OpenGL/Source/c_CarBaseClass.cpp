@@ -28,6 +28,9 @@ c_CarBaseClass::c_CarBaseClass()
 	BoostPad = false;
 	SlowPad = false;
 	once = false;
+	Oslowed = false;
+	Tslowed = false;
+	SpedoVeloZ = 0;
 }
 c_CarBaseClass::~c_CarBaseClass()
 {
@@ -62,9 +65,9 @@ void c_CarBaseClass::Movement(double dt)
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			//OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
-			if (gotCollide("Boostpad", false))
+			if (gotCollide("Boostpad", false) || gotCollide("Boostpad2", false) || gotCollide("Boostpad3", false) || gotCollide("Boostpad4", false) || gotCollide("Boostpad5", false) || gotCollide("Boostpad6", false) || gotCollide("Boostpad7", false))
 				BoostPad = true;
-			if (gotCollide("Slowpad", false))
+			if (gotCollide("Slowpad", false) || gotCollide("Slowpad2", false) || gotCollide("Slowpad3", false) || gotCollide("Slowpad4", false) || gotCollide("Slowpad5", false) || gotCollide("Slowpad6", false) || gotCollide("Slowpad7", false))
 				SlowPad = true;
 
 
@@ -74,9 +77,10 @@ void c_CarBaseClass::Movement(double dt)
 				Backwards = false;
 				if (Acceleration > MaxAcceleration - Friction)
 					Acceleration = MaxAcceleration - Friction;
-				if (VelocityZ > MaxSpeed && (PressQ))
-					VelocityZ = 1.5;
-				else if (VelocityZ > MaxSpeed && (!PressQ || !Nitro))
+				if (VelocityZ > MaxSpeed && (!PressQ))
+					//VelocityZ -= 0.5;
+					VelocityZ = MaxSpeed;
+				if (VelocityZ < MaxSpeed && (!PressQ))
 					//VelocityZ -= 0.5;
 					VelocityZ = MaxSpeed;
 				if (BoostPad)
@@ -217,6 +221,7 @@ void c_CarBaseClass::Movement(double dt)
 	else
 	{
 		if (Application::IsKeyPressed('W') && Backwards == false)
+
 		{
 			//Ability(dt);
 			Acceleration += (MaxAcceleration - Friction);
@@ -225,11 +230,10 @@ void c_CarBaseClass::Movement(double dt)
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			//OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
-			if (gotCollide("Boostpad", false))
-				BoostPad = true;
-			if (gotCollide("Slowpad", false))
-				SlowPad = true;
-
+			if (gotCollide("Boostpad",false) || gotCollide("Boostpad2", false) || gotCollide("Boostpad3", false) || gotCollide("Boostpad4", false) || gotCollide("Boostpad5", false) || gotCollide("Boostpad6", false) || gotCollide("Boostpad7", false))
+			BoostPad = true;
+			if (gotCollide("Slowpad", false) || gotCollide("Slowpad2", false) || gotCollide("Slowpad3", false) || gotCollide("Slowpad4", false) || gotCollide("Slowpad5", false) || gotCollide("Slowpad6", false) || gotCollide("Slowpad7", false))
+			SlowPad = true;
 
 			if (!gotCollide(updateX, pos.y, updateZ))
 			{
@@ -247,7 +251,6 @@ void c_CarBaseClass::Movement(double dt)
 					VelocityZ = 1.8f;
 				if (SlowPad)
 					VelocityZ = 0.5f;
-
 			}
 			else
 			{
@@ -260,8 +263,9 @@ void c_CarBaseClass::Movement(double dt)
 					VelocityZ = -VelocityZ / 2;
 				}
 			}
-
 		}
+		 
+	}
 		if (Driving)
 		{
 			if (!Application::IsKeyPressed('W'))
@@ -384,14 +388,7 @@ void c_CarBaseClass::Movement(double dt)
 				}
 			}
 		}
-	}
-}
-
-
-
-float c_CarBaseClass::GetSpeed()
-{
-	return VelocityZ;
+	
 }
 
 float c_CarBaseClass::GetMaxAcceleration()
@@ -404,6 +401,10 @@ float c_CarBaseClass::GetAcceleration()
 	return Acceleration;
 }
 
+float c_CarBaseClass::GetSpeed()
+{
+	return VelocityZ;
+}
 
 void c_CarBaseClass::SetFriction(float friction)
 {
@@ -424,7 +425,7 @@ void c_CarBaseClass::PadEffect(double dt)
 	if (BoostPad)
 	{
 		Duration++;
-		if (Duration >= 25) // 3 sec/dt
+		if (Duration >= 50) // 3 sec/dt
 		{
 			BoostPad = false;
 			Duration = 0;
@@ -447,6 +448,29 @@ void c_CarBaseClass::SetSpeed(float speed)
 	this->VelocityZ = speed;
 }
 
+void c_CarBaseClass::PSpeed(float speed)
+{
+	this->VelocityZ = speed;
+}
+
+void c_CarBaseClass::SetOSlowed(bool speed)
+{
+	Oslowed = speed;
+}
+
+void c_CarBaseClass::SetTSlowed(bool speed)
+{
+	Tslowed = speed;
+}
+
+float c_CarBaseClass::GetSpedoSpeed()
+{
+	SpedoVeloZ = (VelocityZ * 180);
+	if (VelocityZ <= 0)
+		SpedoVeloZ = 0;
+
+	return SpedoVeloZ;
+}
 void c_CarBaseClass::SetSteeringAngle(float angle)
 {
 	this->SteeringAngle = angle;

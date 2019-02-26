@@ -1,5 +1,0 @@
-﻿  c_Npc.cpp
-c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_npc.cpp(683): warning C4018: '<': signed/unsigned mismatch
-c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_npc.cpp(685): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\irfan\desktop\sp2(github)\sp\opengl\source\c_npc.cpp(686): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  OpenGL.vcxproj -> C:\Users\irfan\Desktop\Sp2(Github)\SP\Debug\OpenGL.exe

@@ -28,6 +28,10 @@ public:
 		LIGHT2,
 		TRACK,
 		RACEBANNER,
+		TRAFFICRED,
+		TRAFFICNULL,
+		TRAFFICNULL2,
+		TRAFFICGREEN,
 		STREETLIGHT,
 		NITRO,
 		BOOSTPAD,
@@ -156,7 +160,7 @@ private:
 	void renderLights();
 	void updateLights(int num);
 
-	void RenderMesh(Mesh *mesh, bool enableLight);
+	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
@@ -172,12 +176,27 @@ private:
 	c_Entity back;
 	c_Entity left;
 	c_Entity right;
+	c_Entity speedometer;
+	c_Entity needle;
+	c_Entity circle;
 
 	c_AI AI;
 	c_CarBaseClass* car;
 
 	c_Entity boost;
+	c_Entity PickUp;
+	c_Entity boost2;
+	c_Entity boost3;
+	c_Entity boost4;
+	c_Entity boost5;
+	c_Entity boost6;
 	c_Entity slow;
+	c_Entity slow2;
+	c_Entity slow3;
+	c_Entity slow4;
+	c_Entity slow5;
+	c_Entity slow6;
+
 	c_Entity FinishLine;
 	c_Entity track;
 
@@ -186,6 +205,7 @@ private:
 
 	//Variables
 	float elapsedTime;
+	float FreezeTime;
 	float TimePassed;
 	float CamPosX;
 	float CamPosY;
@@ -193,6 +213,8 @@ private:
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
+	bool Freeze = false;
+
 	float FPS;
 	float Countdown;
 	float Timer;
@@ -205,6 +227,10 @@ private:
 	int Cooldown;
 	int laps;
 	int AIlaps;
+
+	bool pick = false;
+	bool checkF = false;
+	int cooldown;
 	bool Finish;
 	bool Raining;
 	bool Snowing;
@@ -213,10 +239,23 @@ private:
 	bool Win;
 	bool Lose;
 
+	float WheelRotation;
+
+	float ArrowP;
+	bool ExitGame;
+	bool AbleToPress;
+	bool OptionSelection;
+	bool VehicleMove;
+
+	//Traffic Lights
+	float red1, red2, red3, green1, green2, green3;
+	bool RedLight, GreenLight;
+
 	c_Weather rain;
 	c_Weather snow;
 	void renderRain();
 	void RenderSnow();
+	void RenderSpeedometer();
 };
 
 #endif

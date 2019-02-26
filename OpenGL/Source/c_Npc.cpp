@@ -132,6 +132,11 @@ void c_Npc::Init()
 	ArrowY = 7;
 	BounceTime = 0;
 	
+	Audio = c_Sound::getInstance();
+
+	Audio->f_Init_Sound();
+	Audio->f_Start_Menu_music();
+
 	//booleans
 	AbleToPress = false;
 	Talk = false;
@@ -312,6 +317,7 @@ void c_Npc::UpdateNpc(double dt)
 	
 	if ((Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Continue == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Override == true))
 	{
+		Audio->f_Menu_MoveSelect();
 		ArrowY--;
 		if (Continue == true || Override == true)
 		{
@@ -340,7 +346,9 @@ void c_Npc::UpdateNpc(double dt)
 	{
 	
 		ArrowY++;
-		if (Continue == true || Override == true)
+		Audio->f_Menu_MoveSelect();
+
+                if (Continue == true || Override == true)
 		{
 			if (ArrowY > 7)
 			{
@@ -365,6 +373,15 @@ void c_Npc::UpdateNpc(double dt)
 	}
 	if ((Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && StartGame == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Options == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Continue == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Override == true && AbleToPress == true))
 	{
+
+
+
+
+		BounceTime = ElapsedTime + 0.125;
+		Audio->f_Menu_ConfirmSelect();
+
+		ArrowY = 7;
+
 		if (LevelSelection == false && StartGame == true && Override == false)
 		{
 			if (ArrowY == 7)
@@ -470,18 +487,23 @@ void c_Npc::UpdateNpc(double dt)
 			if (ArrowY == 7)
 			{
 				//put music here 
+				Audio->f_AdjustMusicVolume(1.0f);
+				Audio->f_AdjustSFXVolume(1.0f);
 			}
 			else if (ArrowY == 6)
 			{
-				
+				Audio->f_AdjustMusicVolume(0.75f);
+				Audio->f_AdjustSFXVolume(0.75f);
 			}
 			else if (ArrowY == 5)
 			{
-				
+				Audio->f_AdjustMusicVolume(0.5f);
+				Audio->f_AdjustSFXVolume(0.5f);
 			}
 			else if (ArrowY == 4)
 			{
-
+				Audio->f_AdjustMusicVolume(0.0f);
+				Audio->f_AdjustSFXVolume(0.0f);
 			}
 		}
 		if (Continue)

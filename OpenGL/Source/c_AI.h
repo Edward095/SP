@@ -21,11 +21,13 @@ public:
 	virtual void Ability(double dt);
 	virtual void PowerUp(bool check);
 	virtual void isOffRoad();
+	void Speed(int speed);
 
 protected:
 	int Waypoint;
 	int Direction;
 	int Turning;
 	int ToTurn;
+	bool freeze = false;
 };
 #endif
