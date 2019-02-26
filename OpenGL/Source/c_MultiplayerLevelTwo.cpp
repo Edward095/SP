@@ -72,7 +72,6 @@ void c_MultiplayerLevelTwo::Init()
 	AbleToPress = false;
 	VehicleMove = true;
 	ArrowP = 7;
-	
 	//----Traffic Light---------------//
 	RedLight = true;
 	GreenLight = false;
