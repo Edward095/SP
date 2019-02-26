@@ -13,6 +13,7 @@
 #include <iomanip>
 
 #include "c_DataManager.h"
+#include "c_SceneManager.h"
 
 #include "c_Firstcar.h"
 #include "c_Secondcar.h";
@@ -243,20 +244,10 @@ void c_LevelThree::Init()
 	meshList[SNOW] = MeshBuilder::GenerateSphere("Snow", Color(1, 1, 1), 18, 18, 2);
 	//----------------------------------------------------------------------------------------//
 
-	//car1 = OBJmanager->getCanCollide("player1");
-	//c_FirstCar* first = dynamic_cast <c_FirstCar*>(car1);
-	//if (first)
-	//	car = first;
-	//c_SecondCar* second = dynamic_cast <c_SecondCar*>(car1);
-	//if (second)
-	//{
-	//	car = second;
-	//	checkF = true;
-	//}
-
-	//c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car1);
-	//if (third)
-	//	car = third;
+	//----Rendering Cooldown Bar----------------------------------------------------------------------------//
+	meshList[ONCOOLDOWN] = MeshBuilder::GenerateQuad("CoolDownBar", Color(1.f, 0.f, 0.f), 2.f);
+	//meshList[ONCOOLDOWN]->textureID = LoadTGA("Image//OnCoolDown.tga");
+	//-----------------------------------------------------------------------------------------------------//
 
 	//Init Entities//
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-10, 1.f, 270), false);
@@ -294,6 +285,8 @@ void c_LevelThree::Init()
 
 void c_LevelThree::Update(double dt)
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	if (!startline)
 	{
 		Audio->f_Game_Fanfare_Startline();
@@ -470,6 +463,11 @@ void c_LevelThree::Update(double dt)
 			Lose = true;
 	}
 	//-----------------------------------------------------------//
+	if (Lose || Win)
+	{
+		scene->getScene("FINISHED")->Init();
+		scene->updateState("FINISHED");
+	}
 
 	if (car->gotCollide("Pickup", false))
 	{
@@ -870,6 +868,8 @@ void c_LevelThree::Render()
 	RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
 	//----------------------------------------------------------------------------------------------------------//
 	RenderSpeedometer();
+	if (car->onCooldown())
+		renderOnCooldown();
 }
 
 void c_LevelThree::renderRain()
@@ -1610,7 +1610,22 @@ void c_LevelThree::RenderSpeedometer()
 	viewStack.PopMatrix();
 	projectionStack.PopMatrix();
 }
-
+void c_LevelThree::renderOnCooldown()
+{
+	Mtx44 ortho;
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity();
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 20, 0);
+	RenderMesh(meshList[ONCOOLDOWN], false);
+	modelStack.PopMatrix();
+	viewStack.PopMatrix();
+	projectionStack.PopMatrix();
+}
 void c_LevelThree::Exit()
 {
 	// Cleanup here

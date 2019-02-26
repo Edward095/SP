@@ -32,6 +32,7 @@ public:
 		LIGHT1,
 		LIGHT2,
 		TRACK,
+		ONCOOLDOWN,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -161,6 +162,7 @@ private:
 	void updateEnviromentCollision();
 	void RenderSpeedometerOne();
 	void RenderSpeedometerTwo();
+	void renderOnCoolDown();
 	void resetVar();
 
 	FirstPersonCamera playerOneCam;

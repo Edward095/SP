@@ -14,6 +14,8 @@ public:
 	enum GEOMETRY_TYPE
 	{
 		TEXT,
+		FILESELECTION,
+		NOSAVEFILE,
 		ARROW,
 		NUM_GEOMETRY,
 	};
@@ -66,6 +68,7 @@ private:
 	Light light[1];
 
 	void RenderMesh(Mesh *mesh, bool enableLight);
+	void RenderTextOnScreen(Mesh * mesh, std::string text, Color color, float size, float x, float y);
 	void initLights();
 	void renderLights();
 	void updateLights(int num);
@@ -73,11 +76,13 @@ private:
 	void renderSelection();
 	void updateSelection(double dt);
 	void loadFile();
+	bool checkEmpty();
 
 	//Variables
 	float ArrowX, ArrowY;
 	double elapsedTime;
 	double bounceTime;
+	bool noFile;
 
 	std::string OBJpath;
 	std::string TGApath;

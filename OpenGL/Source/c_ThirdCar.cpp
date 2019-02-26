@@ -14,7 +14,6 @@ c_ThirdCar::c_ThirdCar()
 
 	MaxSpeed = 1;
 	SteeringAngle = 0;
-	Duration = 0;
 	MaxAcceleration = 0.4;
 	Friction = 0.04;
 	Steering = 2;
@@ -24,8 +23,6 @@ c_ThirdCar::c_ThirdCar()
 	Nitro = false;
 	BoostPad = false;
 	SlowPad = false;
-	once = false;
-	Cooldown = 150;
 	offRoad = false;
 	abilityUsed = false;
 
@@ -44,6 +41,9 @@ c_ThirdCar::~c_ThirdCar()
 void c_ThirdCar::Ability(double dt)
 {
 	c_Sound* Audio = c_Sound::getInstance();
+
+	elapsedTime += dt;
+
 	if (uniqueName == "player2")
 	{
 		if (Application::IsKeyPressed('P') && !once)
@@ -55,13 +55,12 @@ void c_ThirdCar::Ability(double dt)
 			{
 				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
 			}
-			//PressQ = true;
-			once = true;
+			PressQ = true;
 		}
 	}
 	else
 	{
-		if (Application::IsKeyPressed('Q') && !once)
+		if (Application::IsKeyPressed('Q') && !PressQ)
 		{
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
@@ -70,26 +69,24 @@ void c_ThirdCar::Ability(double dt)
 			{
 				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
 			}
-			//PressQ = true;
-			once = true;
+			PressQ = true;
 		}
 	}
 	
-	if (once)
+	if (PressQ && coolDown == 0.f)
 	{
-		Duration++;
+		coolDown = elapsedTime + 10.f;
 		if (!abilityUsed)
 		{
 			Audio->f_Game_Ability_Teleport();
 			abilityUsed = true;
 		}
 	}
-
-	if (Duration >= 500) // 3 sec/dt
+	if (elapsedTime >= coolDown)
 	{
-		once = false;
+		PressQ = false;
 		abilityUsed = false;
-		Duration = 0;
+		coolDown = 0.f;
 	}
 }
 

@@ -14,7 +14,6 @@ c_SecondCar::c_SecondCar()
 
 	MaxSpeed = 0.6;
 	SteeringAngle = 0;
-	Duration = 0;
 	MaxAcceleration = 0.8;
 	Friction = 0.04;
 	Steering = 4;
@@ -24,7 +23,6 @@ c_SecondCar::c_SecondCar()
 	Nitro = false;
 	BoostPad = false;
 	SlowPad = false;
-	once = false;
 	offRoad = false;
 	Oslowed = false;
 	Tslowed = false;
@@ -46,6 +44,7 @@ c_SecondCar::~c_SecondCar()
 void c_SecondCar::Ability(double dt)
 {
 	c_Sound* Audio = c_Sound::getInstance();
+	elapsedTime += dt;
 	if (uniqueName == "player2")
 	{
 		if (Application::IsKeyPressed('P'))

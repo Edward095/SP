@@ -36,6 +36,7 @@ void c_Continue::Init()
 	bounceTime = 0;
 	elapsedTime = 0;
 	levelNum = 0;
+	noFile = false;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -95,20 +96,24 @@ void c_Continue::Init()
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 10000.f);
 	projectionStack.LoadMatrix(projection);
 
-	meshList[TEXT] = MeshBuilder::GenerateQuad("MenuText", Color(1, 0, 0), 10);
-	meshList[TEXT]->textureID = LoadTGA("Image//Continue.tga");
-	meshList[ARROW] = MeshBuilder::GenerateQuad("Arrow", Color(1, 0, 0), 0.7f);
+	meshList[TEXT] = MeshBuilder::GenerateText("text", (unsigned int)16, (unsigned int)16);
+	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
+	meshList[FILESELECTION] = MeshBuilder::GenerateQuad("MenuText", Color(1.f, 0.f, 0.f), 10.f);
+	meshList[FILESELECTION]->textureID = LoadTGA("Image//Continue.tga");
+	meshList[ARROW] = MeshBuilder::GenerateQuad("Arrow", Color(1.f, 0.f, 0.f), 0.7f);
 	meshList[ARROW]->textureID = LoadTGA("Image//Arrow.tga");
-
+	meshList[NOSAVEFILE] = MeshBuilder::GenerateQuad("Arrow", Color(1.f, 0.f, 0.f), 0.7f);
+	meshList[NOSAVEFILE]->textureID = LoadTGA("Image//Arrow.tga");
 }
 void c_Continue::Update(double dt)
 {		
-	//c_SceneManager* scene = c_SceneManager::getInstance();
-
+	c_SceneManager* scene = c_SceneManager::getInstance();
 	elapsedTime += dt;
-	//if(scene->checkState("CONTINUE"))
-	//	updateSelection(dt);
-	updateSelection(dt);
+
+	if (Application::IsKeyPressed(VK_RETURN))
+		scene->updateState("NPC");
+	else 
+		updateSelection(dt);
 }
 void c_Continue::Render()
 {
@@ -127,7 +132,14 @@ void c_Continue::Render()
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
 	renderLights();
-	renderSelection();
+	if (!checkEmpty())
+	{
+		renderSelection();
+		if(noFile)
+			RenderTextOnScreen(meshList[TEXT], "Nothing to load", Color(0.f, 1.f, 0.f), 3.f, 9.f, 18.f);
+	}
+	else
+		RenderMesh(meshList[NOSAVEFILE], false);
 
 }
 void c_Continue::Exit()
@@ -183,6 +195,53 @@ void c_Continue::RenderMesh(Mesh *mesh, bool enableLight)
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
+}
+void c_Continue::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y)
+{
+	if (!mesh || mesh->textureID <= 0) //Proper error check
+	{
+		return;
+	}
+
+	glDisable(GL_DEPTH_TEST);
+
+	//Add these code just after glDisable(GL_DEPTH_TEST);
+	Mtx44 ortho;
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10); //size of screen UI
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity(); //No need camera for ortho mode
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity(); //Reset modelStack
+	modelStack.Scale(size, size, size);
+	modelStack.Translate(x, y, 0);
+
+	glUniform1i(m_parameters[U_TEXT_ENABLED], 1);
+	glUniform3fv(m_parameters[U_TEXT_COLOR], 1, &color.r);
+	glUniform1i(m_parameters[U_LIGHTENABLED], 0);
+	glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, mesh->textureID);
+	glUniform1i(m_parameters[U_COLOR_TEXTURE], 0);
+	for (unsigned i = 0; i < text.length(); ++i)
+	{
+		Mtx44 characterSpacing;
+		characterSpacing.SetToTranslation(i * 0.67f, 0, 0); // 1.0f is the spacing of each character, you may change this value
+		Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
+		glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+		mesh->Render((unsigned)text[i] * 6, 6); // always 6 because a quad is made of 6 vertices
+	}
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
+
+	//Add these code just before glEnable(GL_DEPTH_TEST);
+	projectionStack.PopMatrix();
+	viewStack.PopMatrix();
+	modelStack.PopMatrix();
+
+	glEnable(GL_DEPTH_TEST);
 }
 void c_Continue::initLights()
 {
@@ -281,7 +340,7 @@ void c_Continue::updateLights(int num)
 
 void c_Continue::renderSelection()
 {
-	RenderMesh(meshList[TEXT], false);
+	RenderMesh(meshList[FILESELECTION], false);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(ArrowX, ArrowY, 1.f);
@@ -297,17 +356,19 @@ void c_Continue::updateSelection(double dt)
 
 	if (Application::IsKeyPressed(VK_UP) && bounceTime < elapsedTime)
 	{
+		noFile = false;
 		ArrowY += 2.3f;
 		if (ArrowY > 2.85f)
 			ArrowY = -1.75f;
-		bounceTime = elapsedTime + 0.125;
+		bounceTime = elapsedTime + 0.125f;
 	}
 	if (Application::IsKeyPressed(VK_DOWN) && bounceTime < elapsedTime)
 	{
+		noFile = false;
 		ArrowY -= 2.3f;
 		if (ArrowY < -1.75f)
 			ArrowY = 2.85f;
-		bounceTime = elapsedTime + 0.125;
+		bounceTime = elapsedTime + 0.125f;
 	}
 	if (Application::IsKeyPressed(VK_SPACE) && bounceTime < elapsedTime)
 	{
@@ -318,13 +379,18 @@ void c_Continue::updateSelection(double dt)
 		else if (ArrowY = -1.75f)
 			data->selectFile(3);
 
-		loadFile();
-		const char* obj = OBJpath.c_str();
-		OBJmanager->addCanCollide("player1", obj, TGApath.c_str(), (0, 0, 0));
-		scene->getScene("GARAGE")->Init();
-		scene->getScene(scene->getLevel())->Init();
-		scene->updateState(scene->getLevel());
-		bounceTime = elapsedTime + 0.125;
+		if (data->isEmpty())
+			noFile = true;
+		else
+		{
+			loadFile();
+			const char* obj = OBJpath.c_str();
+			OBJmanager->addCanCollide("player1", obj, TGApath.c_str(), (0.f, 0.f, 0.f));
+			scene->getScene("GARAGE")->Init();
+			scene->getScene(scene->getLevel())->Init();
+			scene->updateState(scene->getLevel());
+		}
+		bounceTime = elapsedTime + 0.125f;
 	}
 }
 void c_Continue::loadFile()
@@ -332,6 +398,23 @@ void c_Continue::loadFile()
 	c_DataManager* data = c_DataManager::getInstance();
 
 	data->readFromFile(OBJpath,TGApath);
+}
+bool c_Continue::checkEmpty()
+{
+	c_DataManager* data = c_DataManager::getInstance();
+	
+	data->selectFile(1);
+	if (data->isEmpty())
+	{
+		data->selectFile(2);
+		if (data->isEmpty())
+		{
+			data->selectFile(3);
+			if (data->isEmpty())
+				return true;
+		}
+	}
+	return false;
 }
 
 void c_Continue::resetVar()

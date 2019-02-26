@@ -202,7 +202,6 @@ void c_LevelOne::Init()
 	//------------------------------------------------------------------------------------------------//
 
 	//----Rendering Race Track And Stuff On Race Track----------------------------------------//
-
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
@@ -211,12 +210,16 @@ void c_LevelOne::Init()
 	meshList[TRAFFICNULL2] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
 	meshList[TRAFFICGREEN] = MeshBuilder::GenerateSphere("traffic light", Color(0, 1, 0), 18, 36, 1.f);
 	//----------------------------------------------------------------------------------------//
-
-
+	
 	//----Rendering Weather Conditions--------------------------------------------------------//
     meshList[RAIN] = MeshBuilder::GenerateSphere("Rain", Color(0,0,1), 18, 18, 2);
 	meshList[SNOW] = MeshBuilder::GenerateSphere("Snow", Color(1, 1, 1), 18, 18, 2);
     //----------------------------------------------------------------------------------------//
+
+	//----Rendering Cooldown Bar----------------------------------------------------------------------------//
+	meshList[ONCOOLDOWN] = MeshBuilder::GenerateQuad("CoolDownBar", Color(1.f, 0.f, 0.f),2.f);
+	//meshList[ONCOOLDOWN]->textureID = LoadTGA("Image//OnCoolDown.tga");
+	//-----------------------------------------------------------------------------------------------------//
 
 	c_Entity* car1;
 	car1 = OBJmanager->getCanCollide("player1");
@@ -280,7 +283,6 @@ void c_LevelOne::Init()
 
 void c_LevelOne::Update(double dt)
 {
-
 	c_SceneManager* scene = c_SceneManager::getInstance();
 	if (!startline)
 	{
@@ -1252,7 +1254,10 @@ void c_LevelOne::renderEntity()
 			RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 9, 10);
 		//----------------------------------------------------------------------------------------------------------//
 		RenderSpeedometer();
+		if (car->onCooldown())
+			renderOnCooldown();
 		//----------------------------------------------------------------------------------------------------------//
+		RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetSpeed()), Color(1, 0, 0), 4, 9, 10);
 }
 void c_LevelOne::renderLevel()
 {
@@ -1417,14 +1422,13 @@ void c_LevelOne::updateLevel(double dt)
 		{
 			elapsedTime += (float)dt;
 			car->Movement(dt);
-			car->Ability(dt);
 			AI.LevelOne(dt);
 		}
 	}
 	//-------------------------------------------//
 
         //------------Updating Traffic Lights------------//
-	if (elapsedTime >= 10)
+	if (elapsedTime >= Countdown)
 	{
 		RedLight = false;
 		GreenLight = true;
@@ -1482,9 +1486,6 @@ void c_LevelOne::updateLevel(double dt)
 		VehicleMove = true;
 		duration++;
 	}
-	//Updating Car Position for Player and AI
-	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
-	//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 
 	//Update Camera
 	camera.Update(dt);
@@ -1579,6 +1580,23 @@ void c_LevelOne::RenderSpeedometer()
 				modelStack.Scale(7, 7, 7);
 				RenderMesh(needle.getMesh(), false);
 				modelStack.PopMatrix();
+			modelStack.PopMatrix();
+		viewStack.PopMatrix();
+	projectionStack.PopMatrix();
+}
+
+void c_LevelOne::renderOnCooldown()
+{
+	Mtx44 ortho;
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	projectionStack.PushMatrix();
+		projectionStack.LoadMatrix(ortho);
+		viewStack.PushMatrix();
+			viewStack.LoadIdentity();
+			modelStack.PushMatrix();
+				modelStack.LoadIdentity();
+				modelStack.Translate(9, 20, 0);
+				RenderMesh(meshList[ONCOOLDOWN], false);
 			modelStack.PopMatrix();
 		viewStack.PopMatrix();
 	projectionStack.PopMatrix();

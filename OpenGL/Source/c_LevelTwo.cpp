@@ -13,10 +13,12 @@
 #include <iomanip>
 
 #include "c_DataManager.h"
+#include "c_SceneManager.h"
 
 #include "c_Firstcar.h"
 #include "c_Secondcar.h";
 #include "c_Thirdcar.h"
+
 
 #include <Windows.h>
 #include <time.h>
@@ -247,6 +249,11 @@ void c_LevelTwo::Init()
 	meshList[SNOW] = MeshBuilder::GenerateSphere("Snow", Color(1, 1, 1), 18, 18, 2);
 	//----------------------------------------------------------------------------------------//
 
+	//----Rendering Cooldown Bar----------------------------------------------------------------------------//
+	meshList[ONCOOLDOWN] = MeshBuilder::GenerateQuad("CoolDownBar", Color(1.f, 0.f, 0.f), 2.f);
+	//meshList[ONCOOLDOWN]->textureID = LoadTGA("Image//OnCoolDown.tga");
+	//-----------------------------------------------------------------------------------------------------//
+
 	//Init Entities//
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-300, 1.f, 210), false);
 	boost2.init("Boostpad2", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-470, 1.f, 290), false);
@@ -282,6 +289,8 @@ void c_LevelTwo::Init()
 
 void c_LevelTwo::Update(double dt)
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	if (!startline)
 	{
 		Audio->f_Game_Fanfare_Startline();
@@ -457,6 +466,11 @@ void c_LevelTwo::Update(double dt)
 			Lose = true;
 	}
 	//---------------------------------------------------------//
+	if (Lose || Win)
+	{
+		scene->getScene("FINISHED")->Init();
+		scene->updateState("FINISHED");
+	}
 
 	if (car->gotCollide("Pickup", false))
 	{
@@ -842,6 +856,8 @@ void c_LevelTwo::Render()
 	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
 	RenderSpeedometer();
+	if (car->onCooldown())
+		renderOnCooldown();
 	//----------------------------------------------------------------------------------------------------------//
 }
 
@@ -1583,7 +1599,22 @@ void c_LevelTwo::RenderSpeedometer()
 	viewStack.PopMatrix();
 	projectionStack.PopMatrix();
 }
-
+void c_LevelTwo::renderOnCooldown()
+{
+	Mtx44 ortho;
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity();
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 20, 0);
+	RenderMesh(meshList[ONCOOLDOWN], false);
+	modelStack.PopMatrix();
+	viewStack.PopMatrix();
+	projectionStack.PopMatrix();
+}
 void c_LevelTwo::Exit()
 {
 	// Cleanup here

@@ -12,6 +12,7 @@ public:
 	void updateAppearance(const char* meshPath, const char* TGApath);
 	virtual void Movement(double dt);
 	virtual void PadEffect(double dt);
+	bool onCooldown();
 	float GetSteeringAngle();
 	float GetMaxAcceleration();
 	float GetSpeed();
@@ -21,13 +22,13 @@ public:
 	void SetSteering(float Steering);
 	void SetMaxSpeed(float Speed);
 	void SetSteeringAngle(float angle);
+	void PSpeed(float speed);
+	void SetOSlowed(bool speed);
+	void SetTSlowed(bool speed);
+	float GetSpedoSpeed();
 	virtual void Ability(double dt) = 0;
 	virtual void PowerUp(bool check) = 0;
 	virtual void isOffRoad() = 0;
-	virtual void PSpeed(float speed);
-	virtual void SetOSlowed(bool speed);
-	virtual void SetTSlowed(bool speed);
-	virtual float GetSpedoSpeed();
 
 protected:
 	float VelocityZ;
@@ -37,8 +38,9 @@ protected:
 	float MaxAcceleration;
 	float Friction;
 	float Steering;
-	int Duration;
-	int Cooldown;
+	float elapsedTime;
+	float coolDown;
+	float abilityDuration;
 	float SpedoVeloZ;
 	int padDuration;
 
@@ -48,7 +50,6 @@ protected:
 	bool Nitro = false;
 	bool BoostPad = false;
 	bool SlowPad = false;
-	bool once;
 
 	bool offRoad;
 	bool Collided = false;
