@@ -69,25 +69,49 @@ void c_FirstCar::Ability(double dt)
 	}
 	
 	if (VelocityZ > MaxSpeed && (PressQ))
-		VelocityZ = 1.5;
-
+	{
+		if (VelocityZ < 2)
+		{
+			VelocityZ += 0.2;
+		}
+		else
+		{
+			VelocityZ = 2;
+		}
+	}
 	if (PressQ)
 	{
 		Cooldown = 300;
 		Duration++;
 	}
-	
-	if (Duration >= 200) // 4 sec/dt
+	if (Duration > 200) // 4 sec/dt
 	{
-		PressQ = false;
-		Cooldown--;
+		if (VelocityZ > MaxSpeed)
+		{
+			VelocityZ -= 0.3;
+		}
+		else
+		{
+			VelocityZ = MaxSpeed;
+			PressQ = false;
+			Cooldown--;
+		}
+		if (Cooldown <= 0)
+		{
+			Duration = 0;
+			Cooldown = 300;
+		}
+
+
 	}
+
 	if (Cooldown <= 0)
 	{
 		abilityUsed = true;
 		Duration = 0;
 		Cooldown = 300;
 	}
+
 }
 
 void c_FirstCar::PowerUp(bool check)
