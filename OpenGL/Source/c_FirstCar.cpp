@@ -12,7 +12,7 @@ c_FirstCar::c_FirstCar()
 	pos.x = 0;
 	pos.y = 1;
 	pos.z = 0;
-	MaxSpeed = 0.8;
+	MaxSpeed = 50;
 	SteeringAngle = 0;
 	MaxAcceleration = 0.6;
 	Friction = 0.04;

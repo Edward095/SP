@@ -30,8 +30,7 @@ void c_MultiplayerLevel::Init()
 	OBJmanager = c_ObjectManager::getInstance();
 	offRoadManager = c_OffRoadManager::getInstance();
 	Audio = c_Sound::getInstance();
-	//Seed Generation For rand() function
-	srand(time(NULL));
+
 
 	c_Entity* car = OBJmanager->getCanCollide("player1");
 
@@ -375,12 +374,8 @@ void c_MultiplayerLevel::Update(double dt)
 		playerOne->SetFriction(0.01);
 		playerTwo->SetFriction(0.01);
 	}
-	if (OffRoad)
-	{
-		playerOne->SetFriction(0.5);
-		playerTwo->SetFriction(0.5);
-	}
-
+	rain.update(dt);
+	snow.update(dt);
 	//-------------------------------------------//
 
 	Timer += (float)dt;

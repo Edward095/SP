@@ -26,6 +26,9 @@ c_Npc::~c_Npc()
 
 void c_Npc::Init()
 {
+	//Seed Generation For rand() function
+	srand(time(NULL));
+
 	c_SceneManager* scene = c_SceneManager::getInstance();
 	c_DataManager* data = c_DataManager::getInstance();
 	Audio = c_Sound::getInstance();
@@ -226,6 +229,7 @@ void c_Npc::UpdateNpc(double dt)
 	{
 		Override = false;
 		StartGame = false;
+		LevelSelection = false;
 		Talk = false;
 		SinglePlayer = false;
 	}
@@ -317,7 +321,7 @@ void c_Npc::UpdateNpc(double dt)
 	}
 	
 	
-	if ((Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Continue == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Override == true))
+	if ((Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Talk2 == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Continue == true) || (Application::IsKeyPressed(VK_DOWN) && BounceTime < ElapsedTime && Override == true))
 	{
 		Audio->f_Menu_MoveSelect();
 		ArrowY--;
@@ -344,7 +348,7 @@ void c_Npc::UpdateNpc(double dt)
 		}
 		BounceTime = ElapsedTime + 0.125;
 	}
-	if ((Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Continue == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Override == true))
+	if ((Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && StartGame == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Options == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Talk2 == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Continue == true) || (Application::IsKeyPressed(VK_UP) && BounceTime < ElapsedTime && Override == true))
 	{
 	
 		ArrowY++;
@@ -373,7 +377,7 @@ void c_Npc::UpdateNpc(double dt)
 		}
 		BounceTime = ElapsedTime + 0.125;
 	}
-	if ((Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && StartGame == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Options == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && MultiPlayer == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Continue == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Override == true && AbleToPress == true))
+	if ((Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && StartGame == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Options == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Talk2 == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Continue == true && AbleToPress == true) || (Application::IsKeyPressed(VK_SPACE) && BounceTime < ElapsedTime && Override == true && AbleToPress == true))
 	{
 
 		BounceTime = ElapsedTime + 0.125;
@@ -443,7 +447,7 @@ void c_Npc::UpdateNpc(double dt)
 				StartGame = true;
 			}
 		}
-		else if ((LevelSelection == true && StartGame == true) || MultiPlayer == true)
+		else if ((LevelSelection == true && StartGame == true) || (Talk2 == true))
 		{
 			if (ArrowY == 7)
 			{
@@ -636,7 +640,7 @@ void c_Npc::RenderNpc()
 	RenderTextOnScreen(meshList[TEXT], std::to_string(cameraY), Color(0, 0, 1), 3, 1, 18);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(cameraZ), Color(0, 0, 1), 3, 1, 17);
 
-	if ((StartGame && !Talk) ||  (Options && !Talk1) || (MultiPlayer && !Talk2) || (Continue && !Talk3) || (LeaderBoard && !Talk4) || (Instructions && Talk5))
+	if ((StartGame && !Talk) ||  (Options && !Talk1) || (MultiPlayer && !Talk2) || (Continue && !Talk3) || (LeaderBoard && !Talk4) || (Instructions && !Talk5))
 	{
 		RenderTextOnScreen(meshList[TEXT], "Press 'F' to talk to NPC", Color(1, 0, 0), 3, 6, 10);
 	}

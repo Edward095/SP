@@ -27,6 +27,7 @@ c_MultiplayerLevelTwo::~c_MultiplayerLevelTwo()
 }
 void c_MultiplayerLevelTwo::Init()
 {
+	Random = rand() % 3 + 1;
 	OBJmanager = c_ObjectManager::getInstance();
 	offRoadManager = c_OffRoadManager::getInstance();
 	Audio = c_Sound::getInstance();
@@ -218,6 +219,7 @@ void c_MultiplayerLevelTwo::Init()
 	}
 	//---------------------------------------------------------------------------------//
 
+
 	meshList[TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
 	meshList[LIGHT1] = MeshBuilder::GenerateSphere("environment light", Color(1, 1, 1), 18, 36, 1.f);
@@ -229,6 +231,9 @@ void c_MultiplayerLevelTwo::Init()
 	meshList[TRAFFICNULL] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
 	meshList[TRAFFICNULL2] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
 	meshList[TRAFFICGREEN] = MeshBuilder::GenerateSphere("traffic light", Color(0, 1, 0), 18, 36, 1.f);
+
+
+
 	//----Rendering Cooldown Bar----------------------------------------------------------------------------//
 	meshList[ONCOOLDOWN] = MeshBuilder::GenerateQuad("CoolDownBar", Color(1.f, 0.f, 0.f), 2.f);
 	//meshList[ONCOOLDOWN]->textureID = LoadTGA("Image//OnCoolDown.tga");
@@ -238,7 +243,6 @@ void c_MultiplayerLevelTwo::Init()
 	meshList[RAIN] = MeshBuilder::GenerateSphere("Rain", Color(0, 0, 1), 18, 18, 2);
 	meshList[SNOW] = MeshBuilder::GenerateSphere("Snow", Color(1, 1, 1), 18, 18, 2);
 	//----------------------------------------------------------------------------------------//
-	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
 
 	
 	track.init("track", "OBJ//RaceTrack2.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
@@ -264,7 +268,6 @@ void c_MultiplayerLevelTwo::Init()
 	slow7.init("Slowpad7", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(0, 1.f, -60), false);
 
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
-
 	rain.init();
 	snow.init();
 }
@@ -499,11 +502,23 @@ void c_MultiplayerLevelTwo::Update(double dt)
 		Snowing = false;
 	}
 
+
+	if (Raining)
+	{
+		playerOne->SetSteering(9);
+		playerTwo->SetSteering(9);
+	}
+	if (Snowing)
+	{
+		playerOne->SetFriction(0.01);
+		playerTwo->SetFriction(0.01);
+	}
 	if (!pick)
 	{
 		rain.update(dt);
 		snow.update(dt);
 	}
+
 
 	
 }
@@ -528,7 +543,6 @@ void c_MultiplayerLevelTwo::Render()
 
 	if (playerOne->onCooldown())
 		renderOnCoolDown();
-
 
 	glViewport(960, 0, 960, 1080);
 	glScissor(960, 0, 960, 1080);
@@ -1745,6 +1759,7 @@ void c_MultiplayerLevelTwo::renderOnCoolDown()
 	viewStack.PopMatrix();
 	projectionStack.PopMatrix();
 }
+
 void c_MultiplayerLevelTwo::resetVar()
 {
 	RedLight = true;
