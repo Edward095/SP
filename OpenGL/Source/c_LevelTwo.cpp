@@ -106,20 +106,6 @@ void c_LevelTwo::Init()
 	cooldown = 300;
 	//-------------------------------//
 
-	//car1 = OBJmanager->getCanCollide("player1");
-	//c_FirstCar* first = dynamic_cast <c_FirstCar*>(car1);
-	//if (first)
-	//	car = first;
-	//c_SecondCar* second = dynamic_cast <c_SecondCar*>(car1);
-	//if (second)
-	//{
-	//	car = second;
-	//	checkF = true;
-	//}
-
-	//c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car1);
-	//if (third)
-	//	car = third;
 
 	//----Random Number Gen----------//
 	Random = rand() % 3 + 1;
@@ -236,8 +222,7 @@ void c_LevelTwo::Init()
 	//------------------------------------------------------------------------------------------------//
 
 	//----Rendering Race Track And Stuff On Race Track----------------------------------------//
-	/*meshList[TRACK] = MeshBuilder::GenerateOBJ("racetrack", "OBJ//RaceTrack1.obj");
-	meshList[TRACK]->textureID = LoadTGA("Image//RaceTrack.tga");*/
+
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp2.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
@@ -517,7 +502,6 @@ void c_LevelTwo::Update(double dt)
 
 	//Updating Car Position for Player and AI
 	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
-	//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 
 	//Update Camera
 	camera.Update(dt);
@@ -1007,8 +991,6 @@ void c_LevelTwo::RenderMesh(Mesh *mesh, bool enableLight)
 
 	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
-	/*modelView = viewStack.Top() * modelStack.Top();
-	glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);*/
 	if (enableLight && bLightEnabled)
 	{
 		glUniform1i(m_parameters[U_LIGHTENABLED], 1);

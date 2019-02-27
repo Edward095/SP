@@ -209,8 +209,7 @@ void c_LevelThree::Init()
 	//------------------------------------------------------------------------------------------------//
 
 	//----Rendering Race Track And Stuff On Race Track----------------------------------------//
-	/*meshList[TRACK] = MeshBuilder::GenerateOBJ("racetrack", "OBJ//RaceTrack1.obj");
-	meshList[TRACK]->textureID = LoadTGA("Image//RaceTrack.tga");*/
+
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp3.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
@@ -224,21 +223,6 @@ void c_LevelThree::Init()
 	meshList[RAIN] = MeshBuilder::GenerateSphere("Rain", Color(0, 0, 1), 18, 18, 2);
 	meshList[SNOW] = MeshBuilder::GenerateSphere("Snow", Color(1, 1, 1), 18, 18, 2);
 	//----------------------------------------------------------------------------------------//
-
-	//car1 = OBJmanager->getCanCollide("player1");
-	//c_FirstCar* first = dynamic_cast <c_FirstCar*>(car1);
-	//if (first)
-	//	car = first;
-	//c_SecondCar* second = dynamic_cast <c_SecondCar*>(car1);
-	//if (second)
-	//{
-	//	car = second;
-	//	checkF = true;
-	//}
-
-	//c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car1);
-	//if (third)
-	//	car = third;
 
 	//Init Entities//
 	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-10, 1.f, 270), false);
@@ -516,7 +500,6 @@ void c_LevelThree::Update(double dt)
 
 	//Updating Car Position for Player and AI
 	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
-	//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 
 	//Update Camera
 	camera.Update(dt);
@@ -586,7 +569,19 @@ void c_LevelThree::Render()
 	car->getOBB()->defaultData();
 	AI.getOBB()->defaultData();
 	boost.getOBB()->defaultData();
+	boost2.getOBB()->defaultData();
+	boost3.getOBB()->defaultData();
+	boost4.getOBB()->defaultData();
+	boost5.getOBB()->defaultData();
+	boost6.getOBB()->defaultData();
+	boost7.getOBB()->defaultData();
 	slow.getOBB()->defaultData();
+	slow2.getOBB()->defaultData();
+	slow3.getOBB()->defaultData();
+	slow4.getOBB()->defaultData();
+	slow5.getOBB()->defaultData();
+	slow6.getOBB()->defaultData();
+	slow7.getOBB()->defaultData();
 	FinishLine.getOBB()->defaultData();
 	track.getOBB()->defaultData();
 	PickUp.getOBB()->defaultData();
@@ -645,16 +640,6 @@ void c_LevelThree::Render()
 	AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 	AI.getOBB()->calcNewAxis(AI.GetSteeringAngle(), 0, 1, 0);
 
-	/**************************************************************		BoostPad		***************************************************************/
-
-		modelStack.PushMatrix();
-		modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
-		modelStack.Scale(3, 1, 3);
-		RenderMesh(boost.getMesh(), true);
-		modelStack.PopMatrix();
-
-		boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
-		boost.getOBB()->calcNewDimensions(3, 1, 3);
 	
 		if (!pick)
 		{
@@ -667,6 +652,16 @@ void c_LevelThree::Render()
 			PickUp.updatePos(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
 			PickUp.getOBB()->calcNewDimensions(3, 1, 3);
 		}
+	/**************************************************************		BoostPad		***************************************************************/
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost.getMesh(), true);
+	modelStack.PopMatrix();
+
+	boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+	boost.getOBB()->calcNewDimensions(3, 1, 3);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);

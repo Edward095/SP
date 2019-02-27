@@ -53,7 +53,6 @@ void c_CarBaseClass::updateAppearance(const char* meshPath, const char* TGApath)
 
 void c_CarBaseClass::Movement(double dt)
 {
-	//Ability(dt);
 	PadEffect(dt);
 	isOffRoad();
 	if (uniqueName == "player2")
@@ -65,7 +64,6 @@ void c_CarBaseClass::Movement(double dt)
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
-			//OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
 			if (gotCollide("Boostpad", false) || gotCollide("Boostpad2", false) || gotCollide("Boostpad3", false) || gotCollide("Boostpad4", false) || gotCollide("Boostpad5", false) || gotCollide("Boostpad6", false) || gotCollide("Boostpad7", false))
 				BoostPad = true;
 			if (gotCollide("Slowpad", false) || gotCollide("Slowpad2", false) || gotCollide("Slowpad3", false) || gotCollide("Slowpad4", false) || gotCollide("Slowpad5", false) || gotCollide("Slowpad6", false) || gotCollide("Slowpad7", false))
@@ -77,10 +75,8 @@ void c_CarBaseClass::Movement(double dt)
 				if (Acceleration > MaxAcceleration - Friction)
 					Acceleration = MaxAcceleration - Friction;
 				if (VelocityZ > MaxSpeed && (!PressQ))
-					//VelocityZ -= 0.5;
 					VelocityZ = MaxSpeed;
 				if (VelocityZ < MaxSpeed && (!PressQ))
-					//VelocityZ -= 0.5;
 					VelocityZ = MaxSpeed;
 				if (BoostPad)
 					VelocityZ = 1.8f;
@@ -117,7 +113,6 @@ void c_CarBaseClass::Movement(double dt)
 					if (VelocityZ < 0)
 					{
 						VelocityZ = 0;
-						//Acceleration = 0;
 						Driving = false;
 						Backwards = false;
 					}
@@ -237,19 +232,13 @@ void c_CarBaseClass::Movement(double dt)
 			{
 				Driving = true;
 				Backwards = false;
-				//Collided = false;
 				if (Acceleration > MaxAcceleration - Friction)
 					Acceleration = MaxAcceleration - Friction;
 				if (VelocityZ > MaxSpeed && (!PressQ))
-					//VelocityZ -= 0.5;
 					VelocityZ = MaxSpeed;
 				if (BoostPad)
 				{
 					VelocityZ += 1.8f;
-					/*   if (!BoostPad)
-					   {
-						  VelocityZ -= 0.8f;
-					   }*/
 				}
 
 				if (SlowPad)
@@ -291,7 +280,6 @@ void c_CarBaseClass::Movement(double dt)
 					if (VelocityZ < 0 && Collided == false)
 					{
 						VelocityZ = 0;
-						//Acceleration = 0;
 						Driving = false;
 						Backwards = false;
 					}
@@ -301,8 +289,6 @@ void c_CarBaseClass::Movement(double dt)
 				{
 					Driving = false;
 					Backwards = false;
-
-					//Collided = true;
 				}
 			}
 		}
@@ -344,8 +330,6 @@ void c_CarBaseClass::Movement(double dt)
 
 				if (Acceleration < -(MaxAcceleration - Friction))
 					Acceleration = -(MaxAcceleration - Friction);
-				/*	if (VelocityZ < -MaxSpeed && (PressQ))
-						VelocityZ = -2;*/
 				if (VelocityZ < -MaxSpeed && (!PressQ))
 					VelocityZ = -MaxSpeed;
 			}
@@ -367,7 +351,6 @@ void c_CarBaseClass::Movement(double dt)
 
 				float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 				float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
-				//OBB->calcNewAxis(SteeringAngle, 0, 1, 0);
 
 				if (!gotCollide(updateX, pos.y, updateZ))
 				{
@@ -434,7 +417,7 @@ void c_CarBaseClass::PadEffect(double dt)
 			Audio->f_Game_Fanfare_Boost();
 		}
 		padDuration++;
-		if (padDuration >= 50) // 3 sec/dt
+		if (padDuration >= 50) // 1 sec/dt
 		{
 			BoostPad = false;
 			padDuration = 0;
@@ -447,7 +430,7 @@ void c_CarBaseClass::PadEffect(double dt)
 			Audio->f_Game_Fanfare_Slow();
 		}
 		padDuration++;
-		if (padDuration >= 25) // 3 sec/dt
+		if (padDuration >= 25) // 0.5 sec/dt
 		{
 			SlowPad = false;
 			padDuration = 0;

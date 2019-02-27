@@ -76,7 +76,7 @@ void c_Sound::f_Menu_ConfirmSelect()
 
 void c_Sound::f_Level_1_music()
 {
-	s_L1_Music->play2D("SFX//Level1_Music.mp3");
+	s_L1_Music->play2D("SFX//Level1_Music.mp3", true);
 }
 
 void c_Sound::f_PauseLevel_1_music()
@@ -91,7 +91,7 @@ void c_Sound::f_UnpauseLevel_1_music()
 
 void c_Sound::f_Level_2_music()
 {
-	s_L2_Music->play2D("SFX//Level2_Music.mp3");
+	s_L2_Music->play2D("SFX//Level2_Music.mp3", true);
 }
 
 void c_Sound::f_PauseLevel_2_music()
@@ -106,7 +106,7 @@ void c_Sound::f_UnpauseLevel_2_music()
 
 void c_Sound::f_Level_3_music()
 {
-	s_L3_Music->play2D("SFX//Level3_Music.mp3");
+	s_L3_Music->play2D("SFX//Level3_Music.mp3", true);
 }
 
 void c_Sound::f_PauseLevel_3_music()
@@ -187,4 +187,12 @@ void c_Sound::f_AdjustMusicVolume(float v_Volume)
 void c_Sound::f_AdjustSFXVolume(float v_Volume)
 {
 	s_GP_SFX->setSoundVolume(v_Volume);
+}
+
+void c_Sound::f_PauseAllmusic()
+{
+	s_MM_Music->setAllSoundsPaused();
+	s_L1_Music->setAllSoundsPaused();
+	s_L2_Music->setAllSoundsPaused();
+	s_L3_Music->setAllSoundsPaused();
 }

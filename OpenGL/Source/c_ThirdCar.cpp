@@ -55,7 +55,6 @@ void c_ThirdCar::Ability(double dt)
 			{
 				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
 			}
-			//PressQ = true;
 			once = true;
 		}
 	}
@@ -70,7 +69,6 @@ void c_ThirdCar::Ability(double dt)
 			{
 				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
 			}
-			//PressQ = true;
 			once = true;
 		}
 	}
@@ -85,7 +83,7 @@ void c_ThirdCar::Ability(double dt)
 		}
 	}
 
-	if (Duration >= 500) // 3 sec/dt
+	if (Duration >= 500) // 10 sec/dt
 	{
 		once = false;
 		abilityUsed = false;

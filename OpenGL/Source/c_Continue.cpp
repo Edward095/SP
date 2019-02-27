@@ -103,11 +103,8 @@ void c_Continue::Init()
 }
 void c_Continue::Update(double dt)
 {		
-	//c_SceneManager* scene = c_SceneManager::getInstance();
 
 	elapsedTime += dt;
-	//if(scene->checkState("CONTINUE"))
-	//	updateSelection(dt);
 	updateSelection(dt);
 }
 void c_Continue::Render()

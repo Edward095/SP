@@ -170,8 +170,6 @@ void c_Npc::Update(double dt)
 		scene->getScene("FINISHED")->Update(dt);
 	else
 		scene->getScene("GARAGE")->Update(dt);
-		//Garage.Update(dt);
-
 	
 }
 

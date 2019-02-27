@@ -73,7 +73,6 @@ void NPCCamera::Update(double dt)
 	
 	UpdateMouse();
 	position.y = 75;
-	//WOBmove(dt);
 
 }
 
@@ -163,12 +162,4 @@ void NPCCamera::WOBmove(double dt)
 	{
 		position -= front * NPCCamera_SPEED * (float)dt;
 	}
-	/*if (Application::IsKeyPressed('Q'))
-	{
-		position += Vector3(0, 1, 0) * 0.75f;
-	}
-	if (Application::IsKeyPressed('E'))
-	{
-		position += Vector3(0, -1, 0) * 0.75f;
-	}*/
 }

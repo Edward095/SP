@@ -9,8 +9,6 @@ c_Collision::c_Collision()
 	highestX = highestY = highestZ = 0;
 	lowestX = lowestY = lowestZ = INFINITY;
 	pos.Set(0, 0, 0);
-	//max.Set(0, 0, 0);
-	//min.Set(0, 0, 0);
 	dimensions = Vector3(0, 0, 0);
 	localX.Set(1, 0, 0);
 	localY.Set(0, 1, 0);
@@ -147,10 +145,6 @@ Vector3 c_Collision::getZAxis()
 {
 	return localZ;
 }
-//Vector3 c_Collision::getHalfDimensions()
-//{
-//	return halfDimensions;
-//}
 Vector3 c_Collision::getDimensions()
 {
 	return dimensions;
@@ -178,7 +172,6 @@ bool c_Collision::getSeparatingPlane(const Vector3& RPos, const Vector3& Plane, 
 bool c_Collision::OBB(c_Collision* other)
 {
 	static Vector3 RPos;
-	//RPos.Set(other.pos.x - pos.x, other.pos.y - pos.y, other.pos.z - pos.z);
 	RPos = other->pos - pos;
 
 	Vector3 otherX = other->getXAxis();
@@ -207,64 +200,3 @@ bool c_Collision::checkSurroundingOBJ(c_Collision* other)
 		&& other->pos.y >= pos.y - 3 * dimensions.y && other->pos.y <= pos.y + 3 * dimensions.y
 		&& other->pos.z >= pos.z - 3 * dimensions.z && other->pos.z <= pos.z + 3 * dimensions.z);
 }
-//void c_Collision::updateHighLow()
-//{
-//	while(!BB.empty())
-//		BB.pop_back();
-//	while (!cornerVec.empty())
-//		cornerVec.pop_back();
-//
-//	calcData();
-//}
-//void c_Collision::calcData()
-//{
-//	dimensions.Set((highestX - lowestX) / 2, (highestY - lowestY) / 2, (highestZ - lowestZ) / 2);
-//	//Vector3 highest, lowest;
-//	//highest.Set(highestX + pos.x, highestY + pos.y, highestZ + pos.z);
-//	//lowest.Set(lowestX + pos.x, lowestY + pos.y, lowestX + pos.z);
-//
-//	//x = HalfWidth; y = HalfHeight; z = HalfDepth
-//	/*BB.push_back(highest);
-//	BB.push_back(lowest);
-//
-//	frontTopLeft.Set(lowestX + pos.x, highestY + pos.y, highestZ + pos.z);
-//	frontTopRight.Set(highestX + pos.x, highestY + pos.y, highestZ + pos.z);
-//	frontBottomLeft.Set(lowestX + pos.x, lowestY + pos.y, highestZ + pos.z);
-//	frontBottomRight.Set(highestX + pos.x, lowestY + pos.y, highestZ + pos.z);
-//
-//	backTopLeft.Set(lowestX + pos.x, highestY + pos.y, lowestZ + pos.z);
-//	backTopRight.Set(highestX + pos.x, highestY + pos.y, lowestZ + pos.z);
-//	backBottomLeft.Set(lowestX + pos.x, lowestY + pos.y, lowestZ + pos.z);
-//	backBottomRight.Set(highestX + pos.x, lowestY + pos.y, lowestZ + pos.z);
-//
-//	cornerVec.push_back(frontTopLeft);
-//	cornerVec.push_back(frontTopRight);
-//	cornerVec.push_back(frontBottomLeft);
-//	cornerVec.push_back(frontBottomRight);
-//	cornerVec.push_back(backTopLeft);
-//	cornerVec.push_back(backTopRight);
-//	cornerVec.push_back(backBottomLeft);
-//	cornerVec.push_back(backBottomRight);
-//*/
-//}
-//bool c_Collision::AABB(c_Collision other)
-//{
-//	//0 = highest; 1 = lowest
-//	std::vector<Vector3> BB2 = other.getBoxes();
-//
-//	if (BB[0].x >= BB2[1].x && BB[1].x <= BB2[0].x &&
-//		BB[0].y >= BB2[1].y && BB[1].y <= BB2[0].y &&
-//		BB[0].z >= BB2[1].z && BB[1].z <= BB2[0].z)
-//		return true;
-//	
-//	return false;
-//}
-
-//std::vector<Vector3> c_Collision::getBoxes()
-//{
-//	return BB;
-//}
-//std::vector<Vector3> c_Collision::getCornervec()
-//{
-//	return cornerVec;
-//}

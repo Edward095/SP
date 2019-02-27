@@ -215,6 +215,21 @@ private:
 	bool music;
 
 	c_Sound* Audio;
+
+	c_Entity boost;
+	c_Entity boost2;
+	c_Entity boost3;
+	c_Entity boost4;
+	c_Entity boost5;
+	c_Entity boost6;
+	c_Entity boost7;
+	c_Entity slow;
+	c_Entity slow2;
+	c_Entity slow3;
+	c_Entity slow4;
+	c_Entity slow5;
+	c_Entity slow6;
+	c_Entity slow7;
 };
 
 #endif
