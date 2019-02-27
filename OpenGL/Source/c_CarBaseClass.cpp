@@ -225,8 +225,7 @@ void c_CarBaseClass::Movement(double dt)
 
 		{
 			Acceleration += (MaxAcceleration - Friction);
-			if(!PressQ)
-				VelocityZ += Acceleration * (float)dt;
+			VelocityZ += Acceleration * (float)dt;
 
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * VelocityZ);
@@ -242,7 +241,7 @@ void c_CarBaseClass::Movement(double dt)
 				Backwards = false;
 				if (Acceleration > MaxAcceleration - Friction)
 					Acceleration = MaxAcceleration - Friction;
-				if (VelocityZ > MaxSpeed && (!PressQ))
+				if (VelocityZ > MaxSpeed)
 					VelocityZ = MaxSpeed;
 				if (BoostPad)
 					VelocityZ = 2.f;
@@ -267,7 +266,6 @@ void c_CarBaseClass::Movement(double dt)
 		{
 			if (!Application::IsKeyPressed('W'))
 			{
-				PressQ = false;
 				Acceleration += -Friction;
 				VelocityZ -= Acceleration * (float)dt;
 
@@ -336,7 +334,7 @@ void c_CarBaseClass::Movement(double dt)
 					Acceleration = -(MaxAcceleration - Friction);
 				/*	if (VelocityZ < -MaxSpeed && (PressQ))
 						VelocityZ = -2;*/
-				if (VelocityZ < -MaxSpeed && (!PressQ))
+				if (VelocityZ < -MaxSpeed)
 					VelocityZ = -MaxSpeed;
 			}
 			else
