@@ -82,6 +82,7 @@ void c_LevelOne::Init()
 	laps = 0;
 	AIlaps = 0;
 	FPS = 0;
+	Checkcount = 0;
 	cooldown = 300;
 	//-------------------------------//
 	startline = false;
@@ -249,7 +250,10 @@ void c_LevelOne::Init()
 	slow4.init("Slowpad4", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-600, 1.f, -300), false);
 	slow5.init("Slowpad5", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, -250), false);
 	slow6.init("Slowpad6", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-37, 1.f, -165), false);
-	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(-11, 0, 38), false);
+	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(-11, 1, 38), false);
+	Checkpoints.init("Checkpoint", "quad", "Image//Car1Blue.tga", Vector3(-200, 1, 328), false);
+	Checkpoints2.init("Checkpoint2", "quad", "Image//Car1Blue.tga", Vector3(-255, 1, 0), false);
+	Checkpoints3.init("Checkpoint3", "quad", "Image//Car1Blue.tga", Vector3(-255, 1, -365), false);
 	AI.init("AI", "OBJ//Car3.obj", "Image//Car1Blue.tga", Vector3(-15, 3, 0), true);
 	track.init("track", "OBJ//RaceTrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0),false);
 	PickUp.init("Pickup", "OBJ//Pad.obj", "Image//Car1Blue.tga", Vector3(0, 1, 50), false);
@@ -300,6 +304,10 @@ void c_LevelOne::Update(double dt)
 	Timer += (float)dt;
 	Countdown -= (float)Timer * dt;
 	FPS = 1 / dt;
+
+	//----Power Up Timer------------------// 
+	FreezeTime = (float)(dt + (dt * 0));
+	//------------------------------------//
 	//----------------------------------//
 
 	//----Power Up Timer------------------// 
@@ -333,6 +341,9 @@ void c_LevelOne::Render()
 	slow5.getOBB()->defaultData();
 	slow6.getOBB()->defaultData();
 	FinishLine.getOBB()->defaultData();
+	Checkpoints.getOBB()->defaultData();
+	Checkpoints2.getOBB()->defaultData();
+	Checkpoints3.getOBB()->defaultData();
 	PickUp.getOBB()->defaultData();
 
 	//clear depth and color buffer
@@ -1201,13 +1212,47 @@ void c_LevelOne::renderEntity()
 
 	modelStack.PushMatrix();
 	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Scale(41, 12, 41);
+	modelStack.Scale(46, 12, 46);
 	RenderMesh(FinishLine.getMesh(), true);
 	modelStack.PopMatrix();
 
 	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	FinishLine.getOBB()->calcNewDimensions(41, 12, 41);
+	FinishLine.getOBB()->calcNewDimensions(46, 12, 46);
+	//--------------------------- Check point 1 ------------------------------------//
+	modelStack.PushMatrix();
+	modelStack.Translate(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(46, 12, 46);
+	RenderMesh(Checkpoints.getMesh(), true);
+	modelStack.PopMatrix();
+
+	Checkpoints.updatePos(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
+	Checkpoints.getOBB()->calcNewDimensions(46, 12, 46);
+	Checkpoints.getOBB()->calcNewAxis(90, 0, 1, 0);
+
+	//--------------------------- Check point 2 ------------------------------------//
+	modelStack.PushMatrix();
+	modelStack.Translate(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
+	modelStack.Scale(46, 12, 46);
+	RenderMesh(Checkpoints2.getMesh(), true);
+	modelStack.PopMatrix();
+
+	Checkpoints2.updatePos(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
+	Checkpoints2.getOBB()->calcNewDimensions(46, 12, 46);
+	//---------------------------- Check point 3 ---------------------------------//
+	modelStack.PushMatrix();
+	modelStack.Translate(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(41, 12, 46);
+	RenderMesh(Checkpoints3.getMesh(), true);
+	modelStack.PopMatrix();
+
+	Checkpoints3.updatePos(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
+	Checkpoints3.getOBB()->calcNewDimensions(46, 12, 46);
+	Checkpoints3.getOBB()->calcNewAxis(90, 0, 1, 0);
+	//---------------------------------------------------------------//
+
+	/********************************************************************************************************************************************************/
 
 	CountdownCut = std::to_string(Countdown);
 	CountdownCut.resize(1);
@@ -1281,9 +1326,7 @@ void c_LevelOne::updateLevel(double dt)
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
 
-	//----Power Up Timer------------------// 
-	FreezeTime = (float)(dt + (dt * 0));
-	//------------------------------------//
+
 
 	//----Updating Camera Position---------------------------------------------------------------//
 	CamPosX = (car->getPos().x - (sin(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
@@ -1333,8 +1376,28 @@ void c_LevelOne::updateLevel(double dt)
 	}
 
 	//-------------------------------------------------//
-
-	//----Collision For Finishing Line---------------------------//
+	if (car->gotCollide("Checkpoint", false))
+	{
+		if (Checkcount == 0)
+			Checkcount = 1;
+		else if (Checkcount == 3)
+			Checkcount = 4;
+	}
+	else if (car->gotCollide("Checkpoint2", false))
+	{
+		if (Checkcount == 1)
+			Checkcount = 2;
+		else if (Checkcount == 4)
+			Checkcount = 5;
+	}
+	else if (car->gotCollide("Checkpoint3", false))
+	{
+		if (Checkcount == 2)
+			Checkcount = 3;
+		else if (Checkcount == 5)
+			Checkcount = 6;
+	}
+	
 	if (car->gotCollide("FinishLine", false))
 	{
 		Finish = true;
@@ -1346,13 +1409,10 @@ void c_LevelOne::updateLevel(double dt)
 
 	if (Finish)
 	{
-		if (elapsedTime >= 10 && elapsedTime <= 50)
-			elapsedTime += (dt + 2);
-
-		if (elapsedTime >= 61 && elapsedTime <= 106)
+		if (Checkcount == 3)
 			laps = 1;
 
-		if (elapsedTime >= 129 && elapsedTime <= 219)
+		if (Checkcount == 6)
 			laps = 2;
 	}
 
@@ -1632,10 +1692,10 @@ void c_LevelOne::resetVar()
 	bLightEnabled  = OptionSelection = VehicleMove = RedLight = true;
 	AbleToPress = GreenLight = false;
 	pick  = checkF = AIFinish = Freeze  = Raining = Snowing = false;
-	Win = Lose = Finish = false;
+	Win = Lose = Finish  = false;
 
 	elapsedTime = FreezeTime = duration = Cooldown = Timer = FPS = 0;
-	laps = AIlaps = 0;
+	laps = AIlaps = Checkcount = 0;
 	ArrowP = 7;
 	Countdown = 3;
 	cooldown = 300;

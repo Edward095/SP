@@ -239,6 +239,9 @@ void c_MultiplayerLevel::Init()
 	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
 	needle.init("needle", "quad", "Image//needle.tga", (float)(1, 1, 1), false);
 	circle.init("circle", "quad", "Image//circle.tga", (float)(1, 1, 1), false);
+	Checkpoints.init("Checkpoint", "quad", "Image//Car1Blue.tga", Vector3(-200, 2, 328), false);
+	Checkpoints2.init("Checkpoint2", "quad", "Image//Car1Blue.tga", Vector3(-255, 1, 0), false);
+	Checkpoints3.init("Checkpoint3", "quad", "Image//Car1Blue.tga", Vector3(-255, 1, -365), false);
 
 	elapsedTime = 0;
 	OelapsedTime = 0;
@@ -253,6 +256,8 @@ void c_MultiplayerLevel::Init()
 	FreezeTime = 0;
 	Tcooldown = 300;
 	Ocooldown = 300;
+	OCheckcount = 0;
+	TCheckcount = 0;
 
 	//Initialization Of Weather Functions//
 	rain.init();
@@ -431,6 +436,28 @@ void c_MultiplayerLevel::Update(double dt)
 		Tduration = 0;
 
 	//--------------------------------------------------//
+	if (playerOne->gotCollide("Checkpoint", false))
+	{
+		if (OCheckcount == 0)
+			OCheckcount = 1;
+		else if (OCheckcount == 3)
+			OCheckcount = 4;
+	}
+	else if (playerOne->gotCollide("Checkpoint2", false))
+	{
+		if (OCheckcount == 1)
+			OCheckcount = 2;
+		else if (OCheckcount == 4)
+			OCheckcount = 5;
+	}
+	else if (playerOne->gotCollide("Checkpoint3", false))
+	{
+		if (OCheckcount == 2)
+			OCheckcount = 3;
+		else if (OCheckcount == 5)
+			OCheckcount = 6;
+	}
+
 	if (playerOne->gotCollide("FinishLine", false))
 	{
 		PoneFinish = true;
@@ -442,14 +469,33 @@ void c_MultiplayerLevel::Update(double dt)
 
 	if (PoneFinish)
 	{
-		if (OelapsedTime >= 20 && OelapsedTime <= 50)
-			OelapsedTime += (dt + 2);
-
-		if (OelapsedTime >= 61 && OelapsedTime <= 106)
+		if (OCheckcount == 3)
 			Ponelaps = 1;
 
-		if (OelapsedTime >= 129 && OelapsedTime <= 219)
+		if (OCheckcount == 6)
 			Ponelaps = 2;
+	}
+
+	if (playerTwo->gotCollide("Checkpoint", false))
+	{
+		if (TCheckcount == 0)
+			TCheckcount = 1;
+		else if (TCheckcount == 3)
+			TCheckcount = 4;
+	}
+	else if (playerTwo->gotCollide("Checkpoint2", false))
+	{
+		if (TCheckcount == 1)
+			TCheckcount = 2;
+		else if (TCheckcount == 4)
+			TCheckcount = 5;
+	}
+	else if (playerTwo->gotCollide("Checkpoint3", false))
+	{
+		if (TCheckcount == 2)
+			TCheckcount = 3;
+		else if (TCheckcount == 5)
+			TCheckcount = 6;
 	}
 
 	if (playerTwo->gotCollide("FinishLine", false))
@@ -463,13 +509,10 @@ void c_MultiplayerLevel::Update(double dt)
 
 	if (PTwoFinish)
 	{
-		if (TelapsedTime >= 20 && TelapsedTime <= 50)
-			TelapsedTime += (dt + 2);
-
-		if (TelapsedTime >= 61 && TelapsedTime <= 106)
+		if (TCheckcount == 3)
 			PTwolaps = 1;
 
-		if (TelapsedTime >= 129 && TelapsedTime <= 219)
+		if (TCheckcount == 6)
 			PTwolaps = 2;
 	}
 
@@ -1372,13 +1415,34 @@ void c_MultiplayerLevel::renderEnviroment()
 
 	modelStack.PushMatrix();
 	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Scale(41, 12, 41);
+	modelStack.Scale(46, 12, 46);
 	RenderMesh(FinishLine.getMesh(), true);
 	modelStack.PopMatrix();
 
-	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	FinishLine.getOBB()->calcNewDimensions(41, 12, 41);
+	//--------------------------- Check point 1 ------------------------------------//
+	modelStack.PushMatrix();
+	modelStack.Translate(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(46, 12, 46);
+	RenderMesh(Checkpoints.getMesh(), true);
+	modelStack.PopMatrix();
+
+	//--------------------------- Check point 2 ------------------------------------//
+	modelStack.PushMatrix();
+	modelStack.Translate(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
+	modelStack.Scale(46, 12, 46);
+	RenderMesh(Checkpoints2.getMesh(), true);
+	modelStack.PopMatrix();
+
+	//---------------------------- Check point 3 ---------------------------------//
+	modelStack.PushMatrix();
+	modelStack.Translate(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(41, 12, 46);
+	RenderMesh(Checkpoints3.getMesh(), true);
+	modelStack.PopMatrix();
+	//---------------------------------------------------------------//
+
 }
 
 void c_MultiplayerLevel::renderRain()
@@ -1444,6 +1508,9 @@ void c_MultiplayerLevel::updateEnviromentCollision()
 	playerTwo->getOBB()->defaultData();
 	FinishLine.getOBB()->defaultData();
 	PickUp.getOBB()->defaultData();
+	Checkpoints.getOBB()->defaultData();
+	Checkpoints2.getOBB()->defaultData();
+	Checkpoints3.getOBB()->defaultData();
 	offRoadManager->defaultData();
 
 	//Front Skybox
@@ -1472,6 +1539,22 @@ void c_MultiplayerLevel::updateEnviromentCollision()
 
 	//OffRoad
 	offRoadManager->updateCollision("OffRoad//offRoadPos1.txt", "OffRoad//offRoadRotate1.txt");
+
+	//Finish LIne
+	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	FinishLine.getOBB()->calcNewDimensions(46, 12, 46);
+
+	//Checkpoints
+	Checkpoints.updatePos(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
+	Checkpoints.getOBB()->calcNewDimensions(46, 12, 46);
+	Checkpoints.getOBB()->calcNewAxis(90, 0, 1, 0);
+
+	Checkpoints2.updatePos(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
+	Checkpoints2.getOBB()->calcNewDimensions(46, 12, 46);
+
+	Checkpoints3.updatePos(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
+	Checkpoints3.getOBB()->calcNewDimensions(46, 12, 46);
+	Checkpoints3.getOBB()->calcNewAxis(90, 0, 1, 0);
 }
 
 void c_MultiplayerLevel::RenderSpeedometerOne()
@@ -1580,7 +1663,7 @@ void c_MultiplayerLevel::resetVar()
 	pick = OffRoad = Snowing = checkFO = checkFT = GreenLight = startline = music = false;
 	OFreeze = TFreeze = Raining = PoneFinish = PTwoFinish = Win = Lose = false;
 	
-	elapsedTime = Cooldown = Timer = Ponelaps = PTwolaps  = Oduration = Tduration  = FreezeTime = OelapsedTime = TelapsedTime = 0;
+	elapsedTime = Cooldown = Timer  = OCheckcount = TCheckcount = Ponelaps = PTwolaps  = Oduration = Tduration  = FreezeTime = OelapsedTime = TelapsedTime = 0;
 	Tcooldown = Ocooldown = 300;
 	Countdown = 3;
 	Random = 2;

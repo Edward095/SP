@@ -349,8 +349,6 @@ void c_Garage::Init()
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 10000.f);
 	projectionStack.LoadMatrix(projection);
 
-	meshList[TEXT] = MeshBuilder::GenerateQuad("MenuText", Color(1, 0, 0), 10);
-	meshList[TEXT]->textureID = LoadTGA("Image//Menu.tga");
 	meshList[ARROW] = MeshBuilder::GenerateQuad("Arrow", Color(1, 0, 0), 0.7f);
 	meshList[ARROW]->textureID = LoadTGA("Image//Arrow.tga");
 

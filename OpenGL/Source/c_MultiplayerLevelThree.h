@@ -197,6 +197,9 @@ private:
 	c_CarBaseClass* playerOne;
 	c_CarBaseClass* playerTwo;
 	c_Entity PickUp;
+	c_Entity Checkpoints;
+	c_Entity Checkpoints2;
+	c_Entity Checkpoints3;
 	c_Impulse Impulse;
 	
 
@@ -239,6 +242,8 @@ private:
 	int Tduration;
 	int Tcooldown;
 	int Ocooldown;
+	int OCheckcount;
+	int TCheckcount;
 	bool startline;
 	bool music;
 

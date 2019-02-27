@@ -207,6 +207,9 @@ private:
 
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
+	c_Entity Checkpoints;
+	c_Entity Checkpoints2;
+	c_Entity Checkpoints3;
 	//Variables
 
 	bool talk;
@@ -228,6 +231,7 @@ private:
 
 	int duration;
 	int Random;
+	int Checkcount;
 	float bLightEnabled;
 	std::string elapedTimeCut;
 	std::string CountdownCut;

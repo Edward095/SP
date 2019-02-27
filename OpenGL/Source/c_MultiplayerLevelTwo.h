@@ -205,7 +205,9 @@ private:
 	c_Impulse Impulse;
 	c_Weather rain;
 	c_Weather snow;
-		
+	c_Entity Checkpoints;
+	c_Entity Checkpoints2;
+	c_Entity Checkpoints3;
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
 
@@ -247,6 +249,8 @@ private:
 	int Tduration;
 	int Tcooldown;
 	int Ocooldown;
+	int OCheckcount;
+	int TCheckcount;
 
 	c_Sound* Audio;
 };

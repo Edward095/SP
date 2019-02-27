@@ -116,6 +116,7 @@ void c_LevelTwo::Init()
 	AIlaps = 0;
 	FPS = 0;
 	cooldown = 300;
+	Checkcount = 0;
 	//-------------------------------//
 
 	//----Random Number Gen----------//
@@ -276,6 +277,9 @@ void c_LevelTwo::Init()
 	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
 	needle.init("needle", "quad", "Image//needle.tga", (float)(1, 1, 1), false);
 	circle.init("circle", "quad", "Image//circle.tga", (float)(1, 1, 1), false);
+	Checkpoints.init("Checkpoint", "quad", "Image//Car1Blue.tga", Vector3(-200, 2, 235), false);
+	Checkpoints2.init("Checkpoint2", "quad", "Image//Car1Blue.tga", Vector3(-250, 1, 0), false);
+	Checkpoints3.init("Checkpoint3", "quad", "Image//Car1Blue.tga", Vector3(-255, 1, -380), false);
 	offRoadManager->addOffRoad("OffRoad//offRoadOBJ2.txt");
 
 	//---- Enabling Light------------//
@@ -421,6 +425,28 @@ void c_LevelTwo::Update(double dt)
 	//-------------------------------------------------//
 
 	//----Collision For Finishing Line---------------------------//
+	if (car->gotCollide("Checkpoint", false))
+	{
+		if (Checkcount == 0)
+			Checkcount = 1;
+		else if (Checkcount == 3)
+			Checkcount = 4;
+	}
+	else if (car->gotCollide("Checkpoint2", false))
+	{
+		if (Checkcount == 1)
+			Checkcount = 2;
+		else if (Checkcount == 4)
+			Checkcount = 5;
+	}
+	else if (car->gotCollide("Checkpoint3", false))
+	{
+		if (Checkcount == 2)
+			Checkcount = 3;
+		else if (Checkcount == 5)
+			Checkcount = 6;
+	}
+
 	if (car->gotCollide("FinishLine", false))
 	{
 		Finish = true;
@@ -432,13 +458,10 @@ void c_LevelTwo::Update(double dt)
 
 	if (Finish)
 	{
-		if (elapsedTime >= 10 && elapsedTime <= 50)
-			elapsedTime += (dt + 2);
-
-		if (elapsedTime >= 61 && elapsedTime <= 106)
+		if (Checkcount == 3)
 			laps = 1;
 
-		if (elapsedTime >= 129 && elapsedTime <= 219)
+		if (Checkcount == 6)
 			laps = 2;
 	}
 
@@ -559,6 +582,9 @@ void c_LevelTwo::updateEnviromentCollision()
 	slow6.getOBB()->defaultData();
 	slow7.getOBB()->defaultData();
 	track.getOBB()->defaultData();
+	Checkpoints.getOBB()->defaultData();
+	Checkpoints2.getOBB()->defaultData();
+	Checkpoints3.getOBB()->defaultData();
 	offRoadManager->defaultData();
 
 	//Front Skybox
@@ -813,15 +839,47 @@ void c_LevelTwo::Render()
 
 	modelStack.PushMatrix();
 	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Scale(41, 12, 41);
+	modelStack.Scale(46, 12, 46);
 	RenderMesh(FinishLine.getMesh(), true);
 	modelStack.PopMatrix();
 
 	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	FinishLine.getOBB()->calcNewDimensions(41, 12, 41);
-	CountdownCut = std::to_string(Countdown);
-	CountdownCut.resize(1);
+	FinishLine.getOBB()->calcNewDimensions(46, 12, 46);
+	//--------------------------- Check point 1 ------------------------------------//
+	modelStack.PushMatrix();
+	modelStack.Translate(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(46, 12, 46);
+	RenderMesh(Checkpoints.getMesh(), true);
+	modelStack.PopMatrix();
+
+	Checkpoints.updatePos(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
+	Checkpoints.getOBB()->calcNewDimensions(46, 12, 46);
+	Checkpoints.getOBB()->calcNewAxis(90, 0, 1, 0);
+
+	//--------------------------- Check point 2 ------------------------------------//
+	modelStack.PushMatrix();
+	modelStack.Translate(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
+	modelStack.Scale(46, 12, 46);
+	RenderMesh(Checkpoints2.getMesh(), true);
+	modelStack.PopMatrix();
+
+	Checkpoints2.updatePos(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
+	Checkpoints2.getOBB()->calcNewDimensions(46, 12, 46);
+	//---------------------------- Check point 3 ---------------------------------//
+	modelStack.PushMatrix();
+	modelStack.Translate(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(41, 12, 46);
+	RenderMesh(Checkpoints3.getMesh(), true);
+	modelStack.PopMatrix();
+
+	Checkpoints3.updatePos(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
+	Checkpoints3.getOBB()->calcNewDimensions(46, 12, 46);
+	Checkpoints3.getOBB()->calcNewAxis(90, 0, 1, 0);
+	//---------------------------------------------------------------//
+
+	/********************************************************************************************************************************************************/
 
 	CountdownCut = std::to_string(Countdown);
 	CountdownCut.resize(1);

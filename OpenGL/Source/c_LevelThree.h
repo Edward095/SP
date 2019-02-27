@@ -201,6 +201,9 @@ private:
 	c_Entity speedometer;
 	c_Entity needle;
 	c_Entity circle;
+	c_Entity Checkpoints;
+	c_Entity Checkpoints2;
+	c_Entity Checkpoints3;
 
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
@@ -226,6 +229,7 @@ private:
 
 	int duration;
 	int Random;
+	int Checkcount;
 	float bLightEnabled;
 	std::string elapedTimeCut;
 	std::string CountdownCut;
