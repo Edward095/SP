@@ -47,12 +47,3 @@ void c_Impulse::CalcImpulse()
 
 
 
-
-//Momentum, mass x velocity
-//Impulse = Final Momentum - Initial Momentum 
-//impulse = force x time 
-//find the time that affects the car,
-//force, f = ma then find acceleration, since m = 1, just dont care about mass
-
-//Ke after collision = 100
-//

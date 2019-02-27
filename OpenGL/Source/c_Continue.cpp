@@ -108,6 +108,7 @@ void c_Continue::Init()
 }
 void c_Continue::Update(double dt)
 {		
+
 	c_SceneManager* scene = c_SceneManager::getInstance();
 	elapsedTime += dt;
 
@@ -115,6 +116,7 @@ void c_Continue::Update(double dt)
 		scene->updateState("NPC");
 	else 
 		updateSelection(dt);
+
 }
 void c_Continue::Render()
 {

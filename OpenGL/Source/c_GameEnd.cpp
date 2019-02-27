@@ -380,11 +380,11 @@ void c_GameEnd::goNextLevel()
 void c_GameEnd::retry()
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
-
 	scene->getScene(scene->getLevel())->resetVar();
 }
 
 void c_GameEnd::resetVar()
 {
 	
+
 }

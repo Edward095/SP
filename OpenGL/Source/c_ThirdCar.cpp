@@ -53,6 +53,7 @@ void c_ThirdCar::Ability(double dt)
 			{
 				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
 			}
+
 			PressQ = true;
 		}
 	}

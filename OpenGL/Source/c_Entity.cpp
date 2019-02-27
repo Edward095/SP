@@ -15,7 +15,6 @@ c_Entity::c_Entity(std::string uniqueName, const char* meshPath, const char* TGA
 {
 	//Add Object to the List
 	this->pos = pos;
-	//updatePos(pos.x, pos.y, pos.z);
 	this->meshPath = meshPath;
 	this->TGApath = TGApath;
 	this->uniqueName = uniqueName;
@@ -195,13 +194,15 @@ bool c_Entity::ignoreEntity(std::string uniqueName)
 		uniqueName != "Boostpad4" ||
 		uniqueName != "Boostpad5" ||
 		uniqueName != "Boostpad6" ||
+		uniqueName != "Boostpad7" ||
 		uniqueName != "Slowpad" ||
 		uniqueName != "Slowpad2" ||
 		uniqueName != "Slowpad3" ||
 		uniqueName != "Slowpad4" ||
 		uniqueName != "Slowpad5" ||
 		uniqueName != "Pickup" ||
-		uniqueName != "Slowpad6");
+		uniqueName != "Slowpad6" ||
+		uniqueName != "Slowpad7");
 }
 const char* c_Entity::getMeshPath()
 {

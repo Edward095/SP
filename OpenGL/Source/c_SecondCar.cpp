@@ -48,8 +48,6 @@ void c_SecondCar::Ability(double dt)
 	{
 		if (Application::IsKeyPressed('P'))
 		{
-			//PressQ = true;
-			//PressQ = true;
 			audioUsed = true;
 		}
 	}
@@ -57,8 +55,6 @@ void c_SecondCar::Ability(double dt)
 	{
 		if (Application::IsKeyPressed('Q'))
 		{
-			//PressQ = true;
-			//PressQ = true;
 			audioUsed = true;
 		}
 	}
