@@ -217,8 +217,8 @@ void c_LevelOne::Init()
     //----------------------------------------------------------------------------------------//
 
 	//----Rendering Cooldown Bar----------------------------------------------------------------------------//
-	meshList[ONCOOLDOWN] = MeshBuilder::GenerateQuad("CoolDownBar", Color(1.f, 0.f, 0.f),2.f);
-	//meshList[ONCOOLDOWN]->textureID = LoadTGA("Image//OnCoolDown.tga");
+	meshList[ONCOOLDOWN] = MeshBuilder::GenerateRect("CoolDownBar", Color(1.f, 0.f, 0.f),2.f);
+	meshList[ONCOOLDOWN]->textureID = LoadTGA("Image//OnCoolDown.tga");
 	//-----------------------------------------------------------------------------------------------------//
 
 	c_Entity* car1;
@@ -1595,7 +1595,8 @@ void c_LevelOne::renderOnCooldown()
 			viewStack.LoadIdentity();
 			modelStack.PushMatrix();
 				modelStack.LoadIdentity();
-				modelStack.Translate(9, 20, 0);
+				modelStack.Translate(10, 20, 0);
+				modelStack.Scale(8, 8, 1);
 				RenderMesh(meshList[ONCOOLDOWN], false);
 			modelStack.PopMatrix();
 		viewStack.PopMatrix();
