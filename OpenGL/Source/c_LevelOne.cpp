@@ -41,8 +41,7 @@ void c_LevelOne::Init()
 
 	dataManager->saveCurrentLevel(1);
 
-	//Seed Generation For rand() function
-	srand(time(NULL));
+
 	//Initialization Of Variables//
 	
 	//----Starting---------------//

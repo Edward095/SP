@@ -96,9 +96,6 @@
     <ClCompile Include="Source\c_OffRoadManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\c_Impulse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\c_LevelThree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -213,9 +210,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\c_OffRoadManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\c_Impulse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\c_LevelThree.h">

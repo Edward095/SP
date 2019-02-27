@@ -11,7 +11,7 @@
 #include "c_OffRoadManager.h"
 #include "c_Sound.h"
 #include "c_CarBaseClass.h"
-#include "c_Impulse.h"
+
 #include "c_Weather.h"
 
 
@@ -202,7 +202,6 @@ private:
 	c_CarBaseClass* playerOne;
 	c_CarBaseClass* playerTwo;
 
-	c_Impulse Impulse;
 
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;

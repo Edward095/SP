@@ -55,8 +55,7 @@ void c_LevelThree::Init()
 	if (third)
 		car = third;
 
-	//Seed Generation For rand() function
-	srand(time(NULL));
+
 
 	//Initialization Of Variables//
 

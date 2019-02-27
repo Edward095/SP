@@ -26,6 +26,9 @@ c_Npc::~c_Npc()
 
 void c_Npc::Init()
 {
+	//Seed Generation For rand() function
+	srand(time(NULL));
+
 	c_SceneManager* scene = c_SceneManager::getInstance();
 	c_DataManager* data = c_DataManager::getInstance();
 	Audio = c_Sound::getInstance();
@@ -228,6 +231,7 @@ void c_Npc::UpdateNpc(double dt)
 	{
 		Override = false;
 		StartGame = false;
+		LevelSelection = false;
 		Talk = false;
 		SinglePlayer = false;
 	}

@@ -12,7 +12,8 @@
 
 #include "c_CarBaseClass.h"
 #include"c_Sound.h"
-#include "c_Impulse.h"
+
+#include "c_Weather.h"
 
 
 class c_MultiplayerLevelTwo : public Scene
@@ -34,6 +35,8 @@ public:
 		LIGHT2,
 		TRACK,
 		ONCOOLDOWN,
+		RAIN,
+		SNOW,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -196,7 +199,6 @@ private:
 	c_Entity needle;
 	c_Entity circle;
 
-	c_Impulse Impulse;
 		
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
@@ -236,6 +238,12 @@ private:
 	int Tduration;
 	int Tcooldown;
 	int Ocooldown;
+	int Random;
+
+	c_Weather rain;
+	c_Weather snow;
+	void renderRain();
+	void RenderSnow();
 
 	c_Sound* Audio;
 };

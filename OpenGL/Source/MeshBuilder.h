@@ -33,7 +33,6 @@ public:
 	static Mesh* GenerateQuarterTorus(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float outerR, float innerR);
 	static Mesh* GenerateEars(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float outerR, float innerR);
 	static Mesh* GenerateNose(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float radius, float height);
-	static Mesh* GenerateCandy(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float radius);
 	static Mesh* GenerateTaperedCylinder(const std::string &meshName, Color color, unsigned numStack, float height, float radius);
 	static Mesh* GenerateOBJ(const std::string &meshName, const std::string &file_path);
 };

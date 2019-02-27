@@ -149,7 +149,6 @@
   <ItemGroup>
     <ClCompile Include="Source\c_DataManager.cpp" />
     <ClCompile Include="Source\c_GameEnd.cpp" />
-    <ClCompile Include="Source\c_Impulse.cpp" />
     <ClCompile Include="Source\c_LevelThree.cpp" />
     <ClCompile Include="Source\c_LevelTwo.cpp" />
     <ClCompile Include="Source\c_MultiplayerLevelThree.cpp" />
@@ -187,7 +186,6 @@
   <ItemGroup>
     <ClInclude Include="Source\c_DataManager.h" />
     <ClInclude Include="Source\c_GameEnd.h" />
-    <ClInclude Include="Source\c_Impulse.h" />
     <ClInclude Include="Source\c_LevelThree.h" />
     <ClInclude Include="Source\c_LevelTwo.h" />
     <ClInclude Include="Source\c_MultiplayerLevelThree.h" />
