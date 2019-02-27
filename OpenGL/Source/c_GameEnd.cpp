@@ -32,6 +32,8 @@ void c_GameEnd::Init()
 	c_DataManager* data = c_DataManager::getInstance();
 	elapsedTime = bounceTime = 0.f;
 	ArrowY = 1;
+	over = false;
+	overTiming = 0.0;
 
 	NextLevel = LoadTGA("Image//NextLevel.tga");
 	Retry = LoadTGA("Image//Retry.tga");
@@ -99,16 +101,26 @@ void c_GameEnd::Init()
 	meshList[TEXT]->textureID = NextLevel;
 	meshList[GAMEOVER] = MeshBuilder::GenerateQuad("GAMEOVER", Color(1, 0, 0), 10.f);
 	meshList[GAMEOVER]->textureID = LoadTGA("Image//GameEnd.tga");
+	meshList[WINTEXT] = MeshBuilder::GenerateQuad("Wintext", Color(1, 0, 0), 10);
+	meshList[WINTEXT]->textureID = LoadTGA("Image//Win.tga");
 
 }
 void c_GameEnd::Update(double dt)
 {		
 	elapsedTime += dt;
 
-	updateSelection();
+	if (overTiming == 0)
+		overTiming = elapsedTime + 3;
+	if (elapsedTime >= overTiming)
+		over = true;
+
+	if(over)
+		updateSelection();
 }
 void c_GameEnd::Render()
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -124,9 +136,10 @@ void c_GameEnd::Render()
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
 	renderLights();
-
-	renderSelection();
-
+	if (over || scene->singleOrMulti('M'))
+		renderSelection();
+	else
+		RenderMesh(meshList[WINTEXT], false);
 }
 void c_GameEnd::Exit()
 {
@@ -284,6 +297,8 @@ void c_GameEnd::renderSelection()
 }
 void c_GameEnd::updateSelection()
 {
+	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	if (Application::IsKeyPressed(VK_UP) && bounceTime < elapsedTime)
 	{
 		ArrowY -= 1;
@@ -322,7 +337,7 @@ void c_GameEnd::updateSelection()
 			retry();
 		else if (ArrowY = 3)
 		{
-
+			scene->updateState("NPC");
 		}
 		bounceTime = elapsedTime + 0.125;
 	}
@@ -348,7 +363,7 @@ void c_GameEnd::goNextLevel()
 		{
 			offRoadManager->clearList();
 			OBJmanager->clearAll();
-			scene->getScene("SLEVELTWO")->Init();
+			scene->getScene("SLEVELTHREE")->Init();
 			scene->updateLevel("SLEVELTHREE");
 			scene->updateState("SLEVELTHREE");
 		}
@@ -361,7 +376,7 @@ void c_GameEnd::goNextLevel()
 		{
 			offRoadManager->clearList();
 			OBJmanager->clearAll();
-			scene->getScene("MLEVELONE")->Init();
+			scene->getScene("MLEVELTWO")->Init();
 			scene->updateLevel("MLEVELTWO");
 			scene->updateState("MLEVELTWO");
 		}
@@ -369,7 +384,7 @@ void c_GameEnd::goNextLevel()
 		{
 			offRoadManager->clearList();
 			OBJmanager->clearAll();
-			scene->getScene("MLEVELTWO")->Init();
+			scene->getScene("MLEVELTHREE")->Init();
 			scene->updateLevel("MLEVELTHREE");
 			scene->updateState("MLEVELTHREE");
 		}

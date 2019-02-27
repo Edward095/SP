@@ -57,7 +57,6 @@ void c_LevelOne::Init()
 	//-------------------------------//
 
 	//-------------ability related----------------//
-	pick = false;
 	checkF = false;
 	AIFinish = false;
 	Freeze = false;
@@ -257,7 +256,6 @@ void c_LevelOne::Init()
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(-11, 0, 38), false);
 	AI.init("AI", "OBJ//Car3.obj", "Image//Car1Blue.tga", Vector3(-15, 3, 0), true);
 	track.init("track", "OBJ//RaceTrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0),false);
-	PickUp.init("Pickup", "OBJ//Pad.obj", "Image//Car1Blue.tga", Vector3(0, 1, 50), false);
 	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
 	needle.init("needle", "quad", "Image//needle.tga", (float)(1, 1, 1), false);
 	circle.init("circle", "quad", "Image//circle.tga", (float)(1, 1, 1), false);
@@ -338,7 +336,6 @@ void c_LevelOne::Render()
 	slow5.getOBB()->defaultData();
 	slow6.getOBB()->defaultData();
 	FinishLine.getOBB()->defaultData();
-	PickUp.getOBB()->defaultData();
 
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -1071,13 +1068,11 @@ void c_LevelOne::renderEntity()
 	updateEnviromentCollision();
 	if (Random == 1)
 	{
-		if (!pick)
-			renderRain();
+		renderRain();
 	}
 	if (Random == 2)
 	{
-		if (!pick)
-			RenderSnow();
+		RenderSnow();
 	}
 	//------------------------------------------------------//
 	/**************************************************************		CAR		***************************************************************/
@@ -1110,19 +1105,6 @@ void c_LevelOne::renderEntity()
 
 	AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 	AI.getOBB()->calcNewAxis(AI.GetSteeringAngle(), 0, 1, 0);
-
-	/**************************************************************		PickUp		***************************************************************/
-	if (!pick)
-	{
-		modelStack.PushMatrix();
-		modelStack.Translate(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
-		modelStack.Scale(3, 1, 3);
-		RenderMesh(PickUp.getMesh(), true);
-		modelStack.PopMatrix();
-
-		PickUp.updatePos(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
-		PickUp.getOBB()->calcNewDimensions(3, 1, 3);
-	}
 
 		/**************************************************************		BoostPad		***************************************************************/
 
@@ -1424,14 +1406,6 @@ void c_LevelOne::updateLevel(double dt)
 		scene->getScene("FINISHED")->Init();
 		scene->updateState("FINISHED");
 	}
-
-	if (car->gotCollide("Pickup", false))
-	{
-		pick = true;
-		Raining = false;
-		Snowing = false;
-	}
-
 	//----Weather and Environment Effects-------//
 	if (Raining)
 	{
@@ -1447,11 +1421,8 @@ void c_LevelOne::updateLevel(double dt)
 	else
 		car->SetFriction(0.1);
 
-	if (!pick)
-	{
-		rain.update(dt);
-		snow.update(dt);
-	}
+	rain.update(dt);
+	snow.update(dt);
 	//-------------------------------------------//
 
 	//----Countdown to Start Of the Game---------//
@@ -1673,7 +1644,7 @@ void c_LevelOne::resetVar()
 
 	bLightEnabled  = OptionSelection = VehicleMove = RedLight = true;
 	AbleToPress = GreenLight = false;
-	pick  = checkF = AIFinish = Freeze  = Raining = Snowing = false;
+	checkF = AIFinish = Freeze  = Raining = Snowing = false;
 	Win = Lose = Finish = false;
 
 	elapsedTime = FreezeTime = duration = Cooldown = Timer = FPS = 0;

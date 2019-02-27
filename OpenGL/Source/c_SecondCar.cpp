@@ -97,16 +97,16 @@ void c_SecondCar::isOffRoad()
 		SetFriction(0.04f);
 
 		if (Oslowed && !Tslowed)
-			SetMaxSpeed(0.3f);
+			SetMaxSpeed(0.6f);
 
 		if (Tslowed && !Oslowed)
-			SetMaxSpeed(0.3f);
+			SetMaxSpeed(0.6f);
 
 		if (!Tslowed && !Oslowed)
-			SetMaxSpeed(0.6f);
+			SetMaxSpeed(2.f);
 
 		if (Tslowed && Oslowed)
-			SetMaxSpeed(0.6f);
+			SetMaxSpeed(2.f);
 	}
 }
 

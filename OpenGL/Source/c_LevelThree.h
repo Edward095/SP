@@ -179,7 +179,6 @@ private:
 	c_Entity right;
 	c_Entity nitro;
 	c_Entity track;
-	c_Entity PickUp;
 	c_AI AI;
 	c_CarBaseClass* car;
 
@@ -238,7 +237,6 @@ private:
 	bool AIFinish;
 	bool Win;
 	bool Lose;
-	bool pick;
 	bool checkF;
 	int cooldown;
 

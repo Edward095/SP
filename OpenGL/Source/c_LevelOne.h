@@ -190,7 +190,6 @@ private:
 	c_AI AI;
 	c_CarBaseClass* car;
 
-	c_Entity PickUp;
 	c_Entity boost;
 	c_Entity boost2;
 	c_Entity boost3;
@@ -234,7 +233,6 @@ private:
 	int laps;
 	int AIlaps;
 
-	bool pick;
 	bool checkF;
 	int cooldown;
 	bool Finish;

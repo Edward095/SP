@@ -14,6 +14,7 @@ public:
 	enum GEOMETRY_TYPE
 	{
 		TEXT,
+		WINTEXT,
 		GAMEOVER,
 		ARROW,
 		NUM_GEOMETRY,
@@ -82,6 +83,8 @@ private:
 	unsigned NextLevel;
 	unsigned Retry;
 	unsigned exit;
+	double overTiming;
+	bool over;
 
 };
 
