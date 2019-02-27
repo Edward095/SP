@@ -14,8 +14,8 @@ c_ThirdCar::c_ThirdCar()
 
 	MaxSpeed = 1;
 	SteeringAngle = 0;
-	MaxAcceleration = 0.4;
-	Friction = 0.04;
+	MaxAcceleration = 0.4f;
+	Friction = 0.04f;
 	Steering = 2;
 	Driving = false;
 	Backwards = false;
@@ -24,8 +24,6 @@ c_ThirdCar::c_ThirdCar()
 	BoostPad = false;
 	SlowPad = false;
 	offRoad = false;
-	abilityUsed = false;
-
 }
 c_ThirdCar::c_ThirdCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos,bool canCollide)
 {
@@ -42,11 +40,11 @@ void c_ThirdCar::Ability(double dt)
 {
 	c_Sound* Audio = c_Sound::getInstance();
 
-	elapsedTime += dt;
+	elapsedTime += (float)(dt);
 
 	if (uniqueName == "player2")
 	{
-		if (Application::IsKeyPressed('P') && !once)
+		if (Application::IsKeyPressed('P') && !PressQ)
 		{
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
@@ -55,6 +53,7 @@ void c_ThirdCar::Ability(double dt)
 			{
 				updatePos(pos.x + updateX, pos.y, pos.z + updateZ);
 			}
+
 			PressQ = true;
 		}
 	}
@@ -76,16 +75,11 @@ void c_ThirdCar::Ability(double dt)
 	if (PressQ && coolDown == 0.f)
 	{
 		coolDown = elapsedTime + 10.f;
-		if (!abilityUsed)
-		{
-			Audio->f_Game_Ability_Teleport();
-			abilityUsed = true;
-		}
+		Audio->f_Game_Ability_Teleport();
 	}
 	if (elapsedTime >= coolDown)
 	{
 		PressQ = false;
-		abilityUsed = false;
 		coolDown = 0.f;
 	}
 }
@@ -99,7 +93,7 @@ void c_ThirdCar::isOffRoad()
 {
 	c_OffRoadManager* manager = c_OffRoadManager::getInstance();
 
-	for (int i = 0; i < manager->getList().size(); i++)
+	for (int i = 0; i < (int)manager->getList().size(); i++)
 	{
 		if (gotCollide(manager->getList()[i], false) || !gotCollide("track", false))
 		{

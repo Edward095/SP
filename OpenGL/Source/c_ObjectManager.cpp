@@ -53,7 +53,7 @@ std::vector <c_Entity*> c_ObjectManager::getCannotCollide()
 }
 c_Entity* c_ObjectManager::getCannotCollide(std::string uniqueName)
 {
-	for (int i = 0; i < cannotCollideOBJ.size(); i++)
+	for (int i = 0; i < (int)cannotCollideOBJ.size(); i++)
 	{
 		if (cannotCollideOBJ[i]->getUniqueName() == uniqueName)
 			return cannotCollideOBJ[i];
@@ -65,7 +65,7 @@ std::vector <c_Entity*> c_ObjectManager::getCanCollide()
 }
 c_Entity* c_ObjectManager::getCanCollide(std::string uniqueName)
 {
-	for (int i = 0; i < canCollideOBJ.size(); i++)
+	for (int i = 0; i < (int)canCollideOBJ.size(); i++)
 	{
 		if (canCollideOBJ[i]->getUniqueName() == uniqueName)
 			return canCollideOBJ[i];
@@ -75,7 +75,7 @@ c_Entity* c_ObjectManager::getCanCollide(std::string uniqueName)
 void c_ObjectManager::getCanCollide(std::string uniqueName,c_Entity* entity)
 {
 	c_Entity* entity1;
-	for (int i = 0; i < canCollideOBJ.size(); i++)
+	for (int i = 0; i < (int)canCollideOBJ.size(); i++)
 	{
 		if (canCollideOBJ[i]->getUniqueName() == uniqueName)
 			entity1= canCollideOBJ[i];
@@ -99,7 +99,7 @@ void c_ObjectManager::delNullOBJ()
 {
 	std::vector <int> elements;
 
-	for (int i = 0; i < canCollideOBJ.size(); i++)
+	for (int i = 0; i < (int)canCollideOBJ.size(); i++)
 	{
 		if (canCollideOBJ[i]->getOBB() == nullptr)
 			elements.push_back(i);
@@ -109,7 +109,7 @@ void c_ObjectManager::delNullOBJ()
 		canCollideOBJ.erase(canCollideOBJ.begin() + elements[i]);
 	}
 
-	for (int i = 0; i < cannotCollideOBJ.size(); i++)
+	for (int i = 0; i < (int)cannotCollideOBJ.size(); i++)
 	{
 		if (cannotCollideOBJ[i]->getOBB() == nullptr)
 			elements.push_back(i);

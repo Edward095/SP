@@ -319,7 +319,7 @@ Mesh* MeshBuilder::GenerateCube(const std::string &meshName, Color color, float 
 	vertex_buffer_data.push_back(v);
 
 	std::vector<GLuint> index_buffer_data;
-	for (int i = 0; i < vertex_buffer_data.size(); i++)
+	for (int i = 0; i < (int)vertex_buffer_data.size(); i++)
 	{
 		index_buffer_data.push_back(i);
 	}
@@ -998,7 +998,7 @@ Mesh* MeshBuilder::GenerateEars(const std::string &meshName, Color color, unsign
 
 	float degreePerStack = 45.f / numStack;
 	float degreePerSlice = 180.f / numSlice;
-	float x1, z1;
+
 	float x2, y2, z2;
 
 	for (unsigned stack = 0; stack < numStack + 1; stack++)
@@ -1090,50 +1090,7 @@ Mesh* MeshBuilder::GenerateNose(const std::string &meshName, Color color, unsign
 }
 
 
-Mesh* MeshBuilder::GenerateCandy(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float radius)
-{
-	srand(time(NULL));
 
-	Vertex v;
-	std::vector<Vertex> vertex_buffer_data;
-	std::vector<GLuint> index_buffer_data;
-	float degreePerStack = 180.f / numStack;
-	float degreePerSlice = 360.f / numSlice;
-	float ranGreen = rand() % 192 + 182;
-	float ranBlue = rand() % 203 + 193;
-	Color white(1, 1, 1);
-	Color pink(1.00000, 0.75294, 0.79608);
-
-	for (unsigned stack = 0; stack < numStack + 1; ++stack) {
-		float phi = -90 + stack * degreePerStack;
-		for (unsigned slice = 0; slice < numSlice + 1; ++slice) {
-			float theta = slice * degreePerSlice;
-			v.pos.Set(radius * sphereX(phi, theta), radius * sphereY(phi, theta), radius * sphereZ(phi, theta));
-			if (rand() % 2)
-				v.color = white;
-			else
-				v.color = pink;
-			v.normal.Set(sphereX(phi, theta), sphereY(phi, theta), sphereZ(phi, theta));
-			vertex_buffer_data.push_back(v);
-		}
-	}
-	for (unsigned stack = 0; stack < numStack; ++stack) {
-		for (unsigned slice = 0; slice < numSlice + 1; ++slice) {
-			index_buffer_data.push_back(stack * (numSlice + 1) + slice);
-			index_buffer_data.push_back((stack + 1) * (numSlice + 1) + slice);
-		}
-	}
-	Mesh *mesh = new Mesh(meshName);
-	mesh->indexSize = index_buffer_data.size();
-	mesh->mode = Mesh::DRAW_TRIANGLE_STRIP;
-
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_data.size() * sizeof(Vertex), &vertex_buffer_data[0], GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint), &index_buffer_data[0], GL_STATIC_DRAW);
-
-	return mesh;
-}
 Mesh* MeshBuilder::GenerateTaperedCylinder(const std::string &meshName, Color color, unsigned numStack, float height, float radius)
 {
 	int i = 0;

@@ -149,13 +149,11 @@
   <ItemGroup>
     <ClCompile Include="Source\c_DataManager.cpp" />
     <ClCompile Include="Source\c_GameEnd.cpp" />
-    <ClCompile Include="Source\c_Impulse.cpp" />
     <ClCompile Include="Source\c_LevelThree.cpp" />
     <ClCompile Include="Source\c_LevelTwo.cpp" />
     <ClCompile Include="Source\c_MultiplayerLevelThree.cpp" />
     <ClCompile Include="Source\c_MultiplayerLevelTwo.cpp" />
     <ClCompile Include="Source\c_OffRoadManager.cpp" />
-    <ClCompile Include="Source\c_SecondPlayer.cpp" />
     <ClCompile Include="Source\c_Weather.cpp" />
     <ClCompile Include="Source\c_SecondCar.cpp" />
     <ClCompile Include="Source\c_MultiplayerLevel.cpp" />
@@ -187,13 +185,11 @@
   <ItemGroup>
     <ClInclude Include="Source\c_DataManager.h" />
     <ClInclude Include="Source\c_GameEnd.h" />
-    <ClInclude Include="Source\c_Impulse.h" />
     <ClInclude Include="Source\c_LevelThree.h" />
     <ClInclude Include="Source\c_LevelTwo.h" />
     <ClInclude Include="Source\c_MultiplayerLevelThree.h" />
     <ClInclude Include="Source\c_MultiplayerLevelTwo.h" />
     <ClInclude Include="Source\c_OffRoadManager.h" />
-    <ClInclude Include="Source\c_SecondPlayer.h" />
     <ClInclude Include="Source\c_Weather.h" />
     <ClInclude Include="Source\c_SecondCar.h" />
     <ClInclude Include="Source\c_MultiplayerLevel.h" />

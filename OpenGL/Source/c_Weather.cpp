@@ -25,8 +25,8 @@ void c_Weather::init()
 }
 void c_Weather::update(double dt)
 {
-	translateX += 35 * 1.5 * dt;
-	translateY -= 70 * 1.5 * dt;
+	translateX += (float)(35 * 1.5 * dt);
+	translateY -= (float) (70 * 1.5 * dt);
 	if (translateX >= 109 && translateY <= -54)
 	{
 		translateX = 0;

@@ -83,8 +83,6 @@ private:
 	Light light[1];
 	
 	//Class
-	//c_Garage Garage;
-	//c_LevelOne LevelOne;
 
 	c_Sound* Audio;
 

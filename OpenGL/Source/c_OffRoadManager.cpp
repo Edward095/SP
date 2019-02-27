@@ -31,7 +31,7 @@ c_OffRoadManager* c_OffRoadManager::getInstance()
 
 bool c_OffRoadManager::toIgnore(std::string uniqueName)
 {
-	for (int i = 0; i < listToIgnore.size(); i++)
+	for (int i = 0; i < (int)listToIgnore.size(); i++)
 	{
 		if (uniqueName == listToIgnore[i])
 			return true;
@@ -128,7 +128,7 @@ void c_OffRoadManager::defaultData()
 	int counter = 0;
 	std::string offRoad = "offRoad";
 
-	for (int i = 0; i < listToIgnore.size(); i++)
+	for (int i = 0; i < (int)listToIgnore.size(); i++)
 	{
 		OBJmanager->getCannotCollide(offRoad + std::to_string(counter))->getOBB()->defaultData();
 		counter++;

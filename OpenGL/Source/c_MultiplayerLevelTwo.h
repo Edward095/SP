@@ -12,7 +12,7 @@
 
 #include "c_CarBaseClass.h"
 #include"c_Sound.h"
-#include "c_Impulse.h"
+
 #include "c_Weather.h"
 
 
@@ -34,9 +34,9 @@ public:
 		LIGHT1,
 		LIGHT2,
 		TRACK,
+		ONCOOLDOWN,
 		RAIN,
 		SNOW,
-		ONCOOLDOWN,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -241,7 +241,7 @@ private:
 	float Countdown;
 	float FreezeTime;
 	float red1, red2, red3, green1, green2, green3;
-	int Random;
+
 	int Cooldown;
 	int Ponelaps;
 	int PTwolaps;
@@ -251,8 +251,27 @@ private:
 	int Ocooldown;
 	int OCheckcount;
 	int TCheckcount;
+	int Random;
+
+	c_Weather rain;
+	c_Weather snow;
 
 	c_Sound* Audio;
+
+	c_Entity boost;
+	c_Entity boost2;
+	c_Entity boost3;
+	c_Entity boost4;
+	c_Entity boost5;
+	c_Entity boost6;
+	c_Entity boost7;
+	c_Entity slow;
+	c_Entity slow2;
+	c_Entity slow3;
+	c_Entity slow4;
+	c_Entity slow5;
+	c_Entity slow6;
+	c_Entity slow7;
 };
 
 #endif

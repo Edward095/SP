@@ -12,10 +12,10 @@ c_FirstCar::c_FirstCar()
 	pos.x = 0;
 	pos.y = 1;
 	pos.z = 0;
-	MaxSpeed = 0.8;
+	MaxSpeed = 50;
 	SteeringAngle = 0;
-	MaxAcceleration = 0.6;
-	Friction = 0.04;
+	MaxAcceleration = 0.6f;
+	Friction = 0.04f;
 	Steering = 3;
 	Driving = false;
 	Backwards = false;
@@ -24,7 +24,6 @@ c_FirstCar::c_FirstCar()
 	BoostPad = false;
 	SlowPad = false;
 	offRoad = false;
-	abilityUsed = false;
 }
 c_FirstCar::c_FirstCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
 {
@@ -39,7 +38,7 @@ c_FirstCar::~c_FirstCar()
 void c_FirstCar::Ability(double dt)
 {
 	c_Sound* Audio = c_Sound::getInstance();
-	elapsedTime += dt;
+	elapsedTime += (float)(dt);
 
 	if (uniqueName == "player2")
 	{
@@ -63,34 +62,19 @@ void c_FirstCar::Ability(double dt)
 	{
 		abilityDuration = elapsedTime + 4.f;
 		coolDown = elapsedTime + 8.f;
-		if (!abilityUsed)
-		{
-			abilityUsed = true;
-			Audio->f_Game_Ability_Nitro();
-		}
-	}
-	//Ability OnGoing
-	if (PressQ && elapsedTime < abilityDuration)
-	{
-		if (VelocityZ < 1.5f)
-			VelocityZ += 0.2f;
-		else 
-			VelocityZ = 1.5f;
+		Audio->f_Game_Ability_Nitro();
+		MaxSpeed = 1.5f;
 	}
 	//Ability Finished but cooldown haven end
 	if (PressQ && elapsedTime > abilityDuration && elapsedTime < coolDown)
 	{
-		if (VelocityZ > MaxSpeed)
-			VelocityZ -= 0.2f;
-		else
-			VelocityZ = MaxSpeed;
+		MaxSpeed = 0.8f;
 	}
 	//Cooldown ends ability can be used again
 	else if (PressQ && elapsedTime >= coolDown)
 	{
 		coolDown = 0.f;
 		PressQ = false;
-		abilityUsed = false;
 	}
 }
 
@@ -106,7 +90,7 @@ void c_FirstCar::isOffRoad()
 {
 	c_OffRoadManager* manager = c_OffRoadManager::getInstance();
 
-	for (int i = 0; i < manager->getList().size(); i++)
+	for (int i = 0; i < (int)manager->getList().size(); i++)
 	{
 		if (gotCollide(manager->getList()[i],false) || !gotCollide("track", false))
 		{
@@ -130,6 +114,11 @@ void c_FirstCar::isOffRoad()
 	else
 	{
 		SetFriction(0.04);
-		SetMaxSpeed(0.8f);
+		if (elapsedTime < abilityDuration)
+			MaxSpeed = 1.5f;
+		else
+		{
+			SetMaxSpeed(0.8f);
+		}
 	}
 }

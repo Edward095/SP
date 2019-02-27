@@ -117,11 +117,11 @@ bool LoadOBJ(
 		out_normals.push_back(normal);
 	}
 	int highest = 0, lowest = INFINITY;
-	for (int i = 0; i < vertexIndices.size(); i++)
+	for (int i = 0; i < (int)vertexIndices.size(); i++)
 	{
-		if (vertexIndices[i] < lowest)
+		if ((int)vertexIndices[i] < lowest)
 			lowest = vertexIndices[i];
-		else if (vertexIndices[i] > highest)
+		else if ((int)vertexIndices[i] > highest)
 			highest = vertexIndices[i];
 	}
 

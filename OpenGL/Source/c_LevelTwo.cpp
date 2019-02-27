@@ -1,5 +1,6 @@
 #include "c_LevelTwo.h"
 #include "GL\glew.h"
+#include <GLFW/glfw3.h>
 
 #include "shader.hpp"
 #include "Mtx44.h"
@@ -16,7 +17,7 @@
 #include "c_SceneManager.h"
 
 #include "c_Firstcar.h"
-#include "c_Secondcar.h";
+#include "c_Secondcar.h"
 #include "c_Thirdcar.h"
 
 
@@ -57,8 +58,7 @@ void c_LevelTwo::Init()
 	if (third)
 		car = third;
 
-	//Seed Generation For rand() function
-	srand(time(NULL));
+	
 
 	//Initialization Of Variables//
 
@@ -234,8 +234,7 @@ void c_LevelTwo::Init()
 	//------------------------------------------------------------------------------------------------//
 
 	//----Rendering Race Track And Stuff On Race Track----------------------------------------//
-	/*meshList[TRACK] = MeshBuilder::GenerateOBJ("racetrack", "OBJ//RaceTrack1.obj");
-	meshList[TRACK]->textureID = LoadTGA("Image//RaceTrack.tga");*/
+
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
 	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp2.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
@@ -251,8 +250,8 @@ void c_LevelTwo::Init()
 	//----------------------------------------------------------------------------------------//
 
 	//----Rendering Cooldown Bar----------------------------------------------------------------------------//
-	meshList[ONCOOLDOWN] = MeshBuilder::GenerateQuad("CoolDownBar", Color(1.f, 0.f, 0.f), 2.f);
-	//meshList[ONCOOLDOWN]->textureID = LoadTGA("Image//OnCoolDown.tga");
+	meshList[ONCOOLDOWN] = MeshBuilder::GenerateRect("CoolDownBar", Color(1.f, 0.f, 0.f), 2.f);
+	meshList[ONCOOLDOWN]->textureID = LoadTGA("Image//OnCoolDown.tga");
 	//-----------------------------------------------------------------------------------------------------//
 
 	//Init Entities//
@@ -309,8 +308,8 @@ void c_LevelTwo::Update(double dt)
 
 	//----Setting Of Time And FPS-------//
 	Timer += (float)dt;
-	Countdown -= (float)Timer * dt;
-	FPS = 1 / dt;
+	Countdown -= (float)(Timer * dt);
+	FPS = (float) (1 / dt);
 	//----------------------------------//
 
 	//----Power Up Timer------------------// 
@@ -476,9 +475,9 @@ void c_LevelTwo::Update(double dt)
 
 	if (AIFinish)
 	{
-		if (elapsedTime >= 58 && elapsedTime <= 62)
+		if (elapsedTime >= 58.f && elapsedTime <= 62.f)
 			AIlaps = 1;
-		if (elapsedTime >= 117 && elapsedTime <= 121)
+		if (elapsedTime >= 117.f  && elapsedTime <= 121.f)
 			AIlaps = 2;
 	}
 
@@ -512,16 +511,16 @@ void c_LevelTwo::Update(double dt)
 	//----Weather and Environment Effects-------//
 	if (Raining)
 	{
-		car->SetSteering(9);
+		car->SetSteering(9.f);
 	}
 	if (Snowing)
 	{
-		car->SetFriction(0.01);
+		car->SetFriction(0.01f);
 	}
 	if (OffRoad)
 	{
-		car->SetFriction(0.5);
-		car->SetMaxSpeed(0.1);
+		car->SetFriction(0.5f);
+		car->SetMaxSpeed(0.1f);
 	}
 
 	//-------------------------------------------//
@@ -532,7 +531,7 @@ void c_LevelTwo::Update(double dt)
 	}
 
 	//----Countdown to Start Of the Game---------//
-	if (Countdown <= 0)
+	if (Countdown <= 0.f)
 	{
 		if (VehicleMove == true)
 		{
@@ -551,7 +550,6 @@ void c_LevelTwo::Update(double dt)
 
 	//Updating Car Position for Player and AI
 	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
-	//AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 
 	//Update Camera
 	camera.Update(dt);
@@ -609,7 +607,7 @@ void c_LevelTwo::updateEnviromentCollision()
 
 	//track
 	track.updatePos(-310.951f, 0, -135.453f);
-	track.getOBB()->calcNewAxis(90, 0, 1, 0);
+	track.getOBB()->calcNewAxis(90.f, 0, 1, 0);
 
 	offRoadManager->updateCollision("OffRoad//offRoadPos2.txt", "OffRoad//offRoadRotate2.txt");
 }
@@ -659,22 +657,22 @@ void c_LevelTwo::Render()
 	/**************************************************************		CAR		***************************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(car->getPos().x, car->getPos().y, car->getPos().z);
-	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Rotate(90.f, 0, 1, 0);
 	modelStack.Rotate(car->GetSteeringAngle(), 0, 1, 0);
 	RenderMesh(car->getMesh(), true);
 	modelStack.PopMatrix();
 
 	//UpdateCollisions
 	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
-	car->getOBB()->calcNewAxis(90, 0, 1, 0);
+	car->getOBB()->calcNewAxis(90.f, 0, 1, 0);
 	car->getOBB()->calcNewAxis(car->GetSteeringAngle(), 0, 1, 0);
 
 	/**************************************************************		AI		***************************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(AI.getPos().x, AI.getPos().y, AI.getPos().z);
-	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Rotate(90.f, 0, 1, 0);
 	modelStack.Rotate(AI.GetTurning(), 0, 1, 0);
-	modelStack.Scale(0.7, 0.7, 0.7);
+	modelStack.Scale(0.7f, 0.7f, 0.7f);
 	RenderMesh(AI.getMesh(), true);
 	modelStack.PopMatrix();
 
@@ -686,154 +684,154 @@ void c_LevelTwo::Render()
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
-		modelStack.Scale(3, 1, 3);
+		modelStack.Scale(3.f, 1.f, 3.f);
 		RenderMesh(PickUp.getMesh(), true);
 		modelStack.PopMatrix();
 
 		PickUp.updatePos(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
-		PickUp.getOBB()->calcNewDimensions(3, 1, 3);
+		PickUp.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 	}
 
 	/**************************************************************		BoostPad		***************************************************************/
 
 		modelStack.PushMatrix();
 		modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
-		modelStack.Scale(3, 1, 3);
+		modelStack.Scale(3.f, 1.f, 3.f);
 		RenderMesh(boost.getMesh(), true);
 		modelStack.PopMatrix();
 
 		boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
-		boost.getOBB()->calcNewDimensions(3, 1, 3);
+		boost.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 	
 		if (!pick)
 		{
 			modelStack.PushMatrix();
 			modelStack.Translate(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
-			modelStack.Scale(3, 1, 3);
+			modelStack.Scale(3.f, 1.f, 3.f);
 			RenderMesh(PickUp.getMesh(), true);
 			modelStack.PopMatrix();
 
 			PickUp.updatePos(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
-			PickUp.getOBB()->calcNewDimensions(3, 1, 3);
+			PickUp.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 		}
 
 	modelStack.PushMatrix();
 	modelStack.Translate(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);
-	modelStack.Scale(3, 1, 3);
+	modelStack.Scale(3.f, 1.f, 3.f);
 	RenderMesh(boost2.getMesh(), true);
 	modelStack.PopMatrix();
 
 	boost2.updatePos(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);
-	boost2.getOBB()->calcNewDimensions(3, 1, 3);
+	boost2.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(boost3.getPos().x, boost3.getPos().y, boost3.getPos().z);
-	modelStack.Scale(3, 1, 3);
+	modelStack.Scale(3.f, 1.f, 3.f);
 	RenderMesh(boost3.getMesh(), true);
 	modelStack.PopMatrix();
 
 	boost3.updatePos(boost3.getPos().x, boost3.getPos().y, boost3.getPos().z);
-	boost3.getOBB()->calcNewDimensions(3, 1, 3);
+	boost3.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(boost4.getPos().x, boost4.getPos().y, boost4.getPos().z);
-	modelStack.Scale(3, 1, 3);
+	modelStack.Scale(3.f, 1.f, 3.f);
 	RenderMesh(boost4.getMesh(), true);
 	modelStack.PopMatrix();
 
 	boost4.updatePos(boost4.getPos().x, boost4.getPos().y, boost4.getPos().z);
-	boost4.getOBB()->calcNewDimensions(3, 1, 3);
+	boost4.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(boost5.getPos().x, boost5.getPos().y, boost5.getPos().z);
-	modelStack.Scale(3, 1, 3);
+	modelStack.Scale(3.f, 1.f, 3.f);
 	RenderMesh(boost5.getMesh(), true);
 	modelStack.PopMatrix();
 
 	boost5.updatePos(boost5.getPos().x, boost5.getPos().y, boost5.getPos().z);
-	boost5.getOBB()->calcNewDimensions(3, 1, 3);
+	boost5.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(boost6.getPos().x, boost6.getPos().y, boost6.getPos().z);
-	modelStack.Scale(3, 1, 3);
+	modelStack.Scale(3.f, 1.f, 3.f);
 	RenderMesh(boost6.getMesh(), true);
 	modelStack.PopMatrix();
 
 	boost6.updatePos(boost6.getPos().x, boost6.getPos().y, boost6.getPos().z);
-	boost6.getOBB()->calcNewDimensions(3, 1, 3);
+	boost6.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(boost7.getPos().x, boost7.getPos().y, boost7.getPos().z);
-	modelStack.Scale(3, 1, 3);
+	modelStack.Scale(3.f, 1.f, 3.f);
 	RenderMesh(boost7.getMesh(), true);
 	modelStack.PopMatrix();
 
 	boost7.updatePos(boost7.getPos().x, boost7.getPos().y, boost7.getPos().z);
-	boost7.getOBB()->calcNewDimensions(3, 1, 3);
+	boost7.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 
 	/**************************************************************		SlowPad		***************************************************************/
 	modelStack.PushMatrix();
 	modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
-	modelStack.Scale(3, 1, 3);
+	modelStack.Scale(3.f, 1.f, 3.f);
 	RenderMesh(slow.getMesh(), true);
 	modelStack.PopMatrix();
 
 	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
-	slow.getOBB()->calcNewDimensions(3, 1, 3);
+	slow.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(slow2.getPos().x, slow2.getPos().y, slow2.getPos().z);
-	modelStack.Scale(3, 1, 3);
+	modelStack.Scale(3.f, 1.f, 3.f);
 	RenderMesh(slow2.getMesh(), true);
 	modelStack.PopMatrix();
 
 	slow2.updatePos(slow2.getPos().x, slow2.getPos().y, slow2.getPos().z);
-	slow2.getOBB()->calcNewDimensions(3, 1, 3);
+	slow2.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(slow3.getPos().x, slow3.getPos().y, slow3.getPos().z);
-	modelStack.Scale(3, 1, 3);
+	modelStack.Scale(3.f, 1.f, 3.f);
 	RenderMesh(slow3.getMesh(), true);
 	modelStack.PopMatrix();
 
 	slow3.updatePos(slow3.getPos().x, slow3.getPos().y, slow3.getPos().z);
-	slow3.getOBB()->calcNewDimensions(3, 1, 3);
+	slow3.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(slow4.getPos().x, slow4.getPos().y, slow4.getPos().z);
-	modelStack.Scale(3, 1, 3);
+	modelStack.Scale(3.f, 1.f, 3.f);
 	RenderMesh(slow4.getMesh(), true);
 	modelStack.PopMatrix();
 
 	slow4.updatePos(slow4.getPos().x, slow4.getPos().y, slow4.getPos().z);
-	slow4.getOBB()->calcNewDimensions(3, 1, 3);
+	slow4.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(slow5.getPos().x, slow5.getPos().y, slow5.getPos().z);
-	modelStack.Scale(3, 1, 3);
+	modelStack.Scale(3.f, 1.f, 3.f);
 	RenderMesh(slow5.getMesh(), true);
 	modelStack.PopMatrix();
 
 	slow5.updatePos(slow5.getPos().x, slow5.getPos().y, slow5.getPos().z);
-	slow5.getOBB()->calcNewDimensions(3, 1, 3);
+	slow5.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
-	modelStack.Scale(3, 1, 3);
+	modelStack.Scale(3.f, 1.f, 3.f);
 	RenderMesh(slow6.getMesh(), true);
 	modelStack.PopMatrix();
 
 	slow6.updatePos(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
-	slow6.getOBB()->calcNewDimensions(3, 1, 3);
+	slow6.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(slow7.getPos().x, slow7.getPos().y, slow7.getPos().z);
-	modelStack.Scale(3, 1, 3);
+	modelStack.Scale(3.f, 1.f, 3.f);
 	RenderMesh(slow7.getMesh(), true);
 	modelStack.PopMatrix();
 
 	slow7.updatePos(slow7.getPos().x, slow7.getPos().y, slow7.getPos().z);
-	slow7.getOBB()->calcNewDimensions(3, 1, 3);
+	slow7.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
 
 	/**************************************************************		FinishLine		***************************************************************/
 
@@ -885,7 +883,7 @@ void c_LevelTwo::Render()
 	CountdownCut.resize(1);
 
 	if (Countdown >= 0)
-		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 11, 14);
+		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1.f, 0, 0), 4.f, 11.f, 14.f);
 	else
 	{
 		Cooldown++;
@@ -893,9 +891,9 @@ void c_LevelTwo::Render()
 		elapedTimeCut.resize(5);
 
 		if (Cooldown <= 50)
-			RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 9, 14);
+			RenderTextOnScreen(meshList[TEXT], "START", Color(1.f, 0.f, 0.f), 4.f, 9.f, 14.f);
 		else
-			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 9, 14);
+			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1.f, 0.f, 0.f), 4.f, 9.f, 14.f);
 	}
 	RenderTextOnScreen(meshList[TEXT], "Player lap: ", Color(1, 0, 0), 3, 16.3, 3);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 24, 3);
@@ -931,7 +929,7 @@ void c_LevelTwo::Render()
 
 void c_LevelTwo::renderRain()
 {
-	for (int i = 0; i < rain.getX().size() - 2000; i++)
+	for (int i = 0; i < (int)rain.getX().size() - 2000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
@@ -947,7 +945,7 @@ void c_LevelTwo::renderRain()
 
 void c_LevelTwo::RenderSnow()
 {
-	for (int i = 0; i < snow.getX().size() - 2000; i++)
+	for (int i = 0; i < (int)snow.getX().size() - 2000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
@@ -1073,8 +1071,7 @@ void c_LevelTwo::renderEnviroment()
 	}
 	if (ExitGame == true)
 	{
-		glDeleteVertexArrays(1, &m_vertexArrayID);
-		glDeleteProgram(m_programID);
+		glfwTerminate();
 	}
 }
 
@@ -1086,8 +1083,6 @@ void c_LevelTwo::RenderMesh(Mesh *mesh, bool enableLight)
 
 	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
-	/*modelView = viewStack.Top() * modelStack.Top();
-	glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);*/
 	if (enableLight && bLightEnabled)
 	{
 		glUniform1i(m_parameters[U_LIGHTENABLED], 1);
@@ -1677,7 +1672,8 @@ void c_LevelTwo::renderOnCooldown()
 	viewStack.LoadIdentity();
 	modelStack.PushMatrix();
 	modelStack.LoadIdentity();
-	modelStack.Translate(9, 20, 0);
+	modelStack.Translate(10, 20, 0);
+	modelStack.Scale(8, 8, 1);
 	RenderMesh(meshList[ONCOOLDOWN], false);
 	modelStack.PopMatrix();
 	viewStack.PopMatrix();

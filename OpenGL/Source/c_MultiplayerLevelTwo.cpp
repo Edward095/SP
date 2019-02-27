@@ -1,5 +1,6 @@
 #include "c_MultiplayerLevelTwo.h"
 #include "GL\glew.h"
+#include <GLFW/glfw3.h>
 
 #include "shader.hpp"
 #include "Mtx44.h"
@@ -26,6 +27,7 @@ c_MultiplayerLevelTwo::~c_MultiplayerLevelTwo()
 }
 void c_MultiplayerLevelTwo::Init()
 {
+	Random = rand() % 3 + 1;
 	OBJmanager = c_ObjectManager::getInstance();
 	offRoadManager = c_OffRoadManager::getInstance();
 	Audio = c_Sound::getInstance();
@@ -219,6 +221,7 @@ void c_MultiplayerLevelTwo::Init()
 	}
 	//---------------------------------------------------------------------------------//
 
+
 	meshList[TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
 	meshList[LIGHT1] = MeshBuilder::GenerateSphere("environment light", Color(1, 1, 1), 18, 36, 1.f);
@@ -230,6 +233,9 @@ void c_MultiplayerLevelTwo::Init()
 	meshList[TRAFFICNULL] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
 	meshList[TRAFFICNULL2] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
 	meshList[TRAFFICGREEN] = MeshBuilder::GenerateSphere("traffic light", Color(0, 1, 0), 18, 36, 1.f);
+
+
+
 	//----Rendering Cooldown Bar----------------------------------------------------------------------------//
 	meshList[ONCOOLDOWN] = MeshBuilder::GenerateQuad("CoolDownBar", Color(1.f, 0.f, 0.f), 2.f);
 	//meshList[ONCOOLDOWN]->textureID = LoadTGA("Image//OnCoolDown.tga");
@@ -239,7 +245,6 @@ void c_MultiplayerLevelTwo::Init()
 	meshList[RAIN] = MeshBuilder::GenerateSphere("Rain", Color(0, 0, 1), 18, 18, 2);
 	meshList[SNOW] = MeshBuilder::GenerateSphere("Snow", Color(1, 1, 1), 18, 18, 2);
 	//----------------------------------------------------------------------------------------//
-	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
 
 	
 	track.init("track", "OBJ//RaceTrack2.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
@@ -252,9 +257,21 @@ void c_MultiplayerLevelTwo::Init()
 	Checkpoints.init("Checkpoint", "quad", "Image//Car1Blue.tga", Vector3(-200, 2, 235), false);
 	Checkpoints2.init("Checkpoint2", "quad", "Image//Car1Blue.tga", Vector3(-250, 1, 0), false);
 	Checkpoints3.init("Checkpoint3", "quad", "Image//Car1Blue.tga", Vector3(-255, 1, -380), false);
-
+	boost.init("Boostpad", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-300, 1.f, 210), false);
+	boost2.init("Boostpad2", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-470, 1.f, 290), false);
+	boost3.init("Boostpad3", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-300, 1.f, 70), false);
+	boost4.init("Boostpad4", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-600, 1.f, -400), false);
+	boost5.init("Boostpad5", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-590, 1.f, -580), false);
+	boost6.init("Boostpad6", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(-25, 1.f, -250), false);
+	boost7.init("Boostpad7", "OBJ//Pad.obj", "Image//BoostPad.tga", Vector3(0, 1.f, -90), false);
+	slow.init("Slowpad", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-370, 1.f, 235), false);
+	slow2.init("Slowpad2", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-605, 1.f, 125), false);
+	slow3.init("Slowpad3", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-265, 1.f, -160), false);
+	slow4.init("Slowpad4", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-593, 1.f, -420), false);
+	slow5.init("Slowpad5", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-400, 1.f, -590), false);
+	slow6.init("Slowpad6", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-200, 1.f, -380), false);
+	slow7.init("Slowpad7", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(0, 1.f, -60), false);
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
-
 	rain.init();
 	snow.init();
 }
@@ -291,6 +308,8 @@ void c_MultiplayerLevelTwo::Update(double dt)
 	playerOne->updatePos(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
 	playerTwo->updatePos(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
 
+	playerOne->Movement(dt);
+	playerTwo->Movement(dt);
 	if (OptionSelection == true)
 	{
 		VehicleMove = true;
@@ -371,7 +390,7 @@ void c_MultiplayerLevelTwo::Update(double dt)
 	//-------------------------------------------//
 
 	Timer += (float)dt;
-	Countdown -= (float)Timer * dt;
+	Countdown -= (float)(Timer * dt);
 	FreezeTime = (float)(dt + (dt * 0));
 
 	if (Countdown <= 0)
@@ -526,11 +545,23 @@ void c_MultiplayerLevelTwo::Update(double dt)
 		Snowing = false;
 	}
 
+
+	if (Raining)
+	{
+		playerOne->SetSteering(9);
+		playerTwo->SetSteering(9);
+	}
+	if (Snowing)
+	{
+		playerOne->SetFriction(0.01);
+		playerTwo->SetFriction(0.01);
+	}
 	if (!pick)
 	{
 		rain.update(dt);
 		snow.update(dt);
 	}
+
 
 	
 }
@@ -555,7 +586,6 @@ void c_MultiplayerLevelTwo::Render()
 
 	if (playerOne->onCooldown())
 		renderOnCoolDown();
-
 
 	glViewport(960, 0, 960, 1080);
 	glScissor(960, 0, 960, 1080);
@@ -1287,6 +1317,92 @@ static const float SKYBOXSIZE = 1500.f;
 static const float translateLength = SKYBOXSIZE / 2;
 void c_MultiplayerLevelTwo::renderEnviroment()
 {
+	/**************************************************************		BoostPad		***************************************************************/
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost.getMesh(), true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost2.getMesh(), true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost3.getPos().x, boost3.getPos().y, boost3.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost3.getMesh(), true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost4.getPos().x, boost4.getPos().y, boost4.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost4.getMesh(), true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost5.getPos().x, boost5.getPos().y, boost5.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost5.getMesh(), true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost6.getPos().x, boost6.getPos().y, boost6.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost6.getMesh(), true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(boost7.getPos().x, boost7.getPos().y, boost7.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(boost7.getMesh(), true);
+	modelStack.PopMatrix();
+
+	/**************************************************************		SlowPad		***************************************************************/
+	modelStack.PushMatrix();
+	modelStack.Translate(slow.getPos().x, slow.getPos().y, slow.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow.getMesh(), true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow2.getPos().x, slow2.getPos().y, slow2.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow2.getMesh(), true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow3.getPos().x, slow3.getPos().y, slow3.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow3.getMesh(), true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow4.getPos().x, slow4.getPos().y, slow4.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow4.getMesh(), true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow5.getPos().x, slow5.getPos().y, slow5.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow5.getMesh(), true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow6.getMesh(), true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow7.getPos().x, slow7.getPos().y, slow7.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow7.getMesh(), true);
+	modelStack.PopMatrix();
 	/****************************************************Skybox*****************************************************/
 
 	//Front Skybox
@@ -1396,8 +1512,20 @@ void c_MultiplayerLevelTwo::renderEnviroment()
 	}
 	if (ExitGame == true)
 	{
-		glDeleteVertexArrays(1, &m_vertexArrayID);
-		glDeleteProgram(m_programID);
+		glfwTerminate();
+	}
+
+	/**************************************************************		PickUp		***************************************************************/
+	if (!pick)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
+		modelStack.Scale(3, 1, 3);
+		RenderMesh(PickUp.getMesh(), true);
+		modelStack.PopMatrix();
+
+		PickUp.updatePos(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
+		PickUp.getOBB()->calcNewDimensions(3, 1, 3);
 	}
 
 	/**************************************************************		PickUp		***************************************************************/
@@ -1448,7 +1576,7 @@ void c_MultiplayerLevelTwo::renderEnviroment()
 
 void c_MultiplayerLevelTwo::renderRain()
 {
-	for (int i = 0; i < rain.getX().size() - 3000; i++)
+	for (int i = 0; i < (int)rain.getX().size() - 3000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
@@ -1474,7 +1602,7 @@ void c_MultiplayerLevelTwo::renderRain()
 
 void c_MultiplayerLevelTwo::RenderSnow()
 {
-	for (int i = 0; i < snow.getX().size() - 3000; i++)
+	for (int i = 0; i < (int)snow.getX().size() - 3000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
@@ -1514,6 +1642,20 @@ void c_MultiplayerLevelTwo::updateEnviromentCollision()
 	Checkpoints2.getOBB()->defaultData();
 	Checkpoints3.getOBB()->defaultData();
 	offRoadManager->defaultData();
+	boost.getOBB()->defaultData();
+	boost2.getOBB()->defaultData();
+	boost3.getOBB()->defaultData();
+	boost4.getOBB()->defaultData();
+	boost5.getOBB()->defaultData();
+	boost6.getOBB()->defaultData();
+	boost7.getOBB()->defaultData();
+	slow.getOBB()->defaultData();
+	slow2.getOBB()->defaultData();
+	slow3.getOBB()->defaultData();
+	slow4.getOBB()->defaultData();
+	slow5.getOBB()->defaultData();
+	slow6.getOBB()->defaultData();
+	slow7.getOBB()->defaultData();
 
 	//Front Skybox
 	front.updatePos(0, 0, translateLength);
@@ -1534,6 +1676,50 @@ void c_MultiplayerLevelTwo::updateEnviromentCollision()
 	//Back Skybox
 	back.updatePos(0, 0, -translateLength);
 	back.getOBB()->calcNewDimensions(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+
+	// Boost/Slow pads
+
+	boost.updatePos(boost.getPos().x, boost.getPos().y, boost.getPos().z);
+	boost.getOBB()->calcNewDimensions(3, 1, 3);
+
+	boost2.updatePos(boost2.getPos().x, boost2.getPos().y, boost2.getPos().z);
+	boost2.getOBB()->calcNewDimensions(3, 1, 3);
+
+	boost3.updatePos(boost3.getPos().x, boost3.getPos().y, boost3.getPos().z);
+	boost3.getOBB()->calcNewDimensions(3, 1, 3);
+
+	boost4.updatePos(boost4.getPos().x, boost4.getPos().y, boost4.getPos().z);
+	boost4.getOBB()->calcNewDimensions(3, 1, 3);
+
+	boost5.updatePos(boost5.getPos().x, boost5.getPos().y, boost5.getPos().z);
+	boost5.getOBB()->calcNewDimensions(3, 1, 3);
+
+	boost6.updatePos(boost6.getPos().x, boost6.getPos().y, boost6.getPos().z);
+	boost6.getOBB()->calcNewDimensions(3, 1, 3);
+
+	boost7.updatePos(boost7.getPos().x, boost7.getPos().y, boost7.getPos().z);
+	boost7.getOBB()->calcNewDimensions(3, 1, 3);
+
+	slow.updatePos(slow.getPos().x, slow.getPos().y, slow.getPos().z);
+	slow.getOBB()->calcNewDimensions(3, 1, 3);
+
+	slow2.updatePos(slow2.getPos().x, slow2.getPos().y, slow2.getPos().z);
+	slow2.getOBB()->calcNewDimensions(3, 1, 3);
+
+	slow3.updatePos(slow3.getPos().x, slow3.getPos().y, slow3.getPos().z);
+	slow3.getOBB()->calcNewDimensions(3, 1, 3);
+
+	slow4.updatePos(slow4.getPos().x, slow4.getPos().y, slow4.getPos().z);
+	slow4.getOBB()->calcNewDimensions(3, 1, 3);
+
+	slow5.updatePos(slow5.getPos().x, slow5.getPos().y, slow5.getPos().z);
+	slow5.getOBB()->calcNewDimensions(3, 1, 3);
+
+	slow6.updatePos(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
+	slow6.getOBB()->calcNewDimensions(3, 1, 3);
+
+	slow7.updatePos(slow7.getPos().x, slow7.getPos().y, slow7.getPos().z);
+	slow7.getOBB()->calcNewDimensions(3, 1, 3);
 
 	//track
 	track.updatePos(-310.951f, 0, -135.453f);
@@ -1654,6 +1840,7 @@ void c_MultiplayerLevelTwo::renderOnCoolDown()
 	viewStack.PopMatrix();
 	projectionStack.PopMatrix();
 }
+
 void c_MultiplayerLevelTwo::resetVar()
 {
 	RedLight = true;

@@ -73,7 +73,6 @@ void NPCCamera::Update(double dt)
 	
 	UpdateMouse();
 	position.y = 75;
-	//WOBmove(dt);
 
 }
 
@@ -110,34 +109,34 @@ void NPCCamera::WBmove(double dt, float xUpper, float xLower, float zUpper, floa
 
 	if (Application::IsKeyPressed('D'))
 	{
-		position += right * NPCCamera_SPEED * dt;
+		position += right * NPCCamera_SPEED * (float)(dt);
 		if (checkCollisions(xUpper, xLower,zUpper,zLower))
 		{
-			position -= right * NPCCamera_SPEED * dt;
+			position -= right * NPCCamera_SPEED * (float)(dt);
 		}
 	}
 	if (Application::IsKeyPressed('W'))
 	{
-		position += front * NPCCamera_SPEED * dt;
+		position += front * NPCCamera_SPEED * (float)(dt);
 		if (checkCollisions(xUpper, xLower, zUpper, zLower))
 		{
-			position -= front * NPCCamera_SPEED * dt;
+			position -= front * NPCCamera_SPEED * (float)(dt);
 		}
 	}
 	if (Application::IsKeyPressed('A'))
 	{
-		position -= right * NPCCamera_SPEED * dt;
+		position -= right * NPCCamera_SPEED * (float)(dt);
 		if (checkCollisions(xUpper, xLower, zUpper, zLower))
 		{
-			position += right * NPCCamera_SPEED * dt;
+			position += right * NPCCamera_SPEED * (float)(dt);
 		}
 	}
 	if (Application::IsKeyPressed('S'))
 	{
-		position -= front * NPCCamera_SPEED * dt;
+		position -= front * NPCCamera_SPEED * (float)(dt);
 		if (checkCollisions(xUpper, xLower, zUpper, zLower))
 		{
-			position += front * NPCCamera_SPEED * dt;
+			position += front * NPCCamera_SPEED * (float)(dt);
 		}
 	}
 }
@@ -163,12 +162,4 @@ void NPCCamera::WOBmove(double dt)
 	{
 		position -= front * NPCCamera_SPEED * (float)dt;
 	}
-	/*if (Application::IsKeyPressed('Q'))
-	{
-		position += Vector3(0, 1, 0) * 0.75f;
-	}
-	if (Application::IsKeyPressed('E'))
-	{
-		position += Vector3(0, -1, 0) * 0.75f;
-	}*/
 }

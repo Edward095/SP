@@ -115,7 +115,7 @@ void c_AI::LevelOne(double dt)
 
 void c_AI::MoveOne(double dt, int Points)
 {
-	Acceleration += 0.1;
+	Acceleration += 0.1f;
 	VelocityZ += Acceleration;
 
 	if (Acceleration > 1)
@@ -417,7 +417,7 @@ void c_AI::LevelTwo(double dt)
 
 void c_AI::MoveTwo(double dt, int Points)
 {
-	Acceleration += 0.1;
+	Acceleration += 0.1f;
 	VelocityZ += Acceleration;
 
 	if (Acceleration > 1)
@@ -706,7 +706,7 @@ void c_AI::LevelThree(double dt)
 
 void c_AI::MoveThree(double dt, int Points)
 {
-	Acceleration += 0.1;
+	Acceleration += 0.1f;
 	VelocityZ += Acceleration;
 
 	if (Acceleration > 1)

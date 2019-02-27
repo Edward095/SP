@@ -45,6 +45,7 @@ public:
 	void f_PauseLevel_3_music();
 	void f_UnpauseLevel_3_music();
 
+	void f_PauseAllmusic();
 private:
 	c_Sound();
 	static c_Sound* instance;

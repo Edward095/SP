@@ -40,6 +40,7 @@ public:
 		RAIN,
 		SNOW,
 		ONCOOLDOWN,
+		GROUND,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -189,8 +190,8 @@ private:
 	c_AI AI;
 	c_CarBaseClass* car;
 
-	c_Entity boost;
 	c_Entity PickUp;
+	c_Entity boost;
 	c_Entity boost2;
 	c_Entity boost3;
 	c_Entity boost4;

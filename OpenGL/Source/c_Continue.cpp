@@ -31,12 +31,15 @@ c_Continue::~c_Continue()
 
 void c_Continue::Init()
 {
-	ArrowX = -3.8f;
-	ArrowY = 2.85f;
+	ArrowY = 1;
 	bounceTime = 0;
 	elapsedTime = 0;
 	levelNum = 0;
 	noFile = false;
+
+	Save1 = LoadTGA("Image//Save1.tga");
+	Save2 = LoadTGA("Image//Save2.tga");
+	Save3 = LoadTGA("Image//Save3.tga");
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -98,15 +101,14 @@ void c_Continue::Init()
 
 	meshList[TEXT] = MeshBuilder::GenerateText("text", (unsigned int)16, (unsigned int)16);
 	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
-	meshList[FILESELECTION] = MeshBuilder::GenerateQuad("MenuText", Color(1.f, 0.f, 0.f), 10.f);
-	meshList[FILESELECTION]->textureID = LoadTGA("Image//Continue.tga");
-	meshList[ARROW] = MeshBuilder::GenerateQuad("Arrow", Color(1.f, 0.f, 0.f), 0.7f);
-	meshList[ARROW]->textureID = LoadTGA("Image//Arrow.tga");
-	meshList[NOSAVEFILE] = MeshBuilder::GenerateQuad("Arrow", Color(1.f, 0.f, 0.f), 0.7f);
-	meshList[NOSAVEFILE]->textureID = LoadTGA("Image//Arrow.tga");
+	meshList[FILESELECTION] = MeshBuilder::GenerateQuad("File Selection", Color(1.f, 0.f, 0.f), 10.f);
+	meshList[FILESELECTION]->textureID = Save1;
+	meshList[NOSAVEFILE] = MeshBuilder::GenerateQuad("NoSaveFile", Color(1.f, 0.f, 0.f), 10.f);
+	meshList[NOSAVEFILE]->textureID = LoadTGA("Image//NoSave.tga");
 }
 void c_Continue::Update(double dt)
 {		
+
 	c_SceneManager* scene = c_SceneManager::getInstance();
 	elapsedTime += dt;
 
@@ -114,6 +116,7 @@ void c_Continue::Update(double dt)
 		scene->updateState("NPC");
 	else 
 		updateSelection(dt);
+
 }
 void c_Continue::Render()
 {
@@ -341,12 +344,6 @@ void c_Continue::updateLights(int num)
 void c_Continue::renderSelection()
 {
 	RenderMesh(meshList[FILESELECTION], false);
-
-	modelStack.PushMatrix();
-	modelStack.Translate(ArrowX, ArrowY, 1.f);
-	modelStack.Rotate(-90.f, 0.f, 0.f, 1.f);
-	RenderMesh(meshList[ARROW], false);
-	modelStack.PopMatrix();
 }
 void c_Continue::updateSelection(double dt)
 {
@@ -357,26 +354,42 @@ void c_Continue::updateSelection(double dt)
 	if (Application::IsKeyPressed(VK_UP) && bounceTime < elapsedTime)
 	{
 		noFile = false;
-		ArrowY += 2.3f;
-		if (ArrowY > 2.85f)
-			ArrowY = -1.75f;
+		ArrowY -= 1;
+		if (ArrowY < 1)
+			ArrowY = 3;
+
+		if (ArrowY == 1)
+			meshList[FILESELECTION]->textureID = Save1;
+		else if (ArrowY == 2)
+			meshList[FILESELECTION]->textureID = Save2;
+		else if (ArrowY == 3)
+			meshList[FILESELECTION]->textureID = Save3;
+
 		bounceTime = elapsedTime + 0.125f;
 	}
 	if (Application::IsKeyPressed(VK_DOWN) && bounceTime < elapsedTime)
 	{
 		noFile = false;
-		ArrowY -= 2.3f;
-		if (ArrowY < -1.75f)
-			ArrowY = 2.85f;
+		ArrowY += 1;
+		if (ArrowY > 3)
+			ArrowY = 1;
+
+		if (ArrowY == 1)
+			meshList[FILESELECTION]->textureID = Save1;
+		else if (ArrowY == 2)
+			meshList[FILESELECTION]->textureID = Save2;
+		else if (ArrowY == 3)
+			meshList[FILESELECTION]->textureID = Save3;
+
 		bounceTime = elapsedTime + 0.125f;
 	}
 	if (Application::IsKeyPressed(VK_SPACE) && bounceTime < elapsedTime)
 	{
-		if (ArrowY == 2.85f)
+		if (ArrowY == 1)
 			data->selectFile(1);
-		else if (ArrowY == 0.55f)
+		else if (ArrowY == 2)
 			data->selectFile(2);
-		else if (ArrowY = -1.75f)
+		else if (ArrowY == 3)
 			data->selectFile(3);
 
 		if (data->isEmpty())

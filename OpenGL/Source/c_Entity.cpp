@@ -15,7 +15,6 @@ c_Entity::c_Entity(std::string uniqueName, const char* meshPath, const char* TGA
 {
 	//Add Object to the List
 	this->pos = pos;
-	//updatePos(pos.x, pos.y, pos.z);
 	this->meshPath = meshPath;
 	this->TGApath = TGApath;
 	this->uniqueName = uniqueName;
@@ -66,7 +65,7 @@ void c_Entity::init(std::string uniqueName, const char* meshPath, const char* TG
 }
 void c_Entity::init(std::string uniqueName)
 {
-	for (int i = 0; i < objectManager->getCanCollide().size(); i++)
+	for (int i = 0; i < (int)objectManager->getCanCollide().size(); i++)
 	{
 		if (objectManager->getCanCollide().at(i)->getUniqueName() == uniqueName)
 		{
@@ -101,7 +100,7 @@ c_Entity* c_Entity::getEntity(std::string uniqueName, bool canCollide)
 {
 	if (canCollide)
 	{
-		for (int i = 0; i < objectManager->getCanCollide().size(); i++)
+		for (int i = 0; i < (int)objectManager->getCanCollide().size(); i++)
 		{
 			if (objectManager->getCanCollide().at(i)->uniqueName == uniqueName)
 			{
@@ -111,7 +110,7 @@ c_Entity* c_Entity::getEntity(std::string uniqueName, bool canCollide)
 	}
 	else
 	{
-		for (int i = 0; i < objectManager->getCannotCollide().size(); i++)
+		for (int i = 0; i < (int)objectManager->getCannotCollide().size(); i++)
 		{
 			if (objectManager->getCannotCollide().at(i)->uniqueName == uniqueName)
 			{
@@ -127,7 +126,7 @@ bool c_Entity::gotCollide(float x, float y, float z)
 
 	updatePos(pos.x + x, pos.y + y, pos.z + z);
 
-	for (int i = 0; i < objectManager->getCanCollide().size(); i++)
+	for (int i = 0; i < (int)objectManager->getCanCollide().size(); i++)
 	{
 		c_Collision* collide = entity[i]->getOBB();
 
@@ -145,7 +144,7 @@ bool c_Entity::gotCollide(std::string uniqueName, bool canCollide)
 
 	if (canCollide)
 	{
-		for (int i = 0; i < objectManager->getCanCollide().size(); i++)
+		for (int i = 0; i < (int)objectManager->getCanCollide().size(); i++)
 		{
 			if (objectManager->getCanCollide().at(i)->getUniqueName() == uniqueName)
 				objectToCollide = objectManager->getCanCollide().at(i)->getOBB();
@@ -153,7 +152,7 @@ bool c_Entity::gotCollide(std::string uniqueName, bool canCollide)
 	}
 	else
 	{
-		for (int i = 0; i < objectManager->getCannotCollide().size(); i++)
+		for (int i = 0; i < (int)objectManager->getCannotCollide().size(); i++)
 		{
 			if (objectManager->getCannotCollide().at(i)->getUniqueName() == uniqueName)
 			{
@@ -195,6 +194,7 @@ bool c_Entity::ignoreEntity(std::string uniqueName)
 		uniqueName != "Boostpad4" ||
 		uniqueName != "Boostpad5" ||
 		uniqueName != "Boostpad6" ||
+		uniqueName != "Boostpad7" ||
 		uniqueName != "Slowpad" ||
 		uniqueName != "Slowpad2" ||
 		uniqueName != "Slowpad3" ||
@@ -204,7 +204,8 @@ bool c_Entity::ignoreEntity(std::string uniqueName)
 		uniqueName != "Checkpoint" ||
 		uniqueName != "Checkpoint2" ||
 		uniqueName != "Checkpoint3" ||
-		uniqueName != "Slowpad6");
+		uniqueName != "Slowpad6" ||
+		uniqueName != "Slowpad7");
 }
 const char* c_Entity::getMeshPath()
 {

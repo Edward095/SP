@@ -96,9 +96,6 @@
     <ClCompile Include="Source\c_OffRoadManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\c_Impulse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\c_LevelThree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -109,9 +106,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\c_MultiplayerLevelTwo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\c_SecondPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\c_DataManager.cpp">
@@ -215,9 +209,6 @@
     <ClInclude Include="Source\c_OffRoadManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\c_Impulse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\c_LevelThree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -228,9 +219,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\c_MultiplayerLevelTwo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\c_SecondPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\c_DataManager.h">

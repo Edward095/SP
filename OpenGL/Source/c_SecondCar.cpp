@@ -12,10 +12,10 @@ c_SecondCar::c_SecondCar()
 	pos.y = 1;
 	pos.z = 0;
 
-	MaxSpeed = 0.6;
+	MaxSpeed = 0.6f;
 	SteeringAngle = 0;
-	MaxAcceleration = 0.8;
-	Friction = 0.04;
+	MaxAcceleration = 0.8f;
+	Friction = 0.04f;
 	Steering = 4;
 	Driving = false;
 	Backwards = false;
@@ -26,7 +26,6 @@ c_SecondCar::c_SecondCar()
 	offRoad = false;
 	Oslowed = false;
 	Tslowed = false;
-	abilityUsed = false;
 	audioCD = 0;
 	audioUsed = false;
 
@@ -44,13 +43,11 @@ c_SecondCar::~c_SecondCar()
 void c_SecondCar::Ability(double dt)
 {
 	c_Sound* Audio = c_Sound::getInstance();
-	elapsedTime += dt;
+	elapsedTime += (float)(dt);
 	if (uniqueName == "player2")
 	{
 		if (Application::IsKeyPressed('P'))
 		{
-			//PressQ = true;
-			//PressQ = true;
 			audioUsed = true;
 		}
 	}
@@ -58,23 +55,16 @@ void c_SecondCar::Ability(double dt)
 	{
 		if (Application::IsKeyPressed('Q'))
 		{
-			//PressQ = true;
-			//PressQ = true;
 			audioUsed = true;
 		}
 	}
 	if (audioUsed)
 	{
 		audioCD++;
-		if (!abilityUsed)
-		{
-			Audio->f_Game_Ability_Freezetime();
-			abilityUsed = true;
-		}
+		Audio->f_Game_Ability_Freezetime();
 	}
 	if (audioCD >= 500)
 	{
-		abilityUsed = false;
 		audioUsed = false;
 		audioCD = 0;
 	}
@@ -88,7 +78,7 @@ void c_SecondCar::isOffRoad()
 {
 	c_OffRoadManager* manager = c_OffRoadManager::getInstance();
 
-	for (int i = 0; i < manager->getList().size(); i++)
+	for (int i = 0; i < (int)manager->getList().size(); i++)
 	{
 		if (gotCollide(manager->getList()[i], false) || !gotCollide("track", false))
 		{
