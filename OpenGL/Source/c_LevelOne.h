@@ -221,7 +221,6 @@ private:
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
-	bool Freeze;
 
 	float FPS;
 	float Countdown;
@@ -230,9 +229,7 @@ private:
 
 	std::string elapedTimeCut;
 	std::string CountdownCut;
-	int duration;
 	int Random;
-	int Cooldown;
 	int laps;
 	int AIlaps;
 	int Checkcount;
@@ -263,6 +260,7 @@ private:
 	bool music;
 
 	c_Sound* Audio;
+	int AICheckcount;
 };
 
 #endif

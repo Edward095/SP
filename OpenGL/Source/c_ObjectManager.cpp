@@ -73,6 +73,16 @@ c_Entity* c_ObjectManager::getCanCollide(std::string uniqueName)
 	}	
 	return nullptr;
 }
+c_Entity* c_ObjectManager::getCanCollide(std::string uniqueName,std::string ownUniqueName)
+{
+	for (int i = 0; i < (int)canCollideOBJ.size(); i++)
+	{
+		if (canCollideOBJ[i]->getUniqueName() != ownUniqueName &&
+			canCollideOBJ[i]->getUniqueName() == uniqueName)
+			return canCollideOBJ[i];
+	}
+	return nullptr;
+}
 void c_ObjectManager::getCanCollide(std::string uniqueName,c_Entity* entity)
 {
 	c_Entity* entity1;

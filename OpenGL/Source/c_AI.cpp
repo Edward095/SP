@@ -842,10 +842,6 @@ void c_AI::Ability(double dt)
 {
 }
 
-void c_AI::PowerUp(bool check)
-{
-}
-
 void c_AI::isOffRoad()
 {
 }
@@ -856,4 +852,8 @@ void c_AI::Speed(int speed)
 		freeze = true;
 	else
 		freeze = false;
+}
+
+void c_AI::resetVar()
+{
 }

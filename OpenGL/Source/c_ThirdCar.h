@@ -9,10 +9,9 @@ public:
 	c_ThirdCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos,bool canCollide);
 	~c_ThirdCar();
 	void Ability(double dt);
-	virtual void PowerUp(bool check);
-	virtual void isOffRoad();
+	void isOffRoad();
+	void resetVar();
 private:
-	bool once;
 
 };
 

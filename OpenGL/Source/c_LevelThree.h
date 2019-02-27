@@ -221,19 +221,15 @@ private:
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
-	bool Freeze;
 	bool Raining;
 	bool Snowing;
-	bool OffRoad;
 	float FPS;
 
-	int duration;
 	int Random;
 	int Checkcount;
 	float bLightEnabled;
 	std::string elapedTimeCut;
 	std::string CountdownCut;
-	int Cooldown;
 	float Countdown;
 	float Timer;
 	bool Finish;
@@ -263,6 +259,7 @@ private:
 	bool music;
 
 	c_Sound* Audio;
+	int AICheckcount;
 };
 
 

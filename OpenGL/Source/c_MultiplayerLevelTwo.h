@@ -196,7 +196,6 @@ private:
 	c_Entity left;
 	c_Entity right;
 	c_Entity track;
-	c_Entity PickUp;
 	c_CarBaseClass* playerOne;
 	c_CarBaseClass* playerTwo;
 	c_Entity speedometer;
@@ -212,20 +211,14 @@ private:
 	c_OffRoadManager* offRoadManager;
 
 	float ArrowP;
-	bool RedLight;
-	bool pick;
-	bool OffRoad;
 	bool Snowing;
-	bool checkFO;
-	bool checkFT;
+	bool RedLight;
 	bool GreenLight;
 	bool ExitGame;
 	bool AbleToPress;
 	bool OptionSelection;
 	bool VehicleMove;
 
-	bool OFreeze;
-	bool TFreeze;
 	bool Raining;
 	bool PoneFinish;
 	bool PTwoFinish;
@@ -235,20 +228,13 @@ private:
 	bool music;
 
 	float elapsedTime;
-	float OelapsedTime;
-	float TelapsedTime;
 	float Timer;
 	float Countdown;
 	float FreezeTime;
 	float red1, red2, red3, green1, green2, green3;
 
-	int Cooldown;
 	int Ponelaps;
 	int PTwolaps;
-	int Oduration;
-	int Tduration;
-	int Tcooldown;
-	int Ocooldown;
 	int OCheckcount;
 	int TCheckcount;
 	int Random;
@@ -269,6 +255,8 @@ private:
 	c_Entity slow5;
 	c_Entity slow6;
 	c_Entity slow7;
+
+	float bufferTime;
 };
 
 #endif

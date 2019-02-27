@@ -186,8 +186,6 @@ private:
 	float playerTwoCamTargetZ;
 
 	float elapsedTime;
-	float OelapsedTime;
-	float TelapsedTime;
 	std::string elapedTimeCut;
 	int Random;
 
@@ -198,7 +196,6 @@ private:
 	c_Entity right;
 	c_Entity FinishLine;
 	c_Entity track;
-	c_Entity PickUp;
 	c_Entity speedometer;
 	c_Entity needle;
 	c_Entity circle;
@@ -213,7 +210,6 @@ private:
 	c_OffRoadManager* offRoadManager;
 
 	std::string CountdownCut;
-	int Cooldown;
 	float Countdown;
 	float Timer;
 	bool PoneFinish;
@@ -228,7 +224,7 @@ private:
 	bool AbleToPress;
 	bool OptionSelection;
 	bool VehicleMove;
-        //Traffic Lights
+    //Traffic Lights
 	float red1, red2, red3, green1, green2, green3;
 	bool RedLight, GreenLight;
 
@@ -239,18 +235,8 @@ private:
 	void resetVar();
 
 	bool Raining;
-	bool OffRoad;
 	bool Snowing;
-	bool checkFO;
-	bool checkFT;
-	bool OFreeze;
-	bool TFreeze;
-	int Oduration;
-	int Tduration;
 	float FreezeTime;
-	bool pick;
-	int Tcooldown;
-	int Ocooldown;
 	int OCheckcount;
 	int TCheckcount;
 
@@ -271,6 +257,8 @@ private:
 	c_Entity slow4;
 	c_Entity slow5;
 	c_Entity slow6;
+
+	float bufferTime;
 };
 
 #endif

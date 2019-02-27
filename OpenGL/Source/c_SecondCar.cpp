@@ -7,28 +7,31 @@
 
 c_SecondCar::c_SecondCar()
 {
+	MaxSpeed = 2.f;
+	SteeringAngle = 0;
+	Steering = 4.f;
+	MaxAcceleration = 0.8f;
+	Friction = 0.04f;
+	padDuration = 0;
 	VelocityZ = 0;
 	Acceleration = 0;
 	pos.x = 0;
 	pos.y = 1;
 	pos.z = 0;
+	SpedoVeloZ = 0;
+	elapsedTime = 0.f;
+	coolDown = 0.f;
+	abilityDuration = 0.f;
 
-	MaxSpeed = 0.6f;
-	SteeringAngle = 0;
-	MaxAcceleration = 0.8f;
-	Friction = 0.04f;
-	Steering = 4;
 	Driving = false;
 	Backwards = false;
 	PressQ = false;
-	Nitro = false;
 	BoostPad = false;
 	SlowPad = false;
 	offRoad = false;
-	Oslowed = false;
-	Tslowed = false;
-	slowed = false;
+	Collided = false;
 	stopTime = false;
+	slowed = false;
 
 }
 c_SecondCar::c_SecondCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
@@ -57,11 +60,16 @@ void c_SecondCar::Ability(double dt)
 			{
 				stopTime = true;
 				abilityDuration = elapsedTime + 5.f;
-				coolDown = elapsedTime + 10.f;
+				coolDown = elapsedTime + 15.f;
 			}
 			else if (scene->singleOrMulti('M'))
 			{
-				c_Entity* entity = obj->getCanCollide("player2");
+				abilityDuration = elapsedTime + 5.f;
+				coolDown = elapsedTime + 15.f;
+				c_Entity* entity = obj->getCanCollide("player2",this->uniqueName);
+				if (entity == nullptr)
+					entity = obj->getCanCollide("player1", this->uniqueName);
+
 				c_CarBaseClass* car;
 				c_FirstCar* first = dynamic_cast <c_FirstCar*>(entity);
 				if (first)
@@ -74,6 +82,7 @@ void c_SecondCar::Ability(double dt)
 					car = third;
 
 				car->SetMaxSpeed(1.f);
+				car->setSlowed(true);
 			}
 			
 			Audio->f_Game_Ability_Freezetime();
@@ -88,11 +97,16 @@ void c_SecondCar::Ability(double dt)
 			{
 				stopTime = true;
 				abilityDuration = elapsedTime + 5.f;
-				coolDown = elapsedTime + 10.f;
+				coolDown = elapsedTime + 15.f;
 			}
 			else if (scene->singleOrMulti('M'))
 			{
-				c_Entity* entity = obj->getCanCollide("player2");
+				abilityDuration = elapsedTime + 5.f;
+				coolDown = elapsedTime + 15.f;
+				c_Entity* entity = obj->getCanCollide("player2", this->uniqueName);
+				if (entity == nullptr)
+					entity = obj->getCanCollide("player1", this->uniqueName);
+
 				c_CarBaseClass* car;
 				c_FirstCar* first = dynamic_cast <c_FirstCar*>(entity);
 				if (first)
@@ -105,6 +119,7 @@ void c_SecondCar::Ability(double dt)
 					car = third;
 
 				car->SetMaxSpeed(1.f);
+				car->setSlowed(true);
 			}
 
 			Audio->f_Game_Ability_Freezetime();
@@ -118,13 +133,15 @@ void c_SecondCar::Ability(double dt)
 		}
 		else if (scene->singleOrMulti('M'))
 		{
-			c_Entity* entity = obj->getCanCollide("player2");
+			c_Entity* entity = obj->getCanCollide("player2", this->uniqueName);
+			if(entity == nullptr)
+				entity = obj->getCanCollide("player1", this->uniqueName);
 			c_CarBaseClass* car;
 			c_FirstCar* first = dynamic_cast <c_FirstCar*>(entity);
 			if (first)
 			{
 				car = first;
-				car->SetMaxSpeed(3.5f);
+				car->SetMaxSpeed(2.5f);
 			}
 			c_SecondCar* second = dynamic_cast <c_SecondCar*>(entity);
 			if (second)
@@ -136,19 +153,15 @@ void c_SecondCar::Ability(double dt)
 			if (third)
 			{
 				car = third;
-				car->SetMaxSpeed(3.5f);
+				car->SetMaxSpeed(3.f);
 			}
+			car->setSlowed(false);
 		}
 	}
 	if (elapsedTime >= coolDown)
 	{
 		PressQ = false;
 	}
-}
-
-void c_SecondCar::PowerUp(bool check)
-{
-
 }
 void c_SecondCar::isOffRoad()
 {
@@ -177,18 +190,31 @@ void c_SecondCar::isOffRoad()
 			MaxSpeed = 2.f;
 	}
 }
-
-void c_SecondCar::SetOSlowed(bool speed)
+void c_SecondCar::resetVar()
 {
-	Oslowed = speed;
-}
+	MaxSpeed = 2.f;
+	SteeringAngle = 0;
+	Steering = 4.f;
+	MaxAcceleration = 0.8f;
+	Friction = 0.04f;
+	padDuration = 0;
+	VelocityZ = 0;
+	Acceleration = 0;
+	pos.x = 0;
+	pos.y = 1;
+	pos.z = 0;
+	SpedoVeloZ = 0;
+	elapsedTime = 0.f;
+	coolDown = 0.f;
+	abilityDuration = 0.f;
 
-void c_SecondCar::SetTSlowed(bool speed)
-{
-	Tslowed = speed;
-}
-
-void c_SecondCar::setSlowed(bool slowedorNot)
-{
-	slowed = slowedorNot;
+	Driving = false;
+	Backwards = false;
+	PressQ = false;
+	BoostPad = false;
+	SlowPad = false;
+	offRoad = false;
+	Collided = false;
+	stopTime = false;
+	slowed = false;
 }

@@ -61,7 +61,6 @@ void c_LevelTwo::Init()
 	
 
 	//Initialization Of Variables//
-
     //----Setting Car Variables------//
 	car->SetFriction(0.1f);
 	car->SetSteering(5);
@@ -92,8 +91,6 @@ void c_LevelTwo::Init()
 	//-------------------------------//
 
 	//-------------ability related----------------//
-	Freeze = false;
-	OffRoad = false;
 	AIFinish = false;
 	//-------------------------------//
 
@@ -107,15 +104,14 @@ void c_LevelTwo::Init()
 	//----Time Related Variables-----//
 	elapsedTime = 0;
 	FreezeTime = 0;
-	duration = 0;
-	Cooldown = 0;
-	Countdown = 3;
+	Countdown = 6;
 	Timer = 0;
 	laps = 0;
 	AIlaps = 0;
 	FPS = 0;
 	cooldown = 300;
 	Checkcount = 0;
+	AICheckcount = 0;
 	//-------------------------------//
 
 	//----Random Number Gen----------//
@@ -391,39 +387,6 @@ void c_LevelTwo::Update(double dt)
 	}
 	//-----------------------------------------------//
 
-	//----KeyPress to enable PowerUps----------------//
-	if (Application::IsKeyPressed('Q') && checkF)
-	{
-		Freeze = true;
-	}
-
-	if (Freeze && duration <= 200)
-	{
-		duration++;
-		AI.Speed(0);
-		elapsedTime -= FreezeTime;
-		cooldown = 300;
-	}
-
-	if (duration >= 200) // 4 sec/dt
-	{
-		Freeze = false;
-		cooldown--;
-		AI.Speed(1);
-	}
-
-	if (cooldown <= 0)
-	{
-		duration = 0;
-		cooldown = 300;
-	}
-
-	if (car->getPos().x == nitro.getPos().x && car->getPos().z == nitro.getPos().z)
-	{
-		car->PowerUp(true);
-	}
-	//-------------------------------------------------//
-
 	//----Collision For Finishing Line---------------------------//
 	if (car->gotCollide("Checkpoint", false))
 	{
@@ -476,10 +439,33 @@ void c_LevelTwo::Update(double dt)
 
 	if (AIFinish)
 	{
-		if (elapsedTime >= 58.f && elapsedTime <= 62.f)
+		if (AICheckcount == 3)
 			AIlaps = 1;
-		if (elapsedTime >= 117.f  && elapsedTime <= 121.f)
+
+		if (AICheckcount == 6)
 			AIlaps = 2;
+	}
+
+	if (AI.gotCollide("Checkpoint", false))
+	{
+		if (AICheckcount == 0)
+			AICheckcount = 1;
+		else if (AICheckcount == 3)
+			AICheckcount = 4;
+	}
+	else if (AI.gotCollide("Checkpoint2", false))
+	{
+		if (AICheckcount == 1)
+			AICheckcount = 2;
+		else if (AICheckcount == 4)
+			AICheckcount = 5;
+	}
+	else if (AI.gotCollide("Checkpoint3", false))
+	{
+		if (AICheckcount == 2)
+			AICheckcount = 3;
+		else if (AICheckcount == 5)
+			AICheckcount = 6;
 	}
 
 	if (laps == 2 || AIlaps == 2)
@@ -490,32 +476,29 @@ void c_LevelTwo::Update(double dt)
 			Lose = true;
 	}
 	//---------------------------------------------------------//
+	if (Application::IsKeyPressed('7'))
+		Win = true;
+	if (Application::IsKeyPressed('6'))
+		Lose = true;
+
 	if (Lose || Win)
 	{
+		Audio->f_PauseLevel_2_music();
+		scene->setWinOrLose(Win);
 		scene->getScene("FINISHED")->Init();
 		scene->updateState("FINISHED");
 	}
-
-	/*if (Win || Lose)
-	{
-		scene->getScene("FINISHED")->Init();
-		scene->updateState("FINISHED");
-	}*/
-
 	//----Weather and Environment Effects-------//
 	if (Raining)
 	{
-		car->SetSteering(2.f);
+		car->SetSteering(3);
 	}
-	if (Snowing)
+	else if (Snowing)
 	{
 		car->SetFriction(0.01f);
 	}
-	if (OffRoad)
-	{
-		car->SetFriction(0.5f);
-		car->SetMaxSpeed(0.1f);
-	}
+	else
+		car->SetFriction(0.1f);
 
 	//-------------------------------------------//
 	rain.update(dt);
@@ -536,7 +519,6 @@ void c_LevelTwo::Update(double dt)
 	if (OptionSelection == true)
 	{
 		VehicleMove = true;
-		duration++;
 	}
 
 	//Updating Car Position for Player and AI
@@ -601,6 +583,22 @@ void c_LevelTwo::updateEnviromentCollision()
 	track.getOBB()->calcNewAxis(90.f, 0, 1, 0);
 
 	offRoadManager->updateCollision("OffRoad//offRoadPos2.txt", "OffRoad//offRoadRotate2.txt");
+
+	//Finish LIne
+	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	FinishLine.getOBB()->calcNewDimensions(46, 12, 46);
+
+	//Checkpoints
+	Checkpoints.updatePos(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
+	Checkpoints.getOBB()->calcNewDimensions(46, 12, 46);
+	Checkpoints.getOBB()->calcNewAxis(90, 0, 1, 0);
+
+	Checkpoints2.updatePos(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
+	Checkpoints2.getOBB()->calcNewDimensions(46, 12, 46);
+
+	Checkpoints3.updatePos(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
+	Checkpoints3.getOBB()->calcNewDimensions(46, 12, 46);
+	Checkpoints3.getOBB()->calcNewAxis(90, 0, 1, 0);
 }
 
 void c_LevelTwo::Render()
@@ -796,47 +794,6 @@ void c_LevelTwo::Render()
 
 	slow7.updatePos(slow7.getPos().x, slow7.getPos().y, slow7.getPos().z);
 	slow7.getOBB()->calcNewDimensions(3.f, 1.f, 3.f);
-
-	/**************************************************************		FinishLine		***************************************************************/
-
-	modelStack.PushMatrix();
-	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	modelStack.Scale(46, 12, 46);
-	modelStack.PopMatrix();
-
-	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	FinishLine.getOBB()->calcNewDimensions(46, 12, 46);
-	//--------------------------- Check point 1 ------------------------------------//
-	modelStack.PushMatrix();
-	modelStack.Translate(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Scale(46, 12, 46);
-	modelStack.PopMatrix();
-
-	Checkpoints.updatePos(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
-	Checkpoints.getOBB()->calcNewDimensions(46, 12, 46);
-	Checkpoints.getOBB()->calcNewAxis(90, 0, 1, 0);
-
-	//--------------------------- Check point 2 ------------------------------------//
-	modelStack.PushMatrix();
-	modelStack.Translate(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
-	modelStack.Scale(46, 12, 46);
-	modelStack.PopMatrix();
-
-	Checkpoints2.updatePos(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
-	Checkpoints2.getOBB()->calcNewDimensions(46, 12, 46);
-	//---------------------------- Check point 3 ---------------------------------//
-	modelStack.PushMatrix();
-	modelStack.Translate(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Scale(41, 12, 46);
-	modelStack.PopMatrix();
-
-	Checkpoints3.updatePos(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
-	Checkpoints3.getOBB()->calcNewDimensions(46, 12, 46);
-	Checkpoints3.getOBB()->calcNewAxis(90, 0, 1, 0);
-	//---------------------------------------------------------------//
-
 	/********************************************************************************************************************************************************/
 
 	CountdownCut = std::to_string(Countdown);
@@ -846,14 +803,10 @@ void c_LevelTwo::Render()
 		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1.f, 0, 0), 4.f, 11.f, 14.f);
 	else
 	{
-		Cooldown++;
 		elapedTimeCut = std::to_string(elapsedTime);
 		elapedTimeCut.resize(5);
-
-		if (Cooldown <= 50)
-			RenderTextOnScreen(meshList[TEXT], "START", Color(1.f, 0.f, 0.f), 4.f, 9.f, 14.f);
-		else
-			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1.f, 0.f, 0.f), 4.f, 9.f, 14.f);
+	
+		RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1.f, 0.f, 0.f), 4.f, 9.f, 14.f);
 	}
 	RenderTextOnScreen(meshList[TEXT], "Player lap: ", Color(1, 0, 0), 3, 16.3f, 3);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 24, 3);
@@ -990,7 +943,7 @@ void c_LevelTwo::renderEnviroment()
 
 	//StreetLight
 	modelStack.PushMatrix();
-	modelStack.Translate(-6, -3, 50); 
+	modelStack.Translate(-6, -5, 50); 
 	modelStack.Rotate(90.f, 0, 1, 0);
 	modelStack.Scale(6, 5, 6);
 	RenderMesh(meshList[STREETLIGHT], true);
@@ -1664,7 +1617,7 @@ void c_LevelTwo::resetVar()
 {
 	OptionSelection = VehicleMove = RedLight = bLightEnabled = true;
 	AbleToPress = GreenLight = Raining = Snowing = false;
-	checkF = Freeze = OffRoad = AIFinish = false;
+	checkF = AIFinish = false;
 	Win = Lose = Finish = false;
 
 	car->SetFriction(0.1f);
@@ -1680,9 +1633,13 @@ void c_LevelTwo::resetVar()
 	CamTargetY = car->getPos().y;
 	CamTargetZ = car->getPos().z;
 
-	elapsedTime = FreezeTime = duration = Cooldown = Timer = FPS =  0;
+	elapsedTime = FreezeTime = Timer = FPS =  0;
 	ArrowP = 7;
-	Countdown = 3;
+	Countdown = 6;
 	laps  = AIlaps = 0;
 	cooldown = 300;
+	AICheckcount = 0;
+
+	startline = false;
+	music = false;
 }

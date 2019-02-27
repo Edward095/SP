@@ -21,7 +21,6 @@ public:
 	enum GEOMETRY_TYPE
 	{
 		TEXT,
-		CARAXIS,
 		TOP,
 		BOTTOM,
 		RACEBANNER,
@@ -197,7 +196,6 @@ private:
 	c_Entity speedometer;
 	c_Entity needle;
 	c_Entity circle;
-	c_Entity PickUp;
     c_Entity FinishLine;
 
 	c_CarBaseClass* playerOne;
@@ -217,14 +215,8 @@ private:
 	bool OptionSelection;
 	bool VehicleMove;
 
-	bool pick;
-	bool OffRoad;
 	bool Snowing;
-	bool checkFO;
-	bool checkFT;
 
-	bool OFreeze;
-	bool TFreeze;
 	bool Raining;
 	bool PoneFinish;
 	bool PTwoFinish;
@@ -233,19 +225,12 @@ private:
 
 	float ArrowP;
 	float elapsedTime;
-	float OelapsedTime;
-	float TelapsedTime;
 	float Timer;
 	float Countdown;
 	float FreezeTime;
 	float red1, red2, red3, green1, green2, green3;
-	int Cooldown;
 	int Ponelaps;
 	int PTwolaps;
-	int Oduration;
-	int Tduration;
-	int Tcooldown;
-	int Ocooldown;
 	int OCheckcount;
 	int TCheckcount;
 	bool startline;
@@ -273,6 +258,8 @@ private:
 	c_Entity slow5;
 	c_Entity slow6;
 	c_Entity slow7;
+
+	float bufferTime;
 };
 
 #endif

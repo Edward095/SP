@@ -6,24 +6,31 @@
 
 c_ThirdCar::c_ThirdCar()
 {
+	MaxSpeed = 3.f;
+	SteeringAngle = 0;
+	Steering = 2;
+	MaxAcceleration = 0.4f;
+	Friction = 0.04f;
+	padDuration = 0;
 	VelocityZ = 0;
 	Acceleration = 0;
 	pos.x = 0;
 	pos.y = 1;
 	pos.z = 0;
+	SpedoVeloZ = 0;
+	elapsedTime = 0.f;
+	coolDown = 0.f;
+	abilityDuration = 0.f;
 
-	MaxSpeed = 1;
-	SteeringAngle = 0;
-	MaxAcceleration = 0.4f;
-	Friction = 0.04f;
-	Steering = 2;
 	Driving = false;
 	Backwards = false;
 	PressQ = false;
-	Nitro = false;
 	BoostPad = false;
 	SlowPad = false;
 	offRoad = false;
+	Collided = false;
+	stopTime = false;
+	slowed = false;
 }
 c_ThirdCar::c_ThirdCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos,bool canCollide)
 {
@@ -84,11 +91,6 @@ void c_ThirdCar::Ability(double dt)
 	}
 }
 
-void c_ThirdCar::PowerUp(bool check)
-{
-
-}
-
 void c_ThirdCar::isOffRoad()
 {
 	c_OffRoadManager* manager = c_OffRoadManager::getInstance();
@@ -110,6 +112,37 @@ void c_ThirdCar::isOffRoad()
 	else
 	{
 		SetFriction(0.04f);
-		SetMaxSpeed(3.f);
+		if (slowed)
+			SetMaxSpeed(1.f);
+		else
+			SetMaxSpeed(3.f);
 	}
+}
+void c_ThirdCar::resetVar()
+{
+	MaxSpeed = 3.f;
+	SteeringAngle = 0;
+	Steering = 2;
+	MaxAcceleration = 0.4f;
+	Friction = 0.04f;
+	padDuration = 0;
+	VelocityZ = 0;
+	Acceleration = 0;
+	pos.x = 0;
+	pos.y = 1;
+	pos.z = 0;
+	SpedoVeloZ = 0;
+	elapsedTime = 0.f;
+	coolDown = 0.f;
+	abilityDuration = 0.f;
+
+	Driving = false;
+	Backwards = false;
+	PressQ = false;
+	BoostPad = false;
+	SlowPad = false;
+	offRoad = false;
+	Collided = false;
+	stopTime = false;
+	slowed = false;
 }

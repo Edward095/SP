@@ -12,6 +12,7 @@ public:
 	virtual void Render() = 0;
 	virtual void Exit() = 0;
 	virtual void resetVar() = 0;
+	virtual void initLights() = 0;
 };
 
 #endif

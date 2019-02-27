@@ -14,6 +14,7 @@
 #include "c_ObjectManager.h"
 #include "c_DataManager.h"
 #include "c_SceneManager.h"
+#include "c_Sound.h"
 
 #include "c_FirstCar.h"
 #include "c_SecondCar.h"
@@ -350,9 +351,11 @@ void c_Continue::updateSelection(double dt)
 	c_ObjectManager* OBJmanager = c_ObjectManager::getInstance();
 	c_DataManager* data = c_DataManager::getInstance();
 	c_SceneManager* scene = c_SceneManager::getInstance();
+	c_Sound* Audio = c_Sound::getInstance();
 
 	if (Application::IsKeyPressed(VK_UP) && bounceTime < elapsedTime)
 	{
+		Audio->f_Menu_MoveSelect();
 		noFile = false;
 		ArrowY -= 1;
 		if (ArrowY < 1)
@@ -369,6 +372,7 @@ void c_Continue::updateSelection(double dt)
 	}
 	if (Application::IsKeyPressed(VK_DOWN) && bounceTime < elapsedTime)
 	{
+		Audio->f_Menu_MoveSelect();
 		noFile = false;
 		ArrowY += 1;
 		if (ArrowY > 3)
@@ -385,6 +389,8 @@ void c_Continue::updateSelection(double dt)
 	}
 	if (Application::IsKeyPressed(VK_SPACE) && bounceTime < elapsedTime)
 	{
+		Audio->f_Menu_ConfirmSelect();
+
 		if (ArrowY == 1)
 			data->selectFile(1);
 		else if (ArrowY == 2)

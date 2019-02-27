@@ -9,15 +9,10 @@ public:
 	c_SecondCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide);
 	~c_SecondCar();
 	void Ability(double dt);
-	virtual void PowerUp(bool check);
-	virtual void isOffRoad();
-	void SetOSlowed(bool speed);
-	void SetTSlowed(bool speed);
-	void setSlowed(bool slowedorNot);
-
+	void isOffRoad();
+	void resetVar();
 
 private:
-	bool slowed;
 };
 
 #endif

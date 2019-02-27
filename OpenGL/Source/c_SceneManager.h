@@ -15,6 +15,7 @@
 
 #include "c_Continue.h"
 #include "c_GameEnd.h"
+#include "c_Title.h"
 
 class c_SceneManager
 {
@@ -33,8 +34,7 @@ private://Functions and Enums
 		MLEVELTHREE,
 		CONTINUE,
 		FINISHED,
-		LEADERBOARDS,
-
+		TITLE,
 };
 
 public:
@@ -46,6 +46,8 @@ public:
 	bool checkState(std::string state);
 	bool checkLevel(std::string level);
 	bool singleOrMulti(char sORm);
+	void setWinOrLose(bool winorlose);
+	bool getWinOrLose();
 	std::string getLevel();
 
 	Scene* getScene(std::string sceneName);
@@ -56,6 +58,7 @@ private:
 	std::map <GAMESTATE, std::string> game_State;
 	std::string currentState;
 	std::string level;
+	bool WinOrLose;
 
 	c_Npc* npc;
 	c_Garage* garage;
@@ -68,6 +71,7 @@ private:
 
 	c_GameEnd* gameEnd;
 	c_Continue* continueGame;
+	c_Title* title;
 };
 
 #endif

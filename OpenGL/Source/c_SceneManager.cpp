@@ -15,6 +15,7 @@ c_SceneManager::c_SceneManager()
 	game_State[MLEVELTWO] = "MLEVELTWO";
 	game_State[MLEVELTHREE] = "MLEVELTHREE";
 	game_State[FINISHED] = "FINISHED";
+	game_State[TITLE] = "TITLE";
 
 	npc = new c_Npc();
 	garage = new c_Garage();
@@ -27,6 +28,9 @@ c_SceneManager::c_SceneManager()
 
 	continueGame = new c_Continue();
 	gameEnd = new c_GameEnd();
+	title = new c_Title();
+
+	WinOrLose = false;
 }
 
 
@@ -55,6 +59,7 @@ void c_SceneManager::cleanUp()
 	mLevelThree->Exit();
 	continueGame->Exit();
 	gameEnd->Exit();
+	title->Exit();
 
 
 	delete npc;
@@ -68,6 +73,7 @@ void c_SceneManager::cleanUp()
 
 	delete continueGame;
 	delete gameEnd;
+	delete title;
 }
 
 void c_SceneManager::updateState(std::string state)
@@ -90,6 +96,10 @@ bool c_SceneManager::checkLevel(std::string level)
 {
 	return (this->level == level);
 }
+bool c_SceneManager::getWinOrLose()
+{
+	return WinOrLose;
+}
 std::string c_SceneManager::getLevel()
 {
 	return level;
@@ -97,6 +107,10 @@ std::string c_SceneManager::getLevel()
 bool c_SceneManager::singleOrMulti(char sOrm)
 {
 	return (sOrm == level[0]);
+}
+void c_SceneManager::setWinOrLose(bool winorlose)
+{
+	WinOrLose = winorlose;
 }
 Scene* c_SceneManager::getScene(std::string sceneName)
 {
@@ -120,5 +134,7 @@ Scene* c_SceneManager::getScene(std::string sceneName)
 		return continueGame;
 	else if (sceneName == "FINISHED")
 		return gameEnd;
+	else if (sceneName == "TITLE")
+		return title;
 	return nullptr;
 }

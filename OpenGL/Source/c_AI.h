@@ -19,9 +19,9 @@ public:
 	void TurnThree(double dt, int dir);
 	float GetTurning();
 	virtual void Ability(double dt);
-	virtual void PowerUp(bool check);
 	virtual void isOffRoad();
 	void Speed(int speed);
+	void resetVar();
 
 protected:
 	int Waypoint;

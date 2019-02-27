@@ -59,7 +59,6 @@ void c_LevelOne::Init()
 	//-------------ability related----------------//
 	checkF = false;
 	AIFinish = false;
-	Freeze = false;
 	//-------------------------------//
 
 	//-------------race related----------------//
@@ -74,14 +73,13 @@ void c_LevelOne::Init()
 	//----Time Related Variables-----//
 	elapsedTime = 0;
 	FreezeTime = 0;
-	duration = 0;
-	Cooldown = 0;
-	Countdown = 3;
+	Countdown = 6;
 	Timer = 0;
 	laps = 0;
 	AIlaps = 0;
 	FPS = 0;
 	Checkcount = 0;
+	AICheckcount = 0;
 	cooldown = 300;
 	//-------------------------------//
 	startline = false;
@@ -1017,7 +1015,7 @@ void c_LevelOne::renderEnviroment()
 
 	//StreetLight
 	modelStack.PushMatrix();
-	modelStack.Translate(-9, -3, 50);
+	modelStack.Translate(-9, -5, 50);
 	modelStack.Rotate(90.f, 0, 1, 0);
 	modelStack.Scale(6, 5, 6);
 	RenderMesh(meshList[STREETLIGHT], true);
@@ -1227,46 +1225,6 @@ void c_LevelOne::renderEntity()
 	slow6.updatePos(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
 	slow6.getOBB()->calcNewDimensions(3, 1, 3);
 
-	/**************************************************************		FinishLine		***************************************************************/
-
-	modelStack.PushMatrix();
-	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	modelStack.Scale(46, 12, 46);
-	modelStack.PopMatrix();
-
-	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	FinishLine.getOBB()->calcNewDimensions(46, 12, 46);
-	//--------------------------- Check point 1 ------------------------------------//
-	modelStack.PushMatrix();
-	modelStack.Translate(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Scale(46, 12, 46);
-	modelStack.PopMatrix();
-
-	Checkpoints.updatePos(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
-	Checkpoints.getOBB()->calcNewDimensions(46, 12, 46);
-	Checkpoints.getOBB()->calcNewAxis(90, 0, 1, 0);
-
-	//--------------------------- Check point 2 ------------------------------------//
-	modelStack.PushMatrix();
-	modelStack.Translate(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
-	modelStack.Scale(46, 12, 46);
-	modelStack.PopMatrix();
-
-	Checkpoints2.updatePos(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
-	Checkpoints2.getOBB()->calcNewDimensions(46, 12, 46);
-	//---------------------------- Check point 3 ---------------------------------//
-	modelStack.PushMatrix();
-	modelStack.Translate(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Scale(41, 12, 46);
-	modelStack.PopMatrix();
-
-	Checkpoints3.updatePos(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
-	Checkpoints3.getOBB()->calcNewDimensions(46, 12, 46);
-	Checkpoints3.getOBB()->calcNewAxis(90, 0, 1, 0);
-	//---------------------------------------------------------------//
-
 	/********************************************************************************************************************************************************/
 
 	CountdownCut = std::to_string(Countdown);
@@ -1279,14 +1237,10 @@ void c_LevelOne::renderEntity()
 			RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 11, 14);
 		else
 		{
-			Cooldown++;
 			elapedTimeCut = std::to_string(elapsedTime);
 			elapedTimeCut.resize(5);
-
-			if (Cooldown <= 50)
-				RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 9, 14);
-			else
-				RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 9, 14);
+			
+			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 9, 14);
 		}
 		RenderTextOnScreen(meshList[TEXT], "Player lap: ", Color(1, 0, 0), 3, 16.3f, 3);
 		RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 24, 3);
@@ -1340,8 +1294,6 @@ void c_LevelOne::updateLevel(double dt)
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
 
-
-
 	//----Updating Camera Position---------------------------------------------------------------//
 	CamPosX = (car->getPos().x - (sin(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
 	CamPosY = car->getPos().y + 8;
@@ -1361,33 +1313,6 @@ void c_LevelOne::updateLevel(double dt)
 		bLightEnabled = false;
 	}
 	//-----------------------------------------------//
-
-	//----KeyPress to enable PowerUps----------------//
-	//if (Application::IsKeyPressed('Q') && checkF)
-	//{
-	//	Freeze = true;
-	//}
-
-	//if (Freeze && duration <= 200)
-	//{
-	//	duration++;
-	//	AI.Speed(0);
-	//	elapsedTime -= FreezeTime;
-	//	cooldown = 300;
-	//}
-
-	//if (duration >= 200) // 4 sec/dt
-	//{
-	//	Freeze = false;
-	//	cooldown--;
-	//	AI.Speed(1);
-	//}
-
-	//if (cooldown <= 0)
-	//{
-	//	duration = 0;
-	//	cooldown = 300;
-	//}
 
 	//-------------------------------------------------//
 	if (car->gotCollide("Checkpoint", false))
@@ -1429,24 +1354,45 @@ void c_LevelOne::updateLevel(double dt)
 		if (Checkcount == 6)
 			laps = 2;
 	}
-
 	if (AI.gotCollide("FinishLine", false))
 	{
-		AIFinish = true;
+	    AIFinish = true;
 	}
 	else
 	{
-		AIFinish = false;
+	    AIFinish = false;
 	}
 
 	if (AIFinish)
 	{
-		if (elapsedTime >= 59 && elapsedTime <= 63)
-			AIlaps = 1;
-		if (elapsedTime >= 119 && elapsedTime <= 123)
-			AIlaps = 2;
+	    if (AICheckcount == 3)
+	        AIlaps = 1;
+
+	    if (AICheckcount == 6)
+	        AIlaps = 2;
 	}
 
+	if (AI.gotCollide("Checkpoint", false))
+	{
+	    if (AICheckcount == 0)
+	        AICheckcount = 1;
+	    else if (AICheckcount == 3)
+	        AICheckcount = 4;
+	}
+	else if (AI.gotCollide("Checkpoint2", false))
+	{
+	    if (AICheckcount == 1)
+	        AICheckcount = 2;
+	    else if (AICheckcount == 4)
+	        AICheckcount = 5;
+	}
+	else if (AI.gotCollide("Checkpoint3", false))
+	{
+	    if (AICheckcount == 2)
+	        AICheckcount = 3;
+	    else if (AICheckcount == 5)
+	        AICheckcount = 6;
+	}
 	if (laps == 2 || AIlaps == 2)
 	{
 		if (laps < AIlaps)
@@ -1455,8 +1401,15 @@ void c_LevelOne::updateLevel(double dt)
 			Lose = true;
 	}
 	//-----------------------------------------------------------//
+	if (Application::IsKeyPressed('7'))
+		Win = true;
+	if (Application::IsKeyPressed('6'))
+		Lose = true;
+
 	if (Win || Lose)
 	{
+		Audio->f_PauseLevel_1_music();
+		scene->setWinOrLose(Win);
 		scene->getScene("FINISHED")->Init();
 		scene->updateState("FINISHED");
 	}
@@ -1551,7 +1504,6 @@ void c_LevelOne::updateLevel(double dt)
 	if (OptionSelection == true)
 	{
 		VehicleMove = true;
-		duration++;
 	}
 
 	//Updating Car Position for Player and AI
@@ -1611,6 +1563,22 @@ void c_LevelOne::updateEnviromentCollision()
 
 	//OffRoad
 	offRoadManager->updateCollision("OffRoad//offRoadPos1.txt","OffRoad//offRoadRotate1.txt");
+
+	//Finish LIne
+	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	FinishLine.getOBB()->calcNewDimensions(46, 12, 46);
+
+	//Checkpoints
+	Checkpoints.updatePos(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
+	Checkpoints.getOBB()->calcNewDimensions(46, 12, 46);
+	Checkpoints.getOBB()->calcNewAxis(90, 0, 1, 0);
+
+	Checkpoints2.updatePos(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
+	Checkpoints2.getOBB()->calcNewDimensions(46, 12, 46);
+
+	Checkpoints3.updatePos(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
+	Checkpoints3.getOBB()->calcNewDimensions(46, 12, 46);
+	Checkpoints3.getOBB()->calcNewAxis(90, 0, 1, 0);
 
 }
 
@@ -1701,12 +1669,16 @@ void c_LevelOne::resetVar()
 
 	bLightEnabled  = OptionSelection = VehicleMove = RedLight = true;
 	AbleToPress = GreenLight = false;
-	checkF = AIFinish = Freeze  = Raining = Snowing = false;
+	checkF = AIFinish = Raining = Snowing = false;
 	Win = Lose = Finish = false;
 
-	elapsedTime = FreezeTime = duration = Cooldown = Timer = FPS = 0;
+	elapsedTime = FreezeTime = Timer = FPS = 0;
 	laps = AIlaps = Checkcount = 0;
 	ArrowP = 7;
-	Countdown = 3;
+	Countdown = 6;
 	cooldown = 300;
+	AICheckcount = 0;
+
+	startline = false;
+	music = false;
 }

@@ -154,8 +154,9 @@
     <ClCompile Include="Source\c_MultiplayerLevelThree.cpp" />
     <ClCompile Include="Source\c_MultiplayerLevelTwo.cpp" />
     <ClCompile Include="Source\c_OffRoadManager.cpp" />
-    <ClCompile Include="Source\c_Weather.cpp" />
     <ClCompile Include="Source\c_SecondCar.cpp" />
+    <ClCompile Include="Source\c_Title.cpp" />
+    <ClCompile Include="Source\c_Weather.cpp" />
     <ClCompile Include="Source\c_MultiplayerLevel.cpp" />
     <ClCompile Include="Source\c_AI.cpp" />
     <ClCompile Include="Source\c_SceneManager.cpp" />
@@ -190,8 +191,9 @@
     <ClInclude Include="Source\c_MultiplayerLevelThree.h" />
     <ClInclude Include="Source\c_MultiplayerLevelTwo.h" />
     <ClInclude Include="Source\c_OffRoadManager.h" />
-    <ClInclude Include="Source\c_Weather.h" />
     <ClInclude Include="Source\c_SecondCar.h" />
+    <ClInclude Include="Source\c_Title.h" />
+    <ClInclude Include="Source\c_Weather.h" />
     <ClInclude Include="Source\c_MultiplayerLevel.h" />
     <ClInclude Include="Source\c_AI.h" />
     <ClInclude Include="Source\c_Continue.h" />

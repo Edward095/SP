@@ -16,6 +16,7 @@
 #include "c_ObjectManager.h"
 #include "c_DataManager.h"
 #include "c_OffRoadManager.h"
+#include "c_Sound.h"
 
 c_GameEnd::c_GameEnd()
 {
@@ -103,6 +104,8 @@ void c_GameEnd::Init()
 	meshList[GAMEOVER]->textureID = LoadTGA("Image//GameEnd.tga");
 	meshList[WINTEXT] = MeshBuilder::GenerateQuad("Wintext", Color(1, 0, 0), 10);
 	meshList[WINTEXT]->textureID = LoadTGA("Image//Win.tga");
+	meshList[LOSETEXT] = MeshBuilder::GenerateQuad("LoseText", Color(1, 0, 0), 10);
+	meshList[LOSETEXT]->textureID = LoadTGA("Image//Lose.tga");
 
 }
 void c_GameEnd::Update(double dt)
@@ -138,8 +141,10 @@ void c_GameEnd::Render()
 	renderLights();
 	if (over || scene->singleOrMulti('M'))
 		renderSelection();
-	else
+	else if(scene->getWinOrLose())
 		RenderMesh(meshList[WINTEXT], false);
+	else if(!scene->getWinOrLose())
+		RenderMesh(meshList[LOSETEXT], false);
 }
 void c_GameEnd::Exit()
 {
@@ -298,24 +303,28 @@ void c_GameEnd::renderSelection()
 void c_GameEnd::updateSelection()
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
+	c_Sound* Audio = c_Sound::getInstance();
 
 	if (Application::IsKeyPressed(VK_UP) && bounceTime < elapsedTime)
 	{
+		Audio->f_Menu_MoveSelect();
+		bounceTime = elapsedTime + 0.125;
+
 		ArrowY -= 1;
 		if (ArrowY < 1)
 			ArrowY = 3;
 
 		if (ArrowY == 1)
-			meshList[TEXT]->textureID = LoadTGA("Image//NextLevel.tga");
+			meshList[TEXT]->textureID = NextLevel;
 		else if (ArrowY == 2)
-			meshList[TEXT]->textureID = LoadTGA("Image//Retry.tga");
+			meshList[TEXT]->textureID = Retry;
 		else if (ArrowY == 3)
-			meshList[TEXT]->textureID = LoadTGA("Image//Exit.tga");
-
-		bounceTime = elapsedTime + 0.125;
+			meshList[TEXT]->textureID = exit;
 	}
 	if (Application::IsKeyPressed(VK_DOWN) && bounceTime < elapsedTime)
 	{
+		Audio->f_Menu_MoveSelect();
+		bounceTime = elapsedTime + 0.125;
 		ArrowY += 1;
 		if (ArrowY > 3)
 			ArrowY = 1;
@@ -327,19 +336,18 @@ void c_GameEnd::updateSelection()
 		else if (ArrowY == 3)
 			meshList[TEXT]->textureID = exit;
 
-		bounceTime = elapsedTime + 0.125;
 	}
 	if (Application::IsKeyPressed(VK_SPACE) && bounceTime < elapsedTime)
 	{
+		Audio->f_Menu_ConfirmSelect();
+		bounceTime = elapsedTime + 0.125;
+
 		if (ArrowY == 1)
 			goNextLevel();
 		else if (ArrowY == 2)
 			retry();
-		else if (ArrowY = 3)
-		{
+		else if (ArrowY == 3)
 			scene->updateState("NPC");
-		}
-		bounceTime = elapsedTime + 0.125;
 	}
 	
 }
@@ -358,6 +366,10 @@ void c_GameEnd::goNextLevel()
 			scene->getScene("SLEVELTWO")->Init();
 			scene->updateLevel("SLEVELTWO");
 			scene->updateState("SLEVELTWO");
+
+			c_CarBaseClass* car1 = getCar("player1");
+			car1->resetVar();
+			OBJmanager->getCanCollide("player1")->updatePos(0, 0, 0);
 		}
 		else if (scene->checkLevel("SLEVELTWO"))
 		{
@@ -366,8 +378,11 @@ void c_GameEnd::goNextLevel()
 			scene->getScene("SLEVELTHREE")->Init();
 			scene->updateLevel("SLEVELTHREE");
 			scene->updateState("SLEVELTHREE");
+			c_CarBaseClass* car1 = getCar("player1");
+			car1->resetVar();
+			OBJmanager->getCanCollide("player1")->updatePos(0, 0, 0);
 		}
-		else
+		else if (scene->checkLevel("SLEVELTHREE"))
 			RenderMesh(meshList[GAMEOVER], false);
 	}
 	else
@@ -379,6 +394,12 @@ void c_GameEnd::goNextLevel()
 			scene->getScene("MLEVELTWO")->Init();
 			scene->updateLevel("MLEVELTWO");
 			scene->updateState("MLEVELTWO");
+			c_CarBaseClass* car1 = getCar("player1");
+			car1->resetVar();
+			car1 = getCar("player2");
+			car1->resetVar();
+			OBJmanager->getCanCollide("player1")->updatePos(0, 0, 0);
+			OBJmanager->getCanCollide("player2")->updatePos(-10, 0, 0);
 		}
 		else if (scene->checkLevel("MLEVELTWO"))
 		{
@@ -387,19 +408,46 @@ void c_GameEnd::goNextLevel()
 			scene->getScene("MLEVELTHREE")->Init();
 			scene->updateLevel("MLEVELTHREE");
 			scene->updateState("MLEVELTHREE");
+			c_CarBaseClass* car1 = getCar("player1");
+			car1->resetVar();
+			car1 = getCar("player2");
+			car1->resetVar();
+			OBJmanager->getCanCollide("player1")->updatePos(0, 0, 0);
+			OBJmanager->getCanCollide("player2")->updatePos(-10, 0, 0);
 		}
-		else
+		else if(scene->checkLevel("MLEVELTHREE"))
 			RenderMesh(meshList[GAMEOVER], false);
 	}
 }
 void c_GameEnd::retry()
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
+
 	scene->getScene(scene->getLevel())->resetVar();
+	scene->getScene(scene->getLevel())->initLights();
+	scene->updateState(scene->getLevel());
 }
 
 void c_GameEnd::resetVar()
 {
 	
 
+}
+
+c_CarBaseClass * c_GameEnd::getCar(std::string name)
+{
+	c_ObjectManager* OBJmanager = c_ObjectManager::getInstance();
+	c_Entity* car = OBJmanager->getCanCollide(name);
+
+	c_FirstCar* first = dynamic_cast <c_FirstCar*>(car);
+	if (first)
+		return first;
+	c_SecondCar* second = dynamic_cast <c_SecondCar*>(car);
+	if (second)
+		return second;
+	c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(car);
+	if (third)
+		return third;
+
+	return nullptr;
 }

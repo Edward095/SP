@@ -87,9 +87,6 @@
     <ClCompile Include="Source\c_MultiplayerLevel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\c_SecondCar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\c_Weather.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -115,6 +112,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\c_GameEnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\c_Title.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\c_SecondCar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -200,9 +203,6 @@
     <ClInclude Include="Source\c_MultiplayerLevel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\c_SecondCar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\c_Weather.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -228,6 +228,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\c_GameEnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\c_Title.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\c_SecondCar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

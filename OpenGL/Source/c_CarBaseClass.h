@@ -23,12 +23,11 @@ public:
 	void SetMaxSpeed(float Speed);
 	void SetSteeringAngle(float angle);
 	void PSpeed(float speed);
-	void SetOSlowed(bool speed);
-	void SetTSlowed(bool speed);
 	float GetSpedoSpeed();
 	bool getStopTime();
+	void setSlowed(bool slowedorNot);
+	virtual void resetVar() = 0;
 	virtual void Ability(double dt) = 0;
-	virtual void PowerUp(bool check) = 0;
 	virtual void isOffRoad() = 0;
 
 protected:
@@ -45,19 +44,17 @@ protected:
 	float SpedoVeloZ;
 	int padDuration;
 
-	bool Driving = false;
-	bool Backwards = false;
-	bool PressQ = false;
-	bool Nitro = false;
-	bool BoostPad = false;
-	bool SlowPad = false;
+	bool Driving;
+	bool Backwards;
+	bool PressQ;
+	bool BoostPad;
+	bool SlowPad;
 
 	bool offRoad;
-	bool Collided = false;
-	bool freeze = false;
-	bool Oslowed;
-	bool Tslowed;
+	bool Collided;
+
 	bool stopTime;
+	bool slowed;
 };
 
 

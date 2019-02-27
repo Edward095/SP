@@ -7,6 +7,7 @@
 #include "MatrixStack.h"
 #include "Light.h"
 #include "c_Sound.h"
+#include "c_CarBaseClass.h"
 
 class c_GameEnd : public Scene
 {
@@ -15,6 +16,7 @@ public:
 	{
 		TEXT,
 		WINTEXT,
+		LOSETEXT,
 		GAMEOVER,
 		ARROW,
 		NUM_GEOMETRY,
@@ -76,6 +78,7 @@ private:
 	void goNextLevel();
 	void retry();
 	void resetVar();
+	c_CarBaseClass* getCar(std::string name);
 
 	int ArrowY;
 	double elapsedTime;

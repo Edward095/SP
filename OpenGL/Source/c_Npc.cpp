@@ -37,7 +37,8 @@ void c_Npc::Init()
 	Audio->f_AdjustMusicVolume(volume);
 	Audio->f_AdjustSFXVolume(volume);
 
-	scene->updateState("NPC");
+	scene->updateState("TITLE");
+	scene->getScene("TITLE")->Init();
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -166,7 +167,12 @@ void c_Npc::Update(double dt)
 	camera.WBmove(dt, 300.f, -450.f, 218.f, -150.f);
 
 	if (scene->checkState("NPC"))
+	{
+		Audio->f_Unpause_Menu_Music();
 		UpdateNpc(dt);
+	}
+	else if (scene->checkState("TITLE"))
+		scene->getScene("TITLE")->Update(dt);
 	else if (scene->checkState("CONTINUE"))
 		scene->getScene("CONTINUE")->Update(dt);
 	else if (scene->checkState("FINISHED"))
@@ -198,8 +204,9 @@ void c_Npc::Render()
 	MVP = projectionStack.Top() *viewStack.Top()*modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
-	
-	if (scene->checkState("NPC"))
+	if (scene->checkState("TITLE"))
+		scene->getScene("TITLE")->Render();
+	else if (scene->checkState("NPC"))
 		RenderNpc();
 	else if (scene->checkState("CONTINUE"))
 		scene->getScene("CONTINUE")->Render();
@@ -443,6 +450,7 @@ void c_Npc::UpdateNpc(double dt)
 
 				scene->getScene("GARAGE")->Init();
 				scene->getScene("GARAGE")->Update(dt);
+				Audio->f_Pause_Menu_Music();
 			}
 			else if (ArrowY == 6)
 			{
@@ -454,6 +462,7 @@ void c_Npc::UpdateNpc(double dt)
 
 				scene->getScene("GARAGE")->Init();
 				scene->getScene("GARAGE")->Update(dt);
+				Audio->f_Pause_Menu_Music();
 			}
 			else if (ArrowY == 5)
 			{
@@ -465,6 +474,7 @@ void c_Npc::UpdateNpc(double dt)
 
 				scene->getScene("GARAGE")->Init();
 				scene->getScene("GARAGE")->Update(dt);
+				Audio->f_Pause_Menu_Music();
 			}
 		}
 
@@ -503,6 +513,7 @@ void c_Npc::UpdateNpc(double dt)
 				//yes
 				scene->updateState("CONTINUE");
 				scene->getScene("CONTINUE")->Init();
+				Audio->f_Pause_Menu_Music();
 			}
 			else if (ArrowY == 6)
 			{
