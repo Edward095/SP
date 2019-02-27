@@ -87,7 +87,7 @@ void c_LevelOne::Init()
 	startline = false;
 	music = false;
 	//----Random Number Gen----------//
-	Random = rand() % 3 + 1;
+	Random = 1;
 	//-------------------------------//
 
 
@@ -166,6 +166,7 @@ void c_LevelOne::Init()
 		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0), true);
+		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(0, 0, 0.4), 1);
 	}
 	if (Random == 2)
 	{
@@ -177,6 +178,7 @@ void c_LevelOne::Init()
 		left.init("left", "quad", "Image//SnowLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//SnowRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//SnowBack.tga", (float)(0, 0, 0), true);
+		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(1, 1, 1), 1);
 	}
 	if (Random == 3)
 	{
@@ -188,6 +190,7 @@ void c_LevelOne::Init()
 		left.init("left", "quad", "Image//SunnyLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//SunnyRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//SunnyBack.tga", (float)(0, 0, 0), true);
+		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(1, 0, 0), 1);
 	}
 	//---------------------------------------------------------------------------------//
 
@@ -209,6 +212,8 @@ void c_LevelOne::Init()
 	meshList[TRAFFICNULL] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
 	meshList[TRAFFICNULL2] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
 	meshList[TRAFFICGREEN] = MeshBuilder::GenerateSphere("traffic light", Color(0, 1, 0), 18, 36, 1.f);
+
+	//meshList[GROUND]->textureID = LoadTGA("Image//Ground.tga");
 	//----------------------------------------------------------------------------------------//
 	
 	//----Rendering Weather Conditions--------------------------------------------------------//
@@ -1011,7 +1016,14 @@ void c_LevelOne::renderEnviroment()
 	modelStack.Scale(6, 5, 6);
 	RenderMesh(meshList[STREETLIGHT], true);
 	modelStack.PopMatrix();
-
+	
+	//Ground
+	modelStack.PushMatrix();
+	modelStack.Translate(0, -1, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(-90, 1, 0, 0);
+	RenderMesh(meshList[GROUND], false);
+	modelStack.PopMatrix();
 	//TrafficLight
 	if (RedLight == false)
 	{
@@ -1046,6 +1058,7 @@ void c_LevelOne::renderEnviroment()
 		RenderMesh(meshList[TRAFFICGREEN], false);
 		modelStack.PopMatrix();
 	}
+
 	if (ExitGame == true)
 	{
 		glfwTerminate();

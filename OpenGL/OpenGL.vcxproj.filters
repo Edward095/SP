@@ -108,9 +108,6 @@
     <ClCompile Include="Source\c_MultiplayerLevelTwo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\c_SecondPlayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\c_DataManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -222,9 +219,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\c_MultiplayerLevelTwo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\c_SecondPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\c_DataManager.h">
