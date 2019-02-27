@@ -1,5 +1,6 @@
 #include "c_LevelThree.h"
 #include "GL\glew.h"
+#include <GLFW/glfw3.h>
 
 #include "shader.hpp"
 #include "Mtx44.h"
@@ -1013,8 +1014,7 @@ void c_LevelThree::renderEnviroment()
 	}
 	if (ExitGame == true)
 	{
-		glDeleteVertexArrays(1, &m_vertexArrayID);
-		glDeleteProgram(m_programID);
+		glfwTerminate();
 	}
 }
 

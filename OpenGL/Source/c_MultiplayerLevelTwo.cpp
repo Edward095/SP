@@ -1,5 +1,6 @@
 #include "c_MultiplayerLevelTwo.h"
 #include "GL\glew.h"
+#include <GLFW/glfw3.h>
 
 #include "shader.hpp"
 #include "Mtx44.h"
@@ -1352,8 +1353,20 @@ void c_MultiplayerLevelTwo::renderEnviroment()
 	}
 	if (ExitGame == true)
 	{
-		glDeleteVertexArrays(1, &m_vertexArrayID);
-		glDeleteProgram(m_programID);
+		glfwTerminate();
+	}
+
+	/**************************************************************		PickUp		***************************************************************/
+	if (!pick)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
+		modelStack.Scale(3, 1, 3);
+		RenderMesh(PickUp.getMesh(), true);
+		modelStack.PopMatrix();
+
+		PickUp.updatePos(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
+		PickUp.getOBB()->calcNewDimensions(3, 1, 3);
 	}
 
 	/**************************************************************		PickUp		***************************************************************/
