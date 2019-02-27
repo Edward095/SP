@@ -13,11 +13,11 @@ public:
 	virtual void isOffRoad();
 	void SetOSlowed(bool speed);
 	void SetTSlowed(bool speed);
+	void setSlowed(bool slowedorNot);
 
 
 private:
-	float audioCD;
-	bool audioUsed;
+	bool slowed;
 };
 
 #endif

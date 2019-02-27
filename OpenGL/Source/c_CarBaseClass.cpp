@@ -29,6 +29,7 @@ c_CarBaseClass::c_CarBaseClass()
 	SlowPad = false;
 	Oslowed = false;
 	Tslowed = false;
+	stopTime = false;
 	SpedoVeloZ = 0;
 
 	elapsedTime = 0.f;
@@ -478,4 +479,8 @@ float c_CarBaseClass::GetSpedoSpeed()
 void c_CarBaseClass::SetSteeringAngle(float angle)
 {
 	this->SteeringAngle = angle;
+}
+bool c_CarBaseClass::getStopTime()
+{
+	return stopTime;
 }

@@ -1,3 +1,5 @@
-OBJpath: OBJ//Car1.obj
-TGApath: Image//Car1Blue.tga
-Level: 2
+OBJpath: OBJ//Car2.obj
+TGApath: Image//Car2Blue.tga
+Level: 1
+
+

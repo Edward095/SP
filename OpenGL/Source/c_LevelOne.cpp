@@ -1363,31 +1363,31 @@ void c_LevelOne::updateLevel(double dt)
 	//-----------------------------------------------//
 
 	//----KeyPress to enable PowerUps----------------//
-	if (Application::IsKeyPressed('Q') && checkF)
-	{
-		Freeze = true;
-	}
+	//if (Application::IsKeyPressed('Q') && checkF)
+	//{
+	//	Freeze = true;
+	//}
 
-	if (Freeze && duration <= 200)
-	{
-		duration++;
-		AI.Speed(0);
-		elapsedTime -= FreezeTime;
-		cooldown = 300;
-	}
+	//if (Freeze && duration <= 200)
+	//{
+	//	duration++;
+	//	AI.Speed(0);
+	//	elapsedTime -= FreezeTime;
+	//	cooldown = 300;
+	//}
 
-	if (duration >= 200) // 4 sec/dt
-	{
-		Freeze = false;
-		cooldown--;
-		AI.Speed(1);
-	}
+	//if (duration >= 200) // 4 sec/dt
+	//{
+	//	Freeze = false;
+	//	cooldown--;
+	//	AI.Speed(1);
+	//}
 
-	if (cooldown <= 0)
-	{
-		duration = 0;
-		cooldown = 300;
-	}
+	//if (cooldown <= 0)
+	//{
+	//	duration = 0;
+	//	cooldown = 300;
+	//}
 
 	//-------------------------------------------------//
 	if (car->gotCollide("Checkpoint", false))
@@ -1484,7 +1484,10 @@ void c_LevelOne::updateLevel(double dt)
 	{
 		if (VehicleMove == true)
 		{
-			elapsedTime += (float)dt;
+			if (!car->getStopTime())
+			{
+				elapsedTime += dt;
+			}
 			car->Movement(dt);
 			AI.LevelOne(dt);
 		}

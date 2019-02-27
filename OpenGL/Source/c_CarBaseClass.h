@@ -26,6 +26,7 @@ public:
 	void SetOSlowed(bool speed);
 	void SetTSlowed(bool speed);
 	float GetSpedoSpeed();
+	bool getStopTime();
 	virtual void Ability(double dt) = 0;
 	virtual void PowerUp(bool check) = 0;
 	virtual void isOffRoad() = 0;
@@ -56,6 +57,7 @@ protected:
 	bool freeze = false;
 	bool Oslowed;
 	bool Tslowed;
+	bool stopTime;
 };
 
 

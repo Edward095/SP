@@ -1,6 +1,7 @@
 #include "c_SecondCar.h"
 #include "c_ObjectManager.h"
 #include "c_OffRoadManager.h"
+#include "c_SceneManager.h"
 #include "LoadTGA.h"
 
 
@@ -26,8 +27,8 @@ c_SecondCar::c_SecondCar()
 	offRoad = false;
 	Oslowed = false;
 	Tslowed = false;
-	audioCD = 0;
-	audioUsed = false;
+	slowed = false;
+	stopTime = false;
 
 }
 c_SecondCar::c_SecondCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
@@ -43,30 +44,105 @@ c_SecondCar::~c_SecondCar()
 void c_SecondCar::Ability(double dt)
 {
 	c_Sound* Audio = c_Sound::getInstance();
+	c_SceneManager* scene = c_SceneManager::getInstance();
+	c_ObjectManager* obj = c_ObjectManager::getInstance();
 	elapsedTime += (float)(dt);
+
 	if (uniqueName == "player2")
 	{
-		if (Application::IsKeyPressed('P'))
+		if (Application::IsKeyPressed('P') && !PressQ)
 		{
-			audioUsed = true;
+			PressQ = true;
+			if (scene->singleOrMulti('S'))
+			{
+				stopTime = true;
+				abilityDuration = elapsedTime + 5.f;
+				coolDown = elapsedTime + 10.f;
+			}
+			else if (scene->singleOrMulti('M'))
+			{
+				c_Entity* entity = obj->getCanCollide("player2");
+				c_CarBaseClass* car;
+				c_FirstCar* first = dynamic_cast <c_FirstCar*>(entity);
+				if (first)
+					car = first;
+				c_SecondCar* second = dynamic_cast <c_SecondCar*>(entity);
+				if (second)
+					car = second;
+				c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(entity);
+				if (third)
+					car = third;
+
+				car->SetMaxSpeed(1.f);
+			}
+			
+			Audio->f_Game_Ability_Freezetime();
 		}
 	}
 	else
 	{
-		if (Application::IsKeyPressed('Q'))
+		if (Application::IsKeyPressed('Q') && !PressQ)
 		{
-			audioUsed = true;
+			PressQ = true;
+			if (scene->singleOrMulti('S'))
+			{
+				stopTime = true;
+				abilityDuration = elapsedTime + 5.f;
+				coolDown = elapsedTime + 10.f;
+			}
+			else if (scene->singleOrMulti('M'))
+			{
+				c_Entity* entity = obj->getCanCollide("player2");
+				c_CarBaseClass* car;
+				c_FirstCar* first = dynamic_cast <c_FirstCar*>(entity);
+				if (first)
+					car = first;
+				c_SecondCar* second = dynamic_cast <c_SecondCar*>(entity);
+				if (second)
+					car = second;
+				c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(entity);
+				if (third)
+					car = third;
+
+				car->SetMaxSpeed(1.f);
+			}
+
+			Audio->f_Game_Ability_Freezetime();
 		}
 	}
-	if (audioUsed)
+	if (elapsedTime >= abilityDuration)
 	{
-		audioCD++;
-		Audio->f_Game_Ability_Freezetime();
+		if (scene->singleOrMulti('S'))
+		{
+			stopTime = false;
+		}
+		else if (scene->singleOrMulti('M'))
+		{
+			c_Entity* entity = obj->getCanCollide("player2");
+			c_CarBaseClass* car;
+			c_FirstCar* first = dynamic_cast <c_FirstCar*>(entity);
+			if (first)
+			{
+				car = first;
+				car->SetMaxSpeed(3.5f);
+			}
+			c_SecondCar* second = dynamic_cast <c_SecondCar*>(entity);
+			if (second)
+			{
+				car = second;
+				car->SetMaxSpeed(2.f);
+			}			
+			c_ThirdCar* third = dynamic_cast <c_ThirdCar*>(entity);
+			if (third)
+			{
+				car = third;
+				car->SetMaxSpeed(3.5f);
+			}
+		}
 	}
-	if (audioCD >= 500)
+	if (elapsedTime >= coolDown)
 	{
-		audioUsed = false;
-		audioCD = 0;
+		PressQ = false;
 	}
 }
 
@@ -95,18 +171,10 @@ void c_SecondCar::isOffRoad()
 	else
 	{
 		SetFriction(0.04f);
-
-		if (Oslowed && !Tslowed)
-			SetMaxSpeed(0.6f);
-
-		if (Tslowed && !Oslowed)
-			SetMaxSpeed(0.6f);
-
-		if (!Tslowed && !Oslowed)
-			SetMaxSpeed(2.f);
-
-		if (Tslowed && Oslowed)
-			SetMaxSpeed(2.f);
+		if (slowed)
+			MaxSpeed = 1.f;
+		else
+			MaxSpeed = 2.f;
 	}
 }
 
@@ -118,4 +186,9 @@ void c_SecondCar::SetOSlowed(bool speed)
 void c_SecondCar::SetTSlowed(bool speed)
 {
 	Tslowed = speed;
+}
+
+void c_SecondCar::setSlowed(bool slowedorNot)
+{
+	slowed = slowedorNot;
 }
