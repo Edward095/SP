@@ -39,6 +39,7 @@ public:
 		SLOWPAD,
 		RAIN,
 		SNOW,
+		ONCOOLDOWN,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -169,6 +170,10 @@ private:
 	void updateEnviromentCollision();
 	void renderEntity();
 	void renderLevel();
+	void renderRain();
+	void RenderSnow();
+	void RenderSpeedometer();
+	void renderOnCooldown();
 
 	void updateLevel(double dt);
 
@@ -207,14 +212,13 @@ private:
 	//Variables
 	float elapsedTime;
 	float FreezeTime;
-	float TimePassed;
 	float CamPosX;
 	float CamPosY;
 	float CamPosZ;
 	float CamTargetX;
 	float CamTargetY;
 	float CamTargetZ;
-	bool Freeze = false;
+	bool Freeze;
 
 	float FPS;
 	float Countdown;
@@ -229,18 +233,15 @@ private:
 	int laps;
 	int AIlaps;
 
-	bool pick = false;
-	bool checkF = false;
+	bool pick;
+	bool checkF;
 	int cooldown;
 	bool Finish;
 	bool Raining;
 	bool Snowing;
 	bool AIFinish;
-	bool CheckEnd;
 	bool Win;
 	bool Lose;
-
-	float WheelRotation;
 
 	float ArrowP;
 	bool ExitGame;
@@ -254,9 +255,6 @@ private:
 
 	c_Weather rain;
 	c_Weather snow;
-	void renderRain();
-	void RenderSnow();
-	void RenderSpeedometer();
 
 	bool startline;
 	bool music;

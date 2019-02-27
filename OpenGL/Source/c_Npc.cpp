@@ -518,7 +518,8 @@ void c_Npc::UpdateNpc(double dt)
 			}
 			else if (ArrowY == 6)
 			{
-				//no
+				Continue = false;
+				Talk3 = false;
 			}
 		}
 		
@@ -635,16 +636,16 @@ void c_Npc::RenderNpc()
 	RenderTextOnScreen(meshList[TEXT], std::to_string(cameraY), Color(0, 0, 1), 3, 1, 18);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(cameraZ), Color(0, 0, 1), 3, 1, 17);
 
-	if ((StartGame == true && Talk == false) ||  (Options == true && Talk1 == false) || (MultiPlayer == true && Talk2 == false) || (Continue == true && Talk3 == false) || (LeaderBoard == true && Talk4 == false) || (Instructions == true && Talk5 == false))
+	if ((StartGame && !Talk) ||  (Options && !Talk1) || (MultiPlayer && !Talk2) || (Continue && !Talk3) || (LeaderBoard && !Talk4) || (Instructions && Talk5))
 	{
 		RenderTextOnScreen(meshList[TEXT], "Press 'F' to talk to NPC", Color(1, 0, 0), 3, 6, 10);
 	}
-	if (StartGame == true && Talk == true && LevelSelection == false && Override == false)
+	if (StartGame && Talk && !LevelSelection && !Override)
 	{
 		RenderTextOnScreen(meshList[TEXT], "Save Files", Color(1, 0, 0), 3, 9, 13);
 		AbleToPress = true;
 	}
-	if ((StartGame == true && Talk == true && LevelSelection == false && Override == false))
+	if ((StartGame && Talk && !LevelSelection && !Override))
 	{
 		RenderTextOnScreen(meshList[TEXT], "Save File 1", Color(1, 0, 0), 5, 7, 7);
 		AbleToPress = true;
@@ -973,4 +974,11 @@ void c_Npc::RenderText(Mesh* mesh, std::string text, Color color, float spacing)
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 	glEnable(GL_DEPTH_TEST);
+}
+
+void c_Npc::resetVar()
+{
+	AbleToPress = Talk = Talk1 = Talk2 = Talk3 = false;
+	LevelSelection = SinglePlayer = MultiPlayer = StartGame = false;
+	Continue  = Options = LeaderBoard= false;
 }

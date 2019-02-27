@@ -74,10 +74,14 @@ private:
 	void updateSelection();
 	void goNextLevel();
 	void retry();
+	void resetVar();
 
-	float ArrowX, ArrowY;
+	int ArrowY;
 	double elapsedTime;
 	double bounceTime;
+	unsigned NextLevel;
+	unsigned Retry;
+	unsigned exit;
 
 };
 

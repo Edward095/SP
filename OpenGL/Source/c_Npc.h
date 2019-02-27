@@ -95,7 +95,7 @@ private:
 	void RenderMesh(Mesh *mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color, float spacing);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
-
+	void resetVar();
 
 
 	//Variables

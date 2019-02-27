@@ -13,6 +13,7 @@
 #include "c_CarBaseClass.h"
 #include"c_Sound.h"
 #include "c_Impulse.h"
+#include "c_Weather.h"
 
 
 class c_MultiplayerLevelTwo : public Scene
@@ -33,6 +34,9 @@ public:
 		LIGHT1,
 		LIGHT2,
 		TRACK,
+		RAIN,
+		SNOW,
+		ONCOOLDOWN,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -160,10 +164,12 @@ private:
 	void renderPlayerTwo();
 
 	void updateEnviromentCollision();
-	void updatePlayerOneCollision();
-	void updatePlayerTwoCollision();
 	void RenderSpeedometerOne();
 	void RenderSpeedometerTwo();
+	void renderRain();
+	void RenderSnow();
+	void renderOnCoolDown();
+	void resetVar();
 
 	FirstPersonCamera playerOneCam;
 	float playerOneCamPosX;
@@ -181,18 +187,8 @@ private:
 	float playerTwoCamTargetY;
 	float playerTwoCamTargetZ;
 
-	float elapsedTime;
 	std::string elapedTimeCut;
-
-        float ArrowP;
-	bool ExitGame;
-	bool AbleToPress;
-	bool OptionSelection;
-	bool VehicleMove;
-
-	//Traffic Lights
-	float red1, red2, red3, green1, green2, green3;
-	bool RedLight, GreenLight;
+	std::string CountdownCut;
 
 	c_Entity front;
 	c_Entity back;
@@ -205,24 +201,52 @@ private:
 	c_Entity speedometer;
 	c_Entity needle;
 	c_Entity circle;
-
+	c_Entity FinishLine;
 	c_Impulse Impulse;
+	c_Weather rain;
+	c_Weather snow;
 		
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
 
-	bool checkFO = false;
-	bool checkFT = false;
-	bool OFreeze = false;
-	bool TFreeze = false;
-	int Oduration;
-	int Tduration;
-	float FreezeTime;
-	bool pick = false;
-	int cooldown;
+	float ArrowP;
+	bool RedLight;
+	bool pick;
+	bool OffRoad;
+	bool Snowing;
+	bool checkFO;
+	bool checkFT;
+	bool GreenLight;
+	bool ExitGame;
+	bool AbleToPress;
+	bool OptionSelection;
+	bool VehicleMove;
 
+	bool OFreeze;
+	bool TFreeze;
+	bool Raining;
+	bool PoneFinish;
+	bool PTwoFinish;
+	bool Win;
+	bool Lose;
 	bool startline;
 	bool music;
+
+	float elapsedTime;
+	float OelapsedTime;
+	float TelapsedTime;
+	float Timer;
+	float Countdown;
+	float FreezeTime;
+	float red1, red2, red3, green1, green2, green3;
+	int Random;
+	int Cooldown;
+	int Ponelaps;
+	int PTwolaps;
+	int Oduration;
+	int Tduration;
+	int Tcooldown;
+	int Ocooldown;
 
 	c_Sound* Audio;
 

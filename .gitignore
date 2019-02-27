@@ -39,3 +39,4 @@ OpenGL/Release/OpenGL.log
 *.db
 *.log
 *.ipdb
+*.obj
