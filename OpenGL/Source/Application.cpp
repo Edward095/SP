@@ -111,9 +111,9 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	Scene *scene = new c_Npc();
+	//Scene *scene = new c_Npc();
 	//Scene *scene = new c_Continue();
-	//Scene *scene = new c_GameEnd();
+	Scene *scene = new c_GameEnd();
 
 	scene->Init();
 

@@ -120,6 +120,7 @@ void c_GameEnd::Render()
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
 	renderLights();
+
 	renderSelection();
 
 }
@@ -288,9 +289,9 @@ void c_GameEnd::updateSelection()
 		if (ArrowY == 1)
 			meshList[TEXT]->textureID = LoadTGA("Image//NextLevel.tga");
 		else if (ArrowY == 2)
-			meshList[TEXT]->textureID = LoadTGA("Image//Save.tga");
-		else if (ArrowY == 3)
 			meshList[TEXT]->textureID = LoadTGA("Image//Retry.tga");
+		else if (ArrowY == 3)
+			meshList[TEXT]->textureID = LoadTGA("Image//Exit.tga");
 
 		bounceTime = elapsedTime + 0.125;
 	}
@@ -303,9 +304,9 @@ void c_GameEnd::updateSelection()
 		if (ArrowY == 1)
 			meshList[TEXT]->textureID = LoadTGA("Image//NextLevel.tga");
 		else if (ArrowY == 2)
-			meshList[TEXT]->textureID = LoadTGA("Image//Save.tga");
-		else if (ArrowY == 3)
 			meshList[TEXT]->textureID = LoadTGA("Image//Retry.tga");
+		else if (ArrowY == 3)
+			meshList[TEXT]->textureID = LoadTGA("Image//Exit.tga");
 
 		bounceTime = elapsedTime + 0.125;
 	}
