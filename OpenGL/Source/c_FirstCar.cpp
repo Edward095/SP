@@ -63,7 +63,7 @@ void c_FirstCar::Ability(double dt)
 		abilityDuration = elapsedTime + 4.f;
 		coolDown = elapsedTime + 8.f;
 		Audio->f_Game_Ability_Nitro();
-		MaxSpeed = 1.5f;
+		//MaxSpeed = 1.5f;
 	}
 	//Ability Finished but cooldown haven end
 	if (PressQ && elapsedTime > abilityDuration && elapsedTime < coolDown)
@@ -115,10 +115,10 @@ void c_FirstCar::isOffRoad()
 	{
 		SetFriction(0.04);
 		if (elapsedTime < abilityDuration)
-			MaxSpeed = 1.5f;
+			MaxSpeed = 3.f;
 		else
 		{
-			SetMaxSpeed(0.8f);
+			SetMaxSpeed(2.5f);
 		}
 	}
 }

@@ -110,6 +110,6 @@ void c_ThirdCar::isOffRoad()
 	else
 	{
 		SetFriction(0.04f);
-		SetMaxSpeed(1.f);
+		SetMaxSpeed(3.f);
 	}
 }

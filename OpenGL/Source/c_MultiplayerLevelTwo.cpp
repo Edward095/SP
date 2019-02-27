@@ -62,7 +62,7 @@ void c_MultiplayerLevelTwo::Init()
 		playerTwo = third;
 	playerTwo->updatePos(-10, 0, 0);
 
-	Random = 2;
+	Random = rand() % 3 + 1;
 
 	playerOneCamPosX = playerOne->getPos().x + 1;
 	playerOneCamPosY = playerOne->getPos().y + 1;
@@ -196,6 +196,7 @@ void c_MultiplayerLevelTwo::Init()
 		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0), true);
+		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(0, 0, 0.4), 1);
 	}
 	if (Random == 2)
 	{
@@ -207,6 +208,7 @@ void c_MultiplayerLevelTwo::Init()
 		left.init("left", "quad", "Image//SnowLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//SnowRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//SnowBack.tga", (float)(0, 0, 0), true);
+		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(1, 1, 1), 1);
 	}
 	if (Random == 3)
 	{
@@ -218,6 +220,7 @@ void c_MultiplayerLevelTwo::Init()
 		left.init("left", "quad", "Image//SunnyLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//SunnyRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//SunnyBack.tga", (float)(0, 0, 0), true);
+		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(1, 0, 0), 1);
 	}
 	//---------------------------------------------------------------------------------//
 
@@ -548,8 +551,8 @@ void c_MultiplayerLevelTwo::Update(double dt)
 
 	if (Raining)
 	{
-		playerOne->SetSteering(9);
-		playerTwo->SetSteering(9);
+		playerOne->SetSteering(3);
+		playerTwo->SetSteering(3);
 	}
 	if (Snowing)
 	{
@@ -575,12 +578,12 @@ void c_MultiplayerLevelTwo::Render()
 
 	if (Random == 1)
 	{
-		if (!pick)
+		//if (!pick)
 			renderRain();
 	}
 	if (Random == 2)
 	{
-		if (!pick)
+		//if (!pick)
 			RenderSnow();
 	}
 
@@ -1475,6 +1478,14 @@ void c_MultiplayerLevelTwo::renderEnviroment()
 	modelStack.Rotate(90.f, 0, 1, 0);
 	modelStack.Scale(6, 5, 6);
 	RenderMesh(meshList[STREETLIGHT], true);
+	modelStack.PopMatrix();
+
+	//Ground
+	modelStack.PushMatrix();
+	modelStack.Translate(0, -1, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(-90, 1, 0, 0);
+	RenderMesh(meshList[GROUND], false);
 	modelStack.PopMatrix();
 
 	//TrafficLight
