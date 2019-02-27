@@ -16,7 +16,7 @@
 #include <Windows.h>
 #include <time.h>
 
-#include "c_DataManager.h"`
+#include "c_DataManager.h"
 #include "c_SceneManager.h"
 
 #include "c_Firstcar.h"
@@ -303,8 +303,8 @@ void c_LevelOne::Update(double dt)
 
 	//----Setting Of Time And FPS-------//
 	Timer += (float)dt;
-	Countdown -= (float)Timer * dt;
-	FPS = 1 / dt;
+	Countdown -= (float)(Timer * dt);
+	FPS = (float)(1 / dt);
 	//----------------------------------//
 
 	//----Power Up Timer------------------// 
@@ -362,7 +362,7 @@ void c_LevelOne::Render()
 
 void c_LevelOne::renderRain()
 {
-	for (int i = 0; i < rain.getX().size() - 2000; i++)
+	for (int i = 0; i < (int)rain.getX().size() - 2000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
@@ -378,7 +378,7 @@ void c_LevelOne::renderRain()
 
 void c_LevelOne::RenderSnow()
 {
-	for (int i = 0; i < snow.getX().size() - 2000; i++)
+	for (int i = 0; i < (int)snow.getX().size() - 2000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
@@ -1385,7 +1385,7 @@ void c_LevelOne::updateLevel(double dt)
 	if (Finish)
 	{
 		if (elapsedTime >= 10 && elapsedTime <= 50)
-			elapsedTime += (dt + 2);
+			elapsedTime += (float)(dt + 2);
 
 		if (elapsedTime >= 61 && elapsedTime <= 106)
 			laps = 1;

@@ -416,7 +416,7 @@ void c_CarBaseClass::PadEffect(double dt)
 		if (padDuration == 0)
 		{
 			Audio->f_Game_Fanfare_Boost();
-			padDuration = elapsedTime + 2.f;
+			padDuration = (int)(elapsedTime + 2.f);
 		}
 
 		if (elapsedTime >= padDuration)
@@ -430,7 +430,7 @@ void c_CarBaseClass::PadEffect(double dt)
 		if (padDuration == 0)
 		{
 			Audio->f_Game_Fanfare_Slow();
-			padDuration = elapsedTime + 1.5f;
+			padDuration = (int)(elapsedTime + 1.5f);
 		}
 
 		if (elapsedTime >= padDuration)

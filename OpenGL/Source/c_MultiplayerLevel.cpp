@@ -379,7 +379,7 @@ void c_MultiplayerLevel::Update(double dt)
 	//-------------------------------------------//
 
 	Timer += (float)dt;
-	Countdown -= (float)Timer * dt;
+	Countdown -= (float)(Timer * dt);
 	FreezeTime = (float)(dt + (dt * 0));
 
 	if (Countdown <= 0)
@@ -450,7 +450,7 @@ void c_MultiplayerLevel::Update(double dt)
 	if (PoneFinish)
 	{
 		if (OelapsedTime >= 20 && OelapsedTime <= 50)
-			OelapsedTime += (dt + 2);
+			OelapsedTime += (float)(dt + 2);
 
 		if (OelapsedTime >= 61 && OelapsedTime <= 106)
 			Ponelaps = 1;
@@ -471,7 +471,7 @@ void c_MultiplayerLevel::Update(double dt)
 	if (PTwoFinish)
 	{
 		if (TelapsedTime >= 20 && TelapsedTime <= 50)
-			TelapsedTime += (dt + 2);
+			TelapsedTime += (float)(dt + 2);
 
 		if (TelapsedTime >= 61 && TelapsedTime <= 106)
 			PTwolaps = 1;
@@ -1466,7 +1466,7 @@ void c_MultiplayerLevel::renderEnviroment()
 
 void c_MultiplayerLevel::renderRain()
 {
-	for (int i = 0; i < rain.getX().size() - 3000; i++)
+	for (int i = 0; i < (int)rain.getX().size() - 3000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
@@ -1492,7 +1492,7 @@ void c_MultiplayerLevel::renderRain()
 
 void c_MultiplayerLevel::RenderSnow()
 {
-	for (int i = 0; i < snow.getX().size()- 3000; i++)
+	for (int i = 0; i < (int)snow.getX().size()- 3000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));

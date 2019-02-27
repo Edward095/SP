@@ -319,7 +319,7 @@ Mesh* MeshBuilder::GenerateCube(const std::string &meshName, Color color, float 
 	vertex_buffer_data.push_back(v);
 
 	std::vector<GLuint> index_buffer_data;
-	for (int i = 0; i < vertex_buffer_data.size(); i++)
+	for (int i = 0; i < (int)vertex_buffer_data.size(); i++)
 	{
 		index_buffer_data.push_back(i);
 	}
@@ -998,7 +998,7 @@ Mesh* MeshBuilder::GenerateEars(const std::string &meshName, Color color, unsign
 
 	float degreePerStack = 45.f / numStack;
 	float degreePerSlice = 180.f / numSlice;
-	float x1, z1;
+
 	float x2, y2, z2;
 
 	for (unsigned stack = 0; stack < numStack + 1; stack++)

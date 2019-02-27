@@ -14,8 +14,8 @@ c_FirstCar::c_FirstCar()
 	pos.z = 0;
 	MaxSpeed = 50;
 	SteeringAngle = 0;
-	MaxAcceleration = 0.6;
-	Friction = 0.04;
+	MaxAcceleration = 0.6f;
+	Friction = 0.04f;
 	Steering = 3;
 	Driving = false;
 	Backwards = false;
@@ -38,7 +38,7 @@ c_FirstCar::~c_FirstCar()
 void c_FirstCar::Ability(double dt)
 {
 	c_Sound* Audio = c_Sound::getInstance();
-	elapsedTime += dt;
+	elapsedTime += (float)(dt);
 
 	if (uniqueName == "player2")
 	{
@@ -90,7 +90,7 @@ void c_FirstCar::isOffRoad()
 {
 	c_OffRoadManager* manager = c_OffRoadManager::getInstance();
 
-	for (int i = 0; i < manager->getList().size(); i++)
+	for (int i = 0; i < (int)manager->getList().size(); i++)
 	{
 		if (gotCollide(manager->getList()[i],false) || !gotCollide("track", false))
 		{
