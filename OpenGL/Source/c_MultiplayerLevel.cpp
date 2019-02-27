@@ -1,5 +1,6 @@
 #include "c_MultiplayerLevel.h"
 #include "GL\glew.h"
+#include <GLFW/glfw3.h>
 
 #include "shader.hpp"
 #include "Mtx44.h"
@@ -1351,8 +1352,7 @@ void c_MultiplayerLevel::renderEnviroment()
 	}
 	if (ExitGame == true)
 	{
-		glDeleteVertexArrays(1, &m_vertexArrayID);
-		glDeleteProgram(m_programID);
+		glfwTerminate();
 	}
 
 	/**************************************************************		PickUp		***************************************************************/
