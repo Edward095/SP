@@ -1,31 +1,233 @@
-﻿  c_LevelThree.cpp
-c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(18): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(55): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(60): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(277): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(278): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(406): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(471): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(476): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(557): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(854): warning C4018: '<': signed/unsigned mismatch
-c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(870): warning C4018: '<': signed/unsigned mismatch
-c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(940): warning C4305: 'argument': truncation from 'double' to 'float'
+﻿  c_DataManager.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_datamanager.cpp(100): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_datamanager.cpp(190): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_datamanager.cpp(210): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_datamanager.cpp(221): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_datamanager.cpp(231): warning C4018: '<': signed/unsigned mismatch
+  c_GameEnd.cpp
+  c_Impulse.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_impulse.cpp(23): warning C4353: nonstandard extension used: constant 0 as function expression.  Use '__noop' function intrinsic instead
+  c_LevelThree.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(20): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(60): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(65): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(305): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(306): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(429): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(488): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(491): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(581): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(660): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(665): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(848): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(876): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(892): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(962): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(1647): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(1660): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelthree.cpp(1660): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  c_LevelTwo.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(20): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(62): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(67): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(308): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(309): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(436): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(496): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(501): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(650): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(841): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(875): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(891): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(1645): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(1658): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_leveltwo.cpp(1658): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   c_MultiplayerLevelThree.cpp
-c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(159): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(160): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(161): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(162): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(1091): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(1253): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(203): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(204): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(205): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(206): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(336): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(337): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(348): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(419): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(440): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(1128): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(1132): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(1204): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(1208): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(1363): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(1553): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(1665): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevelthree.cpp(1665): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   c_MultiplayerLevelTwo.cpp
-c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(154): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(155): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(156): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(157): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(374): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(375): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(386): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(457): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(478): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(1167): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(1171): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(1243): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(1247): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(1503): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(1529): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(1756): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerleveltwo.cpp(1756): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  c_OffRoadManager.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_offroadmanager.cpp(34): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_offroadmanager.cpp(61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_offroadmanager.cpp(131): warning C4018: '<': signed/unsigned mismatch
+  c_SecondPlayer.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_secondplayer.cpp(14): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_secondplayer.cpp(16): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_secondplayer.cpp(17): warning C4305: '=': truncation from 'double' to 'float'
+  c_Weather.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_weather.cpp(21): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+c:\users\marc-\documents\github\sp\opengl\source\c_weather.cpp(22): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+c:\users\marc-\documents\github\sp\opengl\source\c_weather.cpp(23): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+c:\users\marc-\documents\github\sp\opengl\source\c_weather.cpp(28): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_weather.cpp(29): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+  c_SecondCar.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_secondcar.cpp(15): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_secondcar.cpp(17): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_secondcar.cpp(18): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_secondcar.cpp(46): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_secondcar.cpp(81): warning C4018: '<': signed/unsigned mismatch
+  c_MultiplayerLevel.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(34): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(375): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(376): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(387): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(458): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(479): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(1149): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(1153): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(1225): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(1229): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(1474): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(1500): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(1721): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_multiplayerlevel.cpp(1721): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  c_AI.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_ai.cpp(118): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_ai.cpp(420): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_ai.cpp(709): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_ai.cpp(838): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+  c_SceneManager.cpp
+  c_ObjectManager.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_objectmanager.cpp(56): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_objectmanager.cpp(68): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_objectmanager.cpp(78): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_objectmanager.cpp(102): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_objectmanager.cpp(112): warning C4018: '<': signed/unsigned mismatch
+  c_Entity.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_entity.cpp(68): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_entity.cpp(103): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_entity.cpp(113): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_entity.cpp(129): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_entity.cpp(147): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_entity.cpp(155): warning C4018: '<': signed/unsigned mismatch
+  c_Garage.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_garage.cpp(351): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_garage.cpp(1261): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_garage.cpp(1265): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_garage.cpp(1269): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_garage.cpp(1324): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_garage.cpp(1328): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_garage.cpp(1332): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_garage.cpp(1372): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  c_CarBaseClass.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_carbaseclass.cpp(418): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_carbaseclass.cpp(432): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  c_FirstCar.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(15): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(17): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(18): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(41): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(103): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_firstcar.cpp(126): warning C4305: 'argument': truncation from 'double' to 'float'
+  c_LevelOne.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(19): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(46): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(263): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(302): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(303): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(361): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(377): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(1089): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(1094): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(1257): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(1376): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(1433): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(1436): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(1652): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(1667): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_levelone.cpp(1667): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Compiling...
+  c_Npc.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_npc.cpp(712): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\c_npc.cpp(714): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_npc.cpp(715): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  c_Sound.cpp
+  c_Collision.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_collision.cpp(130): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  c_Continue.cpp
+  c_ThirdCar.cpp
+c:\users\marc-\documents\github\sp\opengl\source\c_thirdcar.cpp(17): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_thirdcar.cpp(18): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\c_thirdcar.cpp(43): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\c_thirdcar.cpp(96): warning C4018: '<': signed/unsigned mismatch
+  FirstPersonCamera.cpp
+  LoadOBJ.cpp
+c:\users\marc-\documents\github\sp\opengl\source\loadobj.cpp(119): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\loadobj.cpp(120): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\loadobj.cpp(122): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\loadobj.cpp(124): warning C4018: '>': signed/unsigned mismatch
+  Camera.cpp
+  LoadTGA.cpp
+  Mesh.cpp
+  MeshBuilder.cpp
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(322): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(673): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1001): warning C4101: 'x1': unreferenced local variable
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1001): warning C4101: 'z1': unreferenced local variable
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1095): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1102): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1103): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1105): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1148): warning C4018: '<': signed/unsigned mismatch
+c:\users\marc-\documents\github\sp\opengl\source\meshbuilder.cpp(1150): warning C4018: '>': signed/unsigned mismatch
+  Application.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  c:\users\marc-\documents\github\sp\glfw\include\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
+  main.cpp
+  NPCCamera.cpp
+c:\users\marc-\documents\github\sp\opengl\source\npccamera.cpp(112): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\npccamera.cpp(115): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\npccamera.cpp(120): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\npccamera.cpp(123): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\npccamera.cpp(128): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\npccamera.cpp(131): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\npccamera.cpp(136): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\marc-\documents\github\sp\opengl\source\npccamera.cpp(139): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  shader.cpp
+  Utility.cpp
   Generating code
-  11 of 1667 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    101 functions had inline decision re-evaluated but remain unchanged
+c:\users\marc-\documents\github\sp\opengl\source\c_scenemanager.cpp(123): warning C4715: 'c_SceneManager::getScene': not all control paths return a value
+c:\users\marc-\documents\github\sp\opengl\source\c_objectmanager.cpp(61): warning C4715: 'c_ObjectManager::getCannotCollide': not all control paths return a value
+  All 1688 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   OpenGL.vcxproj -> C:\Users\marc-\Documents\GitHub\SP\Release\OpenGL.exe
