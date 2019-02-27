@@ -844,7 +844,6 @@ void c_LevelThree::Render()
 	modelStack.PushMatrix();
 	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
 	modelStack.Scale(46, 12, 46);
-	RenderMesh(FinishLine.getMesh(), true);
 	modelStack.PopMatrix();
 
 	//--------------------------- Check point 1 ------------------------------------//
@@ -852,7 +851,6 @@ void c_LevelThree::Render()
 	modelStack.Translate(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Scale(46, 12, 46);
-	RenderMesh(Checkpoints.getMesh(), true);
 	modelStack.PopMatrix();
 
 
@@ -860,7 +858,6 @@ void c_LevelThree::Render()
 	modelStack.PushMatrix();
 	modelStack.Translate(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
 	modelStack.Scale(46, 12, 46);
-	RenderMesh(Checkpoints2.getMesh(), true);
 	modelStack.PopMatrix();
 
 	//---------------------------- Check point 3 ---------------------------------//
@@ -868,7 +865,6 @@ void c_LevelThree::Render()
 	modelStack.Translate(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Scale(41, 12, 46);
-	RenderMesh(Checkpoints3.getMesh(), true);
 	modelStack.PopMatrix();
 	//---------------------------------------------------------------//
 

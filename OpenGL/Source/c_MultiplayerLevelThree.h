@@ -197,15 +197,13 @@ private:
 	c_Entity needle;
 	c_Entity circle;
 	c_Entity PickUp;
-        c_Entity FinishLine;
+    c_Entity FinishLine;
 
 	c_CarBaseClass* playerOne;
 	c_CarBaseClass* playerTwo;
-	c_Entity PickUp;
 	c_Entity Checkpoints;
 	c_Entity Checkpoints2;
 	c_Entity Checkpoints3;
-	c_Impulse Impulse;
 	
 
 	c_ObjectManager* OBJmanager;

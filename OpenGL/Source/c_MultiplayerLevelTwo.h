@@ -202,7 +202,6 @@ private:
 	c_Entity needle;
 	c_Entity circle;
 	c_Entity FinishLine;
-	c_Impulse Impulse;
 	c_Weather rain;
 	c_Weather snow;
 	c_Entity Checkpoints;
@@ -252,9 +251,6 @@ private:
 	int OCheckcount;
 	int TCheckcount;
 	int Random;
-
-	c_Weather rain;
-	c_Weather snow;
 
 	c_Sound* Audio;
 
