@@ -835,7 +835,7 @@ void c_AI::TurnThree(double dt, int dir)
 
 float c_AI::GetTurning()
 {
-	return Turning;
+	return (float)Turning;
 }
 
 void c_AI::Ability(double dt)

@@ -670,7 +670,7 @@ Mesh* MeshBuilder::GenerateCylinder(const std::string &meshName, Color color, un
 	std::vector<GLuint> index_buffer_data;
 	float stackHeight = height / numStack;
 
-	for (int stack = 0; stack < numStack; ++stack)
+	for (int stack = 0; stack < (int)numStack; ++stack)
 	{
 		for (float theta = 0; theta <= 360; theta += 10)
 		{
@@ -1102,7 +1102,7 @@ Mesh* MeshBuilder::GenerateTaperedCylinder(const std::string &meshName, Color co
 	bool overHalf = false;
 	float taperedRadius = radius;
 
-	for (int stack = 0; stack < numStack; ++stack)
+	for (int stack = 0; stack < (int)numStack; ++stack)
 	{
 		if (stack > numStack / 2)
 			overHalf = true;

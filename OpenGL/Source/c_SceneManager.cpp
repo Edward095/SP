@@ -120,4 +120,5 @@ Scene* c_SceneManager::getScene(std::string sceneName)
 		return continueGame;
 	else if (sceneName == "FINISHED")
 		return gameEnd;
+	return nullptr;
 }

@@ -113,7 +113,7 @@ void c_FirstCar::isOffRoad()
 	}
 	else
 	{
-		SetFriction(0.04);
+		SetFriction(0.04f);
 		if (elapsedTime < abilityDuration)
 			MaxSpeed = 3.f;
 		else

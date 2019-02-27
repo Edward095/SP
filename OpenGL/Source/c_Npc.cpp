@@ -715,8 +715,8 @@ void c_Npc::RenderNpc()
 		RenderTextOnScreen(meshList[TEXT], "LeaderBoard", Color(1, 0, 0), 3, 9, 18);
 		for (int i = 0; i < (int)data.size(); i++)
 		{
-			RenderTextOnScreen(meshList[TEXT], name[i], Color(0, 0, 1), 3, 9, counter);
-			RenderTextOnScreen(meshList[TEXT], std::to_string(data[i]), Color(0, 1, 0), 3, 19, counter);
+			RenderTextOnScreen(meshList[TEXT], name[i], Color(0, 0, 1), 3.f, 9.f, (float)counter);
+			RenderTextOnScreen(meshList[TEXT], std::to_string(data[i]), Color(0, 1, 0), 3, 19, (float)counter);
 			counter--;
 		}
 	}

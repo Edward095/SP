@@ -127,7 +127,7 @@ void c_Collision::defaultData()
 		dimensions.Set(0.5, 0.5, 0);
 	else
 		dimensions.Set((highestX - lowestX) / 2, (highestY - lowestY) / 2, (highestZ - lowestZ) / 2);
-	pos = (0, 0, 0);
+	pos = (0.f, 0.f, 0.f);
 	localX.Set(1, 0, 0);
 	localY.Set(0, 1, 0);
 	localZ.Set(0, 0, 1);
