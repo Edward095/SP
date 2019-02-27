@@ -234,7 +234,7 @@ void c_MultiplayerLevel::Init()
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
 
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(-11, 0, 38), false);
-	track.init("track", "OBJ//RaceTrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
+	track.init("track", "OBJ//Racetrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
 	offRoadManager->addOffRoad("OffRoad//offRoadOBJ1.txt");
 	PickUp.init("Pickup", "OBJ//Pad.obj", "Image//Car1Blue.tga", Vector3(0, 1, 50), false);
 	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
@@ -407,14 +407,14 @@ void c_MultiplayerLevel::Update(double dt)
 	if (OFreeze && Oduration <= 200)
 	{
 		Oduration++;
-		playerTwo->SetTSlowed(true);
+//		playerTwo->SetTSlowed(true);
 		Ocooldown = 300;
 	}
 
 	if (Oduration >= 200) // 3 sec/dt
 	{
 		OFreeze = false;
-		playerTwo->SetTSlowed(false);
+//		playerTwo->SetTSlowed(false);
 		Ocooldown--;
 	}
 
@@ -428,14 +428,14 @@ void c_MultiplayerLevel::Update(double dt)
 	if (TFreeze && Tduration <= 200)
 	{
 		Tduration++;
-		playerOne->SetOSlowed(true);
+		//playerOne->SetOSlowed(true);
 		Tcooldown = 300;
 	}
 
 	if (Tduration >= 200) // 3 sec/dt
 	{
 		TFreeze = false;
-		playerOne->SetOSlowed(false);
+	//	playerOne->SetOSlowed(false);
 		Tcooldown--;
 	}
 
@@ -1644,7 +1644,7 @@ void c_MultiplayerLevel::RenderSpeedometerOne()
 	modelStack.LoadIdentity();
 	modelStack.Translate(9, 11, 2);
 	modelStack.Rotate(220, 0, 0, 1); //Velocity 0 = 220, Ve20 = 198, Ve40 = 176 etc.
-	modelStack.Rotate(-playerOne->GetSpedoSpeed(), 0, 0, 1);
+//	modelStack.Rotate(-playerOne->GetSpedoSpeed(), 0, 0, 1);
 	modelStack.Scale(7, 7, 7);
 	RenderMesh(needle.getMesh(), false);
 	modelStack.PopMatrix();
@@ -1685,7 +1685,7 @@ void c_MultiplayerLevel::RenderSpeedometerTwo()
 	modelStack.LoadIdentity();
 	modelStack.Translate(9, 11, 2);
 	modelStack.Rotate(220, 0, 0, 1); //Velocity 0 = 220, Ve20 = 198, Ve40 = 176 etc.
-	modelStack.Rotate(-playerTwo->GetSpedoSpeed(), 0, 0, 1);
+//	modelStack.Rotate(-playerTwo->GetSpedoSpeed(), 0, 0, 1);
 	modelStack.Scale(7, 7, 7);
 	RenderMesh(needle.getMesh(), false);
 	modelStack.PopMatrix();

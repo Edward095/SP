@@ -223,7 +223,7 @@ void c_MultiplayerLevelTwo::Init()
 	meshList[LIGHT1] = MeshBuilder::GenerateSphere("environment light", Color(1, 1, 1), 18, 36, 1.f);
 	meshList[LIGHT2] = MeshBuilder::GenerateSphere("street light", Color(1, 1, 1), 18, 36, 1.f);
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
-	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
+	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp2.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
 	meshList[TRAFFICRED] = MeshBuilder::GenerateSphere("traffic light", Color(1, 0, 0), 18, 36, 1.f);
 	meshList[TRAFFICNULL] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
@@ -241,7 +241,7 @@ void c_MultiplayerLevelTwo::Init()
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
 
 	
-	track.init("track", "OBJ//RaceTrack2.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
+	track.init("track", "OBJ//Racetrack2.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
 	PickUp.init("Pickup", "OBJ//Pad.obj", "Image//Car1Blue.tga", Vector3(0, 1, 50), false);
 	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
 	needle.init("needle", "quad", "Image//needle.tga", (float)(1, 1, 1), false);
@@ -406,14 +406,14 @@ void c_MultiplayerLevelTwo::Update(double dt)
 	if (OFreeze && Oduration <= 200)
 	{
 		Oduration++;
-		playerTwo->SetTSlowed(true);
+//		playerTwo->SetTSlowed(true);
 		Ocooldown = 300;
 	}
 
 	if (Oduration >= 200) // 3 sec/dt
 	{
 		OFreeze = false;
-		playerTwo->SetTSlowed(false);
+		//playerTwo->SetTSlowed(false);
 		Ocooldown--;
 	}
 
@@ -427,14 +427,14 @@ void c_MultiplayerLevelTwo::Update(double dt)
 	if (TFreeze && Tduration <= 200)
 	{
 		Tduration++;
-		playerOne->SetOSlowed(true);
+		//playerOne->SetOSlowed(true);
 		Tcooldown = 300;
 	}
 
 	if (Tduration >= 200) // 3 sec/dt
 	{
 		TFreeze = false;
-		playerOne->SetOSlowed(false);
+		//playerOne->SetOSlowed(false);
 		Tcooldown--;
 	}
 
@@ -1401,7 +1401,7 @@ void c_MultiplayerLevelTwo::renderEnviroment()
 	modelStack.PushMatrix();
 	modelStack.Translate(-310.951f, 0, -135.453f);
 	modelStack.Rotate(90, 0, 1, 0);
-	RenderMesh(track.getMesh(), false);
+	RenderMesh(track.getMesh(), true);
 	modelStack.PopMatrix();
 
 	//RaceBanner
@@ -1680,7 +1680,7 @@ void c_MultiplayerLevelTwo::RenderSpeedometerOne()
 	modelStack.LoadIdentity();
 	modelStack.Translate(9, 11, 2);
 	modelStack.Rotate(220, 0, 0, 1); //Velocity 0 = 220, Ve20 = 198, Ve40 = 176 etc.
-	modelStack.Rotate(-playerOne->GetSpedoSpeed(), 0, 0, 1);
+	//modelStack.Rotate(-playerOne->GetSpedoSpeed(), 0, 0, 1);
 	modelStack.Scale(7, 7, 7);
 	RenderMesh(needle.getMesh(), false);
 	modelStack.PopMatrix();
@@ -1721,7 +1721,7 @@ void c_MultiplayerLevelTwo::RenderSpeedometerTwo()
 	modelStack.LoadIdentity();
 	modelStack.Translate(9, 11, 2);
 	modelStack.Rotate(220, 0, 0, 1); //Velocity 0 = 220, Ve20 = 198, Ve40 = 176 etc.
-	modelStack.Rotate(-playerTwo->GetSpedoSpeed(), 0, 0, 1);
+	//modelStack.Rotate(-playerTwo->GetSpedoSpeed(), 0, 0, 1);
 	modelStack.Scale(7, 7, 7);
 	RenderMesh(needle.getMesh(), false);
 	modelStack.PopMatrix();

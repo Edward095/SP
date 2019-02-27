@@ -451,29 +451,29 @@ void c_CarBaseClass::SetSpeed(float speed)
 	this->VelocityZ = speed;
 }
 
-void c_CarBaseClass::PSpeed(float speed)
-{
-	this->VelocityZ = speed;
-}
-
-void c_CarBaseClass::SetOSlowed(bool speed)
-{
-	Oslowed = speed;
-}
-
-void c_CarBaseClass::SetTSlowed(bool speed)
-{
-	Tslowed = speed;
-}
-
-float c_CarBaseClass::GetSpedoSpeed()
-{
-	SpedoVeloZ = (VelocityZ * 180);
-	if (VelocityZ <= 0)
-		SpedoVeloZ = 0;
-
-	return SpedoVeloZ;
-}
+//void c_CarBaseClass::PSpeed(float speed)
+//{
+//	this->VelocityZ = speed;
+//}
+//
+//void c_CarBaseClass::SetOSlowed(bool speed)
+//{
+//	Oslowed = speed;
+//}
+//
+//void c_CarBaseClass::SetTSlowed(bool speed)
+//{
+//	Tslowed = speed;
+//}
+//
+//float c_CarBaseClass::GetSpedoSpeed()
+//{
+//	SpedoVeloZ = (VelocityZ * 180);
+//	if (VelocityZ <= 0)
+//		SpedoVeloZ = 0;
+//
+//	return SpedoVeloZ;
+//}
 void c_CarBaseClass::SetSteeringAngle(float angle)
 {
 	this->SteeringAngle = angle;
