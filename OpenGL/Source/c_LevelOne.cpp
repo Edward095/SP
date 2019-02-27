@@ -358,7 +358,7 @@ void c_LevelOne::Render()
 
 void c_LevelOne::renderRain()
 {
-	for (int i = 0; i < rain.getX().size() - 4000; i++)
+	for (int i = 0; i < rain.getX().size() - 2000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
@@ -374,7 +374,7 @@ void c_LevelOne::renderRain()
 
 void c_LevelOne::RenderSnow()
 {
-	for (int i = 0; i < snow.getX().size() - 4000; i++)
+	for (int i = 0; i < snow.getX().size() - 2000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
@@ -393,8 +393,7 @@ void c_LevelOne::RenderMesh(Mesh *mesh, bool enableLight)
 
 	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
-    /*modelView = viewStack.Top() * modelStack.Top();
-	glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);*/
+
 	if (enableLight && bLightEnabled)
 	{
 		glUniform1i(m_parameters[U_LIGHTENABLED], 1);
@@ -1194,8 +1193,35 @@ void c_LevelOne::renderEntity()
 	RenderMesh(slow3.getMesh(), true);
 	modelStack.PopMatrix();
 
-	boost6.updatePos(boost6.getPos().x, boost6.getPos().y, boost6.getPos().z);
-	boost6.getOBB()->calcNewDimensions(3, 1, 3);
+	slow3.updatePos(slow3.getPos().x, slow3.getPos().y, slow3.getPos().z);
+	slow3.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow4.getPos().x, slow4.getPos().y, slow4.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow4.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow4.updatePos(slow4.getPos().x, slow4.getPos().y, slow4.getPos().z);
+	slow4.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow5.getPos().x, slow5.getPos().y, slow5.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow5.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow5.updatePos(slow5.getPos().x, slow5.getPos().y, slow5.getPos().z);
+	slow5.getOBB()->calcNewDimensions(3, 1, 3);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
+	modelStack.Scale(3, 1, 3);
+	RenderMesh(slow6.getMesh(), true);
+	modelStack.PopMatrix();
+
+	slow6.updatePos(slow6.getPos().x, slow6.getPos().y, slow6.getPos().z);
+	slow6.getOBB()->calcNewDimensions(3, 1, 3);
 
 	/**************************************************************		FinishLine		***************************************************************/
 
@@ -1487,6 +1513,9 @@ void c_LevelOne::updateLevel(double dt)
 		VehicleMove = true;
 		duration++;
 	}
+
+	//Updating Car Position for Player and AI
+	car->updatePos(car->getPos().x, car->getPos().y, car->getPos().z);
 
 	//Update Camera
 	camera.Update(dt);
