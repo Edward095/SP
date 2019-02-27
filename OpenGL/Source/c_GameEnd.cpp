@@ -1,5 +1,6 @@
 #include "c_GameEnd.h"
 #include "GL\glew.h"
+#include <GLFW/glfw3.h>
 
 #include "shader.hpp"
 #include "Mtx44.h"
@@ -30,8 +31,7 @@ void c_GameEnd::Init()
 	c_SceneManager* scene = c_SceneManager::getInstance();
 	c_DataManager* data = c_DataManager::getInstance();
 	elapsedTime = bounceTime = 0.f;
-	ArrowX = -3.8f;
-	ArrowY = 2.55f;
+	ArrowY = 1;
 
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -92,9 +92,7 @@ void c_GameEnd::Init()
 	projectionStack.LoadMatrix(projection);
 
 	meshList[TEXT] = MeshBuilder::GenerateQuad("gameEnd", Color(1, 0, 0), 10);
-	meshList[TEXT]->textureID = LoadTGA("Image//gameEnd.tga");
-	meshList[ARROW] = MeshBuilder::GenerateQuad("Arrow", Color(1, 0, 0), 0.7f);
-	meshList[ARROW]->textureID = LoadTGA("Image//Arrow.tga");
+	meshList[TEXT]->textureID = LoadTGA("Image//NextLevel.tga");
 	meshList[GAMEOVER] = MeshBuilder::GenerateQuad("GAMEOVER", Color(1, 0, 0), 10.f);
 	meshList[GAMEOVER]->textureID = LoadTGA("Image//Arrow.tga");
 
@@ -122,6 +120,7 @@ void c_GameEnd::Render()
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
 	renderLights();
+
 	renderSelection();
 
 }
@@ -278,39 +277,49 @@ void c_GameEnd::updateLights(int num)
 void c_GameEnd::renderSelection()
 {
 	RenderMesh(meshList[TEXT], false);
-
-	modelStack.PushMatrix();
-	modelStack.Translate(ArrowX, ArrowY, 1.f);
-	modelStack.Rotate(-90.f, 0.f, 0.f, 1.f);
-	RenderMesh(meshList[ARROW], false);
-	modelStack.PopMatrix();
 }
 void c_GameEnd::updateSelection()
 {
 	if (Application::IsKeyPressed(VK_UP) && bounceTime < elapsedTime)
 	{
-		ArrowY += 2.3f;
-		if (ArrowY > 2.55f)
-			ArrowY = -2.05f;
+		ArrowY -= 1;
+		if (ArrowY < 1)
+			ArrowY = 3;
+
+		if (ArrowY == 1)
+			meshList[TEXT]->textureID = LoadTGA("Image//NextLevel.tga");
+		else if (ArrowY == 2)
+			meshList[TEXT]->textureID = LoadTGA("Image//Retry.tga");
+		else if (ArrowY == 3)
+			meshList[TEXT]->textureID = LoadTGA("Image//Exit.tga");
+
 		bounceTime = elapsedTime + 0.125;
 	}
 	if (Application::IsKeyPressed(VK_DOWN) && bounceTime < elapsedTime)
 	{
-		ArrowY -= 2.3f;
-		if (ArrowY < -2.05f)
-			ArrowY = 2.55f;
+		ArrowY += 1;
+		if (ArrowY > 3)
+			ArrowY = 1;
+
+		if (ArrowY == 1)
+			meshList[TEXT]->textureID = LoadTGA("Image//NextLevel.tga");
+		else if (ArrowY == 2)
+			meshList[TEXT]->textureID = LoadTGA("Image//Retry.tga");
+		else if (ArrowY == 3)
+			meshList[TEXT]->textureID = LoadTGA("Image//Exit.tga");
+
 		bounceTime = elapsedTime + 0.125;
 	}
 	if (Application::IsKeyPressed(VK_SPACE) && bounceTime < elapsedTime)
 	{
-		if (ArrowY == 2.55f)
+		if (ArrowY == 1)
 			goNextLevel();
-		else if (ArrowY == 0.25f)
+		else if (ArrowY == 2)
 			retry();
-		else if (ArrowY = -2.05f)
-			
+		else if (ArrowY = 3)
+		{
 
-
+		}
 		bounceTime = elapsedTime + 0.125;
 	}
 	

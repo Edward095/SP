@@ -386,7 +386,7 @@ void c_Garage::Init()
 	meshList[STATBOARD] = MeshBuilder::GenerateOBJ("statboard", "OBJ//StatBoard.obj");
 
 	meshList[UI] = MeshBuilder::GenerateQuad("controls", Color(0, 0, 0), 3);
-	meshList[UI]->textureID = LoadTGA("Image//UI.tga");
+	meshList[UI]->textureID = LoadTGA("Image//P1UI.tga");
 
 
 }
@@ -1270,7 +1270,7 @@ void c_Garage::f_UpdateGarage(double dt)
 		v_Garage_SFX->f_Menu_MoveSelect();
 		v_BounceTime = v_ElapsedTime + 0.250;
 	}
-  	if (Application::IsKeyPressed('E') && v_BounceTime < v_ElapsedTime)
+  	if (Application::IsKeyPressed(VK_SPACE) && v_BounceTime < v_ElapsedTime)
 	{
 		v_ConfirmRotation = 900;
 		v_Garage_SFX->f_Menu_ConfirmSelect();
@@ -1411,6 +1411,8 @@ void c_Garage::f_RenderGarage()
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 4, 1);
 	modelStack.Scale(2.5f, 2.5f, 2.5f);
+	if (v_Car1Changed)
+		meshList[UI]->textureID = LoadTGA("Image//P2UI.tga");
 	RenderMesh(meshList[UI], false);
 	modelStack.PopMatrix();
 }

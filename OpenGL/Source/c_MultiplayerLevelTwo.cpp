@@ -1,5 +1,6 @@
 #include "c_MultiplayerLevelTwo.h"
 #include "GL\glew.h"
+#include <GLFW/glfw3.h>
 
 #include "shader.hpp"
 #include "Mtx44.h"
@@ -61,6 +62,8 @@ void c_MultiplayerLevelTwo::Init()
 		playerTwo = third;
 	playerTwo->updatePos(-10, 0, 0);
 
+	Random = 2;
+
 	playerOneCamPosX = playerOne->getPos().x + 1;
 	playerOneCamPosY = playerOne->getPos().y + 1;
 	playerOneCamPosZ = playerOne->getPos().z + 1;
@@ -103,6 +106,8 @@ void c_MultiplayerLevelTwo::Init()
 	//-------------------------------//
 
 	elapsedTime = 0;
+	OelapsedTime = 0;
+	TelapsedTime = 0;
 	Cooldown = 0;
 	Countdown = 3;
 	Timer = 0;
@@ -178,6 +183,7 @@ void c_MultiplayerLevelTwo::Init()
 	projection.SetToPerspective(60.f, 4.f / 3.f, 0.1f, 10000.f);
 	projectionStack.LoadMatrix(projection);
 
+	//----Rendering Skybox For Different Weathers-------------------------------------//
 	if (Random == 1)
 	{
 		meshList[TOP] = MeshBuilder::GenerateQuad("Top", Color(1, 1, 1), 1.f);
@@ -211,6 +217,8 @@ void c_MultiplayerLevelTwo::Init()
 		right.init("right", "quad", "Image//SunnyRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//SunnyBack.tga", (float)(0, 0, 0), true);
 	}
+	//---------------------------------------------------------------------------------//
+
 
 	meshList[TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
@@ -223,14 +231,26 @@ void c_MultiplayerLevelTwo::Init()
 	meshList[TRAFFICNULL] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
 	meshList[TRAFFICNULL2] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
 	meshList[TRAFFICGREEN] = MeshBuilder::GenerateSphere("traffic light", Color(0, 1, 0), 18, 36, 1.f);
+
+
+
+	//----Rendering Cooldown Bar----------------------------------------------------------------------------//
+	meshList[ONCOOLDOWN] = MeshBuilder::GenerateQuad("CoolDownBar", Color(1.f, 0.f, 0.f), 2.f);
+	//meshList[ONCOOLDOWN]->textureID = LoadTGA("Image//OnCoolDown.tga");
+	//-----------------------------------------------------------------------------------------------------//
+
+	//----Rendering Weather Conditions--------------------------------------------------------//
 	meshList[RAIN] = MeshBuilder::GenerateSphere("Rain", Color(0, 0, 1), 18, 18, 2);
 	meshList[SNOW] = MeshBuilder::GenerateSphere("Snow", Color(1, 1, 1), 18, 18, 2);
+	//----------------------------------------------------------------------------------------//
 
+	
 	track.init("track", "OBJ//RaceTrack2.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
 	PickUp.init("Pickup", "OBJ//Pad.obj", "Image//Car1Blue.tga", Vector3(0, 1, 50), false);
 	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
 	needle.init("needle", "quad", "Image//needle.tga", (float)(1, 1, 1), false);
 	circle.init("circle", "quad", "Image//circle.tga", (float)(1, 1, 1), false);
+	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(-11, 0, 38), false);
 	offRoadManager->addOffRoad("OffRoad//offRoadOBJ2.txt");
 
 	meshList[CARAXIS] = MeshBuilder::GenerateAxes("Axis", 100, 100, 100);
@@ -270,17 +290,57 @@ void c_MultiplayerLevelTwo::Update(double dt)
 	playerOne->updatePos(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
 	playerTwo->updatePos(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
 
-	playerOne->Movement(dt);
-	playerTwo->Movement(dt);
-
-	if (Countdown <= 0)
+	if (OptionSelection == true)
 	{
-		elapsedTime += (float)dt;
-		playerOne->Movement(dt);
-		playerTwo->Movement(dt);
-		playerOne->Ability(dt);
-		playerTwo->Ability(dt);
+		VehicleMove = true;
+		//duration++;
 	}
+	//------------KeyPress to Pause Game-------------//
+	if (Application::IsKeyPressed(VK_TAB))
+	{
+		OptionSelection = false;
+		VehicleMove = false;
+	}
+	//-----------KeyPress to Move Arrow Up-----------//
+	if (Application::IsKeyPressed(VK_UP))
+	{
+		ArrowP--;
+		if (OptionSelection == false)
+		{
+			if (ArrowP <= 6)
+			{
+				ArrowP = 7;
+			}
+		}
+	}
+	//----------KeyPress to Move Arrow Down----------//
+	if (Application::IsKeyPressed(VK_DOWN))
+	{
+		ArrowP++;
+		if (OptionSelection == false)
+		{
+			if (ArrowP >= 7)
+			{
+				ArrowP = 6;
+			}
+		}
+	}
+	//-----------KeyPress to Select Option-----------//
+	if (OptionSelection == false && ArrowP == 7)
+	{
+		if (Application::IsKeyPressed(VK_RETURN))
+		{
+			OptionSelection = true;
+		}
+	}
+	if (OptionSelection == false && ArrowP == 6)
+	{
+		if (Application::IsKeyPressed(VK_RETURN))
+		{
+			ExitGame = true;
+		}
+	}
+	//---------------------------------------------//
 
 	//------------Updating Traffic Lights------------//
 	if (elapsedTime >= 10)
@@ -290,19 +350,42 @@ void c_MultiplayerLevelTwo::Update(double dt)
 	}
 	//-----------------------------------------------//
 
-	if (Countdown <= 0)
+	//----Weather and Environment Effects-------//
+	if (Raining)
 	{
-		elapsedTime += (float)dt;
-		playerOne->Movement(dt);
-		playerTwo->Movement(dt);
-		playerOne->Ability(dt);
-		playerTwo->Ability(dt);
+		playerOne->SetSteering(9);
+		playerTwo->SetSteering(9);
+	}
+	if (Snowing)
+	{
+		playerOne->SetFriction(0.01);
+		playerTwo->SetFriction(0.01);
+	}
+	if (OffRoad)
+	{
+		playerOne->SetFriction(0.5);
+		playerTwo->SetFriction(0.5);
 	}
 
-	if (playerOne->gotCollide("FinishLine", false))
-		PoneFinish = true;
-	else
-		PoneFinish = false;
+	//-------------------------------------------//
+
+	Timer += (float)dt;
+	Countdown -= (float)Timer * dt;
+	FreezeTime = (float)(dt + (dt * 0));
+
+	if (Countdown <= 0)
+	{
+		if (VehicleMove == true)
+		{
+			elapsedTime += (float)dt;
+			OelapsedTime += (float)dt;
+			TelapsedTime += (float)dt;
+			playerOne->Movement(dt);
+			playerTwo->Movement(dt);
+			playerOne->Ability(dt);
+			playerTwo->Ability(dt);
+		}
+	}
 
 	if (Application::IsKeyPressed('Q') && checkFO)
 		OFreeze = true;
@@ -347,38 +430,48 @@ void c_MultiplayerLevelTwo::Update(double dt)
 
 	//--------------------------------------------------//
 	if (playerOne->gotCollide("FinishLine", false))
+	{
 		PoneFinish = true;
+	}
 	else
+	{
 		PoneFinish = false;
+	}
 
 	if (PoneFinish)
 	{
-		if (elapsedTime <= 36)
-			elapsedTime += (dt + 2);
+		if (OelapsedTime >= 20 && OelapsedTime <= 50)
+			OelapsedTime += (dt + 2);
 
-		if (elapsedTime >= 37 && elapsedTime <= 80)
+		if (OelapsedTime >= 61 && OelapsedTime <= 106)
 			Ponelaps = 1;
-		if (elapsedTime >= 81 && elapsedTime <= 140)
-			Ponelaps = 0;
+
+		if (OelapsedTime >= 129 && OelapsedTime <= 219)
+			Ponelaps = 2;
 	}
 
 	if (playerTwo->gotCollide("FinishLine", false))
+	{
 		PTwoFinish = true;
+	}
 	else
+	{
 		PTwoFinish = false;
+	}
 
 	if (PTwoFinish)
 	{
-		if (elapsedTime <= 36)
-			elapsedTime += (dt + 2);
+		if (TelapsedTime >= 20 && TelapsedTime <= 50)
+			TelapsedTime += (dt + 2);
 
-		if (elapsedTime >= 37 && elapsedTime <= 80)
-			Ponelaps = 1;
-		if (elapsedTime >= 81 && elapsedTime <= 140)
-			Ponelaps = 0;
+		if (TelapsedTime >= 61 && TelapsedTime <= 106)
+			PTwolaps = 1;
+
+		if (TelapsedTime >= 129 && TelapsedTime <= 219)
+			PTwolaps = 2;
 	}
 
-	if (Ponelaps == 0 || PTwolaps == 0)
+	if (Ponelaps == 2 || PTwolaps == 2)
 	{
 		if (Ponelaps < PTwolaps)
 			Win = true;// Player 2 wins
@@ -393,6 +486,7 @@ void c_MultiplayerLevelTwo::Update(double dt)
 		Snowing = false;
 	}
 
+
 	if (Raining)
 	{
 		playerOne->SetSteering(9);
@@ -403,14 +497,14 @@ void c_MultiplayerLevelTwo::Update(double dt)
 		playerOne->SetFriction(0.01);
 		playerTwo->SetFriction(0.01);
 	}
-	rain.update(dt);
-	snow.update(dt);
-	//if (!pick)
-	//{
-	//	rain.update(dt);
-	//	snow.update(dt);
-	//}
+	if (!pick)
+	{
+		rain.update(dt);
+		snow.update(dt);
+	}
 
+
+	
 }
 void c_MultiplayerLevelTwo::Render()
 {
@@ -419,39 +513,41 @@ void c_MultiplayerLevelTwo::Render()
 	glViewport(0, 0, 960, 1080);
 	glScissor(0, 0, 960, 1080);
 	renderPlayerOne();
-	if (playerOne->onCooldown())
-		renderOnCoolDown();
+
 	if (Random == 1)
 	{
-		//if (!pick)
+		if (!pick)
 			renderRain();
 	}
 	if (Random == 2)
 	{
-		//if (!pick)
+		if (!pick)
 			RenderSnow();
 	}
+
+	if (playerOne->onCooldown())
+		renderOnCoolDown();
+
 	glViewport(960, 0, 960, 1080);
 	glScissor(960, 0, 960, 1080);
 	renderPlayerTwo();
-	if (playerTwo->onCooldown())
-		renderOnCoolDown();
+
 	if (Random == 1)
 	{
-		//if (!pick)
+		if (!pick)
 			renderRain();
 	}
 	if (Random == 2)
 	{
-		//if (!pick)
+		if (!pick)
 			RenderSnow();
 	}
 
+	if (playerTwo->onCooldown())
+		renderOnCoolDown();
+
 	glDisable(GL_SCISSOR_TEST);
 
-	elapedTimeCut = std::to_string(elapsedTime);
-	elapedTimeCut.resize(5);
-	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
 	// Pause Screen
 		if (OptionSelection == false)
 		{
@@ -1047,9 +1143,38 @@ void c_MultiplayerLevelTwo::renderPlayerOne()
 	playerTwo->getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerTwo->getOBB()->calcNewAxis(playerTwo->GetSteeringAngle(), 0, 1, 0);
 
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerOne->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	CountdownCut = std::to_string(Countdown);
+	CountdownCut.resize(1);
+
+	CountdownCut = std::to_string(Countdown);
+	CountdownCut.resize(1);
+
+	if (Countdown >= 0)
+		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 11, 14);
+	else
+	{
+		Cooldown++;
+		elapedTimeCut = std::to_string(OelapsedTime);
+		elapedTimeCut.resize(5);
+
+		if (Cooldown <= 50)
+			RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 9, 14);
+		else
+			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 9, 14);
+	}
+	RenderTextOnScreen(meshList[TEXT], "Player 1 lap: ", Color(1, 0, 0), 3, 15.3, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(Ponelaps), Color(1, 0, 0), 3, 24, 3);
+	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 3);
+
+	RenderTextOnScreen(meshList[TEXT], "Player 2 lap: ", Color(1, 0, 0), 3, 15.3, 2);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(PTwolaps), Color(1, 0, 0), 3, 24, 2);
+	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 2);
+
+	if (Win)
+		RenderTextOnScreen(meshList[TEXT], "Player 2 wins", Color(1, 0, 0), 4, 9, 10);
+	if (Lose)
+		RenderTextOnScreen(meshList[TEXT], "Player 1 wins", Color(1, 0, 0), 4, 9, 10);
+
 	RenderSpeedometerOne();
 }
 void c_MultiplayerLevelTwo::renderPlayerTwo()
@@ -1097,9 +1222,35 @@ void c_MultiplayerLevelTwo::renderPlayerTwo()
 	playerTwo->getOBB()->calcNewAxis(90, 0, 1, 0);
 	playerTwo->getOBB()->calcNewAxis(playerTwo->GetSteeringAngle(), 0, 1, 0);
 
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	//RenderTextOnScreen(meshList[TEXT], std::to_string(playerTwo->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	CountdownCut = std::to_string(Countdown);
+	CountdownCut.resize(1);
+
+	if (Countdown >= 0)
+		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 11, 14);
+	else
+	{
+		Cooldown++;
+		elapedTimeCut = std::to_string(TelapsedTime);
+		elapedTimeCut.resize(5);
+
+		if (Cooldown <= 50)
+			RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 9, 14);
+		else
+			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 9, 14);
+	}
+	RenderTextOnScreen(meshList[TEXT], "Player 1 lap: ", Color(1, 0, 0), 3, 15.3, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(Ponelaps), Color(1, 0, 0), 3, 24, 3);
+	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 3);
+
+	RenderTextOnScreen(meshList[TEXT], "Player 2 lap: ", Color(1, 0, 0), 3, 15.3, 2);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(PTwolaps), Color(1, 0, 0), 3, 24, 2);
+	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 2);
+
+	if (Win)
+		RenderTextOnScreen(meshList[TEXT], "Player 2 wins", Color(1, 0, 0), 4, 9, 10);
+	if (Lose)
+		RenderTextOnScreen(meshList[TEXT], "Player 1 wins", Color(1, 0, 0), 4, 9, 10);
+
 	RenderSpeedometerTwo();
 }
 
@@ -1216,10 +1367,102 @@ void c_MultiplayerLevelTwo::renderEnviroment()
 	}
 	if (ExitGame == true)
 	{
-		glDeleteVertexArrays(1, &m_vertexArrayID);
-		glDeleteProgram(m_programID);
+		glfwTerminate();
 	}
+
+	/**************************************************************		PickUp		***************************************************************/
+	if (!pick)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
+		modelStack.Scale(3, 1, 3);
+		RenderMesh(PickUp.getMesh(), true);
+		modelStack.PopMatrix();
+
+		PickUp.updatePos(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
+		PickUp.getOBB()->calcNewDimensions(3, 1, 3);
+	}
+
+	/**************************************************************		PickUp		***************************************************************/
+	if (!pick)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
+		modelStack.Scale(3, 1, 3);
+		RenderMesh(PickUp.getMesh(), true);
+		modelStack.PopMatrix();
+
+		PickUp.updatePos(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
+		PickUp.getOBB()->calcNewDimensions(3, 1, 3);
+	}
+
+	/**************************************************************		FinishLine		***************************************************************/
+
+	modelStack.PushMatrix();
+	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	modelStack.Rotate(90, 1, 0, 0);
+	modelStack.Scale(41, 12, 41);
+	RenderMesh(FinishLine.getMesh(), true);
+	modelStack.PopMatrix();
+
+	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
+	FinishLine.getOBB()->calcNewDimensions(41, 12, 41);
+
 }
+
+void c_MultiplayerLevelTwo::renderRain()
+{
+	for (int i = 0; i < rain.getX().size() - 3000; i++)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
+		modelStack.Translate(rain.getTranslateX(), rain.getTranslateY(), rain.getTranslateZ());
+		modelStack.Translate(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
+		modelStack.Rotate(45, 0, 0, 1);
+		modelStack.Scale(0.1f, 0.5f, 0.1f);
+		RenderMesh(meshList[RAIN], true);
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
+		modelStack.Translate(rain.getTranslateX(), rain.getTranslateY(), rain.getTranslateZ());
+		modelStack.Translate(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
+		modelStack.Rotate(45, 0, 0, 1);
+		modelStack.Scale(0.1f, 0.5f, 0.1f);
+		RenderMesh(meshList[RAIN], true);
+		modelStack.PopMatrix();
+	}
+
+	Raining = true;
+}
+
+void c_MultiplayerLevelTwo::RenderSnow()
+{
+	for (int i = 0; i < snow.getX().size() - 3000; i++)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
+		modelStack.Translate(snow.getTranslateX() / 3, snow.getTranslateY() / 3, snow.getTranslateZ() / 3);
+		modelStack.Translate(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
+		modelStack.Rotate(45, 0, 0, 1);
+		modelStack.Scale(0.1f, 0.5f, 0.1f);
+		RenderMesh(meshList[SNOW], true);
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
+		modelStack.Translate(snow.getTranslateX() / 3, snow.getTranslateY() / 3, snow.getTranslateZ() / 3);
+		modelStack.Translate(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
+		modelStack.Rotate(45, 0, 0, 1);
+		modelStack.Scale(0.1f, 0.5f, 0.1f);
+		RenderMesh(meshList[SNOW], true);
+		modelStack.PopMatrix();
+	}
+
+	Snowing = true;
+}
+
+
 void c_MultiplayerLevelTwo::updateEnviromentCollision()
 {
 	front.getOBB()->defaultData();
@@ -1229,10 +1472,9 @@ void c_MultiplayerLevelTwo::updateEnviromentCollision()
 	track.getOBB()->defaultData();
 	playerOne->getOBB()->defaultData();
 	playerTwo->getOBB()->defaultData();
+	FinishLine.getOBB()->defaultData();
+	PickUp.getOBB()->defaultData();
 	offRoadManager->defaultData();
-	//AI.getOBB()->defaultData();
-	//boost.getOBB()->defaultData();
-	//slow.getOBB()->defaultData();
 
 	//Front Skybox
 	front.updatePos(0, 0, translateLength);
@@ -1416,8 +1658,9 @@ void c_MultiplayerLevelTwo::resetVar()
 	OFreeze = TFreeze = Raining = PoneFinish = PTwoFinish = Win = Lose = false;
 	ExitGame = AbleToPress = OptionSelection = VehicleMove  = music = false;
 
-	elapsedTime = Cooldown = Timer = Ponelaps = PTwolaps = Oduration = Tduration = FreezeTime = 0;
+	elapsedTime = Cooldown = Timer = Ponelaps = PTwolaps = Oduration = Tduration = FreezeTime  = OelapsedTime = TelapsedTime = 0;
 	red1 = red2 = red3 = green1 = green2 = green3 = 0;
 	Tcooldown = Ocooldown = 300;
 	Countdown = 3;
+	Random = 2;
 }

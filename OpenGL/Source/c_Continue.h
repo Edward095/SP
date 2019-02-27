@@ -79,7 +79,7 @@ private:
 	bool checkEmpty();
 
 	//Variables
-	float ArrowX, ArrowY;
+	int ArrowY;
 	double elapsedTime;
 	double bounceTime;
 	bool noFile;

@@ -57,6 +57,7 @@ void c_FirstCar::Ability(double dt)
 				PressQ = true;
 		}
 	}
+	
 	//Ability Used,Setting how long it lasts and the cooldown duration
 	if (PressQ && coolDown == 0.f)
 	{
@@ -116,6 +117,13 @@ void c_FirstCar::isOffRoad()
 	}
 	if (offRoad)
 	{
+		if (Application::IsKeyPressed('Q') || Application::IsKeyPressed('P'))
+		{
+			if (Driving || Backwards)
+			{
+				PressQ = false;
+			}
+		}
 		SetFriction(0.5f);
 		SetMaxSpeed(0.3f);
 	}
