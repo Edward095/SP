@@ -180,7 +180,7 @@ private:
 	float playerTwoCamTargetZ;
 
 	std::string elapedTimeCut;
-	
+	std::string CountdownCut;
 
 
 	c_Entity front;
@@ -191,10 +191,10 @@ private:
 	c_Entity speedometer;
 	c_Entity needle;
 	c_Entity circle;
-
+	c_Entity FinishLine;
 	c_CarBaseClass* playerOne;
 	c_CarBaseClass* playerTwo;
-
+	c_Entity PickUp;
 	c_Impulse Impulse;
 	
 
@@ -224,6 +224,8 @@ private:
 
 	float ArrowP;
 	float elapsedTime;
+	float OelapsedTime;
+	float TelapsedTime;
 	float Timer;
 	float Countdown;
 	float FreezeTime;

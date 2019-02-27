@@ -66,13 +66,13 @@ void c_FirstCar::Ability(double dt)
 	
 	if (VelocityZ > MaxSpeed && (PressQ))
 	{
-		if (VelocityZ < 2)
+		if (VelocityZ < 1.5)
 		{
-			VelocityZ += 0.2;
+			VelocityZ += 0.1;
 		}
 		else
 		{
-			VelocityZ = 2;
+			VelocityZ = 1.5;
 		}
 	}
 	if (PressQ)
@@ -138,6 +138,13 @@ void c_FirstCar::isOffRoad()
 	}
 	if (offRoad)
 	{
+		if (Application::IsKeyPressed('Q') || Application::IsKeyPressed('P'))
+		{
+			if (Driving || Backwards)
+			{
+				PressQ = false;
+			}
+		}
 		SetFriction(0.5f);
 		SetMaxSpeed(0.3f);
 	}

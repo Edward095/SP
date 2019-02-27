@@ -246,7 +246,7 @@ void c_LevelOne::Init()
 	slow4.init("Slowpad4", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-600, 1.f, -300), false);
 	slow5.init("Slowpad5", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, -250), false);
 	slow6.init("Slowpad6", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-37, 1.f, -165), false);
-	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(-12, 0, 38), false);
+	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(-11, 0, 38), false);
 	AI.init("AI", "OBJ//Car3.obj", "Image//Car1Blue.tga", Vector3(-15, 3, 0), true);
 	track.init("track", "OBJ//RaceTrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0),false);
 	PickUp.init("Pickup", "OBJ//Pad.obj", "Image//Car1Blue.tga", Vector3(0, 1, 50), false);
@@ -1200,12 +1200,13 @@ void c_LevelOne::renderEntity()
 	modelStack.PushMatrix();
 	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
 	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Scale(50, 15, 50);
+	modelStack.Scale(41, 12, 41);
 	RenderMesh(FinishLine.getMesh(), true);
 	modelStack.PopMatrix();
 
 	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
+	FinishLine.getOBB()->calcNewDimensions(41, 12, 41);
+
 	CountdownCut = std::to_string(Countdown);
 	CountdownCut.resize(1);
 
@@ -1247,9 +1248,9 @@ void c_LevelOne::renderEntity()
 		}
 	
 		if (Win)
-			RenderTextOnScreen(meshList[TEXT], "YOU LOSE", Color(1, 0, 0), 4, 9, 10);
+			RenderTextOnScreen(meshList[TEXT], "You Lose", Color(1, 0, 0), 4, 9, 10);
 		if (Lose)
-			RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 9, 10);
+			RenderTextOnScreen(meshList[TEXT], "You Win", Color(1, 0, 0), 4, 9, 10);
 		//----------------------------------------------------------------------------------------------------------//
 		RenderSpeedometer();
 		//----------------------------------------------------------------------------------------------------------//
@@ -1340,12 +1341,13 @@ void c_LevelOne::updateLevel(double dt)
 
 	if (Finish)
 	{
-		if (elapsedTime <= 36)
+		if (elapsedTime >= 10 && elapsedTime <= 50)
 			elapsedTime += (dt + 2);
 
-		if (elapsedTime >= 37 && elapsedTime <= 80)
+		if (elapsedTime >= 61 && elapsedTime <= 106)
 			laps = 1;
-		if (elapsedTime >= 81 && elapsedTime <= 140)
+
+		if (elapsedTime >= 129 && elapsedTime <= 219)
 			laps = 2;
 	}
 
@@ -1360,9 +1362,9 @@ void c_LevelOne::updateLevel(double dt)
 
 	if (AIFinish)
 	{
-		if (elapsedTime >= 59 && elapsedTime <= 65)
+		if (elapsedTime >= 59 && elapsedTime <= 63)
 			AIlaps = 1;
-		if (elapsedTime >= 119 && elapsedTime <= 1128)
+		if (elapsedTime >= 119 && elapsedTime <= 123)
 			AIlaps = 2;
 	}
 
@@ -1407,7 +1409,6 @@ void c_LevelOne::updateLevel(double dt)
 		rain.update(dt);
 		snow.update(dt);
 	}
-
 	//-------------------------------------------//
 
 	//----Countdown to Start Of the Game---------//

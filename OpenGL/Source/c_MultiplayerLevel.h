@@ -183,6 +183,8 @@ private:
 	float playerTwoCamTargetZ;
 
 	float elapsedTime;
+	float OelapsedTime;
+	float TelapsedTime;
 	std::string elapedTimeCut;
 	int Random;
 
