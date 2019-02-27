@@ -24,7 +24,6 @@ c_FirstCar::c_FirstCar()
 	BoostPad = false;
 	SlowPad = false;
 	offRoad = false;
-	abilityUsed = false;
 }
 c_FirstCar::c_FirstCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos, bool canCollide)
 {
@@ -63,11 +62,7 @@ void c_FirstCar::Ability(double dt)
 	{
 		abilityDuration = elapsedTime + 4.f;
 		coolDown = elapsedTime + 8.f;
-		if (!abilityUsed)
-		{
-			abilityUsed = true;
-			Audio->f_Game_Ability_Nitro();
-		}
+		Audio->f_Game_Ability_Nitro();
 	}
 	//Ability OnGoing
 	if (PressQ && elapsedTime < abilityDuration)
@@ -90,7 +85,6 @@ void c_FirstCar::Ability(double dt)
 	{
 		coolDown = 0.f;
 		PressQ = false;
-		abilityUsed = false;
 	}
 }
 

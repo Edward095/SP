@@ -37,6 +37,10 @@ void c_Continue::Init()
 	levelNum = 0;
 	noFile = false;
 
+	Save1 = LoadTGA("Image//Save1.tga");
+	Save2 = LoadTGA("Image//Save2.tga");
+	Save3 = LoadTGA("Image//Save3.tga");
+
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	//Enable depth buffer and depth testing
@@ -98,7 +102,7 @@ void c_Continue::Init()
 	meshList[TEXT] = MeshBuilder::GenerateText("text", (unsigned int)16, (unsigned int)16);
 	meshList[TEXT]->textureID = LoadTGA("Image//calibri.tga");
 	meshList[FILESELECTION] = MeshBuilder::GenerateQuad("File Selection", Color(1.f, 0.f, 0.f), 10.f);
-	meshList[FILESELECTION]->textureID = LoadTGA("Image//Save1.tga");
+	meshList[FILESELECTION]->textureID = Save1;
 	meshList[NOSAVEFILE] = MeshBuilder::GenerateQuad("NoSaveFile", Color(1.f, 0.f, 0.f), 10.f);
 	meshList[NOSAVEFILE]->textureID = LoadTGA("Image//NoSave.tga");
 }
@@ -353,11 +357,11 @@ void c_Continue::updateSelection(double dt)
 			ArrowY = 3;
 
 		if (ArrowY == 1)
-			meshList[FILESELECTION]->textureID = LoadTGA("Image//Save1.tga");
+			meshList[FILESELECTION]->textureID = Save1;
 		else if (ArrowY == 2)
-			meshList[FILESELECTION]->textureID = LoadTGA("Image//Save2.tga");
+			meshList[FILESELECTION]->textureID = Save2;
 		else if (ArrowY == 3)
-			meshList[FILESELECTION]->textureID = LoadTGA("Image//Save3.tga");
+			meshList[FILESELECTION]->textureID = Save3;
 
 		bounceTime = elapsedTime + 0.125f;
 	}
@@ -369,11 +373,11 @@ void c_Continue::updateSelection(double dt)
 			ArrowY = 1;
 
 		if (ArrowY == 1)
-			meshList[FILESELECTION]->textureID = LoadTGA("Image//Save1.tga");
+			meshList[FILESELECTION]->textureID = Save1;
 		else if (ArrowY == 2)
-			meshList[FILESELECTION]->textureID = LoadTGA("Image//Save2.tga");
+			meshList[FILESELECTION]->textureID = Save2;
 		else if (ArrowY == 3)
-			meshList[FILESELECTION]->textureID = LoadTGA("Image//Save3.tga");
+			meshList[FILESELECTION]->textureID = Save3;
 
 		bounceTime = elapsedTime + 0.125f;
 	}

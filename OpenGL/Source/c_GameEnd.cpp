@@ -33,6 +33,10 @@ void c_GameEnd::Init()
 	elapsedTime = bounceTime = 0.f;
 	ArrowY = 1;
 
+	NextLevel = LoadTGA("Image//NextLevel.tga");
+	Retry = LoadTGA("Image//Retry.tga");
+	exit = LoadTGA("Image//Exit.tga");
+
 	// Set background color to black
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	//Enable depth buffer and depth testing
@@ -92,9 +96,9 @@ void c_GameEnd::Init()
 	projectionStack.LoadMatrix(projection);
 
 	meshList[TEXT] = MeshBuilder::GenerateQuad("gameEnd", Color(1, 0, 0), 10);
-	meshList[TEXT]->textureID = LoadTGA("Image//NextLevel.tga");
+	meshList[TEXT]->textureID = NextLevel;
 	meshList[GAMEOVER] = MeshBuilder::GenerateQuad("GAMEOVER", Color(1, 0, 0), 10.f);
-	meshList[GAMEOVER]->textureID = LoadTGA("Image//Arrow.tga");
+	meshList[GAMEOVER]->textureID = LoadTGA("Image//GameEnd.tga");
 
 }
 void c_GameEnd::Update(double dt)
@@ -302,11 +306,11 @@ void c_GameEnd::updateSelection()
 			ArrowY = 1;
 
 		if (ArrowY == 1)
-			meshList[TEXT]->textureID = LoadTGA("Image//NextLevel.tga");
-		else if (ArrowY == 2)
-			meshList[TEXT]->textureID = LoadTGA("Image//Retry.tga");
+			meshList[TEXT]->textureID = NextLevel;
+		else if(ArrowY == 2)
+			meshList[TEXT]->textureID = Retry;
 		else if (ArrowY == 3)
-			meshList[TEXT]->textureID = LoadTGA("Image//Exit.tga");
+			meshList[TEXT]->textureID = exit;
 
 		bounceTime = elapsedTime + 0.125;
 	}
@@ -349,11 +353,7 @@ void c_GameEnd::goNextLevel()
 			scene->updateState("SLEVELTHREE");
 		}
 		else
-		{
-			modelStack.PushMatrix();
 			RenderMesh(meshList[GAMEOVER], false);
-			modelStack.PopMatrix();
-		}
 	}
 	else
 	{
@@ -374,11 +374,7 @@ void c_GameEnd::goNextLevel()
 			scene->updateState("MLEVELTHREE");
 		}
 		else
-		{
-			modelStack.PushMatrix();
 			RenderMesh(meshList[GAMEOVER], false);
-			modelStack.PopMatrix();
-		}
 	}
 }
 void c_GameEnd::retry()
