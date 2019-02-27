@@ -58,6 +58,7 @@ c_Entity* c_ObjectManager::getCannotCollide(std::string uniqueName)
 		if (cannotCollideOBJ[i]->getUniqueName() == uniqueName)
 			return cannotCollideOBJ[i];
 	}
+	return nullptr;
 }
 std::vector <c_Entity*> c_ObjectManager::getCanCollide()
 {

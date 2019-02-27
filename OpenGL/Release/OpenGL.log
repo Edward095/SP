@@ -1,17 +1,1 @@
-﻿  c_LevelOne.cpp
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(170): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(271): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(1111): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(1116): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(1309): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(1500): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(1503): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(1719): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(1734): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\asus\desktop\sp2\sp\opengl\source\c_levelone.cpp(1734): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  Generating code
-  3 of 1685 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    10 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  OpenGL.vcxproj -> C:\Users\ASUS\Desktop\SP2\SP\Release\OpenGL.exe
+﻿

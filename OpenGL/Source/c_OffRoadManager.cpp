@@ -58,7 +58,7 @@ void c_OffRoadManager::addOffRoad(std::string offRoadOBJtxt)
 		while (std::getline(file, line))
 		{
 			meshPath = line.c_str();
-			new c_Entity(offRoad + std::to_string(counter), meshPath, "Image//Test.tga", (0, 0, 0), false);
+			new c_Entity(offRoad + std::to_string(counter), meshPath, "Image//Test.tga", (0.f, 0.f, 0.f), false);
 			counter++;
 		}
 	}

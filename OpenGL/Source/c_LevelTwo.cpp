@@ -63,7 +63,7 @@ void c_LevelTwo::Init()
 	//Initialization Of Variables//
 
     //----Setting Car Variables------//
-	car->SetFriction(0.1);
+	car->SetFriction(0.1f);
 	car->SetSteering(5);
 	//-------------------------------//
 
@@ -198,7 +198,7 @@ void c_LevelTwo::Init()
 		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0), true);
-		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(0, 0, 0.4), 1);
+		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(0, 0, 0.4f), 1);
 	}
 	if (Random == 2)
 	{
@@ -514,7 +514,7 @@ void c_LevelTwo::Update(double dt)
 	//----Weather and Environment Effects-------//
 	if (Raining)
 	{
-		car->SetSteering(9.f);
+		car->SetSteering(2.f);
 	}
 	if (Snowing)
 	{
@@ -894,7 +894,7 @@ void c_LevelTwo::Render()
 		else
 			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1.f, 0.f, 0.f), 4.f, 9.f, 14.f);
 	}
-	RenderTextOnScreen(meshList[TEXT], "Player lap: ", Color(1, 0, 0), 3, 16.3, 3);
+	RenderTextOnScreen(meshList[TEXT], "Player lap: ", Color(1, 0, 0), 3, 16.3f, 3);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 24, 3);
 	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 3);
 
@@ -1706,7 +1706,7 @@ void c_LevelTwo::resetVar()
 	pick = checkF = Freeze = OffRoad = AIFinish = false;
 	Win = Lose = Finish = false;
 
-	car->SetFriction(0.1);
+	car->SetFriction(0.1f);
 	car->SetSteering(5);
 
 	car->updatePos(0, 0, 0);

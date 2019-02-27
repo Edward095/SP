@@ -346,10 +346,10 @@ void c_Garage::Init()
 	meshList[COLOUR_RED] = MeshBuilder::GenerateQuad("colourRed", Color(1, 0, 0), 1);
 	meshList[COLOUR_PURPLE] = MeshBuilder::GenerateQuad("colourPurple", Color(1, 0, 1), 1);
 	meshList[COLOUR_GREEN] = MeshBuilder::GenerateQuad("colourGreen", Color(0, 1, 0), 1);
-	meshList[COLOUR_PINK] = MeshBuilder::GenerateQuad("colourPink", Color(1, 0.412, 0.706), 1);
+	meshList[COLOUR_PINK] = MeshBuilder::GenerateQuad("colourPink", Color(1, 0.412f, 0.706f), 1);
 	meshList[COLOUR_YELLOW] = MeshBuilder::GenerateQuad("colourYellow", Color(1, 1, 0), 1);
 	meshList[COLOUR_WHITE] = MeshBuilder::GenerateQuad("colourPink", Color(1, 1, 1), 1);
-	meshList[COLOUR_GREY] = MeshBuilder::GenerateQuad("colourGrey", Color(0.5, 0.5, 0.5), 1);
+	meshList[COLOUR_GREY] = MeshBuilder::GenerateQuad("colourGrey", Color(0.5f, 0.5f, 0.5f), 1);
 	meshList[COLOUR_BLACK] = MeshBuilder::GenerateQuad("colourBlack", Color(0, 0, 0), 1);
 
 	meshList[CAR1PREVIEW] = MeshBuilder::GenerateQuad("Preview1", Color(1, 1, 1), 2);
@@ -1256,15 +1256,15 @@ void c_Garage::f_UpdateGarage(double dt)
 		v_Car1Changed = true;
 		if (v_CarList.f_GetCurCar()->f_GetCarNum() == 0)
 		{
-			manager->addCanCollide("player1", v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+			manager->addCanCollide("player1", v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0.f, 0.f, 0.f));
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 1)
 		{
-			manager->addCanCollide("player1", v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+			manager->addCanCollide("player1", v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0.f, 0.f, 0.f));
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
 		{
-			manager->addCanCollide("player1", v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+			manager->addCanCollide("player1", v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0.f, 0.f, 0.f));
 		}
 		if (v_Car1Changed && scene->singleOrMulti('M'))
 		{
@@ -1319,15 +1319,15 @@ void c_Garage::f_UpdateGarage2(double dt)
 		v_Car2Changed = true;
 		if (v_CarList.f_GetCurCar()->f_GetCarNum() == 0)
 		{
-			manager->addCanCollide("player2", v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+			manager->addCanCollide("player2", v_CarPaths[0], v_CarColourPath1[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0.f, 0.f, 0.f));
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 1)
 		{
-			manager->addCanCollide("player2", v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+			manager->addCanCollide("player2", v_CarPaths[1], v_CarColourPath2[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0.f, 0.f, 0.f));
 		}
 		else if (v_CarList.f_GetCurCar()->f_GetCarNum() == 2)
 		{
-			manager->addCanCollide("player2", v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0, 0, 0));
+			manager->addCanCollide("player2", v_CarPaths[2], v_CarColourPath3[v_ColourList.f_GetCurColour()->f_GetColourNum()], (0.f, 0.f, 0.f));
 		}
 	}
 

@@ -167,7 +167,7 @@ void c_LevelOne::Init()
 		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0), true);
-		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(0, 0, 0.4), 1);
+		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(0, 0, 0.4f), 1);
 	}
 	if (Random == 2)
 	{
@@ -268,8 +268,8 @@ void c_LevelOne::Init()
 	offRoadManager->addOffRoad("OffRoad//offRoadOBJ1.txt");
 
 	 //----Setting Car Variables------//
-	car->SetFriction(0.1);
-	car->SetSteering(0.5);
+	car->SetFriction(0.1f);
+	car->SetSteering(0.5f);
 	//-------------------------------//
 
 	//----Setting Up Camera Coordinates--------//
@@ -1108,12 +1108,12 @@ void c_LevelOne::renderEntity()
 	modelStack.Translate(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Rotate(AI.GetTurning(), 0, 1, 0);
-	modelStack.Scale(0.7, 0.7, 0.7);
+	modelStack.Scale(0.7f, 0.7f, 0.7f);
 	RenderMesh(AI.getMesh(), true);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 2.5, 0);
-	modelStack.Scale(1.8, 1.8, 1.8);
+	modelStack.Scale(1.8f, 1.8f, 1.8f);
 	RenderMesh(meshList[LIGHT2], false);
 	modelStack.PopMatrix();
 	modelStack.PopMatrix();
@@ -1306,7 +1306,7 @@ void c_LevelOne::renderEntity()
 			else
 				RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 9, 14);
 		}
-		RenderTextOnScreen(meshList[TEXT], "Player lap: ", Color(1, 0, 0), 3, 16.3, 3);
+		RenderTextOnScreen(meshList[TEXT], "Player lap: ", Color(1, 0, 0), 3, 16.3f, 3);
 		RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 24, 3);
 		RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 3);
 
@@ -1489,17 +1489,17 @@ void c_LevelOne::updateLevel(double dt)
 	//----Weather and Environment Effects-------//
 	if (Raining)
 	{
-		car->SetSteering(2);
+		car->SetSteering(3);
 	}
 	else
 		car->SetSteering(1.25);
 
 	if (Snowing)
 	{
-		car->SetFriction(0.01);
+		car->SetFriction(0.01f);
 	}
 	else
-		car->SetFriction(0.1);
+		car->SetFriction(0.1f);
 
 	if (!pick)
 	{
@@ -1715,7 +1715,7 @@ void c_LevelOne::resetVar()
 {
 	car->updatePos(0,0,0);
 	car->SetSteeringAngle(0);
-	car->SetFriction(0.1);
+	car->SetFriction(0.1f);
 	car->SetSteering(5);
 	
 	CamPosX = car->getPos().x + 1;

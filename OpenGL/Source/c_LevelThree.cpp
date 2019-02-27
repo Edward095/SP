@@ -193,7 +193,7 @@ void c_LevelThree::Init()
 		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0), true);
-		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(0, 0, 0.4), 1);
+		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(0, 0, 0.4f), 1);
 	}
 	if (Random == 2)
 	{
@@ -503,10 +503,10 @@ void c_LevelThree::Update(double dt)
 	//----Weather and Environment Effects-------//
 	if (Raining)
 	{
-		car->SetSteering(9);
+		car->SetSteering(2);
 	}
 	else
-		car->SetSteering(5);
+		car->SetSteering(1.25);
 
 	if (Snowing)
 	{
@@ -1006,7 +1006,7 @@ void c_LevelThree::renderEnviroment()
 
 	//Track
 	modelStack.PushMatrix();
-	modelStack.Translate(-313.97, 0, -137.378);
+	modelStack.Translate(-313.97f, 0, -137.378f);
 	modelStack.Rotate(90, 0, 1, 0);
 	RenderMesh(track.getMesh(), true);
 	modelStack.PopMatrix();
@@ -1699,7 +1699,7 @@ void c_LevelThree::resetVar()
 	pick = checkF = Freeze = OffRoad = AIFinish = false;
 	Win = Lose = Finish = false;
 
-	car->SetFriction(0.1);
+	car->SetFriction(0.1f);
 	car->SetSteering(5);
 
 	car->updatePos(0, 0, 0);

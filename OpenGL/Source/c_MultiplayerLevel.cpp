@@ -185,7 +185,7 @@ void c_MultiplayerLevel::Init()
 		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0), true);
-		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(0, 0, 0.4), 1);
+		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(0, 0, 0.4f), 1);
 	}
 	if (Random == 2)
 	{
@@ -374,13 +374,13 @@ void c_MultiplayerLevel::Update(double dt)
 	//----Weather and Environment Effects-------//
 	if (Raining)
 	{
-		playerOne->SetSteering(9);
-		playerTwo->SetSteering(9);
+		playerOne->SetSteering(3);
+		playerTwo->SetSteering(3);
 	}
 	if (Snowing)
 	{
-		playerOne->SetFriction(0.01);
-		playerTwo->SetFriction(0.01);
+		playerOne->SetFriction(0.01f);
+		playerTwo->SetFriction(0.01f);
 	}
 	rain.update(dt);
 	snow.update(dt);
@@ -1187,11 +1187,11 @@ void c_MultiplayerLevel::renderPlayerOne()
 		else
 			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 9, 14);
 	}
-	RenderTextOnScreen(meshList[TEXT], "Player 1 lap: ", Color(1, 0, 0), 3, 15.3, 3);
+	RenderTextOnScreen(meshList[TEXT], "Player 1 lap: ", Color(1, 0, 0), 3, 15.3f, 3);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(Ponelaps), Color(1, 0, 0), 3, 24, 3);
 	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 3);
 
-	RenderTextOnScreen(meshList[TEXT], "Player 2 lap: ", Color(1, 0, 0), 3, 15.3, 2);
+	RenderTextOnScreen(meshList[TEXT], "Player 2 lap: ", Color(1, 0, 0), 3, 15.3f, 2);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(PTwolaps), Color(1, 0, 0), 3, 24, 2);
 	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 2);
 
@@ -1263,11 +1263,11 @@ void c_MultiplayerLevel::renderPlayerTwo()
 		else
 			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 9, 14);
 	}
-	RenderTextOnScreen(meshList[TEXT], "Player 1 lap: ", Color(1, 0, 0), 3, 15.3, 3);
+	RenderTextOnScreen(meshList[TEXT], "Player 1 lap: ", Color(1, 0, 0), 3, 15.3f, 3);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(Ponelaps), Color(1, 0, 0), 3, 24, 3);
 	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 3);
 
-	RenderTextOnScreen(meshList[TEXT], "Player 2 lap: ", Color(1, 0, 0), 3, 15.3, 2);
+	RenderTextOnScreen(meshList[TEXT], "Player 2 lap: ", Color(1, 0, 0), 3, 15.3f, 2);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(PTwolaps), Color(1, 0, 0), 3, 24, 2);
 	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 2);
 

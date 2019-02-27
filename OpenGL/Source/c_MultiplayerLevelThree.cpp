@@ -198,7 +198,7 @@ void c_MultiplayerLevelThree::Init()
 		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0), true);
-		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(0, 0, 0.4), 1);
+		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(0, 0, 0.4f), 1);
 	}
 	if (Random == 2)
 	{
@@ -372,18 +372,18 @@ void c_MultiplayerLevelThree::Update(double dt)
 	//----Weather and Environment Effects-------//
 	if (Raining)
 	{
-		playerOne->SetSteering(9);
-		playerTwo->SetSteering(9);
+		playerOne->SetSteering(3);
+		playerTwo->SetSteering(3);
 	}
 	if (Snowing)
 	{
-		playerOne->SetFriction(0.01);
-		playerTwo->SetFriction(0.01);
+		playerOne->SetFriction(0.01f);
+		playerTwo->SetFriction(0.01f);
 	}
 	if (OffRoad)
 	{
-		playerOne->SetFriction(0.5);
-		playerTwo->SetFriction(0.5);
+		playerOne->SetFriction(0.5f);
+		playerTwo->SetFriction(0.5f);
 	}
 
 	//-------------------------------------------//
@@ -545,13 +545,13 @@ void c_MultiplayerLevelThree::Update(double dt)
 
 	if (Raining)
 	{
-		playerOne->SetSteering(9);
-		playerTwo->SetSteering(9);
+		playerOne->SetSteering(3);
+		playerTwo->SetSteering(3);
 	}
 	if (Snowing)
 	{
-		playerOne->SetFriction(0.01);
-		playerTwo->SetFriction(0.01);
+		playerOne->SetFriction(0.01f);
+		playerTwo->SetFriction(0.01f);
 	}
 	rain.update(dt);
 	snow.update(dt);
@@ -1219,11 +1219,11 @@ void c_MultiplayerLevelThree::renderPlayerOne()
 		else
 			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 9, 14);
 	}
-	RenderTextOnScreen(meshList[TEXT], "Player 1 lap: ", Color(1, 0, 0), 3, 15.3, 3);
+	RenderTextOnScreen(meshList[TEXT], "Player 1 lap: ", Color(1, 0, 0), 3, 15.3f, 3);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(Ponelaps), Color(1, 0, 0), 3, 24, 3);
 	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 3);
 
-	RenderTextOnScreen(meshList[TEXT], "Player 2 lap: ", Color(1, 0, 0), 3, 15.3, 2);
+	RenderTextOnScreen(meshList[TEXT], "Player 2 lap: ", Color(1, 0, 0), 3, 15.3f, 2);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(PTwolaps), Color(1, 0, 0), 3, 24, 2);
 	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 2);
 
@@ -1295,11 +1295,11 @@ void c_MultiplayerLevelThree::renderPlayerTwo()
 		else
 			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 9, 14);
 	}
-	RenderTextOnScreen(meshList[TEXT], "Player 1 lap: ", Color(1, 0, 0), 3, 15.3, 3);
+	RenderTextOnScreen(meshList[TEXT], "Player 1 lap: ", Color(1, 0, 0), 3, 15.3f, 3);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(Ponelaps), Color(1, 0, 0), 3, 24, 3);
 	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 3);
 
-	RenderTextOnScreen(meshList[TEXT], "Player 2 lap: ", Color(1, 0, 0), 3, 15.3, 2);
+	RenderTextOnScreen(meshList[TEXT], "Player 2 lap: ", Color(1, 0, 0), 3, 15.3f, 2);
 	RenderTextOnScreen(meshList[TEXT], std::to_string(PTwolaps), Color(1, 0, 0), 3, 24, 2);
 	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 2);
 
@@ -1454,7 +1454,7 @@ void c_MultiplayerLevelThree::renderEnviroment()
 
 	//Track
 	modelStack.PushMatrix();
-	modelStack.Translate(-313.97, 0, -137.378);
+	modelStack.Translate(-313.97f, 0, -137.378f);
 	modelStack.Rotate(90, 0, 1, 0);
 	RenderMesh(track.getMesh(), true);
 	modelStack.PopMatrix();
@@ -1670,7 +1670,7 @@ void c_MultiplayerLevelThree::updateEnviromentCollision()
 	slow7.getOBB()->calcNewDimensions(3, 1, 3);
 
 	//Track
-	track.updatePos(-313.97, 0, -137.378);
+	track.updatePos(-313.97f, 0, -137.378f);
 	track.getOBB()->calcNewAxis(90, 0, 1, 0);
 	offRoadManager->updateCollision("OffRoad//offRoadPos3.txt", "OffRoad//offRoadRotate3.txt");
 
