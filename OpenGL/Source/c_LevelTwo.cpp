@@ -272,7 +272,7 @@ void c_LevelTwo::Init()
 	slow7.init("Slowpad7", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(0, 1.f, -60), false);
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), false);
 	AI.init("AI", "OBJ//Car3.obj", "Image//Car1Blue.tga", Vector3(-15, 3, 0), true);
-	track.init("track", "OBJ//RaceTrack2.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
+	track.init("track", "OBJ//Racetrack2.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
 	PickUp.init("Pickup", "OBJ//Pad.obj", "Image//Car1Blue.tga", Vector3(0, 1, 50), false);
 	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
 	needle.init("needle", "quad", "Image//needle.tga", (float)(1, 1, 1), false);
@@ -874,7 +874,7 @@ void c_LevelTwo::Render()
 
 void c_LevelTwo::renderRain()
 {
-	for (int i = 0; i < rain.getX().size() - 2000; i++)
+	for (int i = 0; i < rain.getX().size() - 4000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
@@ -890,7 +890,7 @@ void c_LevelTwo::renderRain()
 
 void c_LevelTwo::RenderSnow()
 {
-	for (int i = 0; i < snow.getX().size() - 2000; i++)
+	for (int i = 0; i < snow.getX().size() - 4000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
@@ -962,7 +962,7 @@ void c_LevelTwo::renderEnviroment()
 	modelStack.PushMatrix();
 	modelStack.Translate(-310.951f, 0, -135.453f);
 	modelStack.Rotate(90, 0, 1, 0);
-	RenderMesh(track.getMesh(), false);
+	RenderMesh(track.getMesh(), true);
 	modelStack.PopMatrix();
 
 	//RaceBanner

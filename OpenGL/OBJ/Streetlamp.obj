@@ -1298,7 +1298,7 @@ vn -0.867438 -0.497545 0.000000
 vn -0.867438 -0.497545 0.000000
 vn -0.867438 -0.497545 0.000000
 s off
-g polySurface10
+g level_design10_track1_:polySurface10
 usemtl initialShadingGroup
 f 1/1/1 2/2/2 3/3/3 4/4/4
 f 4/4/5 3/3/6 5/5/7 6/6/8
