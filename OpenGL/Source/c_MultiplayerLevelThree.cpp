@@ -193,7 +193,7 @@ void c_MultiplayerLevelThree::Init()
 	meshList[LIGHT1] = MeshBuilder::GenerateSphere("environment light", Color(1, 1, 1), 18, 36, 1.f);
 	meshList[LIGHT2] = MeshBuilder::GenerateSphere("street light", Color(1, 1, 1), 18, 36, 1.f);
 	meshList[RACEBANNER] = MeshBuilder::GenerateOBJ("race banner", "OBJ//RaceBanner.obj");
-	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp3.obj");
+	meshList[STREETLIGHT] = MeshBuilder::GenerateOBJ("street light", "OBJ//Streetlamp.obj");
 	meshList[STREETLIGHT]->textureID = LoadTGA("Image//Streetlamp.tga");
 	meshList[TRAFFICRED] = MeshBuilder::GenerateSphere("traffic light", Color(1, 0, 0), 18, 36, 1.f);
 	meshList[TRAFFICNULL] = MeshBuilder::GenerateSphere("traffic light", Color(0.5f, 0.5f, 0.5f), 18, 36, 1.f);
@@ -204,7 +204,7 @@ void c_MultiplayerLevelThree::Init()
 	left.init("left", "quad", "Image//SunnyLeft.tga", (0, 0, 0), true);
 	right.init("right", "quad", "Image//SunnyRight.tga", (0, 0, 0), true);
 	back.init("back", "quad", "Image/SunnyBack.tga", (0, 0, 0), true);
-	track.init("track", "OBJ//Racetrack3.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
+	track.init("track", "OBJ//RaceTrack3.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
 	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
 	needle.init("needle", "quad", "Image//needle.tga", (float)(1, 1, 1), false);
 	circle.init("circle", "quad", "Image//circle.tga", (float)(1, 1, 1), false);
@@ -1262,7 +1262,7 @@ void c_MultiplayerLevelThree::renderEnviroment()
 	modelStack.PushMatrix();
 	modelStack.Translate(-313.97, 0, -137.378);
 	modelStack.Rotate(90, 0, 1, 0);
-	RenderMesh(track.getMesh(), true);
+	RenderMesh(track.getMesh(), false);
 	modelStack.PopMatrix();
 
 	//RaceBanner
