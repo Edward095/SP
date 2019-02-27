@@ -91,8 +91,8 @@ void c_LevelThree::Init()
 	Cooldown = 0;
 	Countdown = 3;
 	Timer = 0;
-	laps = 2;
-	AIlaps = 2;
+	laps = 0;
+	AIlaps = 0;
 	FPS = 0;
 	cooldown = 300;
 	//-------------------------------//
@@ -264,7 +264,7 @@ void c_LevelThree::Init()
 	slow5.init("Slowpad5", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-555, 1.f, -585), false);
 	slow6.init("Slowpad6", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-350, 1.f, -385), false);
 	slow7.init("Slowpad7", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-30, 1.f, -340), false);
-	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), false);
+	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(-11, 0, 38), false);
 	AI.init("AI", "OBJ//Car3.obj", "Image//Car1Blue.tga", Vector3(-15, 3, 0), true);
 	track.init("track", "OBJ//RaceTrack3.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
 	PickUp.init("Pickup", "OBJ//Pad.obj", "Image//Car1Blue.tga", Vector3(0, 1, 50), false);
@@ -410,15 +410,10 @@ void c_LevelThree::Update(double dt)
 		cooldown = 300;
 	}
 
-
-	if (car->getPos().x == nitro.getPos().x && car->getPos().z == nitro.getPos().z)
-	{
-		car->PowerUp(true);
-	}
 	//-------------------------------------------------//
 
 	//----Collision For Finishing Line---------------------------//
-	if (car->gotCollide("FinishLine",false))
+	if (car->gotCollide("FinishLine", false))
 	{
 		Finish = true;
 	}
@@ -429,13 +424,14 @@ void c_LevelThree::Update(double dt)
 
 	if (Finish)
 	{
-		if (elapsedTime <= 36)
+		if (elapsedTime >= 10 && elapsedTime <= 50)
 			elapsedTime += (dt + 2);
 
-		if (elapsedTime >= 37 && elapsedTime <= 80)
+		if (elapsedTime >= 61 && elapsedTime <= 106)
 			laps = 1;
-		if (elapsedTime >= 81 && elapsedTime <= 140)
-			laps = 0;
+
+		if (elapsedTime >= 129 && elapsedTime <= 219)
+			laps = 2;
 	}
 
 	if (AI.gotCollide("FinishLine", false))
@@ -449,13 +445,13 @@ void c_LevelThree::Update(double dt)
 
 	if (AIFinish)
 	{
-		if (elapsedTime >= 59 && elapsedTime <= 65)
+		if (elapsedTime >= 47 && elapsedTime <= 51)
 			AIlaps = 1;
-		if (elapsedTime >= 119 && elapsedTime <= 1128)
-			AIlaps = 0;
+		if (elapsedTime >= 96 && elapsedTime <= 100)
+			AIlaps = 2;
 	}
 
-	if (laps == 0 || AIlaps == 0)
+	if (laps == 2 || AIlaps == 2)
 	{
 		if (laps < AIlaps)
 			Win = true;
@@ -463,11 +459,13 @@ void c_LevelThree::Update(double dt)
 			Lose = true;
 	}
 	//-----------------------------------------------------------//
+
 	if (Lose || Win)
 	{
 		scene->getScene("FINISHED")->Init();
 		scene->updateState("FINISHED");
 	}
+
 
 	if (car->gotCollide("Pickup", false))
 	{
@@ -476,40 +474,26 @@ void c_LevelThree::Update(double dt)
 		Snowing = false;
 	}
 
-	if (!pick)
-	{
-		rain.update(dt);
-		snow.update(dt);
-	}
-
-	if (Random == 1)
-	{
-		if (!pick)
-			renderRain();
-	}
-	if (Random == 2)
-	{
-		if (!pick)
-			RenderSnow();
-	}
-
 	//----Weather and Environment Effects-------//
 	if (Raining)
 	{
 		car->SetSteering(9);
 	}
+	else
+		car->SetSteering(5);
+
 	if (Snowing)
 	{
 		car->SetFriction(0.01);
 	}
-	if (OffRoad)
-	{
-		car->SetFriction(0.5);
-		car->SetMaxSpeed(0.1);
-	}
+	else
+		car->SetFriction(0.1);
 
-	rain.update(dt);
-	snow.update(dt);
+	if (!pick)
+	{
+		rain.update(dt);
+		snow.update(dt);
+	}
 	//-------------------------------------------//
 
 	//----Countdown to Start Of the Game---------//
@@ -524,6 +508,13 @@ void c_LevelThree::Update(double dt)
 		}
 	}
 	//-------------------------------------------//
+
+		//------------Updating Traffic Lights------------//
+	if (elapsedTime >= 10)
+	{
+		RedLight = false;
+		GreenLight = true;
+	}
 	if (OptionSelection == true)
 	{
 		VehicleMove = true;
@@ -654,13 +645,18 @@ void c_LevelThree::Render()
 	modelStack.Translate(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Rotate(AI.GetTurning(), 0, 1, 0);
-	modelStack.Scale(1, 1, 1);
+	modelStack.Scale(0.7, 0.7, 0.7);
 	RenderMesh(AI.getMesh(), true);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 2.5, 0);
+	modelStack.Scale(1.8, 1.8, 1.8);
+	RenderMesh(meshList[LIGHT2], false);
+	modelStack.PopMatrix();
 	modelStack.PopMatrix();
 
 	AI.updatePos(AI.getPos().x, AI.getPos().y, AI.getPos().z);
 	AI.getOBB()->calcNewAxis(AI.GetSteeringAngle(), 0, 1, 0);
-
 	/**************************************************************		BoostPad		***************************************************************/
 
 		modelStack.PushMatrix();
@@ -738,6 +734,18 @@ void c_LevelThree::Render()
 	boost7.updatePos(boost7.getPos().x, boost7.getPos().y, boost7.getPos().z);
 	boost7.getOBB()->calcNewDimensions(3, 1, 3);
 
+	/**************************************************************		PickUp		***************************************************************/
+	if (!pick)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
+		modelStack.Scale(3, 1, 3);
+		RenderMesh(PickUp.getMesh(), true);
+		modelStack.PopMatrix();
+
+		PickUp.updatePos(PickUp.getPos().x, PickUp.getPos().y, PickUp.getPos().z);
+		PickUp.getOBB()->calcNewDimensions(3, 1, 3);
+	}
 
 	/**************************************************************		SlowPad		***************************************************************/
 
@@ -809,23 +817,21 @@ void c_LevelThree::Render()
 	modelStack.PushMatrix();
 	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
 	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Scale(50, 15, 50);
+	modelStack.Scale(41, 12, 41);
 	RenderMesh(FinishLine.getMesh(), true);
 	modelStack.PopMatrix();
 
 	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	FinishLine.getOBB()->calcNewDimensions(50, 15, 50);
+	FinishLine.getOBB()->calcNewDimensions(41, 12, 41);
 
 	CountdownCut = std::to_string(Countdown);
 	CountdownCut.resize(1);
 
-	//----Render Text On Screen-----------------------------------------------------------------------------------//
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
+	CountdownCut = std::to_string(Countdown);
+	CountdownCut.resize(1);
 
 	if (Countdown >= 0)
-		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 10, 14);
+		RenderTextOnScreen(meshList[TEXT], CountdownCut, Color(1, 0, 0), 4, 11, 14);
 	else
 	{
 		Cooldown++;
@@ -833,40 +839,31 @@ void c_LevelThree::Render()
 		elapedTimeCut.resize(5);
 
 		if (Cooldown <= 50)
-			RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 10, 14);
+			RenderTextOnScreen(meshList[TEXT], "START", Color(1, 0, 0), 4, 9, 14);
 		else
-			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 10, 14);
+			RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 4, 9, 14);
 	}
+	RenderTextOnScreen(meshList[TEXT], "Player lap: ", Color(1, 0, 0), 3, 16.3, 3);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 24, 3);
+	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 3);
 
-	RenderTextOnScreen(meshList[TEXT], std::to_string(laps), Color(1, 0, 0), 3, 9, 1);
+	RenderTextOnScreen(meshList[TEXT], "AI lap: ", Color(1, 0, 0), 3, 19, 2);
+	RenderTextOnScreen(meshList[TEXT], std::to_string(AIlaps), Color(1, 0, 0), 3, 24, 2);
+	RenderTextOnScreen(meshList[TEXT], "/2", Color(1, 0, 0), 3, 25, 2);
 
 	// Pause Screen
-		if (OptionSelection == false)
-		{
-			RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
-			AbleToPress = true;
-			RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
-			AbleToPress = true;
-			RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
-			AbleToPress = true;
-			RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
-			AbleToPress = true;
-			TimePassed -= FreezeTime;
-		}
-	
-	if (Win)
-		RenderTextOnScreen(meshList[TEXT], "YOU WIN", Color(1, 0, 0), 4, 10, 10);
-	if (Lose)
-		RenderTextOnScreen(meshList[TEXT], "YOU LOSE", Color(1, 0, 0), 4, 10, 10);
-
-	elapedTimeCut = std::to_string(elapsedTime);
-	elapedTimeCut.resize(5);
-	RenderTextOnScreen(meshList[TEXT], elapedTimeCut, Color(1, 0, 0), 3, 1, 19);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetSpeed()), Color(1, 0, 0), 3, 1, 3);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetAcceleration()), Color(1, 0, 0), 3, 1, 2);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetMaxAcceleration()), Color(1, 0, 0), 3, 1, 1);
-	RenderTextOnScreen(meshList[TEXT], std::to_string(FPS), Color(1, 0, 0), 3, 15, 15);
-	//----------------------------------------------------------------------------------------------------------//
+	if (OptionSelection == false)
+	{
+		RenderTextOnScreen(meshList[TEXT], "Game Paused", Color(1, 0, 0), 7, 3, 6);
+		AbleToPress = true;
+		RenderTextOnScreen(meshList[TEXT], ">", Color(1, 0, 0), 5, 5, ArrowP);
+		AbleToPress = true;
+		RenderTextOnScreen(meshList[TEXT], "Continue", Color(1, 0, 0), 5, 7, 7);
+		AbleToPress = true;
+		RenderTextOnScreen(meshList[TEXT], "Exit", Color(1, 0, 0), 5, 7, 6);
+		AbleToPress = true;
+		TimePassed -= FreezeTime;
+	}
 	RenderSpeedometer();
 	if (car->onCooldown())
 		renderOnCooldown();

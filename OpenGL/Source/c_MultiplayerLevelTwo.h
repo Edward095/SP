@@ -13,6 +13,7 @@
 #include "c_CarBaseClass.h"
 #include"c_Sound.h"
 #include "c_Impulse.h"
+#include "c_Weather.h"
 
 
 class c_MultiplayerLevelTwo : public Scene
@@ -33,6 +34,8 @@ public:
 		LIGHT1,
 		LIGHT2,
 		TRACK,
+		RAIN,
+		SNOW,
 		ONCOOLDOWN,
 		NUM_GEOMETRY,
 	};
@@ -163,6 +166,8 @@ private:
 	void updateEnviromentCollision();
 	void RenderSpeedometerOne();
 	void RenderSpeedometerTwo();
+	void renderRain();
+	void RenderSnow();
 	void renderOnCoolDown();
 	void resetVar();
 
@@ -183,6 +188,7 @@ private:
 	float playerTwoCamTargetZ;
 
 	std::string elapedTimeCut;
+	std::string CountdownCut;
 
 	c_Entity front;
 	c_Entity back;
@@ -195,8 +201,10 @@ private:
 	c_Entity speedometer;
 	c_Entity needle;
 	c_Entity circle;
-
+	c_Entity FinishLine;
 	c_Impulse Impulse;
+	c_Weather rain;
+	c_Weather snow;
 		
 	c_ObjectManager* OBJmanager;
 	c_OffRoadManager* offRoadManager;
@@ -225,10 +233,13 @@ private:
 	bool music;
 
 	float elapsedTime;
+	float OelapsedTime;
+	float TelapsedTime;
 	float Timer;
 	float Countdown;
 	float FreezeTime;
 	float red1, red2, red3, green1, green2, green3;
+	int Random;
 	int Cooldown;
 	int Ponelaps;
 	int PTwolaps;
