@@ -63,7 +63,7 @@ void c_MultiplayerLevel::Init()
 		playerTwo = third;
 	playerTwo->updatePos(-10, 0, 0);
 
-	Random =  2;
+	Random =  rand() % 3 + 1;
 
 	playerOneCamPosX = playerOne->getPos().x + 1;
 	playerOneCamPosY = playerOne->getPos().y + 1;
@@ -181,10 +181,11 @@ void c_MultiplayerLevel::Init()
 		meshList[TOP]->textureID = LoadTGA("Image//RainTop.tga");
 		meshList[BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
 		meshList[BOTTOM]->textureID = LoadTGA("Image//RainBottom.tga");
-		front.init("front", "quad", "Image//RainFront.tga", (float)(0, 0, 0),true);
+		front.init("front", "quad", "Image//RainFront.tga", (float)(0, 0, 0), true);
 		left.init("left", "quad", "Image//RainLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//RainRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//RainBack.tga", (float)(0, 0, 0), true);
+		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(0, 0, 0.4), 1);
 	}
 	if (Random == 2)
 	{
@@ -196,6 +197,7 @@ void c_MultiplayerLevel::Init()
 		left.init("left", "quad", "Image//SnowLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//SnowRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//SnowBack.tga", (float)(0, 0, 0), true);
+		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(1, 1, 1), 1);
 	}
 	if (Random == 3)
 	{
@@ -207,6 +209,7 @@ void c_MultiplayerLevel::Init()
 		left.init("left", "quad", "Image//SunnyLeft.tga", (float)(0, 0, 0), true);
 		right.init("right", "quad", "Image//SunnyRight.tga", (float)(0, 0, 0), true);
 		back.init("back", "quad", "Image//SunnyBack.tga", (float)(0, 0, 0), true);
+		meshList[GROUND] = MeshBuilder::GenerateQuad("Ground", Color(1, 0, 0), 1);
 	}
 	//---------------------------------------------------------------------------------//
 
@@ -513,12 +516,12 @@ void c_MultiplayerLevel::Render()
 		renderOnCoolDown();
 	if (Random == 1)
 	{
-		if (!pick)
+		//if (!pick)
 		renderRain();
 	}
 	if (Random == 2)
 	{
-		if (!pick)
+		//if (!pick)
 		RenderSnow();
 	}
 
@@ -529,12 +532,12 @@ void c_MultiplayerLevel::Render()
 		renderOnCoolDown();
 	if (Random == 1)
 	{
-		if (!pick)
+		//if (!pick)
 		renderRain();
 	}
 	if (Random == 2)
 	{
-		if (!pick)
+		//if (!pick)
 		RenderSnow();
 	}
 
@@ -659,7 +662,7 @@ void c_MultiplayerLevel::initLights()
 	lights[0].type = Light::LIGHT_DIRECTIONAL;
 	lights[0].position.Set(-9.f, 30.8f, 50.f);
 	lights[0].color.Set(1, 1, 1);
-	lights[0].power = 0.f;
+	lights[0].power = 2.f;
 	lights[0].kC = 1.f;
 	lights[0].kL = 0.01f;
 	lights[0].kQ = 0.001f;
@@ -1385,6 +1388,14 @@ void c_MultiplayerLevel::renderEnviroment()
 	modelStack.Rotate(90.f, 0, 1, 0);
 	modelStack.Scale(6, 5, 6);
 	RenderMesh(meshList[STREETLIGHT], true);
+	modelStack.PopMatrix();
+
+	//Ground
+	modelStack.PushMatrix();
+	modelStack.Translate(0, -1, 0);
+	modelStack.Scale(SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	modelStack.Rotate(-90, 1, 0, 0);
+	RenderMesh(meshList[GROUND], false);
 	modelStack.PopMatrix();
 
 	//TrafficLight

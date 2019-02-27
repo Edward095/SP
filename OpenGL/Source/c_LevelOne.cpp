@@ -87,7 +87,7 @@ void c_LevelOne::Init()
 	startline = false;
 	music = false;
 	//----Random Number Gen----------//
-	Random = 1;
+	Random = 2;
 	//-------------------------------//
 
 
@@ -265,7 +265,7 @@ void c_LevelOne::Init()
 
 	 //----Setting Car Variables------//
 	car->SetFriction(0.1);
-	car->SetSteering(5);
+	car->SetSteering(0.5);
 	//-------------------------------//
 
 	//----Setting Up Camera Coordinates--------//
@@ -1435,10 +1435,10 @@ void c_LevelOne::updateLevel(double dt)
 	//----Weather and Environment Effects-------//
 	if (Raining)
 	{
-		car->SetSteering(9);
+		car->SetSteering(2);
 	}
 	else
-		car->SetSteering(5);
+		car->SetSteering(1.25);
 
 	if (Snowing)
 	{

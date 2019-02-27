@@ -36,6 +36,7 @@ public:
 		ONCOOLDOWN,
 		RAIN,
 		SNOW,
+		GROUND,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE

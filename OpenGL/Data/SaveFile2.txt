@@ -1,0 +1,4 @@
+OBJpath: OBJ//Car3.obj
+TGApath: Image//Car3Blue.tga
+Level: 2
+
