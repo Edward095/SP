@@ -16,7 +16,7 @@
 #include <Windows.h>
 #include <time.h>
 
-#include "c_DataManager.h"`
+#include "c_DataManager.h"
 #include "c_SceneManager.h"
 
 #include "c_Firstcar.h"
@@ -81,12 +81,13 @@ void c_LevelOne::Init()
 	laps = 0;
 	AIlaps = 0;
 	FPS = 0;
+	Checkcount = 0;
 	cooldown = 300;
 	//-------------------------------//
 	startline = false;
 	music = false;
 	//----Random Number Gen----------//
-	Random = 1;
+	Random = 2;
 	//-------------------------------//
 
 
@@ -253,7 +254,10 @@ void c_LevelOne::Init()
 	slow4.init("Slowpad4", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-600, 1.f, -300), false);
 	slow5.init("Slowpad5", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-20, 1.f, -250), false);
 	slow6.init("Slowpad6", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(-37, 1.f, -165), false);
-	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(-11, 0, 38), false);
+	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(-11, 1, 38), false);
+	Checkpoints.init("Checkpoint", "quad", "Image//Car1Blue.tga", Vector3(-200, 1, 328), false);
+	Checkpoints2.init("Checkpoint2", "quad", "Image//Car1Blue.tga", Vector3(-255, 1, 0), false);
+	Checkpoints3.init("Checkpoint3", "quad", "Image//Car1Blue.tga", Vector3(-255, 1, -365), false);
 	AI.init("AI", "OBJ//Car3.obj", "Image//Car1Blue.tga", Vector3(-15, 3, 0), true);
 	track.init("track", "OBJ//RaceTrack1.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0),false);
 	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
@@ -263,7 +267,7 @@ void c_LevelOne::Init()
 
 	 //----Setting Car Variables------//
 	car->SetFriction(0.1);
-	car->SetSteering(5);
+	car->SetSteering(0.5);
 	//-------------------------------//
 
 	//----Setting Up Camera Coordinates--------//
@@ -301,8 +305,11 @@ void c_LevelOne::Update(double dt)
 
 	//----Setting Of Time And FPS-------//
 	Timer += (float)dt;
-	Countdown -= (float)Timer * dt;
-	FPS = 1 / dt;
+
+	//FreezeTime = (float)(dt + (dt * 0));
+	//------------------------------------//
+	Countdown -= (float)(Timer * dt);
+	FPS = (float)(1 / dt);
 	//----------------------------------//
 
 	//----Power Up Timer------------------// 
@@ -336,6 +343,9 @@ void c_LevelOne::Render()
 	slow5.getOBB()->defaultData();
 	slow6.getOBB()->defaultData();
 	FinishLine.getOBB()->defaultData();
+	Checkpoints.getOBB()->defaultData();
+	Checkpoints2.getOBB()->defaultData();
+	Checkpoints3.getOBB()->defaultData();
 
 	//clear depth and color buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -359,7 +369,7 @@ void c_LevelOne::Render()
 
 void c_LevelOne::renderRain()
 {
-	for (int i = 0; i < rain.getX().size() - 2000; i++)
+	for (int i = 0; i < (int)rain.getX().size() - 2000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
@@ -375,7 +385,7 @@ void c_LevelOne::renderRain()
 
 void c_LevelOne::RenderSnow()
 {
-	for (int i = 0; i < snow.getX().size() - 2000; i++)
+	for (int i = 0; i < (int)snow.getX().size() - 2000; i++)
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
@@ -1221,13 +1231,43 @@ void c_LevelOne::renderEntity()
 
 	modelStack.PushMatrix();
 	modelStack.Translate(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Scale(41, 12, 41);
-	RenderMesh(FinishLine.getMesh(), true);
+	modelStack.Scale(46, 12, 46);
 	modelStack.PopMatrix();
 
 	FinishLine.updatePos(FinishLine.getPos().x, FinishLine.getPos().y, FinishLine.getPos().z);
-	FinishLine.getOBB()->calcNewDimensions(41, 12, 41);
+	FinishLine.getOBB()->calcNewDimensions(46, 12, 46);
+	//--------------------------- Check point 1 ------------------------------------//
+	modelStack.PushMatrix();
+	modelStack.Translate(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(46, 12, 46);
+	modelStack.PopMatrix();
+
+	Checkpoints.updatePos(Checkpoints.getPos().x, Checkpoints.getPos().y, Checkpoints.getPos().z);
+	Checkpoints.getOBB()->calcNewDimensions(46, 12, 46);
+	Checkpoints.getOBB()->calcNewAxis(90, 0, 1, 0);
+
+	//--------------------------- Check point 2 ------------------------------------//
+	modelStack.PushMatrix();
+	modelStack.Translate(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
+	modelStack.Scale(46, 12, 46);
+	modelStack.PopMatrix();
+
+	Checkpoints2.updatePos(Checkpoints2.getPos().x, Checkpoints2.getPos().y, Checkpoints2.getPos().z);
+	Checkpoints2.getOBB()->calcNewDimensions(46, 12, 46);
+	//---------------------------- Check point 3 ---------------------------------//
+	modelStack.PushMatrix();
+	modelStack.Translate(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(41, 12, 46);
+	modelStack.PopMatrix();
+
+	Checkpoints3.updatePos(Checkpoints3.getPos().x, Checkpoints3.getPos().y, Checkpoints3.getPos().z);
+	Checkpoints3.getOBB()->calcNewDimensions(46, 12, 46);
+	Checkpoints3.getOBB()->calcNewAxis(90, 0, 1, 0);
+	//---------------------------------------------------------------//
+
+	/********************************************************************************************************************************************************/
 
 	CountdownCut = std::to_string(Countdown);
 	CountdownCut.resize(1);
@@ -1278,7 +1318,6 @@ void c_LevelOne::renderEntity()
 		if (car->onCooldown())
 			renderOnCooldown();
 		//----------------------------------------------------------------------------------------------------------//
-		RenderTextOnScreen(meshList[TEXT], std::to_string(car->GetSpeed()), Color(1, 0, 0), 4, 9, 10);
 }
 void c_LevelOne::renderLevel()
 {
@@ -1301,9 +1340,7 @@ void c_LevelOne::updateLevel(double dt)
 {
 	c_SceneManager* scene = c_SceneManager::getInstance();
 
-	//----Power Up Timer------------------// 
-	FreezeTime = (float)(dt + (dt * 0));
-	//------------------------------------//
+
 
 	//----Updating Camera Position---------------------------------------------------------------//
 	CamPosX = (car->getPos().x - (sin(Math::DegreeToRadian(car->GetSteeringAngle()))) * 10);
@@ -1353,8 +1390,28 @@ void c_LevelOne::updateLevel(double dt)
 	}
 
 	//-------------------------------------------------//
-
-	//----Collision For Finishing Line---------------------------//
+	if (car->gotCollide("Checkpoint", false))
+	{
+		if (Checkcount == 0)
+			Checkcount = 1;
+		else if (Checkcount == 3)
+			Checkcount = 4;
+	}
+	else if (car->gotCollide("Checkpoint2", false))
+	{
+		if (Checkcount == 1)
+			Checkcount = 2;
+		else if (Checkcount == 4)
+			Checkcount = 5;
+	}
+	else if (car->gotCollide("Checkpoint3", false))
+	{
+		if (Checkcount == 2)
+			Checkcount = 3;
+		else if (Checkcount == 5)
+			Checkcount = 6;
+	}
+	
 	if (car->gotCollide("FinishLine", false))
 	{
 		Finish = true;
@@ -1366,13 +1423,10 @@ void c_LevelOne::updateLevel(double dt)
 
 	if (Finish)
 	{
-		if (elapsedTime >= 10 && elapsedTime <= 50)
-			elapsedTime += (dt + 2);
-
-		if (elapsedTime >= 61 && elapsedTime <= 106)
+		if (Checkcount == 3)
 			laps = 1;
 
-		if (elapsedTime >= 129 && elapsedTime <= 219)
+		if (Checkcount == 6)
 			laps = 2;
 	}
 
@@ -1409,10 +1463,10 @@ void c_LevelOne::updateLevel(double dt)
 	//----Weather and Environment Effects-------//
 	if (Raining)
 	{
-		car->SetSteering(9);
+		car->SetSteering(2);
 	}
 	else
-		car->SetSteering(5);
+		car->SetSteering(1.25);
 
 	if (Snowing)
 	{
@@ -1589,7 +1643,7 @@ void c_LevelOne::RenderSpeedometer()
 				modelStack.LoadIdentity();
 				modelStack.Translate(9, 11, 2);
 				modelStack.Rotate(220, 0, 0, 1); //Velocity 0 = 220, Ve20 = 198, Ve40 = 176 etc.
-				modelStack.Rotate(-car->GetSpedoSpeed(), 0, 0, 1);
+				//modelStack.Rotate(-car->GetSpedoSpeed(), 0, 0, 1);
 				modelStack.Scale(7, 7, 7);
 				RenderMesh(needle.getMesh(), false);
 				modelStack.PopMatrix();
@@ -1648,7 +1702,7 @@ void c_LevelOne::resetVar()
 	Win = Lose = Finish = false;
 
 	elapsedTime = FreezeTime = duration = Cooldown = Timer = FPS = 0;
-	laps = AIlaps = 0;
+	laps = AIlaps = Checkcount = 0;
 	ArrowP = 7;
 	Countdown = 3;
 	cooldown = 300;

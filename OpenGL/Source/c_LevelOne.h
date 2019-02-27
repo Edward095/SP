@@ -204,6 +204,9 @@ private:
 	c_Entity slow6;
 
 	c_Entity FinishLine;
+	c_Entity Checkpoints;
+	c_Entity Checkpoints2;
+	c_Entity Checkpoints3;
 	c_Entity track;
 
 	c_OffRoadManager* offRoadManager;
@@ -232,6 +235,7 @@ private:
 	int Cooldown;
 	int laps;
 	int AIlaps;
+	int Checkcount;
 
 	bool checkF;
 	int cooldown;

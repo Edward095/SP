@@ -97,7 +97,7 @@ void c_DataManager::saveCurrentLevel(int levelNum)
 	std::ofstream writeFile(currentFile);
 	if (writeFile.is_open())
 	{
-		for (int i = 0; i < lines.size(); i++)
+		for (int i = 0; i < (int)lines.size(); i++)
 		{
 			writeFile << lines[i] << "\n";
 			if (i == 1 && lines.size() < 3)
@@ -187,7 +187,7 @@ float c_DataManager::getSoundOptions()
 	std::ifstream readFile(soundFile);
 	
 	std::getline(readFile, line);
-	for (int i = 8; i < line.size(); i++)
+	for (int i = 8; i < (int)line.size(); i++)
 	{
 		volume.push_back(line[i]);
 	}
@@ -207,7 +207,7 @@ void c_DataManager::setLevel(std::string line)
 void c_DataManager::setPath(std::string line, std::string& path)
 {
 	std::string filePath;
-	for (int i = 9; i < line.size(); i++)
+	for (int i = 9; i < (int)line.size(); i++)
 	{
 		filePath.push_back(line[i]);
 	}
@@ -218,7 +218,7 @@ float c_DataManager::getTiming(std::string line)
 {
 	std::string timeString;
 	
-	for (int i = 9; i < line.size(); i++)
+	for (int i = 9; i < (int)line.size(); i++)
 	{
 		timeString.push_back(line[i]);
 	}
@@ -228,7 +228,7 @@ std::string c_DataManager::getName(std::string line)
 {
 	std::string name;
 
-	for (int i = 15; i < line.size(); i++)
+	for (int i = 15; i < (int)line.size(); i++)
 	{
 		name.push_back(line[i]);
 	}

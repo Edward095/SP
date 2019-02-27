@@ -37,6 +37,7 @@ public:
 		RAIN,
 		SNOW,
 		ONCOOLDOWN,
+		GROUND,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -201,6 +202,9 @@ private:
 	c_Entity speedometer;
 	c_Entity needle;
 	c_Entity circle;
+	c_Entity Checkpoints;
+	c_Entity Checkpoints2;
+	c_Entity Checkpoints3;
 	c_CarBaseClass* playerOne;
 	c_CarBaseClass* playerTwo;
 
@@ -247,6 +251,8 @@ private:
 	bool pick;
 	int Tcooldown;
 	int Ocooldown;
+	int OCheckcount;
+	int TCheckcount;
 
 	bool startline;
 	bool music;

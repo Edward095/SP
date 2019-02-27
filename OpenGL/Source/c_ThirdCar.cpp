@@ -14,8 +14,8 @@ c_ThirdCar::c_ThirdCar()
 
 	MaxSpeed = 1;
 	SteeringAngle = 0;
-	MaxAcceleration = 0.4;
-	Friction = 0.04;
+	MaxAcceleration = 0.4f;
+	Friction = 0.04f;
 	Steering = 2;
 	Driving = false;
 	Backwards = false;
@@ -40,7 +40,7 @@ void c_ThirdCar::Ability(double dt)
 {
 	c_Sound* Audio = c_Sound::getInstance();
 
-	elapsedTime += dt;
+	elapsedTime += (float)(dt);
 
 	if (uniqueName == "player2")
 	{
@@ -93,7 +93,7 @@ void c_ThirdCar::isOffRoad()
 {
 	c_OffRoadManager* manager = c_OffRoadManager::getInstance();
 
-	for (int i = 0; i < manager->getList().size(); i++)
+	for (int i = 0; i < (int)manager->getList().size(); i++)
 	{
 		if (gotCollide(manager->getList()[i], false) || !gotCollide("track", false))
 		{
@@ -110,6 +110,6 @@ void c_ThirdCar::isOffRoad()
 	else
 	{
 		SetFriction(0.04f);
-		SetMaxSpeed(1.f);
+		SetMaxSpeed(3.f);
 	}
 }
