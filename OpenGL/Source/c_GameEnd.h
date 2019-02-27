@@ -79,6 +79,9 @@ private:
 	int ArrowY;
 	double elapsedTime;
 	double bounceTime;
+	unsigned NextLevel;
+	unsigned Retry;
+	unsigned exit;
 
 };
 

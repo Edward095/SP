@@ -56,8 +56,6 @@ protected:
 	bool freeze = false;
 	bool Oslowed;
 	bool Tslowed;
-
-	bool abilityUsed;
 };
 
 

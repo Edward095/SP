@@ -11,8 +11,6 @@
 #include "Application.h"
 
 #include "c_Npc.h"
-#include "c_Continue.h"
-#include "c_GameEnd.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
@@ -111,9 +109,7 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	//Scene *scene = new c_Npc();
-	//Scene *scene = new c_Continue();
-	Scene *scene = new c_GameEnd();
+	Scene *scene = new c_Npc();
 
 	scene->Init();
 

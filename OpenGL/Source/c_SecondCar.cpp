@@ -26,7 +26,6 @@ c_SecondCar::c_SecondCar()
 	offRoad = false;
 	Oslowed = false;
 	Tslowed = false;
-	abilityUsed = false;
 	audioCD = 0;
 	audioUsed = false;
 
@@ -66,15 +65,10 @@ void c_SecondCar::Ability(double dt)
 	if (audioUsed)
 	{
 		audioCD++;
-		if (!abilityUsed)
-		{
-			Audio->f_Game_Ability_Freezetime();
-			abilityUsed = true;
-		}
+		Audio->f_Game_Ability_Freezetime();
 	}
 	if (audioCD >= 500)
 	{
-		abilityUsed = false;
 		audioUsed = false;
 		audioCD = 0;
 	}

@@ -83,6 +83,9 @@ private:
 	double elapsedTime;
 	double bounceTime;
 	bool noFile;
+	unsigned int Save1;
+	unsigned int Save2;
+	unsigned int Save3;
 
 	std::string OBJpath;
 	std::string TGApath;

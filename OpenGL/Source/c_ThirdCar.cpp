@@ -24,8 +24,6 @@ c_ThirdCar::c_ThirdCar()
 	BoostPad = false;
 	SlowPad = false;
 	offRoad = false;
-	abilityUsed = false;
-
 }
 c_ThirdCar::c_ThirdCar(std::string uniqueName, const char* meshPath, const char* TGApath, Vector3 pos,bool canCollide)
 {
@@ -46,7 +44,7 @@ void c_ThirdCar::Ability(double dt)
 
 	if (uniqueName == "player2")
 	{
-		if (Application::IsKeyPressed('P') && !once)
+		if (Application::IsKeyPressed('P') && !PressQ)
 		{
 			float updateX = (sin(Math::DegreeToRadian(SteeringAngle)) * 75);
 			float updateZ = (cos(Math::DegreeToRadian(SteeringAngle)) * 75);
@@ -76,16 +74,11 @@ void c_ThirdCar::Ability(double dt)
 	if (PressQ && coolDown == 0.f)
 	{
 		coolDown = elapsedTime + 10.f;
-		if (!abilityUsed)
-		{
-			Audio->f_Game_Ability_Teleport();
-			abilityUsed = true;
-		}
+		Audio->f_Game_Ability_Teleport();
 	}
 	if (elapsedTime >= coolDown)
 	{
 		PressQ = false;
-		abilityUsed = false;
 		coolDown = 0.f;
 	}
 }
