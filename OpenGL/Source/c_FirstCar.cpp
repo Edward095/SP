@@ -14,7 +14,6 @@ c_FirstCar::c_FirstCar()
 	pos.z = 0;
 	MaxSpeed = 0.8;
 	SteeringAngle = 0;
-	Duration = 0;
 	MaxAcceleration = 0.6;
 	Friction = 0.04;
 	Steering = 3;
@@ -24,8 +23,6 @@ c_FirstCar::c_FirstCar()
 	Nitro = false;
 	BoostPad = false;
 	SlowPad = false;
-	once = false;
-	Cooldown = 300;
 	offRoad = false;
 	abilityUsed = false;
 }
@@ -42,15 +39,14 @@ c_FirstCar::~c_FirstCar()
 void c_FirstCar::Ability(double dt)
 {
 	c_Sound* Audio = c_Sound::getInstance();
+	elapsedTime += dt;
 
 	if (uniqueName == "player2")
 	{
 		if (Application::IsKeyPressed('P'))
 		{
-			if (Driving || Backwards)
-			{
+			if (Driving)
 				PressQ = true;
-			}
 		}
 	}
 	else
@@ -59,60 +55,43 @@ void c_FirstCar::Ability(double dt)
 		{
 			if (Driving)
 				PressQ = true;
-			else
-				PressQ = false;
 		}
 	}
 	
-	if (VelocityZ > MaxSpeed && (PressQ))
+	//Ability Used,Setting how long it lasts and the cooldown duration
+	if (PressQ && coolDown == 0.f)
 	{
-		if (VelocityZ < 1.5)
-		{
-			VelocityZ += 0.1;
-		}
-		else
-		{
-			VelocityZ = 1.5;
-		}
-	}
-	if (PressQ)
-	{
-		Cooldown = 300;
-		Duration++;
+		abilityDuration = elapsedTime + 4.f;
+		coolDown = elapsedTime + 8.f;
 		if (!abilityUsed)
 		{
 			abilityUsed = true;
 			Audio->f_Game_Ability_Nitro();
 		}
 	}
-	if (Duration > 200) // 4 sec/dt
+	//Ability OnGoing
+	if (PressQ && elapsedTime < abilityDuration)
+	{
+		if (VelocityZ < 1.5f)
+			VelocityZ += 0.2f;
+		else 
+			VelocityZ = 1.5f;
+	}
+	//Ability Finished but cooldown haven end
+	if (PressQ && elapsedTime > abilityDuration && elapsedTime < coolDown)
 	{
 		if (VelocityZ > MaxSpeed)
-		{
-			VelocityZ -= 0.3;
-		}
+			VelocityZ -= 0.2f;
 		else
-		{
 			VelocityZ = MaxSpeed;
-			PressQ = false;
-			Cooldown--;
-		}
-		if (Cooldown <= 0)
-		{
-			Duration = 0;
-			Cooldown = 300;
-		}
-
-
 	}
-
-	if (Cooldown <= 0)
+	//Cooldown ends ability can be used again
+	else if (PressQ && elapsedTime >= coolDown)
 	{
+		coolDown = 0.f;
+		PressQ = false;
 		abilityUsed = false;
-		Duration = 0;
-		Cooldown = 300;
 	}
-
 }
 
 void c_FirstCar::PowerUp(bool check)

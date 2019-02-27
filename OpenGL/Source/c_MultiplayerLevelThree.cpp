@@ -456,6 +456,7 @@ void c_MultiplayerLevelThree::Render()
 	glViewport(0, 0, 960, 1080);
 	glScissor(0, 0, 960, 1080);
 	renderPlayerOne();
+
 	//if (Random == 1)
 	//{
 	//	if (!pick)
@@ -467,9 +468,13 @@ void c_MultiplayerLevelThree::Render()
 	//		RenderSnow();
 	//}
 
+	if (playerOne->onCooldown())
+		renderOnCoolDown();
+
 	glViewport(960, 0, 960, 1080);
 	glScissor(960, 0, 960, 1080);
 	renderPlayerTwo();
+
 	//if (Random == 1)
 	//{
 	//	if (!pick)
@@ -480,6 +485,10 @@ void c_MultiplayerLevelThree::Render()
 	//	if (!pick)
 	//		RenderSnow();
 	//}
+
+	if (playerTwo->onCooldown())
+		renderOnCoolDown();
+
 
 	glDisable(GL_SCISSOR_TEST);
 	
@@ -1461,6 +1470,23 @@ void c_MultiplayerLevelThree::RenderSpeedometerTwo()
 	modelStack.Scale(7, 7, 7);
 	RenderMesh(needle.getMesh(), false);
 	modelStack.PopMatrix();
+	modelStack.PopMatrix();
+	viewStack.PopMatrix();
+	projectionStack.PopMatrix();
+}
+
+void c_MultiplayerLevelThree::renderOnCoolDown()
+{
+	Mtx44 ortho;
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity();
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	modelStack.Translate(9, 20, 0);
+	RenderMesh(meshList[ONCOOLDOWN], false);
 	modelStack.PopMatrix();
 	viewStack.PopMatrix();
 	projectionStack.PopMatrix();

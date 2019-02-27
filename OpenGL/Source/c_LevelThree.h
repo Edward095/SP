@@ -39,6 +39,7 @@ public:
 		SLOWPAD,
 		RAIN,
 		SNOW,
+		ONCOOLDOWN,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -166,6 +167,10 @@ private:
 
 	void renderEnviroment();
 	void updateEnviromentCollision();
+	void renderRain();
+	void RenderSnow();
+	void RenderSpeedometer();
+	void renderOnCooldown();
 
 
 	c_Entity front;
@@ -249,9 +254,6 @@ private:
 
 	c_Weather rain;
 	c_Weather snow;
-	void renderRain();
-	void RenderSnow();
-	void RenderSpeedometer();
 
 	void resetVar();
 	bool startline;

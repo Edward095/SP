@@ -36,6 +36,7 @@ public:
 		TRACK,
 		RAIN,
 		SNOW,
+		ONCOOLDOWN,
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -167,6 +168,7 @@ private:
 	void RenderSpeedometerTwo();
 	void renderRain();
 	void RenderSnow();
+	void renderOnCoolDown();
 	void resetVar();
 
 	FirstPersonCamera playerOneCam;
