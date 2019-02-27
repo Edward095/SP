@@ -271,7 +271,7 @@ void c_LevelTwo::Init()
 	slow7.init("Slowpad7", "OBJ//Pad.obj", "Image//SlowPad.tga", Vector3(0, 1.f, -60), false);
 	FinishLine.init("FinishLine", "quad", "Image//Test.tga", Vector3(0, 0, -20), false);
 	AI.init("AI", "OBJ//Car3.obj", "Image//Car1Blue.tga", Vector3(-15, 3, 0), true);
-	track.init("track", "OBJ//RaceTrack2.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
+	track.init("track", "OBJ//Racetrack2.obj", "Image//RaceTrack.tga", Vector3(0, 0, 0), false);
 	PickUp.init("Pickup", "OBJ//Pad.obj", "Image//Car1Blue.tga", Vector3(0, 1, 50), false);
 	speedometer.init("speedometer", "quad", "Image//speedometer.tga", (float)(1, 1, 1), false);
 	needle.init("needle", "quad", "Image//needle.tga", (float)(1, 1, 1), false);
@@ -1013,7 +1013,7 @@ void c_LevelTwo::renderEnviroment()
 	modelStack.PushMatrix();
 	modelStack.Translate(-310.951f, 0, -135.453f);
 	modelStack.Rotate(90, 0, 1, 0);
-	RenderMesh(track.getMesh(), false);
+	RenderMesh(track.getMesh(), true);
 	modelStack.PopMatrix();
 
 	//RaceBanner
@@ -1650,7 +1650,7 @@ void c_LevelTwo::RenderSpeedometer()
 	modelStack.LoadIdentity();
 	modelStack.Translate(9, 11, 2);
 	modelStack.Rotate(220, 0, 0, 1); //Velocity 0 = 220, Ve20 = 198, Ve40 = 176 etc.
-	modelStack.Rotate(-car->GetSpedoSpeed(), 0, 0, 1);
+//	modelStack.Rotate(-car->GetSpedoSpeed(), 0, 0, 1);
 	modelStack.Scale(7, 7, 7);
 	RenderMesh(needle.getMesh(), false);
 	modelStack.PopMatrix();
