@@ -1599,57 +1599,7 @@ void c_MultiplayerLevelTwo::renderOnCoolDown()
 	viewStack.PopMatrix();
 	projectionStack.PopMatrix();
 }
-void c_MultiplayerLevelTwo::renderRain()
-{
-	for (int i = 0; i < rain.getX().size() - 3000; i++)
-	{
-		modelStack.PushMatrix();
-		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
-		modelStack.Translate(rain.getTranslateX(), rain.getTranslateY(), rain.getTranslateZ());
-		modelStack.Translate(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
-		modelStack.Rotate(45, 0, 0, 1);
-		modelStack.Scale(0.1f, 0.5f, 0.1f);
-		RenderMesh(meshList[RAIN], true);
-		modelStack.PopMatrix();
 
-		modelStack.PushMatrix();
-		modelStack.Translate(rain.getX().at(i), rain.getY().at(i), rain.getZ().at(i));
-		modelStack.Translate(rain.getTranslateX(), rain.getTranslateY(), rain.getTranslateZ());
-		modelStack.Translate(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
-		modelStack.Rotate(45, 0, 0, 1);
-		modelStack.Scale(0.1f, 0.5f, 0.1f);
-		RenderMesh(meshList[RAIN], true);
-		modelStack.PopMatrix();
-	}
-
-	Raining = true;
-}
-
-void c_MultiplayerLevelTwo::RenderSnow()
-{
-	for (int i = 0; i < snow.getX().size() - 3000; i++)
-	{
-		modelStack.PushMatrix();
-		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
-		modelStack.Translate(snow.getTranslateX() / 3, snow.getTranslateY() / 3, snow.getTranslateZ() / 3);
-		modelStack.Translate(playerOne->getPos().x, playerOne->getPos().y, playerOne->getPos().z);
-		modelStack.Rotate(45, 0, 0, 1);
-		modelStack.Scale(0.1f, 0.5f, 0.1f);
-		RenderMesh(meshList[SNOW], true);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(snow.getX().at(i), snow.getY().at(i), snow.getZ().at(i));
-		modelStack.Translate(snow.getTranslateX() / 3, snow.getTranslateY() / 3, snow.getTranslateZ() / 3);
-		modelStack.Translate(playerTwo->getPos().x, playerTwo->getPos().y, playerTwo->getPos().z);
-		modelStack.Rotate(45, 0, 0, 1);
-		modelStack.Scale(0.1f, 0.5f, 0.1f);
-		RenderMesh(meshList[SNOW], true);
-		modelStack.PopMatrix();
-	}
-
-	Snowing = true;
-}
 void c_MultiplayerLevelTwo::resetVar()
 {
 	RedLight = true;

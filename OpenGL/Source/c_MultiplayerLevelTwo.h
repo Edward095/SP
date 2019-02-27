@@ -34,8 +34,6 @@ public:
 		LIGHT1,
 		LIGHT2,
 		TRACK,
-		RAIN,
-		SNOW,
 		ONCOOLDOWN,
 		RAIN,
 		SNOW,
@@ -238,7 +236,7 @@ private:
 	float Countdown;
 	float FreezeTime;
 	float red1, red2, red3, green1, green2, green3;
-	int Random;
+
 	int Cooldown;
 	int Ponelaps;
 	int PTwolaps;
@@ -250,8 +248,7 @@ private:
 
 	c_Weather rain;
 	c_Weather snow;
-	void renderRain();
-	void RenderSnow();
+
 
 	c_Sound* Audio;
 };
